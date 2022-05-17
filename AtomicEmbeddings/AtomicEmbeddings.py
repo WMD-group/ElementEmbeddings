@@ -1,4 +1,3 @@
-#Imports
 from scipy.stats import pearsonr
 from numpy.linalg import norm
 from itertools import combinations_with_replacement
@@ -8,7 +7,10 @@ from sklearn.metrics import DistanceMetric
 from sklearn import decomposition
 import matplotlib.pyplot as plt
 import seaborn as sns
+from os import path
 
+module_directory = path.abspath(path.irname(__file__))
+data_directory = path.join(module_directory, 'data')
 
 class Atomic_Embeddings:
 
@@ -17,6 +19,31 @@ class Atomic_Embeddings:
 
         if not isinstance(self.embeddings["H"], np.ndarray):
             self.embeddings = {ele:np.array(self.embeddings[ele]) for ele in self.embeddings }
+
+    @staticmethod
+    def from_json(
+    embedding_json: Optional[str]=None,
+
+    ):
+    """Creates an instance of the Atomic_Embeddings class from a default embedding file.
+
+    Args:
+        embedding_json (str): JSON-style representation of a set of atomic embedding vectors.
+        This is a python dictionary of element:embedding vector pairs.
+        In a future update, this will be optional and will allow the user to
+        specify embedding vectors from the data file.
+
+    Returns:
+
+    A :class:`Atomic_Embeddings` instance."""
+
+    # Get the matscholar embeddings
+    if embedding_json is None:
+        matscholar_json = os.path.join(data_directory, 'matscholar-embedding.json')
+        with open(matscholar_json, 'r') as f:
+            embedding_data = json.load(f)
+
+    return Atomic_Embeddings(embedding_data)
 
     def element_list(self):
         ele_list=list(self.embeddings.keys())
