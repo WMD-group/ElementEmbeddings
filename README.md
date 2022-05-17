@@ -1,7 +1,7 @@
 Atomic_Embeddings
 ====
 
-The ** Atomic Embeddings** package provides high-level tools for analysing atomic 
+The **Atomic Embeddings** package provides high-level tools for analysing atomic 
 embeddings data. This primarily involves visualising the correlation between 
 atomic embeddings using a variety of different statistical measures.
 
