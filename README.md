@@ -28,7 +28,7 @@ Installation
 The package can be installed by cloning the repository:
 
 ```
-git clone https://github.com/AntObi/Atomic_Embeddings.git
+git clone https://github.com/WMD-group/Atomic_Embeddings.git
 cd Atomic_Embeddings
 pip install .
 ```
