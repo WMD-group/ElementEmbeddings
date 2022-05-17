@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 VERSION ='0.0.1'
-DESCRIPTION = 'Atomic Embeddings
+DESCRIPTION = 'Atomic Embeddings'
 LONG_DESCRIPTION = "A package for visualising and analysing atomic embedding vectors"
 
 # Setting up
