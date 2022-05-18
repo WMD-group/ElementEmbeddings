@@ -35,7 +35,8 @@ class Atomic_Embeddings:
 
     Returns:
 
-    A :class:`Atomic_Embeddings` instance."""
+        A :class:`Atomic_Embeddings` instance.
+    """
 
     # Get the matscholar embeddings
     if embedding_json is None:
