@@ -1,1 +1,1 @@
-from AtomicEmbeddings import AtomicEmbeddings
+from AtomicEmbeddings.AtomicEmbeddings import Atomic_Embeddings
