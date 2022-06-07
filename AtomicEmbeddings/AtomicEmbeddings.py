@@ -4,6 +4,7 @@ from itertools import combinations_with_replacement
 import pandas as pd
 from pymatgen.core import Element
 from sklearn.metrics import DistanceMetric
+import random
 from sklearn import decomposition
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -12,6 +13,8 @@ from typing import Callable, Generator, Optional, Tuple
 import os
 import json
 import numpy as np
+from sklearn.manifold import TSNE
+
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, '../data')
 
@@ -23,6 +26,8 @@ class Atomic_Embeddings:
         if not isinstance(self.embeddings["H"], np.ndarray):
             self.embeddings = {ele:np.array(self.embeddings[ele]) for ele in self.embeddings }
 
+        self.dim = len(random.choice(list(self.embeddings.values())))
+        self.element_list = list(self.embeddings.keys()) 
     @staticmethod
     def from_json(
     embedding_json: Optional[str]=None
@@ -40,17 +45,60 @@ class Atomic_Embeddings:
 
             A :class:`Atomic_Embeddings` instance."""
 
-    # Get the matscholar embeddings
-        if embedding_json is None:
+        # Get the matscholar embeddings
+        if (embedding_json == 'matscholar') or (embedding_json =='matscholar-embedding'):
             matscholar_json = path.join(data_directory, 'matscholar-embedding.json')
             with open(matscholar_json, 'r') as f:
                 embedding_data = json.load(f)
+        
+        #Get the megnet 16 embeddings
+        elif embedding_json == 'megnet16':
+            megnet16_json = path.join(data_directory, 'megnet16.json')
+            with open(megnet16_json, 'r') as f:
+                embedding_data = json.load(f)
+            # Remove 'Null' key from megnet embedding
+            del embedding_data['Null']
+        # Get the random_200 embeddings
+        elif embedding_json =='random_200':
+            random_200_json = path.join(data_directory, 'random_200.json')
+            with open(random_200_json,'r') as f:
+                embedding_data=json.load(f)
+        # Get the mat2vec embeddings
+        elif embedding_json == 'mat2vec':
+            mat2vec_json = path.join(data_directory, 'mat2vec.json')
+            with open(mat2vec_json,'r') as f:
+                embedding_data=json.load(f)
+        
+        # Get the modified_pettifor embeddings
+        elif embedding_json == 'mod_petti':
+            mod_petti_json = path.join(data_directory, 'mod_petti.json')
+            with open(mod_petti_json,'r') as f:
+                embedding_data=json.load(f)
+        
+        # Get the magpie embeddings
+        elif embedding_json == 'magpie':
+            magpie_json = path.join(data_directory, 'magpie.json')
+            with open(magpie_json,'r') as f:
+                embedding_data=json.load(f)
+        # Get the oliynyk embeddings
+        elif embedding_json == 'oliynyk':
+            oliynyk_json = path.join(data_directory, 'oliynyk.json')
+            with open(oliynyk_json,'r') as f:
+                embedding_data=json.load(f)
+        
+        # Get the SkipAtom embeddings
+        elif embedding_json == 'skipatom':
+            skipatom_csv = path.join(data_directory, 'skipatom_20201009_induced.csv')
+            df=pd.read_csv(skipatom_csv)
+            # Convert df to a dictionary of (ele:embeddings) pairs
+            elements = list(df['element'])
+            df.drop(['element'], axis=1, inplace=True)
+            embeds_array=df.to_numpy()
+            embedding_data={elements[i]:embeds_array[i] for i in range(len(embeds_array))}
 
+        else:
+            raise(ValueError(f'{embedding_json} not in the data directory.'))
         return Atomic_Embeddings(embedding_data)
-
-    def element_list(self):
-        ele_list=list(self.embeddings.keys())
-        return ele_list
 
     def create_pairs(self):
         ele_list=self.element_list()
@@ -118,11 +166,6 @@ class Atomic_Embeddings:
         pearson_pivot= corr_df.pivot_table(values="pearson_corr", index = "mend_1", columns = "mend_2")
         return pearson_pivot
 
-    def create_euclidean_pivot_table(self):
-        corr_df=self.create_correlation_df()
-        euclidean_pivot= corr_df.pivot_table(values="euclid_dist", index = "mend_1", columns = "mend_2")
-        return euclidean_pivot
-
     def create_distance_correlation_df(self, metric="euclidean"):
         ele_pairs=self.create_pairs()
         table = []
@@ -154,17 +197,6 @@ class Atomic_Embeddings:
 
         plt.figure(figsize=figsize)
         ax=sns.heatmap(pearson_pivot,
-                      cmap="bwr",
-                      square=True,
-                      linecolor="k")
-        plt.show()
-        return
-
-    def plot_euclidean_correlation(self, figsize=(24,24)):
-        euclidean_pivot=self.create_euclidean_pivot_table()
-
-        plt.figure(figsize=figsize)
-        ax=sns.heatmap(euclidean_pivot,
                       cmap="bwr",
                       square=True,
                       linecolor="k")
@@ -204,3 +236,27 @@ class Atomic_Embeddings:
 
         plt.show()
         return
+
+    def plot_tSNE(self, n_components=2, figsize=(16,12)):
+        """A function to plot a t-SNE plot of the atomic embedding"""
+        embeddings_array= np.array(list(self.embeddings.values()))
+        element_array = np.array(self.element_list)
+
+        tsne=TSNE(n_components)
+        tsne_result = tsne.fit_transform(embeddings_array)
+
+        # Create a dataframe to store the dimension and the label for t-SNE transformation
+        tsne_df = pd.DataFrame({'tsne_dim1': tsne_result[:,0], 'tsne_dim2': tsne_result[:,1], 'element':element_array })
+        #Create the t-SNE plot
+        fig, ax = plt.subplots(figsize=figsize)
+        sns.scatterplot(x='tsne_dim1', y='tsne_dim2', data=tsne_df, ax=ax)
+        lim = (tsne_result.min()-5, tsne_result.max()+5)
+        ax.set_xlim(lim)
+        ax.set_ylim(lim)
+        
+        # Label the points
+        for i in range(tsne_df.shape[0]):
+            plt.text(x=tsne_df['tsne_dim1'][i], y =tsne_df['tsne_dim2'][i], s = tsne_df['element'][i])
+
+        plt.show()
+        return  
