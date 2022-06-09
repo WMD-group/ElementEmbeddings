@@ -16,17 +16,25 @@ import numpy as np
 from sklearn.manifold import TSNE
 
 module_directory = path.abspath(path.dirname(__file__))
-data_directory = path.join(module_directory, '../data')
+data_directory = path.join(module_directory, 'data')
 
 class Atomic_Embeddings:
 
     def __init__(self, embeddings):
         self.embeddings=embeddings
 
-        if not isinstance(self.embeddings["H"], np.ndarray):
+        # Grab a random value from the embedding vector
+        _rand_embed = random.choice(list(self.embeddings.values()))
+        # Convert embeddings to numpy array if not already a numpy array
+        if not isinstance(_rand_embed, np.ndarray):
             self.embeddings = {ele:np.array(self.embeddings[ele]) for ele in self.embeddings }
-
-        self.dim = len(random.choice(list(self.embeddings.values())))
+        # Determines if the embedding vector has a length attribute 
+        # (i.e. is not a scalar int or float)
+        # If the 'vector' is a scalar/float, the representation is linear (dim=1)
+        if hasattr(_rand_embed, "__len__") and (not isinstance(_rand_embed,str)):
+            self.dim = len(random.choice(list(self.embeddings.values())))
+        else:    
+            self.dim=1
         self.element_list = list(self.embeddings.keys()) 
     @staticmethod
     def from_json(
@@ -45,63 +53,45 @@ class Atomic_Embeddings:
 
             A :class:`Atomic_Embeddings` instance."""
 
-        # Get the matscholar embeddings
-        if (embedding_json == 'matscholar') or (embedding_json =='matscholar-embedding'):
-            matscholar_json = path.join(data_directory, 'matscholar-embedding.json')
-            with open(matscholar_json, 'r') as f:
-                embedding_data = json.load(f)
-        
-        #Get the megnet 16 embeddings
-        elif embedding_json == 'megnet16':
-            megnet16_json = path.join(data_directory, 'megnet16.json')
-            with open(megnet16_json, 'r') as f:
-                embedding_data = json.load(f)
-            # Remove 'Null' key from megnet embedding
-            del embedding_data['Null']
-        # Get the random_200 embeddings
-        elif embedding_json =='random_200':
-            random_200_json = path.join(data_directory, 'random_200.json')
-            with open(random_200_json,'r') as f:
-                embedding_data=json.load(f)
-        # Get the mat2vec embeddings
-        elif embedding_json == 'mat2vec':
-            mat2vec_json = path.join(data_directory, 'mat2vec.json')
-            with open(mat2vec_json,'r') as f:
-                embedding_data=json.load(f)
-        
-        # Get the modified_pettifor embeddings
-        elif embedding_json == 'mod_petti':
-            mod_petti_json = path.join(data_directory, 'mod_petti.json')
-            with open(mod_petti_json,'r') as f:
-                embedding_data=json.load(f)
-        
-        # Get the magpie embeddings
-        elif embedding_json == 'magpie':
-            magpie_json = path.join(data_directory, 'magpie.json')
-            with open(magpie_json,'r') as f:
-                embedding_data=json.load(f)
-        # Get the oliynyk embeddings
-        elif embedding_json == 'oliynyk':
-            oliynyk_json = path.join(data_directory, 'oliynyk.json')
-            with open(oliynyk_json,'r') as f:
-                embedding_data=json.load(f)
-        
-        # Get the SkipAtom embeddings
-        elif embedding_json == 'skipatom':
-            skipatom_csv = path.join(data_directory, 'skipatom_20201009_induced.csv')
-            df=pd.read_csv(skipatom_csv)
-            # Convert df to a dictionary of (ele:embeddings) pairs
-            elements = list(df['element'])
-            df.drop(['element'], axis=1, inplace=True)
-            embeds_array=df.to_numpy()
-            embedding_data={elements[i]:embeds_array[i] for i in range(len(embeds_array))}
+        _cbfv_files = {
+            'magpie':'magpie.json',
+            'mat2vec':'mat2vec.json',
+            'matscholar':'matscholar-embedding.json',
+            'megnet16':'megnet16.json',
+            'mod_petti':'mod_petti.json',
+            'oliynyk':'oliynyk.json',
+            'random_200':'random_200.json',
+            'skipatom':'skipatom_20201009_induced.csv'
 
+        }
+        # Get the embeddings
+        if embedding_json in _cbfv_files:
+            if embedding_json == 'skipatom':
+                skipatom_csv = path.join(data_directory, _cbfv_files['skipatom'])
+                df=pd.read_csv(skipatom_csv)
+                # Convert df to a dictionary of (ele:embeddings) pairs
+                elements = list(df['element'])
+                df.drop(['element'], axis=1, inplace=True)
+                embeds_array=df.to_numpy()
+                embedding_data={elements[i]:embeds_array[i] for i in range(len(embeds_array))}
+            
+            elif embedding_json =='megnet16':
+                megnet16_json = path.join(data_directory, _cbfv_files['megnet16'])
+                with open(megnet16_json, 'r') as f:
+                    embedding_data = json.load(f)
+                # Remove 'Null' key from megnet embedding
+                del embedding_data['Null']
+            
+            else:
+                _json = path.join(data_directory, _cbfv_files[embedding_json])
+                with open(_json, 'r') as f:
+                    embedding_data =json.load(f)        
         else:
             raise(ValueError(f'{embedding_json} not in the data directory.'))
         return Atomic_Embeddings(embedding_data)
 
     def create_pairs(self):
-        ele_list=self.element_list()
+        ele_list=self.element_list
         ele_pairs = combinations_with_replacement(ele_list,2)
         return ele_pairs
 
@@ -145,10 +135,10 @@ class Atomic_Embeddings:
                         "manhattan",
                         "chebyshev"]
 
-        if ele1 not in self.element_list():
+        if ele1 not in self.element_list:
             print("ele1 is not an element included within the atomic embeddings")
             raise ValueError
-        if ele2 not in self.element_list():
+        if ele2 not in self.element_list:
             print("ele2 is not an element included within the atomic embeddings")
             raise ValueError
 
@@ -217,7 +207,7 @@ class Atomic_Embeddings:
     def plot_PCA_2D(self, figsize = (16,12), **kwargs):
 
         embeddings_array= np.array(list(self.embeddings.values()))
-        element_array = np.array(self.element_list())
+        element_array = np.array(self.element_list)
 
         fig=plt.figure(figsize=figsize)
         plt.cla() # clear current axes

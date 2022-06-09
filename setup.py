@@ -13,6 +13,12 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
+    package_data={
+        "AtomicEmbeddings": [
+            "data/*.json",
+            "data/*.csv"
+        ]
+    },
     install_requires=[
         "numpy",
         "scipy",

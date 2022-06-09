@@ -1,0 +1,17 @@
+README.md
+setup.py
+AtomicEmbeddings/AtomicEmbeddings.py
+AtomicEmbeddings/__init__.py
+AtomicEmbeddings.egg-info/PKG-INFO
+AtomicEmbeddings.egg-info/SOURCES.txt
+AtomicEmbeddings.egg-info/dependency_links.txt
+AtomicEmbeddings.egg-info/requires.txt
+AtomicEmbeddings.egg-info/top_level.txt
+AtomicEmbeddings/data/magpie.json
+AtomicEmbeddings/data/mat2vec.json
+AtomicEmbeddings/data/matscholar-embedding.json
+AtomicEmbeddings/data/megnet16.json
+AtomicEmbeddings/data/mod_petti.json
+AtomicEmbeddings/data/oliynyk.json
+AtomicEmbeddings/data/random_200.json
+AtomicEmbeddings/data/skipatom_20201009_induced.csv

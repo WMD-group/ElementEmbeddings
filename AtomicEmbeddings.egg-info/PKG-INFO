@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: AtomicEmbeddings
+Version: 0.0.2
+Summary: Atomic Embeddings
+Author: Anthony O. Onwuli
+Author-email: anthony.onwuli16@imperial.ac.uk
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering
+
+A package for visualising and analysing atomic embedding vectors
+
