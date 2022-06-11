@@ -1,6 +1,6 @@
 # Elemental Embeddings
 
-The data contained in this folder is a collection of various elemental representations/embeddings
+The data contained in this folder is a collection of various elemental representation/embedding schemes
 
 ## Magpie
 The following paper describes the details of the Materials Agnostic Platform for Informatics and Exploration (Magpie) framework:
@@ -105,7 +105,7 @@ The 44 features of the embedding vector are formed of the following properties:
 
 ## Random
 
-This is a set of 200-dimensional vectors in which the components are randomly generated.
+This is a set of 200-dimensional vectors in which the components are randomly generated
 
 ## SkipAtom
 
