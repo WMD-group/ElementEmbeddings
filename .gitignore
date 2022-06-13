@@ -205,3 +205,4 @@ cython_debug/
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,linux
+AtomicEmbeddings/data/.DS_Store
