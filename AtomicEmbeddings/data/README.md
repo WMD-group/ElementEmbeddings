@@ -31,6 +31,8 @@ The 21 dimensional embedding vector includes the following elemental properties:
 * Space Group Number
 </details>
 
+* `magpie_sc` is scaled version of the magpie embeddings
+
 ## mat2vec
 
 The following paper describes the implementation of mat2vec:
@@ -102,6 +104,8 @@ The 44 features of the embedding vector are formed of the following properties:
 * Heat_atomization(kJ/mol)
 * Cohesive_energy
 </details>
+
+* `oliynyk_sc` is scaled version of the oliynyk embeddings
 
 ## Random
 
