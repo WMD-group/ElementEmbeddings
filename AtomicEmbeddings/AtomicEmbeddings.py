@@ -1,4 +1,4 @@
-from scipy.stats import pearsonr
+from scipy.stats import pearsonr, wasserstein_distance, energy_distance
 from numpy.linalg import norm
 from itertools import combinations_with_replacement
 import pandas as pd
@@ -36,6 +36,7 @@ class Atomic_Embeddings:
         else:    
             self.dim=1
         self.element_list = list(self.embeddings.keys()) 
+    
     @staticmethod
     def from_json(
     embedding_json: Optional[str]=None
@@ -46,8 +47,6 @@ class Atomic_Embeddings:
         Args:
             embedding_json (str): JSON-style representation of a set of atomic embedding vectors.
             This is a python dictionary of element:embedding vector pairs.
-            In a future update, this will be optional and will allow the user to
-            specify embedding vectors from the data file.
 
         Returns:
 
@@ -55,11 +54,13 @@ class Atomic_Embeddings:
 
         _cbfv_files = {
             'magpie':'magpie.json',
+            'magpie_sc': 'magpie_sc.json',
             'mat2vec':'mat2vec.json',
             'matscholar':'matscholar-embedding.json',
             'megnet16':'megnet16.json',
             'mod_petti':'mod_petti.json',
             'oliynyk':'oliynyk.json',
+            'oliynyk_sc': 'oliynyk_sc.json',
             'random_200':'random_200.json',
             'skipatom':'skipatom_20201009_induced.csv'
 
