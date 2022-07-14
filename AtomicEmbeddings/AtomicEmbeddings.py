@@ -35,7 +35,7 @@ class Atomic_Embeddings:
             self.dim = len(random.choice(list(self.embeddings.values())))
         else:    
             self.dim=1
-        self.element_list = list(self.embeddings.keys()) 
+
     
     @staticmethod
     def from_json(
@@ -91,6 +91,10 @@ class Atomic_Embeddings:
             raise(ValueError(f'{embedding_json} not in the data directory.'))
         return Atomic_Embeddings(embedding_data)
 
+    @property
+    def element_list(self):
+        return list(self.embeddings.keys())
+
     def create_pairs(self):
         ele_list=self.element_list
         ele_pairs = combinations_with_replacement(ele_list,2)
@@ -132,10 +136,17 @@ class Atomic_Embeddings:
         Output
             distance (float): distance between embedding vectors
             """
-        valid_metrics = ["euclidean",
+
+        #Define the allowable metrics
+        scikit_metrics = ["euclidean",
                         "manhattan",
                         "chebyshev"]
 
+        scipy_metrics = {"wasserstein": wasserstein_distance, "energy": energy_distance}
+
+        valid_metrics = scikit_metrics + list(scipy_metrics.keys())
+
+        # Validate if the elements are within the embedding vector
         if ele1 not in self.element_list:
             print("ele1 is not an element included within the atomic embeddings")
             raise ValueError
@@ -143,14 +154,20 @@ class Atomic_Embeddings:
             print("ele2 is not an element included within the atomic embeddings")
             raise ValueError
 
-        if metric not in valid_metrics:
+        # Compute the distance measure
+        if metric in scikit_metrics:
+            distance = DistanceMetric.get_metric(metric)
+
+            return distance.pairwise(self.embeddings[ele1].reshape(1,-1), self.embeddings[ele2].reshape(1,-1))[0][0]
+
+        elif metric in scipy_metrics.keys():
+            return scipy_metrics[metric](self.embeddings[ele1], self.embeddings[ele2])
+
+        else:
             print(f"Invalid distance metric. Use one of the following metrics:{valid_metrics}")
             raise ValueError
 
-        distance = DistanceMetric.get_metric(metric)
-
-        return distance.pairwise(self.embeddings[ele1].reshape(1,-1), self.embeddings[ele2].reshape(1,-1))
-
+        
 
     def create_pearson_pivot_table(self):
         corr_df=self.create_correlation_df()
@@ -161,7 +178,7 @@ class Atomic_Embeddings:
         ele_pairs=self.create_pairs()
         table = []
         for ele1, ele2 in ele_pairs:
-            dist = self.compute_distance_metric(ele1, ele2, metric = metric)[0][0]
+            dist = self.compute_distance_metric(ele1, ele2, metric = metric)
             table.append((ele1, ele2, dist))
             if ele1!=ele2:
                 table.append((ele2, ele1, dist))
@@ -183,27 +200,27 @@ class Atomic_Embeddings:
         return distance_pivot
 
 
-    def plot_pearson_correlation(self, figsize=(24,24)):
+    def plot_pearson_correlation(self, figsize=(24,24), **kwargs):
         pearson_pivot=self.create_pearson_pivot_table()
 
         plt.figure(figsize=figsize)
         ax=sns.heatmap(pearson_pivot,
                       cmap="bwr",
                       square=True,
-                      linecolor="k")
-        plt.show()
-        return
+                      linecolor="k", **kwargs)
+        
+        return ax
 
-    def plot_distance_correlation(self, metric = "euclidean", figsize = (24, 24)):
+    def plot_distance_correlation(self, metric = "euclidean", figsize = (24, 24), **kwargs):
         distance_pivot = self.create_distance_pivot_table(metric = metric)
 
         plt.figure(figsize=figsize)
         ax=sns.heatmap(distance_pivot,
                       cmap="bwr",
                       square=True,
-                      linecolor="k")
-        plt.show()
-        return
+                      linecolor="k", **kwargs)
+        
+        return ax
 
     def plot_PCA_2D(self, figsize = (16,12), **kwargs):
 
@@ -225,8 +242,8 @@ class Atomic_Embeddings:
         for i in range(len(X)):
             plt.text(x=pca_dim1[i], y=pca_dim2[i], s =element_array[i])
 
-        plt.show()
-        return
+        
+        return plt
 
     def plot_tSNE(self, n_components=2, figsize=(16,12)):
         """A function to plot a t-SNE plot of the atomic embedding"""
@@ -249,5 +266,5 @@ class Atomic_Embeddings:
         for i in range(tsne_df.shape[0]):
             plt.text(x=tsne_df['tsne_dim1'][i], y =tsne_df['tsne_dim2'][i], s = tsne_df['element'][i])
 
-        plt.show()
-        return  
+        
+        return plt  

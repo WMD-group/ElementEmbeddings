@@ -206,3 +206,4 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,linux
 AtomicEmbeddings/data/.DS_Store
+Publication/test.ipynb
