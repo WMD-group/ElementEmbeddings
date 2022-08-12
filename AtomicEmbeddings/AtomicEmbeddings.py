@@ -61,15 +61,18 @@ class Atomic_Embeddings:
             'mod_petti':'mod_petti.json',
             'oliynyk':'oliynyk.json',
             'oliynyk_sc': 'oliynyk_sc.json',
-            'random_200':'random_200.json',
+            'random_200':'random_200.csv',
             'skipatom':'skipatom_20201009_induced.csv'
 
         }
+        _cbfv_names=list(_cbfv_files.keys())
+        _cbfv_names_others = [i for i in _cbfv_names if i not in ['skipatom', 'random_200', 'megnet16']]
+
         # Get the embeddings
         if embedding_json in _cbfv_files:
-            if embedding_json == 'skipatom':
-                skipatom_csv = path.join(data_directory, _cbfv_files['skipatom'])
-                df=pd.read_csv(skipatom_csv)
+            if embedding_json == 'skipatom' or embedding_json=='random_200':
+                _csv = path.join(data_directory, _cbfv_files[embedding_json])
+                df=pd.read_csv(_csv)
                 # Convert df to a dictionary of (ele:embeddings) pairs
                 elements = list(df['element'])
                 df.drop(['element'], axis=1, inplace=True)
@@ -83,17 +86,30 @@ class Atomic_Embeddings:
                 # Remove 'Null' key from megnet embedding
                 del embedding_data['Null']
             
-            else:
+            elif embedding_json in _cbfv_names_others:
                 _json = path.join(data_directory, _cbfv_files[embedding_json])
                 with open(_json, 'r') as f:
+                    embedding_data =json.load(f)
+            
+            # Load a json file from a file specified in the input
+            else:
+                with open(embedding_json, 'r') as f:
                     embedding_data =json.load(f)        
         else:
-            raise(ValueError(f'{embedding_json} not in the data directory.'))
+            raise(ValueError(f'{embedding_json} not in the data directory or not in directory.'))
         return Atomic_Embeddings(embedding_data)
 
     @property
     def element_list(self):
         return list(self.embeddings.keys())
+
+    @property
+    def element_groups_dict(self):
+        with open(path.join(data_directory,'element_data/element_group.json')) as f:
+            _dict = json.load(f)
+        return {i:_dict[i] for i in self.element_list}
+            
+
 
     def create_pairs(self):
         ele_list=self.element_list
@@ -222,7 +238,7 @@ class Atomic_Embeddings:
         
         return ax
 
-    def plot_PCA_2D(self, figsize = (16,12), **kwargs):
+    def plot_PCA_2D(self, figsize = (16,12), points_hue='group', points_size=200, **kwargs):
 
         embeddings_array= np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
@@ -237,7 +253,13 @@ class Atomic_Embeddings:
         pca_dim1 = X[:,0]
         pca_dim2 = X[:,1]
 
-        ax=sns.scatterplot(x=pca_dim1, y = pca_dim2)
+        # Create a dataframe to store the dimensions, labels and group info for the PCA 
+        pca_df = pd.DataFrame({'pca_dim1':pca_dim1, 'pca_dim2':pca_dim2, 'element':element_array, 'group':list(self.element_groups_dict.values())})
+
+        ax=sns.scatterplot(x='pca_dim1', y = 'pca_dim2', data=pca_df, hue=points_hue,s=points_size, **kwargs)
+
+        plt.xlabel('Dimension 1')
+        plt.ylabel('Dimension 2')
 
         for i in range(len(X)):
             plt.text(x=pca_dim1[i], y=pca_dim2[i], s =element_array[i])
@@ -245,7 +267,7 @@ class Atomic_Embeddings:
         
         return plt
 
-    def plot_tSNE(self, n_components=2, figsize=(16,12)):
+    def plot_tSNE(self, n_components=2, figsize=(16,12), points_hue='group', points_size=200, **kwargs ):
         """A function to plot a t-SNE plot of the atomic embedding"""
         embeddings_array= np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
@@ -254,13 +276,15 @@ class Atomic_Embeddings:
         tsne_result = tsne.fit_transform(embeddings_array)
 
         # Create a dataframe to store the dimension and the label for t-SNE transformation
-        tsne_df = pd.DataFrame({'tsne_dim1': tsne_result[:,0], 'tsne_dim2': tsne_result[:,1], 'element':element_array })
+        tsne_df = pd.DataFrame({'tsne_dim1': tsne_result[:,0], 'tsne_dim2': tsne_result[:,1], 'element':element_array, 'group':list(self.element_groups_dict.values()) })
         #Create the t-SNE plot
         fig, ax = plt.subplots(figsize=figsize)
-        sns.scatterplot(x='tsne_dim1', y='tsne_dim2', data=tsne_df, ax=ax)
-        lim = (tsne_result.min()-5, tsne_result.max()+5)
-        ax.set_xlim(lim)
-        ax.set_ylim(lim)
+        sns.scatterplot(x='tsne_dim1', y='tsne_dim2', data=tsne_df, hue=points_hue,s=points_size, ax=ax)
+        #lim = (tsne_result.min()-5, tsne_result.max()+5)
+        #ax.set_xlim(lim)
+        #ax.set_ylim(lim)
+        plt.xlabel('Dimension 1')
+        plt.ylabel('Dimension 2')
         
         # Label the points
         for i in range(tsne_df.shape[0]):
