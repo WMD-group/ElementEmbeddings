@@ -1,0 +1,16 @@
+site_name: AtomicEmbeddings
+
+nav:
+    - Home: index.md
+    - About: about.md
+    - Getting Started: installation.md
+    - Python API: python_api.md
+    - Tutorial: tutorials.md
+    - reference.md
+    - Contributing: contribution.md
+    - Issue Tracker: https://github.com/WMD-group/Atomic_Embeddings/issues
+theme: material
+plugins:
+    - mkdocstrings
+repo_url: https://github.com/WMD-group/Atomic_Embeddings
+repo_name: 'Atomic_Embeddings'
