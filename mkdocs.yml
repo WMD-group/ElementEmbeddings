@@ -12,5 +12,14 @@ nav:
 theme: material
 plugins:
     - mkdocstrings
+    - search
+    - autorefs
 repo_url: https://github.com/WMD-group/Atomic_Embeddings
 repo_name: 'Atomic_Embeddings'
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

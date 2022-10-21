@@ -30,6 +30,15 @@ data_directory = path.join(module_directory, "data")
 
 
 class Atomic_Embeddings:
+
+    """
+    Represents an elemental representation, which is essentially a dictionary of {element: vector} pairs.
+
+    Works like a standard python dictionary.
+
+    Adds a few convenience methods related to elemental representations.
+    """
+
     def __init__(self, embeddings):
         self.embeddings = embeddings
 
@@ -53,6 +62,7 @@ class Atomic_Embeddings:
         """Creates an instance of the `Atomic_Embeddings` class from a default embedding file.
 
         The default embeddings are in the table below:
+
         | **Name**                | **str_name** |
         |-------------------------|--------------|
         | Magpie                  | magpie       |
@@ -130,20 +140,25 @@ class Atomic_Embeddings:
 
     @property
     def element_list(self):
+        """Returns the elements of the atomic embedding."""
         return list(self.embeddings.keys())
 
     @property
     def element_groups_dict(self):
+        """Returns a dictionary of {element: element type} pairs e.g. {'He':'Noble gas'}"""
+
         with open(path.join(data_directory, "element_data/element_group.json")) as f:
             _dict = json.load(f)
         return {i: _dict[i] for i in self.element_list}
 
     def create_pairs(self):
+        """Creates all possible pairs of elements"""
         ele_list = self.element_list
         ele_pairs = combinations_with_replacement(ele_list, 2)
         return ele_pairs
 
     def create_correlation_df(self):
+        """Returns a pandas.DataFrame object with columns of the elements and correlation metrics"""
         ele_pairs = self.create_pairs()
         table = []
         for ele1, ele2 in ele_pairs:
@@ -187,13 +202,23 @@ class Atomic_Embeddings:
         return corr_df
 
     def compute_distance_metric(self, ele1, ele2, metric="euclidean"):
-        """Computes distance metric between two vectors
-        Input
+        """Computes distance metric between two vectors.
+
+        Allowed metrics:
+
+        * euclidean
+        * manhattan
+        * chebyshev
+        * wasserstein
+        * energy
+
+
+        Args:
             ele1 (str): element symbol
             ele2 (str): element symbol
             metric (str): name of a distance metric
 
-        Output
+        Returns:
             distance (float): distance between embedding vectors
         """
 
@@ -231,6 +256,8 @@ class Atomic_Embeddings:
             raise ValueError
 
     def create_pearson_pivot_table(self):
+        """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being the pearson correlation metrics"""
+
         corr_df = self.create_correlation_df()
         pearson_pivot = corr_df.pivot_table(
             values="pearson_corr", index="mend_1", columns="mend_2"
@@ -238,6 +265,23 @@ class Atomic_Embeddings:
         return pearson_pivot
 
     def create_distance_correlation_df(self, metric="euclidean"):
+        """Returns a pandas.DataFrame object with columns of the elements and correlation metrics.
+
+        Allowed metrics:
+
+        * euclidean
+        * manhattan
+        * chebyshev
+        * wasserstein
+        * energy
+
+        Args:
+            metric (str): A distance metric
+
+        Returns:
+            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric]
+        """
+
         ele_pairs = self.create_pairs()
         table = []
         for ele1, ele2 in ele_pairs:
@@ -258,6 +302,9 @@ class Atomic_Embeddings:
         return corr_df
 
     def create_distance_pivot_table(self, metric="euclidean"):
+
+        """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being a user-specified distance metric"""
+
         corr_df = self.create_distance_correlation_df(metric=metric)
         distance_pivot = corr_df.pivot_table(
             values=metric, index="mend_1", columns="mend_2"
@@ -265,6 +312,18 @@ class Atomic_Embeddings:
         return distance_pivot
 
     def plot_pearson_correlation(self, figsize=(24, 24), **kwargs):
+
+        """
+        Plots the heatmap of the pearson correlation values for the elemental representation.
+
+        Args:
+            figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+
+        Returns:
+            ax (matplotlib Axes): An Axes object with the heatmap
+
+        """
+
         pearson_pivot = self.create_pearson_pivot_table()
 
         plt.figure(figsize=figsize)
@@ -275,6 +334,18 @@ class Atomic_Embeddings:
         return ax
 
     def plot_distance_correlation(self, metric="euclidean", figsize=(24, 24), **kwargs):
+
+        """
+        Plots the heatmap of the pairwise distance metrics for the elemental representation.
+
+        Args:
+            metric (str): A valid distance metric
+            figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+
+        Returns:
+            ax (matplotlib.axes.Axes): An Axes object with the heatmap
+
+        """
         distance_pivot = self.create_distance_pivot_table(metric=metric)
 
         plt.figure(figsize=figsize)
@@ -287,7 +358,16 @@ class Atomic_Embeddings:
     def plot_PCA_2D(
         self, figsize=(16, 12), points_hue="group", points_size=200, **kwargs
     ):
+        """A function to plot a PCA plot of the atomic embedding.
 
+        Args:
+            figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+            points_size (float): The marker size
+
+        Returns:
+            ax (matplotlib.axes.Axes): An Axes object with the PCA plot
+
+        """
         embeddings_array = np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
 
@@ -336,7 +416,18 @@ class Atomic_Embeddings:
         points_size=200,
         **kwargs,
     ):
-        """A function to plot a t-SNE plot of the atomic embedding"""
+        """A function to plot a t-SNE plot of the atomic embedding
+
+        Args:
+            n_components (int): Number of t-SNE components to plot.
+            figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+            points_size (float): The marker size
+
+        Returns:
+            ax (matplotlib.axes.Axes): An Axes object with the PCA plot
+
+
+        """
         embeddings_array = np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
 
