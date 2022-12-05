@@ -303,7 +303,14 @@ class Atomic_Embeddings:
 
     def create_distance_pivot_table(self, metric="euclidean"):
 
-        """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being a user-specified distance metric"""
+        """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being a user-specified distance metric
+
+        Args:
+            metric (str): A distance metric
+
+        Returns:
+            distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table where the index and columns are the elements and the values are the pairwise distance metric.
+        """
 
         corr_df = self.create_distance_correlation_df(metric=metric)
         distance_pivot = corr_df.pivot_table(
@@ -318,6 +325,7 @@ class Atomic_Embeddings:
 
         Args:
             figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+            **kwargs: Other keyword arguments to be passed to sns.heatmap
 
         Returns:
             ax (matplotlib Axes): An Axes object with the heatmap
