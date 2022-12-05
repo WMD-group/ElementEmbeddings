@@ -1,7 +1,7 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
-VERSION ='0.0.3'
-DESCRIPTION = 'Atomic Embeddings'
+VERSION = "0.0.3"
+DESCRIPTION = "Atomic Embeddings"
 LONG_DESCRIPTION = "A package for visualising and analysing atomic embedding vectors"
 
 # Setting up
@@ -13,26 +13,20 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
-    package_data={
-        "AtomicEmbeddings": [
-            "data/*.json",
-            "data/*.csv"
-        ]
-    },
+    package_data={"AtomicEmbeddings": ["data/*.json", "data/*.csv"]},
     install_requires=[
         "numpy",
         "scipy",
         "pymatgen",
         "seaborn",
         "matplotlib",
-        "scikit-learn"
+        "scikit-learn",
     ],
-    classifiers = [
+    classifiers=[
         "Programming Language :: Python",
         "Development Status :: 1 - Planning",
         "Intended Audience :: Science/Research",
         "Operating System :: OS Independent",
-        "Topic :: Scientific/Engineering"
-
-    ]
+        "Topic :: Scientific/Engineering",
+    ],
 )
