@@ -144,7 +144,10 @@ class Embedding:
     @staticmethod
     # Function to load in an embedding from a json file
     def from_json(embedding_json):
-        #
+        """Creates an instance of"""
+        with open(embedding_json, "r") as f:
+            embedding_data = json.load(f)
+        return embedding_data
         pass
 
     @staticmethod
