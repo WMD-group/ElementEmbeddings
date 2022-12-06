@@ -1,4 +1,12 @@
+# Project information
 site_name: AtomicEmbeddings
+site_url: https://wmd-group.github.io/Atomic_Embeddings/
+site_author: Anthony Onwuli
+
+# Repository
+repo_url: https://github.com/WMD-group/Atomic_Embeddings
+repo_name: 'Atomic_Embeddings'
+edit_uri: ""
 
 nav:
     - Home: index.md
@@ -9,13 +17,18 @@ nav:
     - reference.md
     - Contributing: contribution.md
     - Issue Tracker: https://github.com/WMD-group/Atomic_Embeddings/issues
-theme: material
+
+# Configuration
+theme:
+  name: material
+  custom_dir: docs/.overrides
+
 plugins:
     - mkdocstrings
     - search
     - autorefs
-repo_url: https://github.com/WMD-group/Atomic_Embeddings
-repo_name: 'Atomic_Embeddings'
+
+
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -23,6 +36,11 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+
+# Configuration
+
+
+# Customisation
 extra:
   version:
     provider: mike
