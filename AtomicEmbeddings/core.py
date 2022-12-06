@@ -41,8 +41,9 @@ class Embedding:
     Adds a few convenience methods related to elemental representations.
     """
 
-    def __init__(self, embeddings):
+    def __init__(self, embeddings, citations):
         self.embeddings = embeddings
+        self.citations = None
 
         # Grab a random value from the embedding vector
         _rand_embed = random.choice(list(self.embeddings.values()))
@@ -143,6 +144,12 @@ class Embedding:
     @staticmethod
     # Function to load in an embedding from a json file
     def from_json(embedding_json):
+        #
+        pass
+
+    @staticmethod
+    # Function to load in an embedding from a csv file
+    def from_json(embedding_csv):
         #
         pass
 
