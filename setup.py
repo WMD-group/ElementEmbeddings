@@ -1,3 +1,5 @@
+import unittest
+
 from setuptools import find_packages, setup
 
 VERSION = "0.0.3"
@@ -14,6 +16,7 @@ setup(
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
     package_data={"AtomicEmbeddings": ["data/*.json", "data/*.csv"]},
+    test_suite="AtomicEmbeddings.tests.test",
     install_requires=[
         "numpy",
         "scipy",

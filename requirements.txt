@@ -1,0 +1,9 @@
+numpy
+scipy
+pymatgen
+seaborn
+matplotlib
+scikit-learn
+pandas
+pytest
+pytest-subtests
