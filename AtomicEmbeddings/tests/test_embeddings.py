@@ -13,7 +13,7 @@ class TestSequenceFunctions(unittest.TestCase):
         # Check if the embeddings attribute is a dict
         self.assertIsInstance(magpie.embeddings, dict)
         # Check if the embedding vector is a numpy array
-        self.assertIsInstance(magpie.embeddings["H"], np.darray)
+        self.assertIsInstance(magpie.embeddings["H"], np.ndarray)
         # Check if H is present in the embedding keys
         self.assertIn("H", magpie.embeddings.keys())
         # Check dimensions
@@ -226,7 +226,7 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertEqual(magpie.element_groups_dict, group_dict)
         # Check pair creation
         self.assertEqual(
-            len(magpie.create_pairs()), 4753, "Incorrect number of pairs returned"
+            len(list(magpie.create_pairs())), 4753, "Incorrect number of pairs returned"
         )
 
         # TO-DO
