@@ -19,7 +19,7 @@ schemes in a consistent framework.
 
 Getting started
 --------
-Atomic_Embeddings's main feature, the AtomicEmbedding class is accessible by 
+Atomic_Embeddings's main feature, the Embedding class is accessible by 
 importing the class.
 
 Installation
@@ -33,17 +33,17 @@ pip install .
 ```
 Usage
 --------
-For simple usage, you can instantiate an Atomic_Embeddings object using one of the embeddings in the data directory. For this example, let's use the magpie elemental representation.
+For simple usage, you can instantiate an Embedding object using one of the embeddings in the data directory. For this example, let's use the magpie elemental representation.
 
 ```python
 # Import the class
->>> from AtomicEmbeddings import Atomic_Embeddings
+>>> from AtomicEmbeddings.core import Embedding
 
 # Load the magpie data
->>> magpie = Atomic_Embeddings.from_json('magpie')
+>>> magpie = Embedding.load_data('magpie')
 ```
 
-We can access some of the properties of the Atomic_Embeddings class. For example, we can find the dimensions of the elemental representation and the list of elements for which an embedding exists.
+We can access some of the properties of the `Embedding` class. For example, we can find the dimensions of the elemental representation and the list of elements for which an embedding exists.
 ```python
 # Print out some of the properties of the Atomic_Embeddings class
 >>> print(f'The magpie representation has embeddings of dimension {magpie.dim}') 

@@ -13,7 +13,7 @@ import pandas as pd
 import seaborn as sns
 from numpy.linalg import norm
 from pymatgen.core import Element
-from scipy.stats import energy_distance, pearsonr, wasserstein_distance
+from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
 from sklearn import decomposition
 from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
@@ -36,14 +36,20 @@ class Embedding:
     """
     Represents an elemental representation, which is essentially a dictionary of {element: vector} pairs.
 
+    To load an embedding distributed from the package use the load_data() method.
+
     Works like a standard python dictionary.
 
     Adds a few convenience methods related to elemental representations.
+
+    Args:
+        embeddings (dict): A {element_symbol: vector} dictionary
+        embedding_name (str): The name of the elemental representation
     """
 
-    def __init__(self, embeddings, citations):
+    def __init__(self, embeddings, embedding_name=None):
         self.embeddings = embeddings
-        self.citations = None
+        self.embedding_name = embedding_name
 
         # Grab a random value from the embedding vector
         _rand_embed = random.choice(list(self.embeddings.values()))
@@ -139,27 +145,178 @@ class Embedding:
                     f"{embedding_name} not in the data directory or not in directory."
                 )
             )
-        return Embedding(embedding_data)
+        return Embedding(embedding_data, embedding_name)
 
     @staticmethod
     # Function to load in an embedding from a json file
     def from_json(embedding_json):
-        """Creates an instance of"""
+        """Creates an instance of the Embedding class from a json file
+
+        Args:
+            embedding_json (str): Filepath of the json file"""
         with open(embedding_json, "r") as f:
             embedding_data = json.load(f)
-        return embedding_data
-        pass
+        return Embedding(embedding_data)
 
     @staticmethod
     # Function to load in an embedding from a csv file
+
     def from_json(embedding_csv):
-        #
-        pass
+        """Creates an instance of the Embedding class from a csv file.
+        The first column of the csv file must contain the elements and be named element.
+
+
+        Args:
+            embedding_csv (str): Filepath of the csv file
+        """
+
+        df = pd.read_csv(embedding_csv)
+        elements = list(df["element"])
+        df.drop(["element"], axis=1, inplace=True)
+        embeds_array = df.to_numpy()
+        embedding_data = {
+            elements[i]: embeds_array[i] for i in range(len(embeds_array))
+        }
+        return Embedding(embedding_data)
 
     @property
     def element_list(self):
         """Returns the elements of the embedding."""
         return list(self.embeddings.keys())
+
+    def remove_elements(self, elements, inplace=False):
+        # TO-DO allow removal by atomic numbers
+        """Removes elements from the Embedding instance
+
+        Args:
+            elements (str,list(str)): Accepts either an element symbol or a list of element symbols
+            inplace (bool): If True, elements are removed from the Embedding instance. If false, the original embedding instance is unchanged and a new embedding instance with the elements removed is created.
+
+        """
+        if inplace:
+
+            if isinstance(elements, str):
+                del self.embeddings[elements]
+            elif isinstance(elements, list):
+                for el in elements:
+                    del self.embeddings[el]
+            return None
+        else:
+            embeddings_copy = self.embeddings.copy()
+            if isinstance(elements, str):
+                del embeddings_copy[elements]
+            elif isinstance(elements, list):
+                for el in elements:
+                    del embeddings_copy[el]
+            return Embedding(embeddings_copy, self.embedding_name)
+
+    def citation(self):
+        # Function to return a citation for an Embedding
+        if self.embedding_name in ["magpie", "magpie_sc"]:
+            citation = [
+                "@article{ward2016general,"
+                "title={A general-purpose machine learning framework for predicting properties of inorganic materials},"
+                "author={Ward, Logan and Agrawal, Ankit and Choudhary, Alok and Wolverton, Christopher},"
+                "journal={npj Computational Materials},"
+                "volume={2},"
+                "number={1},"
+                "pages={1--7},"
+                "year={2016},"
+                "publisher={Nature Publishing Group}}"
+            ]
+        elif self.embedding_name == "mat2vec":
+            citation = [
+                "@article{tshitoyan2019unsupervised,"
+                "title={Unsupervised word embeddings capture latent knowledge from materials science literature},"
+                "author={Tshitoyan, Vahe and Dagdelen, John and Weston, Leigh and Dunn, Alexander and Rong, Ziqin and Kononova, Olga and Persson, Kristin A and Ceder, Gerbrand and Jain, Anubhav},"
+                "journal={Nature},"
+                "volume={571},"
+                "number={7763},"
+                "pages={95--98},"
+                "year={2019},"
+                "publisher={Nature Publishing Group} }"
+            ]
+        elif self.embedding_name == "matscholar":
+            citation = [
+                "@article{weston2019named,"
+                "title={Named entity recognition and normalization applied to large-scale information extraction from the materials science literature},"
+                "author={Weston, Leigh and Tshitoyan, Vahe and Dagdelen, John and Kononova, Olga and Trewartha, Amalie and Persson, Kristin A and Ceder, Gerbrand and Jain, Anubhav},"
+                "journal={Journal of chemical information and modeling},"
+                "volume={59},"
+                "number={9},"
+                "pages={3692--3702},"
+                "year={2019},"
+                "publisher={ACS Publications} }"
+            ]
+
+        elif self.embedding_name == "megnet16":
+            citation = [
+                "@article{chen2019graph,"
+                "title={Graph networks as a universal machine learning framework for molecules and crystals},"
+                "author={Chen, Chi and Ye, Weike and Zuo, Yunxing and Zheng, Chen and Ong, Shyue Ping},"
+                "journal={Chemistry of Materials},"
+                "volume={31},"
+                "number={9},"
+                "pages={3564--3572},"
+                "year={2019},"
+                "publisher={ACS Publications} }"
+            ]
+
+        elif self.embedding_name in ["oliynyk", "oliynyk_sc"]:
+            citation = [
+                "              @article{oliynyk2016high,"
+                "title={High-throughput machine-learning-driven synthesis of full-Heusler compounds},"
+                "author={Oliynyk, Anton O and Antono, Erin and Sparks, Taylor D and Ghadbeigi, Leila and Gaultois, Michael W and Meredig, Bryce and Mar, Arthur},"
+                "journal={Chemistry of Materials},"
+                "volume={28},"
+                "number={20},"
+                "pages={7324--7331},"
+                "year={2016},"
+                "publisher={ACS Publications} }"
+            ]
+
+        elif self.embedding_name == "skipatom":
+            citation = [
+                "@article{antunes2022distributed,"
+                "title={Distributed representations of atoms and materials for machine learning},"
+                "author={Antunes, Luis M and Grau-Crespo, Ricardo and Butler, Keith T},"
+                "journal={npj Computational Materials},"
+                "volume={8},"
+                "number={1},"
+                "pages={1--9},"
+                "year={2022},"
+                "publisher={Nature Publishing Group} }"
+            ]
+        elif self.embedding_name == "mod_petti":
+            citation = [
+                "@article{glawe2016optimal,"
+                "title={The optimal one dimensional periodic table: a modified Pettifor chemical scale from data mining},"
+                "author={Glawe, Henning and Sanna, Antonio and Gross, EKU and Marques, Miguel AL},"
+                "journal={New Journal of Physics},"
+                "volume={18},"
+                "number={9},"
+                "pages={093011},"
+                "year={2016},"
+                "publisher={IOP Publishing} }"
+            ]
+
+        else:
+            citation = []
+
+        return citation
+
+    def _is_el_in_embedding(self, el):
+        """A function to check if an element is in the `Embedding` object
+
+        Args:
+            el (str): An element symbol
+        Returns:
+            bool: True if el is in the Embedding, else False"""
+
+        if el in self.element_list:
+            return True
+        else:
+            return False
 
     @property
     def element_groups_dict(self):
@@ -183,10 +340,9 @@ class Embedding:
             pearson = pearsonr(self.embeddings[ele1], self.embeddings[ele2])
             dist = norm(self.embeddings[ele1] - self.embeddings[ele2])
 
-            recip_dist = dist**-1
-            table.append((ele1, ele2, pearson[0], dist, recip_dist))
+            table.append((ele1, ele2, pearson[0], dist))
             if ele1 != ele2:
-                table.append((ele2, ele1, pearson[0], dist, recip_dist))
+                table.append((ele2, ele1, pearson[0], dist))
 
         corr_df = pd.DataFrame(
             table,
@@ -219,6 +375,24 @@ class Embedding:
 
         return corr_df
 
+    def compute_correlation_metric(self, ele1, ele2, metric="pearson"):
+        """Computes the correlation metric between two vectors
+        Allowed metrics:
+
+        * Pearson
+        * Spearman
+
+        Args:
+            ele1 (str): element symbol
+            ele2 (str): element symbol
+            metric (str): name of a correlation metric
+        """
+        # Define the allowable metrics
+        scipy_corrs = {"pearson": pearsonr, "spearman": spearmanr}
+
+        if metric in scipy_corrs:
+            return scipy_corrs[metric](self.embeddings[ele1], self.embeddings[ele2])
+
     def compute_distance_metric(self, ele1, ele2, metric="euclidean"):
         """Computes distance metric between two vectors.
 
@@ -248,12 +422,14 @@ class Embedding:
         valid_metrics = scikit_metrics + list(scipy_metrics.keys())
 
         # Validate if the elements are within the embedding vector
-        if ele1 not in self.element_list:
-            print("ele1 is not an element included within the atomic embeddings")
-            raise ValueError
-        if ele2 not in self.element_list:
-            print("ele2 is not an element included within the atomic embeddings")
-            raise ValueError
+        if not all([self._is_el_in_embedding(ele1), self._is_el_in_embedding(ele2)]):
+            if not self._is_el_in_embedding(ele1):
+                print(f"{ele1} is not an element included within the atomic embeddings")
+                raise ValueError
+
+            elif not self._is_el_in_embedding(ele2):
+                print(f"{ele2} is not an element included within the atomic embeddings")
+                raise ValueError
 
         # Compute the distance measure
         if metric in scikit_metrics:
