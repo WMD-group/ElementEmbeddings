@@ -24,7 +24,7 @@ This module enables the user load in elemetal representation data and analyse it
 
 Typical usage example:
 
-    megnet16 = Embedding.from_json('megnet16')
+    megnet16 = Embedding.load_data('megnet16')
 """
 
 module_directory = path.abspath(path.dirname(__file__))
