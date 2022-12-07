@@ -2,14 +2,14 @@ import unittest
 
 import numpy as np
 
-from AtomicEmbeddings import Atomic_Embeddings
+from AtomicEmbeddings.core import Embedding
 
 
 class TestSequenceFunctions(unittest.TestCase):
     # High Level functions
 
     def test_Atomic_Embeddings_class_magpie(self):
-        magpie = Atomic_Embeddings.from_json("magpie")
+        magpie = Embedding.load_data("magpie")
         # Check if the embeddings attribute is a dict
         self.assertIsInstance(magpie.embeddings, dict)
         # Check if the embedding vector is a numpy array
