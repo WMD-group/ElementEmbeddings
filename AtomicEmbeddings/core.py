@@ -1,5 +1,6 @@
 # Contains the core embedding class
 
+import fnmatch
 import json
 import os
 import random
@@ -17,6 +18,8 @@ from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distan
 from sklearn import decomposition
 from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
+
+from .utils.io import NumpyEncoder
 
 """ Provides the `Embedding` class.
 
@@ -65,6 +68,9 @@ class Embedding:
             self.dim = len(random.choice(list(self.embeddings.values())))
         else:
             self.dim = 1
+
+        # Dummy initialisation for results
+        self._data = []
 
     @staticmethod
     def load_data(embedding_name: Optional[str] = None):
@@ -148,20 +154,18 @@ class Embedding:
         return Embedding(embedding_data, embedding_name)
 
     @staticmethod
-    # Function to load in an embedding from a json file
     def from_json(embedding_json):
         """Creates an instance of the Embedding class from a json file
 
         Args:
             embedding_json (str): Filepath of the json file"""
+        # Need to add validation handling for JSONs in different formats
         with open(embedding_json, "r") as f:
             embedding_data = json.load(f)
         return Embedding(embedding_data)
 
     @staticmethod
-    # Function to load in an embedding from a csv file
-
-    def from_json(embedding_csv):
+    def from_csv(embedding_csv):
         """Creates an instance of the Embedding class from a csv file.
         The first column of the csv file must contain the elements and be named element.
 
@@ -169,7 +173,7 @@ class Embedding:
         Args:
             embedding_csv (str): Filepath of the csv file
         """
-
+        # Need to add validation handling for csv files
         df = pd.read_csv(embedding_csv)
         elements = list(df["element"])
         df.drop(["element"], axis=1, inplace=True)
@@ -178,6 +182,59 @@ class Embedding:
             elements[i]: embeds_array[i] for i in range(len(embeds_array))
         }
         return Embedding(embedding_data)
+
+    def as_dataframe(self, columns: str = "components"):
+        """
+        Returns the embedding as a pandas Dataframe.
+        The first column is the elements and each other column represents a component of the embedding
+
+        Args:
+            columns (str): A string to specify whether the columns are the vector components and the index is the elements (`columns='components') or the columns are the elements (`columns='elements'`).
+
+        Returns:
+            df (pandas.DataFrame): A pandas dataframe object
+
+
+        """
+        embedding = self.embeddings
+        df = pd.DataFrame(embedding)
+        if columns == "components":
+            return df.T
+        elif columns == "elements":
+            return df
+        else:
+            raise (
+                ValueError(
+                    f"{columns} is not a valid keyword argument. Choose either 'components' or 'elements"
+                )
+            )
+
+    def to(self, fmt: str = "", filename: str = ""):
+        """Outputs the embedding to a file
+
+        Args:
+            fmt (str): The file format to output the embedding to. Options include "json" and "csv".
+            filename (str): The name of the file to be outputted
+        Returns:
+            (str) if filename not specified, otherwise None.
+        """
+        fmt = fmt.lower()
+
+        if fmt == "json" or fnmatch.fnmatch(filename, "*.json"):
+            j = json.dumps(self.embeddings, cls=NumpyEncoder)
+            if filename:
+                with open(filename, "w") as file:
+                    file.write(j)
+            else:
+                return j
+        elif fmt == "csv" or fnmatch.fnmatch(filename, "*.csv"):
+            if filename:
+                self.as_dataframe().to_csv(filename, index_label="element")
+            else:
+                return self.as_dataframe().to_csv(index_label="element")
+
+        else:
+            raise ValueError(f"{str(fmt)} is an invalid file format")
 
     @property
     def element_list(self):
@@ -385,7 +442,10 @@ class Embedding:
         Args:
             ele1 (str): element symbol
             ele2 (str): element symbol
-            metric (str): name of a correlation metric
+            metric (str): name of a correlation metric. Options are "spearman" or "pearson"
+
+        Returns:
+            PearsonResult | SpearmanrResult
         """
         # Define the allowable metrics
         scipy_corrs = {"pearson": pearsonr, "spearman": spearmanr}
@@ -556,6 +616,46 @@ class Embedding:
         )
 
         return ax
+
+    def calculate(self, mode: str = "all"):
+        """
+        A function which calculates the pairwise statistics of the elements present in the Embedding class. The pairwise statistics include the distance and correlation metrics
+
+        Args:
+            mode (str): Specifies which pairwise statistics to calculate. `mode="all"` will calculate all available distance and correlation metrics; `mode="correlation"` will only calculate correlation metrics and `mode="distance"` will only calculate distance metrics.
+
+        Returns:
+            None
+        """
+
+        ele_pairs = self.create_pairs()
+        table = []
+
+        columns = ["element_1", "element_2", "pearson_corr", ""]
+
+        for ele1, ele2 in ele_pairs:
+            temp_dict = {"element_1": ele1, "element_2": ele2}
+            table.append(temp_dict)
+        pass
+
+    def calculate_PC(self, n_components, **kwargs):
+        """
+        A function to calculate the principal componenets (PC) of the embeddings
+        """
+        pass
+
+    def calculate_tSNE(self, **kwargs):
+        """
+        A function to calculate t-SNE
+        """
+        pass
+
+    def calculate_UMAP(self, **kwargs):
+        """
+        A function to calculate UMAP embeddings
+        """
+
+        pass
 
     def plot_PCA_2D(
         self, figsize=(16, 12), points_hue="group", points_size=200, **kwargs
