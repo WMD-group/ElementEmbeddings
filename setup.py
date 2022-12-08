@@ -2,7 +2,7 @@ import unittest
 
 from setuptools import find_packages, setup
 
-VERSION = "0.0.3"
+VERSION = "0.1"
 DESCRIPTION = "Atomic Embeddings"
 LONG_DESCRIPTION = "A package for visualising and analysing atomic embedding vectors"
 

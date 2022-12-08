@@ -16,6 +16,7 @@ To carry this package further, we need to be able develop methods which allow us
     * Required to interface with the `Embedding` class to generate composition-based feature vectors (CBFVs) based of the elemental representations
     * Should have options to define the set of operations which are used to generate the CBFVs
     * Should have methods to calculate the similarity between multiple CBFVs
+    * Should have functions for parsing formula
 
 * Plotting utilities
     * This can either be in the form of methods to other class instances or a separate module to handle the plotting.
