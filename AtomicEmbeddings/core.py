@@ -639,6 +639,8 @@ class Embedding:
         pass
 
     def calculate_PC(self, n_components, **kwargs):
+
+        ## Function should return the PCs as well as information on the variance of the components
         """
         A function to calculate the principal componenets (PC) of the embeddings
         """
