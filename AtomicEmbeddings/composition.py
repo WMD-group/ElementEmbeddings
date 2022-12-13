@@ -3,6 +3,8 @@ import collections
 import re
 from typing import Dict, Generator, Iterator, Union, cast
 
+import numpy as np
+
 from .core import Embedding
 
 # Modified from pymatgen.core.Compositions
@@ -116,6 +118,57 @@ class CompositionalEmbedding:
         # Se
 
         # Set an attribute
+        pass
+
+    def _mean_feature_vector(self) -> np.ndarray:
+        """
+        Computes a weighted mean feature vector based of the embedding. The dimension of the feature vector is the same as the embedding.
+
+        """
+        n = int(len(self.fractional_composition))
+        m = len(self.embedding.embeddings["H"])
+        el_matrix = np.zeros(shape=(n, m))
+        for i, k in enumerate(self.fractional_composition.keys()):
+            el_matrix[i] = self.embedding.embeddings[k]
+
+        el_matrix = np.nan_to_num(el_matrix)
+
+        return np.dot(np.array(list(self.fractional_composition.values())), el_matrix)
+
+    def _variance_feature_vector(self):
+        """
+        Computes a weighted variance feature vector
+        """
+        pass
+
+    def _minpool_feature_vector(self):
+        """
+        Computes a min pooled feature vector
+        """
+        pass
+
+    def _maxpool_feature_vector(self):
+        """
+        Computes a max pooled feature vector
+        """
+        pass
+
+    def _range_feature_vector(self):
+        """
+        Computes a range feature vector
+        """
+        pass
+
+    def _sum_feature_vector(self):
+        """
+        Computes the weighted sum feature vector
+        """
+        pass
+
+    def _geometric_mean_feature_vector(self):
+        pass
+
+    def _harmonic_mean_feature_vector(self):
         pass
 
     pass

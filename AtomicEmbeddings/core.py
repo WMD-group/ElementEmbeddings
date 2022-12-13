@@ -131,19 +131,19 @@ class Embedding:
 
             elif embedding_name == "megnet16":
                 megnet16_json = path.join(data_directory, _cbfv_files["megnet16"])
-                with open(megnet16_json, "r") as f:
+                with open(megnet16_json) as f:
                     embedding_data = json.load(f)
                 # Remove 'Null' key from megnet embedding
                 del embedding_data["Null"]
 
             elif embedding_name in _cbfv_names_others:
                 _json = path.join(data_directory, _cbfv_files[embedding_name])
-                with open(_json, "r") as f:
+                with open(_json) as f:
                     embedding_data = json.load(f)
 
             # Load a json file from a file specified in the input
             else:
-                with open(embedding_name, "r") as f:
+                with open(embedding_name) as f:
                     embedding_data = json.load(f)
         else:
             raise (
@@ -160,7 +160,7 @@ class Embedding:
         Args:
             embedding_json (str): Filepath of the json file"""
         # Need to add validation handling for JSONs in different formats
-        with open(embedding_json, "r") as f:
+        with open(embedding_json) as f:
             embedding_data = json.load(f)
         return Embedding(embedding_data)
 
