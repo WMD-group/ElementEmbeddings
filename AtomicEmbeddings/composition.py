@@ -113,7 +113,7 @@ class CompositionalEmbedding:
             "formula": self.formula,
             "composition": self.composition,
             "fractional_composition": self.fractional_composition,
-            #'embedding':self.embedding.as_
+            # 'embedding':self.embedding.as_
         }
         # Se
 

@@ -14,6 +14,10 @@ repos:
     hooks:
       - id: pyupgrade
         args: [--py38-plus]
+  #- repo: https://github.com/pre-commit/mirrors-autopep8
+    #rev: v2.0.0
+    #hooks:
+    #  - id: autopep8
   - repo: https://github.com/nbQA-dev/nbQA
     rev: "1.5.3"
     hooks:

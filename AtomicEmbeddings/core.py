@@ -556,7 +556,6 @@ class Embedding:
         return corr_df
 
     def create_distance_pivot_table(self, metric="euclidean"):
-
         """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being a user-specified distance metric
 
         Args:
@@ -573,7 +572,6 @@ class Embedding:
         return distance_pivot
 
     def plot_pearson_correlation(self, figsize=(24, 24), **kwargs):
-
         """
         Plots the heatmap of the pearson correlation values for the elemental representation.
 
@@ -596,7 +594,6 @@ class Embedding:
         return ax
 
     def plot_distance_correlation(self, metric="euclidean", figsize=(24, 24), **kwargs):
-
         """
         Plots the heatmap of the pairwise distance metrics for the elemental representation.
 
@@ -640,7 +637,7 @@ class Embedding:
 
     def calculate_PC(self, n_components, **kwargs):
 
-        ## Function should return the PCs as well as information on the variance of the components
+        # Function should return the PCs as well as information on the variance of the components
         """
         A function to calculate the principal componenets (PC) of the embeddings
         """
