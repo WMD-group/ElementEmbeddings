@@ -60,7 +60,7 @@ def get_sym_dict(formula: str, factor: Union[int, float]) -> Dict[str, float]:
 
 
 # Function for fractional compositions
-def _get_fractional_composition(formula):
+def _get_fractional_composition(formula: str) -> Dict[str, float]:
     el_dict = formula_parser(formula)
     elamt = {}
     natoms = 0
@@ -72,14 +72,14 @@ def _get_fractional_composition(formula):
 
 # Class to handle compositional embeddings
 class CompositionalEmbedding:
-    def __init__(self, formula, embedding, x=1):
+    def __init__(self, formula: str, embedding: Union[str, Embedding], x=1):
         self.embedding = embedding
 
         # If a string has been passed for embedding, create an Embedding instance
         if isinstance(embedding, str):
             self.embedding = Embedding.load_data(embedding)
 
-        self.embedding_name = self.embedding.embedding_name
+        self.embedding_name: str = self.embedding.embedding_name
         # Set an attribute for the formula
         self.formula = formula
 
@@ -135,40 +135,40 @@ class CompositionalEmbedding:
 
         return np.dot(np.array(list(self.fractional_composition.values())), el_matrix)
 
-    def _variance_feature_vector(self):
+    def _variance_feature_vector(self) -> np.ndarray:
         """
         Computes a weighted variance feature vector
         """
         pass
 
-    def _minpool_feature_vector(self):
+    def _minpool_feature_vector(self) -> np.ndarray:
         """
         Computes a min pooled feature vector
         """
         pass
 
-    def _maxpool_feature_vector(self):
+    def _maxpool_feature_vector(self) -> np.ndarray:
         """
         Computes a max pooled feature vector
         """
         pass
 
-    def _range_feature_vector(self):
+    def _range_feature_vector(self) -> np.ndarray:
         """
         Computes a range feature vector
         """
         pass
 
-    def _sum_feature_vector(self):
+    def _sum_feature_vector(self) -> np.ndarray:
         """
         Computes the weighted sum feature vector
         """
         pass
 
-    def _geometric_mean_feature_vector(self):
+    def _geometric_mean_feature_vector(self) -> np.ndarray:
         pass
 
-    def _harmonic_mean_feature_vector(self):
+    def _harmonic_mean_feature_vector(self) -> np.ndarray:
         pass
 
     pass

@@ -1,14 +1,16 @@
 import unittest
 
 import numpy as np
+import pandas as pd
 
+from AtomicEmbeddings import composition
 from AtomicEmbeddings.core import Embedding
 
 
 class TestSequenceFunctions(unittest.TestCase):
     # High Level functions
 
-    def test_Atomic_Embeddings_class_magpie(self):
+    def test_Embeddings_class_magpie(self):
         magpie = Embedding.load_data("magpie")
         # Check if the embeddings attribute is a dict
         self.assertIsInstance(magpie.embeddings, dict)
@@ -228,6 +230,39 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertEqual(
             len(list(magpie.create_pairs())), 4753, "Incorrect number of pairs returned"
         )
+        self.assertTrue("H" not in magpie.remove_elements("H").element_list)
+        self.assertIsInstance(magpie.citation(), list)
+        self.assertIsInstance(magpie.citation()[0], str)
+        self.assertTrue(magpie._is_el_in_embedding("H"))
+        self.assertIsInstance(magpie.create_correlation_df(), pd.DataFrame)
 
         # TO-DO
         # Create tests for checking dataframes and plotting functions
+
+    # ------------ Compositon.py functions ------------
+    def test_formula_parser(self):
+        LLZO_parsed = composition.formula_parser("Li7La3ZrO12")
+        self.assertIsInstance(LLZO_parsed, dict)
+        self.assertTrue("Zr" in LLZO_parsed)
+        self.assertEqual(LLZO_parsed["Li"], 7)
+
+    def test__get_fractional_composition(self):
+        CsPbI3_frac = composition._get_fractional_composition("CsPbI3")
+        self.assertIsInstance(CsPbI3_frac, dict)
+        self.assertTrue("Pb" in CsPbI3_frac)
+        self.assertEqual(CsPbI3_frac["I"], 0.6)
+
+    def test_Composition_class(self):
+        Fe2O3_magpie = composition.CompositionalEmbedding(
+            formula="Fe2O3", embedding="magpie"
+        )
+        self.assertIsInstance(Fe2O3_magpie.embedding, Embedding)
+        self.assertEqual(Fe2O3_magpie.formula, "Fe2O3")
+        self.assertEqual(Fe2O3_magpie.embedding_name, "magpie")
+        self.assertIsInstance(Fe2O3_magpie.composition, dict)
+        self.assertAlmostEqual({"Fe": 2, "O": 3}, Fe2O3_magpie.composition)
+        self.assertEqual(Fe2O3_magpie._natoms, 5)
+        self.assertEqual(Fe2O3_magpie.fractional_composition, {"Fe": 0.4, "O": 0.6})
+        self.assertIsInstance(Fe2O3_magpie._mean_feature_vector(), np.ndarray)
+
+        pass

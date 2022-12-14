@@ -362,7 +362,7 @@ class Embedding:
 
         return citation
 
-    def _is_el_in_embedding(self, el):
+    def _is_el_in_embedding(self, el: str) -> bool:
         """A function to check if an element is in the `Embedding` object
 
         Args:
@@ -389,7 +389,7 @@ class Embedding:
         ele_pairs = combinations_with_replacement(ele_list, 2)
         return ele_pairs
 
-    def create_correlation_df(self):
+    def create_correlation_df(self) -> pd.DataFrame:
         """Returns a pandas.DataFrame object with columns of the elements and correlation metrics"""
         ele_pairs = self.create_pairs()
         table = []
@@ -430,7 +430,7 @@ class Embedding:
 
         return corr_df
 
-    def compute_correlation_metric(self, ele1, ele2, metric="pearson"):
+    def compute_correlation_metric(self, ele1: str, ele2: str, metric: str = "pearson"):
         """Computes the correlation metric between two vectors
         Allowed metrics:
 
@@ -451,7 +451,7 @@ class Embedding:
         if metric in scipy_corrs:
             return scipy_corrs[metric](self.embeddings[ele1], self.embeddings[ele2])
 
-    def compute_distance_metric(self, ele1, ele2, metric="euclidean"):
+    def compute_distance_metric(self, ele1: str, ele2: str, metric: str = "euclidean"):
         """Computes distance metric between two vectors.
 
         Allowed metrics:
@@ -516,7 +516,7 @@ class Embedding:
         )
         return pearson_pivot
 
-    def create_distance_correlation_df(self, metric="euclidean"):
+    def create_distance_correlation_df(self, metric: str = "euclidean") -> pd.DataFrame:
         """Returns a pandas.DataFrame object with columns of the elements and correlation metrics.
 
         Allowed metrics:
@@ -553,7 +553,7 @@ class Embedding:
 
         return corr_df
 
-    def create_distance_pivot_table(self, metric="euclidean"):
+    def create_distance_pivot_table(self, metric: str = "euclidean"):
         """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being a user-specified distance metric
 
         Args:
@@ -569,7 +569,7 @@ class Embedding:
         )
         return distance_pivot
 
-    def plot_pearson_correlation(self, figsize=(24, 24), **kwargs):
+    def plot_pearson_correlation(self, figsize: Tuple[int, int] = (24, 24), **kwargs):
         """
         Plots the heatmap of the pearson correlation values for the elemental representation.
 
@@ -591,7 +591,9 @@ class Embedding:
 
         return ax
 
-    def plot_distance_correlation(self, metric="euclidean", figsize=(24, 24), **kwargs):
+    def plot_distance_correlation(
+        self, metric: str = "euclidean", figsize: Tuple[int, int] = (24, 24), **kwargs
+    ):
         """
         Plots the heatmap of the pairwise distance metrics for the elemental representation.
 
@@ -633,7 +635,7 @@ class Embedding:
             table.append(temp_dict)
         pass
 
-    def calculate_PC(self, n_components, **kwargs):
+    def calculate_PC(self, n_components: int, **kwargs):
 
         # Function should return the PCs as well as information on the variance of the components
         """
@@ -655,7 +657,11 @@ class Embedding:
         pass
 
     def plot_PCA_2D(
-        self, figsize=(16, 12), points_hue="group", points_size=200, **kwargs
+        self,
+        figsize: Tuple[int, int] = (16, 12),
+        points_hue: str = "group",
+        points_size: int = 200,
+        **kwargs,
     ):
         """A function to plot a PCA plot of the atomic embedding.
 
@@ -709,10 +715,10 @@ class Embedding:
 
     def plot_tSNE(
         self,
-        n_components=2,
-        figsize=(16, 12),
-        points_hue="group",
-        points_size=200,
+        n_components: str = 2,
+        figsize: Tuple[int, int] = (16, 12),
+        points_hue: str = "group",
+        points_size: int = 200,
         **kwargs,
     ):
         """A function to plot a t-SNE plot of the atomic embedding
