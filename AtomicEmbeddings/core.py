@@ -408,7 +408,6 @@ class Embedding:
                 "ele_2",
                 "pearson_corr",
                 "euclid_dist",
-                "reciprocal_euclid_dist",
             ],
         )
 
@@ -425,7 +424,6 @@ class Embedding:
                 "mend_1",
                 "mend_2",
                 "euclid_dist",
-                "reciprocal_euclid_dist",
                 "pearson_corr",
             ]
         ]
