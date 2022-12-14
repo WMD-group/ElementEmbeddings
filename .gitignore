@@ -214,5 +214,5 @@ examples/test.ipynb
 # Development
 testing/
 presentation/
-
+*.svg
 
