@@ -4,6 +4,7 @@ pymatgen
 seaborn
 matplotlib
 scikit-learn
+umap
 pandas
 pytest
 pytest-subtests
