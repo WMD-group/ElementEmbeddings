@@ -1,10 +1,11 @@
-numpy
-scipy
-pymatgen
-seaborn
-matplotlib
-scikit-learn
-umap
-pandas
-pytest
-pytest-subtests
+numpy == 1.23.3
+scipy ==1.9.1
+pymatgen ==2022.9.21
+numba ==0.56.4
+seaborn ==0.12.1
+matplotlib==3.6.0
+scikit-learn==1.1.2
+umap-learn ==0.5.3
+pandas == 1.5.0
+pytest ==7.2.0
+pytest-subtests ==0.9.0
