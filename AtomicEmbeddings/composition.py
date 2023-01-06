@@ -163,7 +163,16 @@ class CompositionalEmbedding:
         """
         Computes the weighted sum feature vector
         """
-        pass
+
+        n = int(len(self.composition))
+        m = len(self.embedding.embeddings["H"])
+        el_matrix = np.zeros(shape=(n, m))
+        for i, k in enumerate(self.composition.keys()):
+            el_matrix[i] = self.embedding.embeddings[k]
+
+        el_matrix = np.nan_to_num(el_matrix)
+
+        return np.dot(np.array(list(self.composition.values())), el_matrix)
 
     def _geometric_mean_feature_vector(self) -> np.ndarray:
         pass

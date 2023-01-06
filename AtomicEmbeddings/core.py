@@ -4,9 +4,10 @@ import fnmatch
 import json
 import os
 import random
+from collections import namedtuple
 from itertools import combinations_with_replacement
 from os import path
-from typing import Callable, Generator, Optional, Tuple
+from typing import Callable, Dict, Generator, List, Optional, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,11 +16,14 @@ import seaborn as sns
 from numpy.linalg import norm
 from pymatgen.core import Element
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
+from scipy.stats._result_classes import PearsonRResult
 from sklearn import decomposition
 from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
 
 from .utils.io import NumpyEncoder
+
+SpearmanrResult = namedtuple("SpearmanrResult", ("correlation", "pvalue"))
 
 """ Provides the `Embedding` class.
 
@@ -50,7 +54,7 @@ class Embedding:
         embedding_name (str): The name of the elemental representation
     """
 
-    def __init__(self, embeddings, embedding_name=None):
+    def __init__(self, embeddings: dict, embedding_name: Optional[str] = None):
         self.embeddings = embeddings
         self.embedding_name = embedding_name
 
@@ -65,9 +69,9 @@ class Embedding:
         # (i.e. is not a scalar int or float)
         # If the 'vector' is a scalar/float, the representation is linear (dim=1)
         if hasattr(_rand_embed, "__len__") and (not isinstance(_rand_embed, str)):
-            self.dim = len(random.choice(list(self.embeddings.values())))
+            self.dim: int = len(random.choice(list(self.embeddings.values())))
         else:
-            self.dim = 1
+            self.dim: int = 1
 
         # Dummy initialisation for results
         self._data = []
@@ -183,7 +187,7 @@ class Embedding:
         }
         return Embedding(embedding_data)
 
-    def as_dataframe(self, columns: str = "components"):
+    def as_dataframe(self, columns: str = "components") -> pd.DataFrame:
         """
         Returns the embedding as a pandas Dataframe.
         The first column is the elements and each other column represents a component of the embedding
@@ -209,7 +213,7 @@ class Embedding:
                 )
             )
 
-    def to(self, fmt: str = "", filename: str = ""):
+    def to(self, fmt: str = "", filename: Optional[str] = ""):
         """Outputs the embedding to a file
 
         Args:
@@ -237,11 +241,11 @@ class Embedding:
             raise ValueError(f"{str(fmt)} is an invalid file format")
 
     @property
-    def element_list(self):
+    def element_list(self) -> list:
         """Returns the elements of the embedding."""
         return list(self.embeddings.keys())
 
-    def remove_elements(self, elements, inplace=False):
+    def remove_elements(self, elements: Union[str, list[str]], inplace: bool = False):
         # TO-DO allow removal by atomic numbers
         """Removes elements from the Embedding instance
 
@@ -267,7 +271,7 @@ class Embedding:
                     del embeddings_copy[el]
             return Embedding(embeddings_copy, self.embedding_name)
 
-    def citation(self):
+    def citation(self) -> list[str]:
         # Function to return a citation for an Embedding
         if self.embedding_name in ["magpie", "magpie_sc"]:
             citation = [
@@ -376,7 +380,7 @@ class Embedding:
             return False
 
     @property
-    def element_groups_dict(self):
+    def element_groups_dict(self) -> Dict[str, str]:
         """Returns a dictionary of {element: element type} pairs e.g. {'He':'Noble gas'}"""
 
         with open(path.join(data_directory, "element_data/element_group.json")) as f:
@@ -430,7 +434,9 @@ class Embedding:
 
         return corr_df
 
-    def compute_correlation_metric(self, ele1: str, ele2: str, metric: str = "pearson"):
+    def compute_correlation_metric(
+        self, ele1: str, ele2: str, metric: str = "pearson"
+    ) -> Union[PearsonRResult, SpearmanrResult]:
         """Computes the correlation metric between two vectors
         Allowed metrics:
 
@@ -451,7 +457,9 @@ class Embedding:
         if metric in scipy_corrs:
             return scipy_corrs[metric](self.embeddings[ele1], self.embeddings[ele2])
 
-    def compute_distance_metric(self, ele1: str, ele2: str, metric: str = "euclidean"):
+    def compute_distance_metric(
+        self, ele1: str, ele2: str, metric: str = "euclidean"
+    ) -> float:
         """Computes distance metric between two vectors.
 
         Allowed metrics:
@@ -507,7 +515,7 @@ class Embedding:
             )
             raise ValueError
 
-    def create_pearson_pivot_table(self):
+    def create_pearson_pivot_table(self) -> pd.DataFrame:
         """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being the pearson correlation metrics"""
 
         corr_df = self.create_correlation_df()
@@ -553,7 +561,7 @@ class Embedding:
 
         return corr_df
 
-    def create_distance_pivot_table(self, metric: str = "euclidean"):
+    def create_distance_pivot_table(self, metric: str = "euclidean") -> pd.DataFrame:
         """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being a user-specified distance metric
 
         Args:
@@ -614,7 +622,7 @@ class Embedding:
 
         return ax
 
-    def calculate(self, mode: str = "all"):
+    def calculate(self, mode: str = "all") -> None:
         """
         A function which calculates the pairwise statistics of the elements present in the Embedding class. The pairwise statistics include the distance and correlation metrics
 
