@@ -245,7 +245,7 @@ class Embedding:
         """Returns the elements of the embedding."""
         return list(self.embeddings.keys())
 
-    def remove_elements(self, elements: Union[str, list[str]], inplace: bool = False):
+    def remove_elements(self, elements: Union[str, List[str]], inplace: bool = False):
         # TO-DO allow removal by atomic numbers
         """Removes elements from the Embedding instance
 
@@ -271,7 +271,7 @@ class Embedding:
                     del embeddings_copy[el]
             return Embedding(embeddings_copy, self.embedding_name)
 
-    def citation(self) -> list[str]:
+    def citation(self) -> List[str]:
         # Function to return a citation for an Embedding
         if self.embedding_name in ["magpie", "magpie_sc"]:
             citation = [
