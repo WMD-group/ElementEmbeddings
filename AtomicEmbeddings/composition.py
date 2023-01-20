@@ -93,6 +93,20 @@ class CompositionalEmbedding:
 
         self.composition = comp_dict
 
+        # Set an attribute for the element matrix
+        self.el_matrix = np.zeros(
+            shape=(len(self.composition), len(self.embedding.embeddings["H"]))
+        )
+        for i, k in enumerate(self.composition.keys()):
+            self.el_matrix[i] = self.embedding.embeddings[k]
+        self.el_matrix = np.nan_to_num(self.el_matrix)
+
+        # Set an attribute for the stoichiometric vector
+        self.stoich_vector = np.array(list(self.composition.values()))
+
+        # Set an attribute for the normalised stoichiometric vector
+        self.norm_stoich_vector = self.stoich_vector / self._natoms
+
     @property
     def fractional_composition(self):
         return _get_fractional_composition(self.formula)
@@ -125,59 +139,129 @@ class CompositionalEmbedding:
         Computes a weighted mean feature vector based of the embedding. The dimension of the feature vector is the same as the embedding.
 
         """
-        n = int(len(self.fractional_composition))
-        m = len(self.embedding.embeddings["H"])
-        el_matrix = np.zeros(shape=(n, m))
-        for i, k in enumerate(self.fractional_composition.keys()):
-            el_matrix[i] = self.embedding.embeddings[k]
-
-        el_matrix = np.nan_to_num(el_matrix)
-
-        return np.dot(np.array(list(self.fractional_composition.values())), el_matrix)
+        return np.dot(self.norm_stoich_vector, self.el_matrix)
 
     def _variance_feature_vector(self) -> np.ndarray:
         """
         Computes a weighted variance feature vector
         """
-        pass
+
+        # 1. Compute the mean feature vector
+        mean_vector = self._mean_feature_vector()
+
+        # 2. Subtract the mean vector from each element in the element matrix
+        diff_matrix = self.el_matrix - mean_vector
+
+        # 3. Square the difference matrix
+        diff_matrix = diff_matrix**2
+        # 4. Compute the weighted sum of the squared difference matrix
+        return np.dot(self.norm_stoich_vector, diff_matrix)
 
     def _minpool_feature_vector(self) -> np.ndarray:
         """
         Computes a min pooled feature vector
         """
-        pass
+        return np.min(self.el_matrix, axis=0)
 
     def _maxpool_feature_vector(self) -> np.ndarray:
         """
         Computes a max pooled feature vector
         """
-        pass
+        return np.max(self.el_matrix, axis=0)
 
     def _range_feature_vector(self) -> np.ndarray:
         """
         Computes a range feature vector
         """
-        pass
+        return self._maxpool_feature_vector() - self._minpool_feature_vector()
 
     def _sum_feature_vector(self) -> np.ndarray:
         """
         Computes the weighted sum feature vector
         """
-
-        n = int(len(self.composition))
-        m = len(self.embedding.embeddings["H"])
-        el_matrix = np.zeros(shape=(n, m))
-        for i, k in enumerate(self.composition.keys()):
-            el_matrix[i] = self.embedding.embeddings[k]
-
-        el_matrix = np.nan_to_num(el_matrix)
-
-        return np.dot(np.array(list(self.composition.values())), el_matrix)
+        return np.dot(self.stoich_vector, self.el_matrix)
 
     def _geometric_mean_feature_vector(self) -> np.ndarray:
-        pass
+        """
+        Computes the geometric mean feature vector
+        """
+        return np.exp(np.dot(self.norm_stoich_vector, np.log(self.el_matrix)))
 
     def _harmonic_mean_feature_vector(self) -> np.ndarray:
-        pass
+        """
+        Computes the harmonic mean feature vector
+        """
+        return np.reciprocal(
+            np.dot(self.norm_stoich_vector, np.reciprocal(self.el_matrix))
+        )
 
-    pass
+    def feature_vector(self, stats=["mean"]):
+        """
+        Computes a feature vector based on the statistics specified in the stats argument
+
+        Args:
+            stats (list): A list of strings specifying the statistics to be computed. The default is ['mean'].
+
+        Returns:
+            np.ndarray: A feature vector of the s times the dimension of the embedding vector where s is the number of statistics specified in the stats argument
+        """
+        if isinstance(stats, str):
+            stats = [stats]
+        if not isinstance(stats, list):
+            raise ValueError("Stats argument must be a list of strings")
+        if not all([isinstance(s, str) for s in stats]):
+            raise ValueError("Stats argument must be a list of strings")
+        if not all(
+            [
+                s
+                in [
+                    "mean",
+                    "variance",
+                    "minpool",
+                    "maxpool",
+                    "range",
+                    "sum",
+                    "geometric_mean",
+                    "harmonic_mean",
+                ]
+                for s in stats
+            ]
+        ):
+            raise ValueError("Stats argument must be a list of strings")
+        feature_vector = []
+        for s in stats:
+            if s == "mean":
+                feature_vector.append(self._mean_feature_vector())
+            elif s == "variance":
+                feature_vector.append(self._variance_feature_vector())
+            elif s == "minpool":
+                feature_vector.append(self._minpool_feature_vector())
+            elif s == "maxpool":
+                feature_vector.append(self._maxpool_feature_vector())
+            elif s == "range":
+                feature_vector.append(self._range_feature_vector())
+            elif s == "sum":
+                feature_vector.append(self._sum_feature_vector())
+            elif s == "geometric_mean":
+                feature_vector.append(self._geometric_mean_feature_vector())
+            elif s == "harmonic_mean":
+                feature_vector.append(self._harmonic_mean_feature_vector())
+        return np.concatenate(feature_vector)
+
+    def __repr__(self):
+        return f"CompositionalEmbedding(formula={self.formula}, embedding={self.embedding})"
+
+    def __str__(self):
+        return f"CompositionalEmbedding(formula={self.formula}, embedding={self.embedding})"
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.formula == other.formula and self.embedding == other.embedding
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __hash__(self):
+        return hash((self.formula, self.embedding))
