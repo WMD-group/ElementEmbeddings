@@ -3,7 +3,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![GitHub issues](https://img.shields.io/github/issues-raw/WMD-Group/Atomic_Embeddings)](https://github.com/WMD-group/Atomic_Embeddings/issues)
 [![CI Status](https://github.com/WMD-group/Atomic_Embeddings/actions/workflows/ci.yml/badge.svg)](https://github.com/WMD-group/Atomic_Embeddings/actions/workflows/ci.yml)
-
+[![codecov](https://codecov.io/gh/WMD-group/Atomic_Embeddings/branch/main/graph/badge.svg?token=OCMIM5SHL0)](https://codecov.io/gh/WMD-group/Atomic_Embeddings)
 
 Atomic_Embeddings
 ====
