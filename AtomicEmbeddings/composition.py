@@ -4,6 +4,7 @@ import re
 from typing import Dict, Generator, Iterator, Union, cast
 
 import numpy as np
+import pandas as pd
 
 from .core import Embedding
 
@@ -147,16 +148,9 @@ class CompositionalEmbedding:
         """
         Computes a weighted variance feature vector
         """
+        diff_matrix = self.el_matrix - self._mean_feature_vector()
 
-        # 1. Compute the mean feature vector
-        mean_vector = self._mean_feature_vector()
-
-        # 2. Subtract the mean vector from each element in the element matrix
-        diff_matrix = self.el_matrix - mean_vector
-
-        # 3. Square the difference matrix
         diff_matrix = diff_matrix**2
-        # 4. Compute the weighted sum of the squared difference matrix
         return np.dot(self.norm_stoich_vector, diff_matrix)
 
     def _minpool_feature_vector(self) -> np.ndarray:
@@ -175,7 +169,7 @@ class CompositionalEmbedding:
         """
         Computes a range feature vector
         """
-        return self._maxpool_feature_vector() - self._minpool_feature_vector()
+        return np.ptp(self.el_matrix, axis=0)
 
     def _sum_feature_vector(self) -> np.ndarray:
         """
@@ -269,3 +263,60 @@ class CompositionalEmbedding:
 
     def __hash__(self):
         return hash((self.formula, self.embedding))
+
+
+def composition_featuriser(
+    data: Union[pd.DataFrame, pd.Series, CompositionalEmbedding, list],
+    embedding: Union[Embedding, str] = "magpie",
+    stats: Union[str, list] = ["mean"],
+    inplace: bool = False,
+) -> pd.DataFrame:
+    """
+    Computes a feature vector for a composition based on the statistics specified in the stats argument
+
+    Args:
+        data (Union[pd.DataFrame, pd.Series, list, CompositionalEmbedding]): A pandas DataFrame or Series containing a column named 'formula', a list of formula, or a CompositionalEmbedding class
+        embedding (Union[Embedding, str], optional): A Embedding class or a string
+        stats (Union[str, list], optional): A list of strings specifying the statistics to be computed. The default is ['mean'].
+        inplace (bool, optional): Whether to perform the operation in place on the data. The default is False.
+
+    Returns:
+        Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector, unless a list of formula is passed in which case a list of feature vectors is returned
+    """
+
+    if isinstance(data, pd.DataFrame):
+        if not inplace:
+            data = data.copy()
+        if "formula" not in data.columns:
+            raise ValueError(
+                "The data must contain a column named 'formula' to featurise."
+            )
+        data["composition"] = data["formula"].apply(
+            lambda x: CompositionalEmbedding(x, embedding)
+        )
+        data["feature_vector"] = data["composition"].apply(
+            lambda x: x.feature_vector(stats)
+        )
+        data.drop("composition", axis=1, inplace=True)
+        return data
+    elif isinstance(data, pd.Series):
+        if not inplace:
+            data = data.copy()
+        data["composition"] = data["formula"].apply(
+            lambda x: CompositionalEmbedding(x, embedding)
+        )
+        data["feature_vector"] = data["composition"].apply(
+            lambda x: x.feature_vector(stats)
+        )
+        data.drop("composition", axis=1, inplace=True)
+        return data
+    elif isinstance(data, list):
+        comps = [CompositionalEmbedding(x, embedding) for x in data]
+        return [x.feature_vector(stats) for x in comps]
+
+    elif isinstance(data, CompositionalEmbedding):
+        return data.feature_vector(stats)
+    else:
+        raise ValueError(
+            "The data must be a pandas DataFrame, Series, list or CompositionalEmbedding class."
+        )
