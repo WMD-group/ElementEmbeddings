@@ -93,6 +93,8 @@ class CompositionalEmbedding:
 
         self.composition = comp_dict
 
+        # Set an attribute for the element list
+        self.element_list = list(self.composition.keys())
         # Set an attribute for the element matrix
         self.el_matrix = np.zeros(
             shape=(len(self.composition), len(self.embedding.embeddings["H"]))
@@ -227,7 +229,9 @@ class CompositionalEmbedding:
                 for s in stats
             ]
         ):
-            raise ValueError("Stats argument must be a list of strings")
+            raise ValueError(
+                f" {[stat for stat in stats if stat not in ['mean','variance','minpool','maxpool','range','sum','geometric_mean','harmonic_mean']]} are not valid statistics."
+            )
         feature_vector = []
         for s in stats:
             if s == "mean":
