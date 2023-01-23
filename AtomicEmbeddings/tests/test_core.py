@@ -1,7 +1,10 @@
 import unittest
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.axes import Axes
+from scipy.stats._result_classes import PearsonRResult
 
 from AtomicEmbeddings import composition
 from AtomicEmbeddings.core import Embedding
@@ -9,6 +12,17 @@ from AtomicEmbeddings.core import Embedding
 
 class TestSequenceFunctions(unittest.TestCase):
     # High Level functions
+
+    def test_Embedding_loading(self):
+        # Test that the skipatom and megnet16 can be loaded
+        skipatom = composition.Embedding.load_data("skipatom")
+        megnet16 = composition.Embedding.load_data("megnet16")
+        self.assertEqual(skipatom.dim, 200)
+        self.assertEqual(skipatom.embedding_name, "skipatom")
+        self.assertEqual(megnet16.dim, 16)
+        self.assertEqual(megnet16.embedding_name, "megnet16")
+        self.assertIsInstance(skipatom.citation(), list)
+        self.assertIsInstance(megnet16.citation(), list)
 
     def test_Embeddings_class_magpie(self):
         magpie = Embedding.load_data("magpie")
@@ -238,6 +252,34 @@ class TestSequenceFunctions(unittest.TestCase):
 
         # TO-DO
         # Create tests for checking dataframes and plotting functions
+        self.assertIsInstance(magpie.as_dataframe(), pd.DataFrame)
+        self.assertIsInstance(magpie.to(fmt="json"), str)
+        self.assertIsInstance(magpie.to(fmt="csv"), str)
+        self.assertIsInstance(
+            magpie.compute_correlation_metric("H", "O", metric="pearson"),
+            PearsonRResult,
+        )
+        self.assertIsInstance(
+            magpie.compute_distance_metric(
+                "H",
+                "O",
+            ),
+            float,
+        )
+        self.assertIsInstance(magpie.create_distance_correlation_df(), pd.DataFrame)
+        self.assertEqual(
+            magpie.create_distance_correlation_df().shape,
+            (len(list(magpie.create_pairs())) * 2 - len(magpie.embeddings), 5),
+        )
+        self.assertListEqual(
+            magpie.create_distance_correlation_df().columns.tolist(),
+            ["ele_1", "ele_2", "mend_1", "mend_2", "euclidean"],
+        )
+        self.assertIsInstance(magpie.create_distance_pivot_table(), pd.DataFrame)
+        self.assertIsInstance(magpie.plot_distance_correlation(), plt.Axes)
+        self.assertIsInstance(
+            magpie.plot_distance_correlation(metric="euclidean"), plt.Axes
+        )
 
     # ------------ Compositon.py functions ------------
     def test_formula_parser(self):
@@ -264,5 +306,31 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertEqual(Fe2O3_magpie._natoms, 5)
         self.assertEqual(Fe2O3_magpie.fractional_composition, {"Fe": 0.4, "O": 0.6})
         self.assertIsInstance(Fe2O3_magpie._mean_feature_vector(), np.ndarray)
+        # Test that the feature vector function works
+        stats = [
+            "mean",
+            "variance",
+            "minpool",
+            "maxpool",
+            "sum",
+            "range",
+            "geometric_mean",
+            "harmonic_mean",
+        ]
+        self.assertIsInstance(Fe2O3_magpie.feature_vector(stats=stats), np.ndarray)
+        self.assertEqual(
+            len(Fe2O3_magpie.feature_vector(stats=stats)),
+            Fe2O3_magpie.embedding.dim * len(stats),
+        )
+        # Test that the feature vector function works with a single stat
+        self.assertIsInstance(Fe2O3_magpie.feature_vector(stats="mean"), np.ndarray)
 
-        pass
+    def test_composition_featuriser(self):
+        formulas = ["Fe2O3", "Li7La3ZrO12", "CsPbI3"]
+        formula_df = pd.DataFrame(formulas, columns=["formula"])
+        self.assertIsInstance(
+            composition.composition_featuriser(formula_df), pd.DataFrame
+        )
+        self.assertEqual(composition.composition_featuriser(formula_df).shape, (3, 2))
+        self.assertIsInstance(composition.composition_featuriser(formulas), list)
+        self.assertEqual(len(composition.composition_featuriser(formulas)), 3)
