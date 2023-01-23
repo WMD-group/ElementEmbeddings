@@ -227,12 +227,16 @@ class Embedding:
         if fmt == "json" or fnmatch.fnmatch(filename, "*.json"):
             j = json.dumps(self.embeddings, cls=NumpyEncoder)
             if filename:
+                if not filename.endswith(".json"):
+                    filename = filename + ".json"
                 with open(filename, "w") as file:
                     file.write(j)
             else:
                 return j
         elif fmt == "csv" or fnmatch.fnmatch(filename, "*.csv"):
             if filename:
+                if not filename.endswith(".csv"):
+                    filename = filename + ".csv"
                 self.as_dataframe().to_csv(filename, index_label="element")
             else:
                 return self.as_dataframe().to_csv(index_label="element")
