@@ -121,6 +121,13 @@ class CompositionalEmbedding:
         """
         return self._natoms
 
+    @property
+    def embedding_dim(self) -> int:
+        """
+        Dimension of the embedding
+        """
+        return self.embedding.dim
+
     def as_dict(self) -> dict:
         # TO-DO: Need to create a dict representation for the embedding class
         """
@@ -191,6 +198,17 @@ class CompositionalEmbedding:
             np.dot(self.norm_stoich_vector, np.reciprocal(self.el_matrix))
         )
 
+    _stats_functions_dict = {
+        "mean": "_mean_feature_vector",
+        "variance": "_variance_feature_vector",
+        "minpool": "_minpool_feature_vector",
+        "maxpool": "_maxpool_feature_vector",
+        "range": "_range_feature_vector",
+        "sum": "_sum_feature_vector",
+        "geometric_mean": "_geometric_mean_feature_vector",
+        "harmonic_mean": "_harmonic_mean_feature_vector",
+    }
+
     def feature_vector(self, stats=["mean"]):
         """
         Computes a feature vector based on the statistics specified in the stats argument
@@ -228,22 +246,7 @@ class CompositionalEmbedding:
             )
         feature_vector = []
         for s in stats:
-            if s == "mean":
-                feature_vector.append(self._mean_feature_vector())
-            elif s == "variance":
-                feature_vector.append(self._variance_feature_vector())
-            elif s == "minpool":
-                feature_vector.append(self._minpool_feature_vector())
-            elif s == "maxpool":
-                feature_vector.append(self._maxpool_feature_vector())
-            elif s == "range":
-                feature_vector.append(self._range_feature_vector())
-            elif s == "sum":
-                feature_vector.append(self._sum_feature_vector())
-            elif s == "geometric_mean":
-                feature_vector.append(self._geometric_mean_feature_vector())
-            elif s == "harmonic_mean":
-                feature_vector.append(self._harmonic_mean_feature_vector())
+            feature_vector.append(getattr(self, self._stats_functions_dict[s])())
         return np.concatenate(feature_vector)
 
     def __repr__(self):
