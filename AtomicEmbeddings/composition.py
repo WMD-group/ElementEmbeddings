@@ -5,9 +5,11 @@ from typing import Dict, Generator, Iterator, Union, cast
 
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 from .core import Embedding
 
+tqdm.pandas()
 # Modified from pymatgen.core.Compositions
 
 
@@ -294,10 +296,10 @@ def composition_featuriser(
             raise ValueError(
                 "The data must contain a column named 'formula' to featurise."
             )
-        data["composition"] = data["formula"].apply(
+        data["composition"] = data["formula"].progress_apply(
             lambda x: CompositionalEmbedding(x, embedding)
         )
-        data["feature_vector"] = data["composition"].apply(
+        data["feature_vector"] = data["composition"].progress_apply(
             lambda x: x.feature_vector(stats)
         )
         data.drop("composition", axis=1, inplace=True)
@@ -305,17 +307,17 @@ def composition_featuriser(
     elif isinstance(data, pd.Series):
         if not inplace:
             data = data.copy()
-        data["composition"] = data["formula"].apply(
+        data["composition"] = data["formula"].progress_apply(
             lambda x: CompositionalEmbedding(x, embedding)
         )
-        data["feature_vector"] = data["composition"].apply(
+        data["feature_vector"] = data["composition"].progress_apply(
             lambda x: x.feature_vector(stats)
         )
         data.drop("composition", axis=1, inplace=True)
         return data
     elif isinstance(data, list):
         comps = [CompositionalEmbedding(x, embedding) for x in data]
-        return [x.feature_vector(stats) for x in comps]
+        return [x.feature_vector(stats) for x in tqdm(comps)]
 
     elif isinstance(data, CompositionalEmbedding):
         return data.feature_vector(stats)
