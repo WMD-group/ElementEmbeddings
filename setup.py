@@ -27,7 +27,7 @@ setup(
     ],
     classifiers=[
         "Programming Language :: Python",
-        "Development Status :: 1 - Planning",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Science/Research",
         "Operating System :: OS Independent",
         "Topic :: Scientific/Engineering",
