@@ -31,13 +31,23 @@ importing the class.
 
 Installation
 --------
-The package can be installed by cloning the repository:
+The latest version can be installed using:
+
+```
+pip install git+git://github.com/WMD-group/Atomic_Embeddings.git
+```
+For development, you can clone the repository and install the package in editable mode.
+To clone the repository and make a local installation, run the following commands:
 
 ```
 git clone https://github.com/WMD-group/Atomic_Embeddings.git
 cd Atomic_Embeddings
-pip install .
+pip install --user -e .
 ```
+
+With -e pip will create links to the source folder so that that changes to the code will be immediately reflected on the PATH.
+
+
 Usage
 --------
 For simple usage, you can instantiate an Embedding object using one of the embeddings in the data directory. For this example, let's use the magpie elemental representation.
