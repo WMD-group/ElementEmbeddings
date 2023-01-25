@@ -71,7 +71,7 @@ class Embedding:
         if hasattr(_rand_embed, "__len__") and (not isinstance(_rand_embed, str)):
             self.dim: int = len(random.choice(list(self.embeddings.values())))
         else:
-            self.dim: int = 1
+            self.dim: int = int(1)
 
         # Dummy initialisation for results
         self._data = []
