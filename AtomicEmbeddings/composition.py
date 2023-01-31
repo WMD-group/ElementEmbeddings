@@ -1,7 +1,12 @@
-# Contains functions for making CBFVs
+"""
+This module provides a class for handling compositional embeddings.
+
+Typical usage example:
+    Fe2O3_magpie = CompositionalEmbedding("Fe2O3", "magpie")
+"""
 import collections
 import re
-from typing import Dict, Generator, Iterator, Union, cast
+from typing import Dict, Union
 
 import numpy as np
 import pandas as pd
@@ -14,9 +19,12 @@ tqdm.pandas()
 
 
 def formula_parser(formula: str) -> Dict[str, float]:
-    # TO-DO: Need to add validation to check composition contains real elements
+    # TO-DO: Add validation to check composition contains real elements.
     """
-    Parses a string formula and returns a dictionary of the composition with key:value pairs of element symbol: amount
+    Parse a string formula.
+
+    Returns a dictionary of the composition with key:value pairs
+    of element symbol:amount.
 
     Args:
         formula (str): A string formula e.g. CsPbI3, Li7La3Zr2O12
@@ -25,7 +33,6 @@ def formula_parser(formula: str) -> Dict[str, float]:
         (dict): A dictionary of the composition
 
     """
-
     # For Metallofullerene
     formula = formula.replace("@", "")
 
@@ -36,16 +43,16 @@ def formula_parser(formula: str) -> Dict[str, float]:
         factor = 1.0
         if m.group(2) != "":
             factor = float(m.group(2))
-        unit_sym_dict = get_sym_dict(m.group(1), factor)
+        unit_sym_dict = _get_sym_dict(m.group(1), factor)
         expanded_sym = "".join([f"{el}{amt}" for el, amt in unit_sym_dict.items()])
         expanded_formula = formula.replace(m.group(), expanded_sym)
         return formula_parser(expanded_formula)
-    return get_sym_dict(formula, 1)
+    return _get_sym_dict(formula, 1)
 
 
 # Parses formula and returns a dictionary of ele symbol: amount
 # From pymatgen.core.composition
-def get_sym_dict(formula: str, factor: Union[int, float]) -> Dict[str, float]:
+def _get_sym_dict(formula: str, factor: Union[int, float]) -> Dict[str, float]:
     sym_dict: Dict[str, float] = collections.defaultdict(float)
     regex = r"([A-Z][a-z]*)\s*([-*\.e\d]*)"
     r = re.compile(regex)
@@ -75,7 +82,18 @@ def _get_fractional_composition(formula: str) -> Dict[str, float]:
 
 # Class to handle compositional embeddings
 class CompositionalEmbedding:
+    """
+    Class to handle compositional embeddings.
+
+    Args:
+        formula (str): A string formula e.g. CsPbI3, Li7La3Zr2O12
+        embedding (Union[str, Embedding]): Either a string name of the embedding
+        or an Embedding instance
+        x (int, optional): The non-stoichiometric amount.
+    """
+
     def __init__(self, formula: str, embedding: Union[str, Embedding], x=1):
+        """Initialise a CompositionalEmbedding instance."""
         self.embedding = embedding
 
         # If a string has been passed for embedding, create an Embedding instance
@@ -114,27 +132,22 @@ class CompositionalEmbedding:
 
     @property
     def fractional_composition(self):
+        """Fractional composition of the Composition."""
         return _get_fractional_composition(self.formula)
 
     @property
     def num_atoms(self) -> float:
-        """
-        Total number of atoms in Composition
-        """
+        """Total number of atoms in Composition."""
         return self._natoms
 
     @property
     def embedding_dim(self) -> int:
-        """
-        Dimension of the embedding
-        """
+        """Dimension of the embedding."""
         return self.embedding.dim
 
     def as_dict(self) -> dict:
         # TO-DO: Need to create a dict representation for the embedding class
-        """
-        Returns the CompositionalEmbedding class as a dict
-        """
+        """Return the CompositionalEmbedding class as a dict."""
         return {
             "formula": self.formula,
             "composition": self.composition,
@@ -148,54 +161,42 @@ class CompositionalEmbedding:
 
     def _mean_feature_vector(self) -> np.ndarray:
         """
-        Computes a weighted mean feature vector based of the embedding. The dimension of the feature vector is the same as the embedding.
+        Compute a weighted mean feature vector based of the embedding.
+
+        The dimension of the feature vector is the same as the embedding.
 
         """
         return np.dot(self.norm_stoich_vector, self.el_matrix)
 
     def _variance_feature_vector(self) -> np.ndarray:
-        """
-        Computes a weighted variance feature vector
-        """
+        """Compute a weighted variance feature vector."""
         diff_matrix = self.el_matrix - self._mean_feature_vector()
 
         diff_matrix = diff_matrix**2
         return np.dot(self.norm_stoich_vector, diff_matrix)
 
     def _minpool_feature_vector(self) -> np.ndarray:
-        """
-        Computes a min pooled feature vector
-        """
+        """Compute a min pooled feature vector."""
         return np.min(self.el_matrix, axis=0)
 
     def _maxpool_feature_vector(self) -> np.ndarray:
-        """
-        Computes a max pooled feature vector
-        """
+        """Compute a max pooled feature vector."""
         return np.max(self.el_matrix, axis=0)
 
     def _range_feature_vector(self) -> np.ndarray:
-        """
-        Computes a range feature vector
-        """
+        """Compute a range feature vector."""
         return np.ptp(self.el_matrix, axis=0)
 
     def _sum_feature_vector(self) -> np.ndarray:
-        """
-        Computes the weighted sum feature vector
-        """
+        """Compute the weighted sum feature vector."""
         return np.dot(self.stoich_vector, self.el_matrix)
 
     def _geometric_mean_feature_vector(self) -> np.ndarray:
-        """
-        Computes the geometric mean feature vector
-        """
+        """Compute the geometric mean feature vector."""
         return np.exp(np.dot(self.norm_stoich_vector, np.log(self.el_matrix)))
 
     def _harmonic_mean_feature_vector(self) -> np.ndarray:
-        """
-        Computes the harmonic mean feature vector
-        """
+        """Compute the harmonic mean feature vector."""
         return np.reciprocal(
             np.dot(self.norm_stoich_vector, np.reciprocal(self.el_matrix))
         )
@@ -211,40 +212,40 @@ class CompositionalEmbedding:
         "harmonic_mean": "_harmonic_mean_feature_vector",
     }
 
-    def feature_vector(self, stats=["mean"]):
+    def feature_vector(self, stats: Union[str, list] = ["mean"]):
         """
-        Computes a feature vector based on the statistics specified in the stats argument
+        Compute a feature vector.
+
+        The feature vector is a concatenation of
+        the statistics specified in the stats argument.
 
         Args:
-            stats (list): A list of strings specifying the statistics to be computed. The default is ['mean'].
+            stats (list): A list of strings specifying the statistics to be computed.
+            The default is ['mean'].
 
         Returns:
-            np.ndarray: A feature vector of the s times the dimension of the embedding vector where s is the number of statistics specified in the stats argument
+            np.ndarray: A feature vector of dimension (len(stats) * embedding_dim).
         """
+        implemented_stats = [
+            "mean",
+            "variance",
+            "minpool",
+            "maxpool",
+            "range",
+            "sum",
+            "geometric_mean",
+            "harmonic_mean",
+        ]
         if isinstance(stats, str):
             stats = [stats]
         if not isinstance(stats, list):
             raise ValueError("Stats argument must be a list of strings")
         if not all([isinstance(s, str) for s in stats]):
             raise ValueError("Stats argument must be a list of strings")
-        if not all(
-            [
-                s
-                in [
-                    "mean",
-                    "variance",
-                    "minpool",
-                    "maxpool",
-                    "range",
-                    "sum",
-                    "geometric_mean",
-                    "harmonic_mean",
-                ]
-                for s in stats
-            ]
-        ):
+        if not all([s in implemented_stats for s in stats]):
             raise ValueError(
-                f" {[stat for stat in stats if stat not in ['mean','variance','minpool','maxpool','range','sum','geometric_mean','harmonic_mean']]} are not valid statistics."
+                f" {[stat for stat in stats if stat not in implemented_stats]} "
+                "are not valid statistics."
             )
         feature_vector = []
         for s in stats:
@@ -252,21 +253,32 @@ class CompositionalEmbedding:
         return np.concatenate(feature_vector)
 
     def __repr__(self):
-        return f"CompositionalEmbedding(formula={self.formula}, embedding={self.embedding})"
+        """Return a string representation of the CompositionalEmbedding class."""
+        return (
+            f"CompositionalEmbedding(formula={self.formula}, "
+            f"embedding={self.embedding})"
+        )
 
     def __str__(self):
-        return f"CompositionalEmbedding(formula={self.formula}, embedding={self.embedding})"
+        """Return a string representation of the CompositionalEmbedding class."""
+        return (
+            f"CompositionalEmbedding(formula={self.formula}, "
+            f"embedding={self.embedding})"
+        )
 
     def __eq__(self, other):
+        """Return True if the two CompositionalEmbedding classes are equal."""
         if isinstance(other, self.__class__):
             return self.formula == other.formula and self.embedding == other.embedding
         else:
             return False
 
     def __ne__(self, other):
+        """Return True if the two CompositionalEmbedding classes are not equal."""
         return not self.__eq__(other)
 
     def __hash__(self):
+        """Return a hash of the CompositionalEmbedding class."""
         return hash((self.formula, self.embedding))
 
 
@@ -277,18 +289,25 @@ def composition_featuriser(
     inplace: bool = False,
 ) -> pd.DataFrame:
     """
-    Computes a feature vector for a composition based on the statistics specified in the stats argument
+    Compute a feature vector for a composition.
+
+    The feature vector is based on the statistics specified
+    in the stats argument.
 
     Args:
-        data (Union[pd.DataFrame, pd.Series, list, CompositionalEmbedding]): A pandas DataFrame or Series containing a column named 'formula', a list of formula, or a CompositionalEmbedding class
+        data (Union[pd.DataFrame, pd.Series, list, CompositionalEmbedding]):
+        A pandas DataFrame or Series containing a column named 'formula',
+        a list of formula, or a CompositionalEmbedding class
         embedding (Union[Embedding, str], optional): A Embedding class or a string
-        stats (Union[str, list], optional): A list of strings specifying the statistics to be computed. The default is ['mean'].
-        inplace (bool, optional): Whether to perform the operation in place on the data. The default is False.
+        stats (Union[str, list], optional): A list of statistics to be computed.
+        The default is ['mean'].
+        inplace (bool, optional): Whether to perform the operation in place on the data.
+        The default is False.
 
     Returns:
-        Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector, unless a list of formula is passed in which case a list of feature vectors is returned
+        Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector,
+        or a list of feature vectors is returned
     """
-
     if isinstance(data, pd.DataFrame):
         if not inplace:
             data = data.copy()
@@ -323,5 +342,6 @@ def composition_featuriser(
         return data.feature_vector(stats)
     else:
         raise ValueError(
-            "The data must be a pandas DataFrame, Series, list or CompositionalEmbedding class."
+            "The data must be a pandas DataFrame, Series, "
+            "list or CompositionalEmbedding class."
         )
