@@ -1,13 +1,19 @@
-# Contains the core embedding class
+"""
+Provides the `Embedding` class.
+
+This module enables the user load in elemetal representation data
+and analyse it using statistical functions.
+
+Typical usage example:
+    megnet16 = Embedding.load_data('megnet16')
+"""
 
 import fnmatch
 import json
-import os
 import random
-from collections import namedtuple
 from itertools import combinations_with_replacement
 from os import path
-from typing import Callable, Dict, Generator, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,35 +23,24 @@ from numpy.linalg import norm
 from pymatgen.core import Element
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
 from scipy.stats._result_classes import PearsonRResult
+from scipy.stats._stats_py import SpearmanrResult
 from sklearn import decomposition
 from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
 
 from .utils.io import NumpyEncoder
 
-SpearmanrResult = namedtuple("SpearmanrResult", ("correlation", "pvalue"))
-
-""" Provides the `Embedding` class.
-
-This module enables the user load in elemetal representation data and analyse it using statistical functions.
-
-Typical usage example:
-
-    megnet16 = Embedding.load_data('megnet16')
-"""
-
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, "data")
 
 
 class Embedding:
-
     """
-    Represents an elemental representation, which is essentially a dictionary of {element: vector} pairs.
+    Represent an elemental representation.
 
     To load an embedding distributed from the package use the load_data() method.
 
-    Works like a standard python dictionary.
+    Works like a standard python dictionary. The keys are {element: vector} pairs.
 
     Adds a few convenience methods related to elemental representations.
 
@@ -55,6 +50,7 @@ class Embedding:
     """
 
     def __init__(self, embeddings: dict, embedding_name: Optional[str] = None):
+        """Initialise the Embedding class."""
         self.embeddings = embeddings
         self.embedding_name = embedding_name
 
@@ -78,7 +74,8 @@ class Embedding:
 
     @staticmethod
     def load_data(embedding_name: Optional[str] = None):
-        """Creates an instance of the `Embedding` class from a default embedding file.
+        """
+        Create an instance of the `Embedding` class from a default embedding file.
 
         The default embeddings are in the table below:
 
@@ -97,12 +94,11 @@ class Embedding:
 
 
         Args:
-            embedding_name (str): The str_name of an embedding file available within the package
+            embedding_name (str): The str_name of an embedding file.
 
         Returns:
-
-            Embedding :class:`Embedding` instance."""
-
+            Embedding :class:`Embedding` instance.
+        """
         _cbfv_files = {
             "magpie": "magpie.json",
             "magpie_sc": "magpie_sc.json",
@@ -159,10 +155,12 @@ class Embedding:
 
     @staticmethod
     def from_json(embedding_json):
-        """Creates an instance of the Embedding class from a json file
+        """
+        Create an instance of the Embedding class from a json file.
 
         Args:
-            embedding_json (str): Filepath of the json file"""
+            embedding_json (str): Filepath of the json file
+        """
         # Need to add validation handling for JSONs in different formats
         with open(embedding_json) as f:
             embedding_data = json.load(f)
@@ -170,9 +168,10 @@ class Embedding:
 
     @staticmethod
     def from_csv(embedding_csv):
-        """Creates an instance of the Embedding class from a csv file.
-        The first column of the csv file must contain the elements and be named element.
+        """
+        Create an instance of the Embedding class from a csv file.
 
+        The first column of the csv file must contain the elements and be named element.
 
         Args:
             embedding_csv (str): Filepath of the csv file
@@ -189,11 +188,15 @@ class Embedding:
 
     def as_dataframe(self, columns: str = "components") -> pd.DataFrame:
         """
-        Returns the embedding as a pandas Dataframe.
-        The first column is the elements and each other column represents a component of the embedding
+        Return the embedding as a pandas Dataframe.
+
+        The first column is the elements and each other
+        column represents a component of the embedding.
 
         Args:
-            columns (str): A string to specify whether the columns are the vector components and the index is the elements (`columns='components') or the columns are the elements (`columns='elements'`).
+            columns (str): A string to specify if the columns are the vector components
+            and the index is the elements (`columns='components')
+            or the columns are the elements (`columns='elements'`).
 
         Returns:
             df (pandas.DataFrame): A pandas dataframe object
@@ -209,15 +212,18 @@ class Embedding:
         else:
             raise (
                 ValueError(
-                    f"{columns} is not a valid keyword argument. Choose either 'components' or 'elements"
+                    f"{columns} is not a valid keyword argument. "
+                    "Choose either 'components' or 'elements"
                 )
             )
 
     def to(self, fmt: str = "", filename: Optional[str] = ""):
-        """Outputs the embedding to a file
+        """
+        Output the embedding to a file.
 
         Args:
-            fmt (str): The file format to output the embedding to. Options include "json" and "csv".
+            fmt (str): The file format to output the embedding to.
+            Options include "json" and "csv".
             filename (str): The name of the file to be outputted
         Returns:
             (str) if filename not specified, otherwise None.
@@ -246,16 +252,19 @@ class Embedding:
 
     @property
     def element_list(self) -> list:
-        """Returns the elements of the embedding."""
+        """Return the elements of the embedding."""
         return list(self.embeddings.keys())
 
     def remove_elements(self, elements: Union[str, List[str]], inplace: bool = False):
         # TO-DO allow removal by atomic numbers
-        """Removes elements from the Embedding instance
+        """
+        Remove elements from the Embedding instance.
 
         Args:
-            elements (str,list(str)): Accepts either an element symbol or a list of element symbols
-            inplace (bool): If True, elements are removed from the Embedding instance. If false, the original embedding instance is unchanged and a new embedding instance with the elements removed is created.
+            elements (str,list(str)): An element symbol or a list of element symbols
+            inplace (bool): If True, elements are removed from the Embedding instance.
+            If false, the original embedding instance is unchanged
+            and a new embedding instance with the elements removed is created.
 
         """
         if inplace:
@@ -276,12 +285,14 @@ class Embedding:
             return Embedding(embeddings_copy, self.embedding_name)
 
     def citation(self) -> List[str]:
-        # Function to return a citation for an Embedding
+        """Return a citation for the embedding."""
         if self.embedding_name in ["magpie", "magpie_sc"]:
             citation = [
                 "@article{ward2016general,"
-                "title={A general-purpose machine learning framework for predicting properties of inorganic materials},"
-                "author={Ward, Logan and Agrawal, Ankit and Choudhary, Alok and Wolverton, Christopher},"
+                "title={A general-purpose machine learning framework for "
+                "predicting properties of inorganic materials},"
+                "author={Ward, Logan and Agrawal, Ankit and Choudhary, Alok "
+                "and Wolverton, Christopher},"
                 "journal={npj Computational Materials},"
                 "volume={2},"
                 "number={1},"
@@ -292,8 +303,11 @@ class Embedding:
         elif self.embedding_name == "mat2vec":
             citation = [
                 "@article{tshitoyan2019unsupervised,"
-                "title={Unsupervised word embeddings capture latent knowledge from materials science literature},"
-                "author={Tshitoyan, Vahe and Dagdelen, John and Weston, Leigh and Dunn, Alexander and Rong, Ziqin and Kononova, Olga and Persson, Kristin A and Ceder, Gerbrand and Jain, Anubhav},"
+                "title={Unsupervised word embeddings capture latent knowledge "
+                "from materials science literature},"
+                "author={Tshitoyan, Vahe and Dagdelen, John and Weston, Leigh "
+                "and Dunn, Alexander and Rong, Ziqin and Kononova, Olga "
+                "and Persson, Kristin A and Ceder, Gerbrand and Jain, Anubhav},"
                 "journal={Nature},"
                 "volume={571},"
                 "number={7763},"
@@ -304,8 +318,12 @@ class Embedding:
         elif self.embedding_name == "matscholar":
             citation = [
                 "@article{weston2019named,"
-                "title={Named entity recognition and normalization applied to large-scale information extraction from the materials science literature},"
-                "author={Weston, Leigh and Tshitoyan, Vahe and Dagdelen, John and Kononova, Olga and Trewartha, Amalie and Persson, Kristin A and Ceder, Gerbrand and Jain, Anubhav},"
+                "title={Named entity recognition and normalization applied to "
+                "large-scale information extraction from the materials "
+                "science literature},"
+                "author={Weston, Leigh and Tshitoyan, Vahe and Dagdelen, John and "
+                "Kononova, Olga and Trewartha, Amalie and Persson, Kristin A and "
+                "Ceder, Gerbrand and Jain, Anubhav},"
                 "journal={Journal of chemical information and modeling},"
                 "volume={59},"
                 "number={9},"
@@ -317,8 +335,10 @@ class Embedding:
         elif self.embedding_name == "megnet16":
             citation = [
                 "@article{chen2019graph,"
-                "title={Graph networks as a universal machine learning framework for molecules and crystals},"
-                "author={Chen, Chi and Ye, Weike and Zuo, Yunxing and Zheng, Chen and Ong, Shyue Ping},"
+                "title={Graph networks as a universal machine learning framework "
+                "for molecules and crystals},"
+                "author={Chen, Chi and Ye, Weike and Zuo, Yunxing and "
+                "Zheng, Chen and Ong, Shyue Ping},"
                 "journal={Chemistry of Materials},"
                 "volume={31},"
                 "number={9},"
@@ -330,8 +350,11 @@ class Embedding:
         elif self.embedding_name in ["oliynyk", "oliynyk_sc"]:
             citation = [
                 "              @article{oliynyk2016high,"
-                "title={High-throughput machine-learning-driven synthesis of full-Heusler compounds},"
-                "author={Oliynyk, Anton O and Antono, Erin and Sparks, Taylor D and Ghadbeigi, Leila and Gaultois, Michael W and Meredig, Bryce and Mar, Arthur},"
+                "title={High-throughput machine-learning-driven synthesis "
+                "of full-Heusler compounds},"
+                "author={Oliynyk, Anton O and Antono, Erin and Sparks, Taylor D and "
+                "Ghadbeigi, Leila and Gaultois, Michael W and "
+                "Meredig, Bryce and Mar, Arthur},"
                 "journal={Chemistry of Materials},"
                 "volume={28},"
                 "number={20},"
@@ -343,7 +366,8 @@ class Embedding:
         elif self.embedding_name == "skipatom":
             citation = [
                 "@article{antunes2022distributed,"
-                "title={Distributed representations of atoms and materials for machine learning},"
+                "title={Distributed representations of atoms and materials "
+                "for machine learning},"
                 "author={Antunes, Luis M and Grau-Crespo, Ricardo and Butler, Keith T},"
                 "journal={npj Computational Materials},"
                 "volume={8},"
@@ -355,8 +379,10 @@ class Embedding:
         elif self.embedding_name == "mod_petti":
             citation = [
                 "@article{glawe2016optimal,"
-                "title={The optimal one dimensional periodic table: a modified Pettifor chemical scale from data mining},"
-                "author={Glawe, Henning and Sanna, Antonio and Gross, EKU and Marques, Miguel AL},"
+                "title={The optimal one dimensional periodic table: "
+                "a modified Pettifor chemical scale from data mining},"
+                "author={Glawe, Henning and Sanna, Antonio and Gross, "
+                "EKU and Marques, Miguel AL},"
                 "journal={New Journal of Physics},"
                 "volume={18},"
                 "number={9},"
@@ -371,13 +397,14 @@ class Embedding:
         return citation
 
     def _is_el_in_embedding(self, el: str) -> bool:
-        """A function to check if an element is in the `Embedding` object
+        """
+        Check if an element is in the `Embedding` object.
 
         Args:
             el (str): An element symbol
         Returns:
-            bool: True if el is in the Embedding, else False"""
-
+            bool: True if el is in the Embedding, else False
+        """
         if el in self.element_list:
             return True
         else:
@@ -385,20 +412,28 @@ class Embedding:
 
     @property
     def element_groups_dict(self) -> Dict[str, str]:
-        """Returns a dictionary of {element: element type} pairs e.g. {'He':'Noble gas'}"""
+        """
+        Return a dictionary of {element: element type} pairs.
 
+        e.g. {'He':'Noble gas'}
+
+        """
         with open(path.join(data_directory, "element_data/element_group.json")) as f:
             _dict = json.load(f)
         return {i: _dict[i] for i in self.element_list}
 
     def create_pairs(self):
-        """Creates all possible pairs of elements"""
+        """Create all possible pairs of elements."""
         ele_list = self.element_list
         ele_pairs = combinations_with_replacement(ele_list, 2)
         return ele_pairs
 
-    def create_correlation_df(self) -> pd.DataFrame:
-        """Returns a pandas.DataFrame object with columns of the elements and correlation metrics"""
+    def correlation_df(self) -> pd.DataFrame:
+        """Return a pandas.DataFrame with correlation metrics.
+
+         The columns of returned dataframe are:
+        [element_1, element_2, pearson_corr, euclid_dist].
+        """
         ele_pairs = self.create_pairs()
         table = []
         for ele1, ele2 in ele_pairs:
@@ -441,16 +476,18 @@ class Embedding:
     def compute_correlation_metric(
         self, ele1: str, ele2: str, metric: str = "pearson"
     ) -> Union[PearsonRResult, SpearmanrResult]:
-        """Computes the correlation metric between two vectors
-        Allowed metrics:
+        """
+        Compute the correlation metric between two vectors.
 
+        Allowed metrics:
         * Pearson
         * Spearman
 
         Args:
             ele1 (str): element symbol
             ele2 (str): element symbol
-            metric (str): name of a correlation metric. Options are "spearman" or "pearson"
+            metric (str): name of a correlation metric.
+            Options are "spearman" or "pearson"
 
         Returns:
             PearsonResult | SpearmanrResult
@@ -464,7 +501,8 @@ class Embedding:
     def compute_distance_metric(
         self, ele1: str, ele2: str, metric: str = "euclidean"
     ) -> float:
-        """Computes distance metric between two vectors.
+        """
+        Compute distance metric between two vectors.
 
         Allowed metrics:
 
@@ -474,7 +512,6 @@ class Embedding:
         * wasserstein
         * energy
 
-
         Args:
             ele1 (str): element symbol
             ele2 (str): element symbol
@@ -483,7 +520,6 @@ class Embedding:
         Returns:
             distance (float): distance between embedding vectors
         """
-
         # Define the allowable metrics
         scikit_metrics = ["euclidean", "manhattan", "chebyshev"]
 
@@ -515,21 +551,27 @@ class Embedding:
 
         else:
             print(
-                f"Invalid distance metric. Use one of the following metrics:{valid_metrics}"
+                "Invalid distance metric."
+                f"Use one of the following metrics:{valid_metrics}"
             )
             raise ValueError
 
-    def create_pearson_pivot_table(self) -> pd.DataFrame:
-        """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being the pearson correlation metrics"""
+    def pearson_pivot_table(self) -> pd.DataFrame:
+        """
+        Return a pandas.DataFrame style pivot object.
 
-        corr_df = self.create_correlation_df()
+        The index and column are the mendeleev number of the element pairs
+        and the values being the pearson correlation metrics.
+        """
+        corr_df = self.correlation_df()
         pearson_pivot = corr_df.pivot_table(
             values="pearson_corr", index="mend_1", columns="mend_2"
         )
         return pearson_pivot
 
-    def create_distance_correlation_df(self, metric: str = "euclidean") -> pd.DataFrame:
-        """Returns a pandas.DataFrame object with columns of the elements and correlation metrics.
+    def distance_correlation_df(self, metric: str = "euclidean") -> pd.DataFrame:
+        """
+        Return a dataframe with columns ["ele_1", "ele_2", metric].
 
         Allowed metrics:
 
@@ -540,12 +582,11 @@ class Embedding:
         * energy
 
         Args:
-            metric (str): A distance metric
+            metric (str): A distance metric.
 
         Returns:
-            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric]
+            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
         """
-
         ele_pairs = self.create_pairs()
         table = []
         for ele1, ele2 in ele_pairs:
@@ -565,17 +606,20 @@ class Embedding:
 
         return corr_df
 
-    def create_distance_pivot_table(self, metric: str = "euclidean") -> pd.DataFrame:
-        """Returns a pandas.DataFrame style pivot with the index and column being the mendeleev number of the element pairs and the values being a user-specified distance metric
+    def distance_pivot_table(self, metric: str = "euclidean") -> pd.DataFrame:
+        """
+        Return a pandas.DataFrame style pivot.
+
+        The index and column being the mendeleev number of the element pairs
+        and the values being a user-specified distance metric.
 
         Args:
-            metric (str): A distance metric
+            metric (str): A distance metric.
 
         Returns:
-            distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table where the index and columns are the elements and the values are the pairwise distance metric.
+            distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
         """
-
-        corr_df = self.create_distance_correlation_df(metric=metric)
+        corr_df = self.distance_correlation_df(metric=metric)
         distance_pivot = corr_df.pivot_table(
             values=metric, index="mend_1", columns="mend_2"
         )
@@ -583,18 +627,17 @@ class Embedding:
 
     def plot_pearson_correlation(self, figsize: Tuple[int, int] = (24, 24), **kwargs):
         """
-        Plots the heatmap of the pearson correlation values for the elemental representation.
+        Plot the heatmap of the pearson correlation values.
 
         Args:
-            figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+            figsize (tuple): A tuple of (width, height).
             **kwargs: Other keyword arguments to be passed to sns.heatmap
 
         Returns:
             ax (matplotlib Axes): An Axes object with the heatmap
 
         """
-
-        pearson_pivot = self.create_pearson_pivot_table()
+        pearson_pivot = self.pearson_pivot_table()
 
         plt.figure(figsize=figsize)
         ax = sns.heatmap(
@@ -607,17 +650,17 @@ class Embedding:
         self, metric: str = "euclidean", figsize: Tuple[int, int] = (24, 24), **kwargs
     ):
         """
-        Plots the heatmap of the pairwise distance metrics for the elemental representation.
+        Plot the heatmap of the pairwise distance metrics.
 
         Args:
             metric (str): A valid distance metric
-            figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+            figsize (tuple): A tuple of (width, height)
 
         Returns:
             ax (matplotlib.axes.Axes): An Axes object with the heatmap
 
         """
-        distance_pivot = self.create_distance_pivot_table(metric=metric)
+        distance_pivot = self.distance_pivot_table(metric=metric)
 
         plt.figure(figsize=figsize)
         ax = sns.heatmap(
@@ -628,19 +671,23 @@ class Embedding:
 
     def calculate(self, mode: str = "all") -> None:
         """
-        A function which calculates the pairwise statistics of the elements present in the Embedding class. The pairwise statistics include the distance and correlation metrics
+        Calculate the pairwise statistics of the elements present.
+
+        The pairwise statistics include the distance and correlation metrics
 
         Args:
-            mode (str): Specifies which pairwise statistics to calculate. `mode="all"` will calculate all available distance and correlation metrics; `mode="correlation"` will only calculate correlation metrics and `mode="distance"` will only calculate distance metrics.
+            mode (str): Specifies which pairwise statistics to calculate. `mode="all"`
+                will calculate all available distance and correlation metrics;
+                `mode="correlation"` will only calculate correlation metrics
+                and `mode="distance"` will only calculate distance metrics.
 
         Returns:
             None
         """
-
         ele_pairs = self.create_pairs()
         table = []
 
-        columns = ["element_1", "element_2", "pearson_corr", ""]
+        # columns = ["element_1", "element_2", "pearson_corr", ""]
 
         for ele1, ele2 in ele_pairs:
             temp_dict = {"element_1": ele1, "element_2": ele2}
@@ -648,24 +695,15 @@ class Embedding:
         pass
 
     def calculate_PC(self, n_components: int, **kwargs):
-
-        # Function should return the PCs as well as information on the variance of the components
-        """
-        A function to calculate the principal componenets (PC) of the embeddings
-        """
+        """Calculate the principal componenets (PC) of the embeddings."""
         pass
 
     def calculate_tSNE(self, **kwargs):
-        """
-        A function to calculate t-SNE
-        """
+        """Calculate t-SNE components."""
         pass
 
     def calculate_UMAP(self, **kwargs):
-        """
-        A function to calculate UMAP embeddings
-        """
-
+        """Calculate UMAP embeddings."""
         pass
 
     def plot_PCA_2D(
@@ -675,10 +713,10 @@ class Embedding:
         points_size: int = 200,
         **kwargs,
     ):
-        """A function to plot a PCA plot of the atomic embedding.
+        """Plot a PCA plot of the atomic embedding.
 
         Args:
-            figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+            figsize (tuple): A tuple of (width, height)
             points_size (float): The marker size
 
         Returns:
@@ -688,8 +726,6 @@ class Embedding:
         embeddings_array = np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
 
-        fig = plt.figure(figsize=figsize)
-        plt.cla()  # clear current axes
         pca = decomposition.PCA(n_components=2)  # project to 2 dimensions
 
         pca.fit(embeddings_array)
@@ -707,14 +743,16 @@ class Embedding:
                 "group": list(self.element_groups_dict.values()),
             }
         )
+        fig, ax = plt.subplots(figsize=figsize)
 
-        ax = sns.scatterplot(
+        sns.scatterplot(
             x="pca_dim1",
             y="pca_dim2",
             data=pca_df,
             hue=points_hue,
             s=points_size,
             **kwargs,
+            ax=ax,
         )
 
         plt.xlabel("Dimension 1")
@@ -733,11 +771,11 @@ class Embedding:
         points_size: int = 200,
         **kwargs,
     ):
-        """A function to plot a t-SNE plot of the atomic embedding
+        """Plot a t-SNE plot of the atomic embedding.
 
         Args:
             n_components (int): Number of t-SNE components to plot.
-            figsize (tuple): A tuple of (width, height) to pass to the matplotlib.pyplot.figure object
+            figsize (tuple): A tuple of (width, height)
             points_size (float): The marker size
 
         Returns:
@@ -751,7 +789,6 @@ class Embedding:
         tsne = TSNE(n_components)
         tsne_result = tsne.fit_transform(embeddings_array)
 
-        # Create a dataframe to store the dimension and the label for t-SNE transformation
         tsne_df = pd.DataFrame(
             {
                 "tsne_dim1": tsne_result[:, 0],
