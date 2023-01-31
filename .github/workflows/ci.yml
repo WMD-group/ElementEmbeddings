@@ -1,6 +1,9 @@
 name: AtomicEmbeddings CI
 
-on: [push]
+on:
+  push:
+    paths:
+      - "**.py" # run workflow if python files changed.
 
 jobs:
 
