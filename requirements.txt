@@ -1,4 +1,4 @@
-numpy == 1.23.3
+numpy == 1.24.1
 scipy ==1.9.1
 pymatgen ==2022.9.21
 numba ==0.56.4
