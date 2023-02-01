@@ -1,10 +1,10 @@
-import unittest
-
+"""Setup script for AtomicEmbeddings."""
 from setuptools import find_packages, setup
 
-VERSION = "0.0.3"
+VERSION = "0.1"
 DESCRIPTION = "Atomic Embeddings"
-LONG_DESCRIPTION = "A package for visualising and analysing atomic embedding vectors"
+LONG_DESCRIPTION = """A package for visualising
+ and analysing atomic embedding vectors."""
 
 # Setting up
 setup(
@@ -27,7 +27,7 @@ setup(
     ],
     classifiers=[
         "Programming Language :: Python",
-        "Development Status :: 1 - Planning",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Science/Research",
         "Operating System :: OS Independent",
         "Topic :: Scientific/Engineering",

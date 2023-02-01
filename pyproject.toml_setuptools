@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0","setuptools-scm" ,"wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "AtomicEmbeddings"
+version = "0.1"
+authors = [
+  { name="Anthony O. Onwuli", email="anthony.onwuli16@imperial.ac.uk" },
+]
+description = "A package for visualising and analysing atomic embedding vectors"
+readme = "README.md"
+dependencies = [
+  "numpy == 1.23.3",
+  "scipy ==1.9.1",
+  "pymatgen ==2022.9.21",
+  "numba ==0.56.4",
+  "seaborn ==0.12.1",
+  "matplotlib==3.6.0",
+  "scikit-learn==1.1.2",
+  "umap-learn ==0.5.3",
+  "pandas == 1.5.0",
+  "pytest ==7.2.0",
+  "pytest-subtests ==0.9.0",
+]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/WMD-Group/Atomic_Embeddings"
+"Bug Tracker" = "https://github.com/WMD-Group/Atomic_Embeddings/issues"
+
+[tool.isort]
+profile = 'black'

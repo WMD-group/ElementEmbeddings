@@ -2,13 +2,13 @@ Here we will demonstrate how to use some of `AtomicEmbeddings`'s features. For f
 
 ## Atomic_Embeddings
 
-The `Atomic_Embeddings` class lies at the heart of the package. It handles elemental representation data and enables analysis and visualisation.
+The `Embedding` class lies at the heart of the package. It handles elemental representation data and enables analysis and visualisation.
 
 ```py
-from AtomicEmbeddings import Atomic_Embeddings
+from AtomicEmbeddings.core import Embedding 
 
 # Load the magpie data
-magpie = Atomic_Embeddings.from_json('magpie')
+magpie = Embedding.load_data('magpie')
 
 # Print out some of the properties of the Atomic_Embeddings class
 

@@ -2,7 +2,8 @@
 
 Modules exported by this package:
 
-- `AtomicEmbeddings`: Provides the `Atomic_Embeddings` class which handles elemental representations.
+- `AtomicEmbeddings.core`: Provides the `Embedding` class.
+- 'AtomicEmbeddings.composition:` Tools to featurise compositions.
 """
 
-from AtomicEmbeddings.AtomicEmbeddings import Atomic_Embeddings
+# from AtomicEmbeddings.AtomicEmbeddings import Atomic_Embeddings

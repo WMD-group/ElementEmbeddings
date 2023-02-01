@@ -210,3 +210,9 @@ cython_debug/
 # mkdocs
 site/
 examples/test.ipynb
+
+# Development
+testing/
+presentation/
+*.svg
+

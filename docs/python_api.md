@@ -4,4 +4,6 @@ The core module of the `AtomicEmbeddings` contains the `Atomic_Embeddings` class
 This part of the project documentation provides the python API for the `AtomicEmbeddings` package.
 
 
-::: AtomicEmbeddings.AtomicEmbeddings
+::: AtomicEmbeddings.core
+
+::: AtomicEmbeddings.composition
