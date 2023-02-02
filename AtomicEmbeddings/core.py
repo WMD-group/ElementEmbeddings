@@ -268,7 +268,6 @@ class Embedding:
 
         """
         if inplace:
-
             if isinstance(elements, str):
                 del self.embeddings[elements]
             elif isinstance(elements, list):
