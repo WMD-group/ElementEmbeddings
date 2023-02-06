@@ -36,11 +36,11 @@ repos:
       - id: nbqa-autopep8
         additional_dependencies: [autopep8==2.0.0]
         args: ["--ignore=E501"]
-  - repo: local
+  - repo: https://github.com/roy-ht/pre-commit-jupyter
+    rev: v1.2.1
     hooks:
-      - id: jupyter-nb-clear-output
-        name: jupyter-nb-clear-output
-        files: \.ipynb$
-        stages: [commit]
-        language: system
-        entry: jupyter nbconvert --clear-output --inplace
+      - id: jupyter-notebook-cleanup
+        args:
+          # - --remove-kernel-metadata
+          - --pin-patterns
+          - "[pin];[donotremove]"
