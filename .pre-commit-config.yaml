@@ -14,7 +14,6 @@ repos:
     hooks:
       - id: pyupgrade
         args: [--py38-plus]
-
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
@@ -37,3 +36,11 @@ repos:
       - id: nbqa-autopep8
         additional_dependencies: [autopep8==2.0.0]
         args: ["--ignore=E501"]
+  - repo: local
+    hooks:
+      - id: jupyter-nb-clear-output
+        name: jupyter-nb-clear-output
+        files: \.ipynb$
+        stages: [commit]
+        language: system
+        entry: jupyter nbconvert --clear-output --inplace
