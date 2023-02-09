@@ -2,37 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://wmd-group.github.io/Atomic_Embeddings/</loc>
-         <lastmod>2022-12-06</lastmod>
+         <lastmod>2023-02-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wmd-group.github.io/Atomic_Embeddings/about/</loc>
-         <lastmod>2022-12-06</lastmod>
+         <lastmod>2023-02-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wmd-group.github.io/Atomic_Embeddings/contribution/</loc>
-         <lastmod>2022-12-06</lastmod>
+         <lastmod>2023-02-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wmd-group.github.io/Atomic_Embeddings/installation/</loc>
-         <lastmod>2022-12-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/python_api/</loc>
-         <lastmod>2022-12-06</lastmod>
+         <lastmod>2023-02-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wmd-group.github.io/Atomic_Embeddings/reference/</loc>
-         <lastmod>2022-12-06</lastmod>
+         <lastmod>2023-02-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wmd-group.github.io/Atomic_Embeddings/tutorials/</loc>
-         <lastmod>2022-12-06</lastmod>
+         <lastmod>2023-02-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wmd-group.github.io/Atomic_Embeddings/python_api/composition/</loc>
+         <lastmod>2023-02-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wmd-group.github.io/Atomic_Embeddings/python_api/core/</loc>
+         <lastmod>2023-02-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://wmd-group.github.io/Atomic_Embeddings/python_api/python_api/</loc>
+         <lastmod>2023-02-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
