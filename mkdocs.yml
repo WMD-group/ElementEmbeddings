@@ -12,7 +12,9 @@ nav:
     - Home: index.md
     - About: about.md
     - Getting Started: installation.md
-    - Python API: python_api.md
+    - 'Python package':
+      - 'Core module': 'python_api/core.md'
+      - 'Composition module': 'python_api/composition.md'
     - Tutorial: tutorials.md
     - reference.md
     - Contributing: contribution.md
