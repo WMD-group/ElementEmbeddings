@@ -29,6 +29,7 @@ from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
 
 from .utils.io import NumpyEncoder
+from .utils.math import cosine_distance, cosine_similarity
 
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, "data")
@@ -476,28 +477,31 @@ class Embedding:
 
     def compute_correlation_metric(
         self, ele1: str, ele2: str, metric: str = "pearson"
-    ) -> Union[PearsonRResult, SpearmanrResult]:
+    ) -> Union[PearsonRResult, SpearmanrResult, float]:
         """
-        Compute the correlation metric between two vectors.
+        Compute the correlation/similarity metric between two vectors.
 
         Allowed metrics:
         * Pearson
         * Spearman
+        * Cosine similarity
 
         Args:
             ele1 (str): element symbol
             ele2 (str): element symbol
             metric (str): name of a correlation metric.
-            Options are "spearman" or "pearson"
+            Options are "spearman", "pearson" and "cosine".
 
         Returns:
-            PearsonResult | SpearmanrResult
+            PearsonResult | SpearmanrResult | float: correlation/similarity metric
         """
         # Define the allowable metrics
         scipy_corrs = {"pearson": pearsonr, "spearman": spearmanr}
 
         if metric in scipy_corrs:
             return scipy_corrs[metric](self.embeddings[ele1], self.embeddings[ele2])
+        elif metric == "cosine":
+            return cosine_similarity(self.embeddings[ele1], self.embeddings[ele2])
 
     def compute_distance_metric(
         self, ele1: str, ele2: str, metric: str = "euclidean"
@@ -512,6 +516,7 @@ class Embedding:
         * chebyshev
         * wasserstein
         * energy
+        * cosine
 
         Args:
             ele1 (str): element symbol
@@ -526,7 +531,7 @@ class Embedding:
 
         scipy_metrics = {"wasserstein": wasserstein_distance, "energy": energy_distance}
 
-        valid_metrics = scikit_metrics + list(scipy_metrics.keys())
+        valid_metrics = scikit_metrics + list(scipy_metrics.keys()) + ["cosine"]
 
         # Validate if the elements are within the embedding vector
         if not all([self._is_el_in_embedding(ele1), self._is_el_in_embedding(ele2)]):
@@ -549,6 +554,8 @@ class Embedding:
 
         elif metric in scipy_metrics.keys():
             return scipy_metrics[metric](self.embeddings[ele1], self.embeddings[ele2])
+        elif metric == "cosine":
+            return cosine_distance(self.embeddings[ele1], self.embeddings[ele2])
 
         else:
             print(
