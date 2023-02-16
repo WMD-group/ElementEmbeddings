@@ -9,11 +9,12 @@ The following paper describes the details of the Materials Agnostic Platform for
 The source code for Magpie can be found
 [here](https://bitbucket.org/wolverton/magpie/src/master/)
 
-The 21 dimensional embedding vector includes the following elemental properties:
+The 22 dimensional embedding vector includes the following elemental properties:
 
 <details>
-    <summary>Click to see the 21 properties</summary>
+    <summary>Click to see the 22 properties</summary>
 
+* Number;
 * Mendeleev number;
 * Atomic weight;
 * Melting temperature;
