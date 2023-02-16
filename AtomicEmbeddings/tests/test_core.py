@@ -35,7 +35,7 @@ class EmbeddingTest(unittest.TestCase):
         # Check if H is present in the embedding keys
         assert "H" in magpie.embeddings.keys()
         # Check dimensions
-        assert magpie.dim == 21
+        assert magpie.dim == 22
         # Check that a list is returned
         assert isinstance(magpie.element_list, list)
         # Check that the correct list is returned
