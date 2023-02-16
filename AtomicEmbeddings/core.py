@@ -100,9 +100,9 @@ class Embedding:
             Embedding :class:`Embedding` instance.
         """
         _cbfv_files = {
-            "magpie": "magpie.json",
+            "magpie": "magpie.csv",
             "magpie_sc": "magpie_sc.json",
-            "mat2vec": "mat2vec.json",
+            "mat2vec": "mat2vec.csv",
             "matscholar": "matscholar-embedding.json",
             "megnet16": "megnet16.json",
             "mod_petti": "mod_petti.json",
@@ -113,12 +113,14 @@ class Embedding:
         }
         _cbfv_names = list(_cbfv_files.keys())
         _cbfv_names_others = [
-            i for i in _cbfv_names if i not in ["skipatom", "random_200", "megnet16"]
+            i
+            for i in _cbfv_names
+            if i not in ["skipatom", "random_200", "megnet16", "magpie", "mat2vec"]
         ]
 
         # Get the embeddings
         if embedding_name in _cbfv_files:
-            if embedding_name == "skipatom" or embedding_name == "random_200":
+            if embedding_name in ["skipatom", "random_200", "magpie", "mat2vec"]:
                 _csv = path.join(data_directory, _cbfv_files[embedding_name])
                 df = pd.read_csv(_csv)
                 # Convert df to a dictionary of (ele:embeddings) pairs
