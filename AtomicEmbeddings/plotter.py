@@ -9,7 +9,7 @@ from .core import Embedding
 
 def heatmap_plotter(
     embedding: Embedding,
-    metric: bool = False,
+    metric: str,
     distance: bool = True,
     correlation: bool = False,
     figsize: Tuple[int, int] = (36, 24),
@@ -24,8 +24,8 @@ def heatmap_plotter(
     ----------
     embedding : Embedding
         The embedding to be plotted.
-    metric : bool, optional
-        Whether to plot a metric distance heatmap, by default False
+    metric : str
+        The distance/correlation metric to be used.
     distance : bool, optional
         Whether to plot a distance heatmap, by default True
     correlation : bool, optional
@@ -42,14 +42,14 @@ def heatmap_plotter(
     """
     fig, ax = plt.subplots(figsize=figsize)
     if correlation:
-        p = embedding.pearson_pivot_table()
+        pivot = embedding.pearson_pivot_table()
 
     elif distance:
-        p = embedding.distance_pivot_table(metric=metric)
-    xlabels = [i[1] for i in p.index]
-    ylabels = [i[1] for i in p.columns]
+        pivot = embedding.distance_pivot_table(metric=metric)
+    xlabels = [i[1] for i in pivot.index]
+    ylabels = [i[1] for i in pivot.columns]
     sns.heatmap(
-        p,
+        pivot,
         cmap="bwr",
         square="True",
         linecolor="k",
@@ -69,7 +69,7 @@ def heatmap_plotter(
 
     fig.tight_layout()
     if filename:
-        plt.savefig("plots/" + filename)
+        plt.savefig(filename)
     if show:
         plt.show()
 
@@ -78,7 +78,7 @@ def multi_heatmap_plotter(
     embeddings: List[Embedding],
     nrows: int,
     ncols: int,
-    metric: bool = False,
+    metric: str,
     distance: bool = True,
     correlation: bool = False,
     figsize: Tuple[int, int] = (36, 36),
