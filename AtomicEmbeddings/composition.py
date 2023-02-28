@@ -253,32 +253,27 @@ class CompositionalEmbedding:
         return np.concatenate(feature_vector)
 
     def __repr__(self):
-        """Return a string representation of the CompositionalEmbedding class."""
         return (
             f"CompositionalEmbedding(formula={self.formula}, "
             f"embedding={self.embedding})"
         )
 
     def __str__(self):
-        """Return a string representation of the CompositionalEmbedding class."""
         return (
             f"CompositionalEmbedding(formula={self.formula}, "
             f"embedding={self.embedding})"
         )
 
     def __eq__(self, other):
-        """Return True if the two CompositionalEmbedding classes are equal."""
         if isinstance(other, self.__class__):
             return self.formula == other.formula and self.embedding == other.embedding
         else:
             return False
 
     def __ne__(self, other):
-        """Return True if the two CompositionalEmbedding classes are not equal."""
         return not self.__eq__(other)
 
     def __hash__(self):
-        """Return a hash of the CompositionalEmbedding class."""
         return hash((self.formula, self.embedding))
 
 
