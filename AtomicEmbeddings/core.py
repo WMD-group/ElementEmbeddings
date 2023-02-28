@@ -516,7 +516,7 @@ class Embedding:
         * chebyshev
         * wasserstein
         * energy
-        * cosine
+        * cosine (cosine distance)
 
         Args:
             ele1 (str): element symbol
@@ -554,7 +554,7 @@ class Embedding:
 
         elif metric in scipy_metrics.keys():
             return scipy_metrics[metric](self.embeddings[ele1], self.embeddings[ele2])
-        elif metric == "cosine":
+        elif metric == "cosine" or metric == "cosine_distance":
             return cosine_distance(self.embeddings[ele1], self.embeddings[ele2])
 
         else:
