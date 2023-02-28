@@ -79,8 +79,6 @@ def multi_heatmap_plotter(
     nrows: int,
     ncols: int,
     metric: str,
-    distance: bool = True,
-    correlation: bool = False,
     figsize: Tuple[int, int] = (36, 36),
     filename: Optional[str] = None,
     show: bool = True,
@@ -99,10 +97,6 @@ def multi_heatmap_plotter(
         The number of columns in the figure.
     metric : bool, optional
         Whether to plot a metric distance heatmap, by default False
-    distance : bool, optional
-        Whether to plot a distance heatmap, by default True
-    correlation : bool, optional
-        Whether to plot a correlation heatmap, by default False
     figsize : Tuple[int,int], optional
         The size of the figure, by default (36, 36)
     filename : Optional[str], optional
@@ -116,10 +110,20 @@ def multi_heatmap_plotter(
     fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize)
     for i, embedding in enumerate(embeddings):
         ax = axes[i // ncols, i % ncols]
-        if correlation:
+
+        correlation_metrics = ["spearman", "pearson", "cosine_similarity"]
+        distance_metrics = [
+            "euclidean",
+            "manhattan",
+            "cosine_distance",
+            "chebyshev",
+            "wasserstein",
+            "energy",
+        ]
+        if metric in correlation_metrics:
             p = embedding.pearson_pivot_table()
 
-        elif distance:
+        elif metric in distance_metrics:
             p = embedding.distance_pivot_table(metric=metric)
         xlabels = [i[1] for i in p.index]
         ylabels = [i[1] for i in p.columns]
