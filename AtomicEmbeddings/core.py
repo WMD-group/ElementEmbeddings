@@ -11,6 +11,7 @@ Typical usage example:
 import fnmatch
 import json
 import random
+import warnings
 from itertools import combinations_with_replacement
 from os import path
 from typing import Dict, List, Optional, Tuple, Union
@@ -44,14 +45,15 @@ class Embedding:
     Works like a standard python dictionary. The keys are {element: vector} pairs.
 
     Adds a few convenience methods related to elemental representations.
-
-    Args:
-        embeddings (dict): A {element_symbol: vector} dictionary
-        embedding_name (str): The name of the elemental representation
     """
 
     def __init__(self, embeddings: dict, embedding_name: Optional[str] = None):
-        """Initialise the Embedding class."""
+        """Initialise the Embedding class.
+
+        Args:
+            embeddings (dict): A {element_symbol: vector} dictionary
+            embedding_name (str): The name of the elemental representation
+        """
         self.embeddings = embeddings
         self.embedding_name = embedding_name
 
@@ -436,6 +438,10 @@ class Embedding:
          The columns of returned dataframe are:
         [element_1, element_2, pearson_corr, euclid_dist].
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         ele_pairs = self.create_pairs()
         table = []
         for ele1, ele2 in ele_pairs:
@@ -571,6 +577,10 @@ class Embedding:
         The index and column are the mendeleev number of the element pairs
         and the values being the pearson correlation metrics.
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         corr_df = self.correlation_df()
         pearson_pivot = corr_df.pivot_table(
             values="pearson_corr", index="mend_1", columns="mend_2"
@@ -645,6 +655,10 @@ class Embedding:
             ax (matplotlib Axes): An Axes object with the heatmap
 
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         pearson_pivot = self.pearson_pivot_table()
 
         plt.figure(figsize=figsize)
@@ -668,6 +682,10 @@ class Embedding:
             ax (matplotlib.axes.Axes): An Axes object with the heatmap
 
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         distance_pivot = self.distance_pivot_table(metric=metric)
 
         plt.figure(figsize=figsize)
