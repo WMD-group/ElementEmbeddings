@@ -1,5 +1,5 @@
 pre-commit ==2.20.0
-black ==22.12.0
+black ==23.1.0
 isort ==5.11.2
 pytest ==7.2.1
 nbqa ==1.5.3
