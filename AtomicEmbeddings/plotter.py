@@ -79,6 +79,7 @@ def multi_heatmap_plotter(
     nrows: int,
     ncols: int,
     metric: str,
+    sortaxisby: str = "mendeleev",
     figsize: Tuple[int, int] = (36, 36),
     filename: Optional[str] = None,
     show: bool = True,
@@ -97,6 +98,9 @@ def multi_heatmap_plotter(
         The number of columns in the figure.
     metric : bool, optional
         Whether to plot a metric distance heatmap, by default False
+    sortaxisby : str, optional
+        The attribute to sort the axis by, by default "mendeleev_number".
+        Options are "mendeleev_number", "atomic_number"
     figsize : Tuple[int,int], optional
         The size of the figure, by default (36, 36)
     filename : Optional[str], optional
@@ -124,7 +128,7 @@ def multi_heatmap_plotter(
             p = embedding.pearson_pivot_table()
 
         elif metric in distance_metrics:
-            p = embedding.distance_pivot_table(metric=metric)
+            p = embedding.distance_pivot_table(metric=metric, sortby=sortaxisby)
         xlabels = [i[1] for i in p.index]
         ylabels = [i[1] for i in p.columns]
         sns.heatmap(
