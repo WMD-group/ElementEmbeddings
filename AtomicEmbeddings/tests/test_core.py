@@ -271,13 +271,15 @@ class EmbeddingTest(unittest.TestCase):
         assert isinstance(magpie.distance_correlation_df(), pd.DataFrame)
         assert magpie.distance_correlation_df().shape == (
             len(list(magpie.create_pairs())) * 2 - len(magpie.embeddings),
-            5,
+            7,
         )
         assert magpie.distance_correlation_df().columns.tolist() == [
             "ele_1",
             "ele_2",
             "mend_1",
             "mend_2",
+            "Z_1",
+            "Z_2",
             "euclidean",
         ]
         assert isinstance(magpie.distance_pivot_table(), pd.DataFrame)
