@@ -34,6 +34,9 @@ from .utils.math import cosine_distance, cosine_similarity
 
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, "data")
+pt_dir = path.join(data_directory, "element_data", "periodic-table-lookup-symbols.json")
+with open(pt_dir) as f:
+    pt = json.load(f)
 
 
 class Embedding:
@@ -617,31 +620,46 @@ class Embedding:
         mend_1 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_1"]]
         mend_2 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_2"]]
 
+        Z_1 = [(pt[ele]["number"], ele) for ele in corr_df["ele_1"]]
+        Z_2 = [(pt[ele]["number"], ele) for ele in corr_df["ele_2"]]
+
         corr_df["mend_1"] = mend_1
         corr_df["mend_2"] = mend_2
 
-        corr_df = corr_df[["ele_1", "ele_2", "mend_1", "mend_2", metric]]
+        corr_df["Z_1"] = Z_1
+        corr_df["Z_2"] = Z_2
+
+        corr_df = corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
 
         return corr_df
 
-    def distance_pivot_table(self, metric: str = "euclidean") -> pd.DataFrame:
+    def distance_pivot_table(
+        self, metric: str = "euclidean", sortby: str = "mendeleev"
+    ) -> pd.DataFrame:
         """
         Return a pandas.DataFrame style pivot.
 
-        The index and column being the mendeleev number of the element pairs
-        and the values being a user-specified distance metric.
+        The index and column being either the mendeleev number or atomic number
+        of the element pairs and the values being a user-specified distance metric.
 
         Args:
             metric (str): A distance metric.
+            sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
 
         Returns:
             distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
         """
         corr_df = self.distance_correlation_df(metric=metric)
-        distance_pivot = corr_df.pivot_table(
-            values=metric, index="mend_1", columns="mend_2"
-        )
-        return distance_pivot
+        if sortby == "mendeleev":
+            distance_pivot = corr_df.pivot_table(
+                values=metric, index="mend_1", columns="mend_2"
+            )
+            return distance_pivot
+        elif sortby == "atomic_number":
+            distance_pivot = corr_df.pivot_table(
+                values=metric, index="Z_1", columns="Z_2"
+            )
+            return distance_pivot
 
     def plot_pearson_correlation(self, figsize: Tuple[int, int] = (24, 24), **kwargs):
         """
