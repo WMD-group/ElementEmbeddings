@@ -82,7 +82,8 @@ def multi_heatmap_plotter(
     sortaxisby: str = "mendeleev",
     figsize: Tuple[int, int] = (36, 36),
     filename: Optional[str] = None,
-    show: bool = True,
+    show_axislabels: bool = True,
+    show_plot: bool = True,
     **kwargs,
 ):
     """
@@ -105,7 +106,9 @@ def multi_heatmap_plotter(
         The size of the figure, by default (36, 36)
     filename : Optional[str], optional
         The filename to save the figure to, by default None
-    show : bool, optional
+    show_axislabels : bool, optional
+        Whether to show the axis, by default True
+    show_plot : bool, optional
         Whether to show the figure, by default True
     **kwargs
         Additional keyword arguments to pass to seaborn.heatmap
@@ -137,21 +140,31 @@ def multi_heatmap_plotter(
             square="True",
             linecolor="k",
             ax=ax,
-            cbar_kws={"shrink": 0.5},
+            cbar_kws={
+                "shrink": 0.5,
+            },
             xticklabels=True,
             yticklabels=True,
             **kwargs,
         )
-        ax.title.set_text(embedding.embedding_name)
-        ax.set_xticklabels(
-            xlabels,
+        ax.set_title(
+            embedding.embedding_name, fontdict={"fontsize": 30, "fontweight": "bold"}
         )
-        ax.set_yticklabels(ylabels)
+        if not show_axislabels:
+            ax.set_xticklabels([])
+            ax.set_yticklabels([])
+            ax.set_xticks([])
+            ax.set_yticks([])
+        else:
+            ax.set_xticklabels(
+                xlabels,
+            )
+            ax.set_yticklabels(ylabels)
         ax.set_xlabel("")
         ax.set_ylabel("")
 
     fig.tight_layout()
     if filename:
         plt.savefig(filename)
-    if show:
+    if show_plot:
         plt.show()
