@@ -114,7 +114,7 @@ class Embedding:
             "mod_petti": "mod_petti.json",
             "oliynyk": "oliynyk.json",
             "oliynyk_sc": "oliynyk_sc.json",
-            "random_200": "random_200.csv",
+            "random_200": "random_200_new.csv",
             "skipatom": "skipatom_20201009_induced.csv",
         }
         _cbfv_names = list(_cbfv_files.keys())
