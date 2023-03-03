@@ -15,6 +15,7 @@ nav:
     - 'Python package':
       - 'Core module': 'python_api/core.md'
       - 'Composition module': 'python_api/composition.md'
+      - 'Plotter module': 'python_api/plotter.md'
     - Tutorial: tutorials.md
     - reference.md
     - Contributing: contribution.md

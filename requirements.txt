@@ -1,7 +1,6 @@
 numpy == 1.23.3
 scipy ==1.9.1
 pymatgen ==2022.9.21
-numba ==0.56.4
 seaborn ==0.12.1
 matplotlib==3.6.0
 scikit-learn==1.2.1
