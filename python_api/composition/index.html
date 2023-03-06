@@ -359,43 +359,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__eq__" class="md-nav__link">
-    __eq__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__hash__" class="md-nav__link">
-    __hash__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__init__" class="md-nav__link">
     __init__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__ne__" class="md-nav__link">
-    __ne__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__repr__" class="md-nav__link">
-    __repr__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__str__" class="md-nav__link">
-    __str__()
   </a>
   
 </li>
@@ -463,6 +428,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotter/" class="md-nav__link">
+        Plotter module
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -493,7 +472,7 @@
   
     <li class="md-nav__item">
       <a href="../../reference/" class="md-nav__link">
-        Reference
+        Elemental Embeddings
       </a>
     </li>
   
@@ -569,43 +548,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__eq__" class="md-nav__link">
-    __eq__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__hash__" class="md-nav__link">
-    __hash__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__init__" class="md-nav__link">
     __init__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__ne__" class="md-nav__link">
-    __ne__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__repr__" class="md-nav__link">
-    __repr__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#AtomicEmbeddings.composition.CompositionalEmbedding.__str__" class="md-nav__link">
-    __str__()
   </a>
   
 </li>
@@ -960,12 +904,7 @@
 <span class="normal"><a href="#__codelineno-0-274">274</a></span>
 <span class="normal"><a href="#__codelineno-0-275">275</a></span>
 <span class="normal"><a href="#__codelineno-0-276">276</a></span>
-<span class="normal"><a href="#__codelineno-0-277">277</a></span>
-<span class="normal"><a href="#__codelineno-0-278">278</a></span>
-<span class="normal"><a href="#__codelineno-0-279">279</a></span>
-<span class="normal"><a href="#__codelineno-0-280">280</a></span>
-<span class="normal"><a href="#__codelineno-0-281">281</a></span>
-<span class="normal"><a href="#__codelineno-0-282">282</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="k">class</span> <span class="nc">CompositionalEmbedding</span><span class="p">:</span>
+<span class="normal"><a href="#__codelineno-0-277">277</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="k">class</span> <span class="nc">CompositionalEmbedding</span><span class="p">:</span>
 <a id="__codelineno-0-85" name="__codelineno-0-85"></a>    <span class="sd">&quot;&quot;&quot;</span>
 <a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="sd">    Class to handle compositional embeddings.</span>
 <a id="__codelineno-0-87" name="__codelineno-0-87"></a>
@@ -1137,33 +1076,28 @@
 <a id="__codelineno-0-253" name="__codelineno-0-253"></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">feature_vector</span><span class="p">)</span>
 <a id="__codelineno-0-254" name="__codelineno-0-254"></a>
 <a id="__codelineno-0-255" name="__codelineno-0-255"></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-0-256" name="__codelineno-0-256"></a>        <span class="sd">&quot;&quot;&quot;Return a string representation of the CompositionalEmbedding class.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-257" name="__codelineno-0-257"></a>        <span class="k">return</span> <span class="p">(</span>
-<a id="__codelineno-0-258" name="__codelineno-0-258"></a>            <span class="sa">f</span><span class="s2">&quot;CompositionalEmbedding(formula=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="si">}</span><span class="s2">, &quot;</span>
-<a id="__codelineno-0-259" name="__codelineno-0-259"></a>            <span class="sa">f</span><span class="s2">&quot;embedding=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="si">}</span><span class="s2">)&quot;</span>
-<a id="__codelineno-0-260" name="__codelineno-0-260"></a>        <span class="p">)</span>
-<a id="__codelineno-0-261" name="__codelineno-0-261"></a>
-<a id="__codelineno-0-262" name="__codelineno-0-262"></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-0-263" name="__codelineno-0-263"></a>        <span class="sd">&quot;&quot;&quot;Return a string representation of the CompositionalEmbedding class.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-264" name="__codelineno-0-264"></a>        <span class="k">return</span> <span class="p">(</span>
-<a id="__codelineno-0-265" name="__codelineno-0-265"></a>            <span class="sa">f</span><span class="s2">&quot;CompositionalEmbedding(formula=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="si">}</span><span class="s2">, &quot;</span>
-<a id="__codelineno-0-266" name="__codelineno-0-266"></a>            <span class="sa">f</span><span class="s2">&quot;embedding=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="si">}</span><span class="s2">)&quot;</span>
-<a id="__codelineno-0-267" name="__codelineno-0-267"></a>        <span class="p">)</span>
-<a id="__codelineno-0-268" name="__codelineno-0-268"></a>
-<a id="__codelineno-0-269" name="__codelineno-0-269"></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<a id="__codelineno-0-270" name="__codelineno-0-270"></a>        <span class="sd">&quot;&quot;&quot;Return True if the two CompositionalEmbedding classes are equal.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-271" name="__codelineno-0-271"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
-<a id="__codelineno-0-272" name="__codelineno-0-272"></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">formula</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">embedding</span>
-<a id="__codelineno-0-273" name="__codelineno-0-273"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-274" name="__codelineno-0-274"></a>            <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-0-256" name="__codelineno-0-256"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-0-257" name="__codelineno-0-257"></a>            <span class="sa">f</span><span class="s2">&quot;CompositionalEmbedding(formula=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="si">}</span><span class="s2">, &quot;</span>
+<a id="__codelineno-0-258" name="__codelineno-0-258"></a>            <span class="sa">f</span><span class="s2">&quot;embedding=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="si">}</span><span class="s2">)&quot;</span>
+<a id="__codelineno-0-259" name="__codelineno-0-259"></a>        <span class="p">)</span>
+<a id="__codelineno-0-260" name="__codelineno-0-260"></a>
+<a id="__codelineno-0-261" name="__codelineno-0-261"></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-0-262" name="__codelineno-0-262"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-0-263" name="__codelineno-0-263"></a>            <span class="sa">f</span><span class="s2">&quot;CompositionalEmbedding(formula=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="si">}</span><span class="s2">, &quot;</span>
+<a id="__codelineno-0-264" name="__codelineno-0-264"></a>            <span class="sa">f</span><span class="s2">&quot;embedding=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="si">}</span><span class="s2">)&quot;</span>
+<a id="__codelineno-0-265" name="__codelineno-0-265"></a>        <span class="p">)</span>
+<a id="__codelineno-0-266" name="__codelineno-0-266"></a>
+<a id="__codelineno-0-267" name="__codelineno-0-267"></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<a id="__codelineno-0-268" name="__codelineno-0-268"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+<a id="__codelineno-0-269" name="__codelineno-0-269"></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">formula</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">embedding</span>
+<a id="__codelineno-0-270" name="__codelineno-0-270"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-271" name="__codelineno-0-271"></a>            <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-0-272" name="__codelineno-0-272"></a>
+<a id="__codelineno-0-273" name="__codelineno-0-273"></a>    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<a id="__codelineno-0-274" name="__codelineno-0-274"></a>        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 <a id="__codelineno-0-275" name="__codelineno-0-275"></a>
-<a id="__codelineno-0-276" name="__codelineno-0-276"></a>    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<a id="__codelineno-0-277" name="__codelineno-0-277"></a>        <span class="sd">&quot;&quot;&quot;Return True if the two CompositionalEmbedding classes are not equal.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-278" name="__codelineno-0-278"></a>        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-<a id="__codelineno-0-279" name="__codelineno-0-279"></a>
-<a id="__codelineno-0-280" name="__codelineno-0-280"></a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-0-281" name="__codelineno-0-281"></a>        <span class="sd">&quot;&quot;&quot;Return a hash of the CompositionalEmbedding class.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-282" name="__codelineno-0-282"></a>        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">))</span>
+<a id="__codelineno-0-276" name="__codelineno-0-276"></a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-0-277" name="__codelineno-0-277"></a>        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
         </details>
 
@@ -1178,66 +1112,6 @@
 
 
 
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="AtomicEmbeddings.composition.CompositionalEmbedding.__eq__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Return True if the two CompositionalEmbedding classes are equal.</p>
-
-      <details class="quote">
-        <summary>Source code in <code>AtomicEmbeddings/composition.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-269">269</a></span>
-<span class="normal"><a href="#__codelineno-0-270">270</a></span>
-<span class="normal"><a href="#__codelineno-0-271">271</a></span>
-<span class="normal"><a href="#__codelineno-0-272">272</a></span>
-<span class="normal"><a href="#__codelineno-0-273">273</a></span>
-<span class="normal"><a href="#__codelineno-0-274">274</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-269" name="__codelineno-0-269"></a><span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<a id="__codelineno-0-270" name="__codelineno-0-270"></a>    <span class="sd">&quot;&quot;&quot;Return True if the two CompositionalEmbedding classes are equal.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-271" name="__codelineno-0-271"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
-<a id="__codelineno-0-272" name="__codelineno-0-272"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">formula</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">formula</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">embedding</span>
-<a id="__codelineno-0-273" name="__codelineno-0-273"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-274" name="__codelineno-0-274"></a>        <span class="k">return</span> <span class="kc">False</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="AtomicEmbeddings.composition.CompositionalEmbedding.__hash__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__hash__</span><span class="p">()</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Return a hash of the CompositionalEmbedding class.</p>
-
-      <details class="quote">
-        <summary>Source code in <code>AtomicEmbeddings/composition.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-280">280</a></span>
-<span class="normal"><a href="#__codelineno-0-281">281</a></span>
-<span class="normal"><a href="#__codelineno-0-282">282</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-280" name="__codelineno-0-280"></a><span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-0-281" name="__codelineno-0-281"></a>    <span class="sd">&quot;&quot;&quot;Return a hash of the CompositionalEmbedding class.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-282" name="__codelineno-0-282"></a>    <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">))</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
 
 <div class="doc doc-object doc-function">
 
@@ -1328,99 +1202,6 @@
 <a id="__codelineno-0-129" name="__codelineno-0-129"></a>
 <a id="__codelineno-0-130" name="__codelineno-0-130"></a>    <span class="c1"># Set an attribute for the normalised stoichiometric vector</span>
 <a id="__codelineno-0-131" name="__codelineno-0-131"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">norm_stoich_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stoich_vector</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_natoms</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="AtomicEmbeddings.composition.CompositionalEmbedding.__ne__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__ne__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Return True if the two CompositionalEmbedding classes are not equal.</p>
-
-      <details class="quote">
-        <summary>Source code in <code>AtomicEmbeddings/composition.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-276">276</a></span>
-<span class="normal"><a href="#__codelineno-0-277">277</a></span>
-<span class="normal"><a href="#__codelineno-0-278">278</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-276" name="__codelineno-0-276"></a><span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<a id="__codelineno-0-277" name="__codelineno-0-277"></a>    <span class="sd">&quot;&quot;&quot;Return True if the two CompositionalEmbedding classes are not equal.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-278" name="__codelineno-0-278"></a>    <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="AtomicEmbeddings.composition.CompositionalEmbedding.__repr__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__repr__</span><span class="p">()</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Return a string representation of the CompositionalEmbedding class.</p>
-
-      <details class="quote">
-        <summary>Source code in <code>AtomicEmbeddings/composition.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-255">255</a></span>
-<span class="normal"><a href="#__codelineno-0-256">256</a></span>
-<span class="normal"><a href="#__codelineno-0-257">257</a></span>
-<span class="normal"><a href="#__codelineno-0-258">258</a></span>
-<span class="normal"><a href="#__codelineno-0-259">259</a></span>
-<span class="normal"><a href="#__codelineno-0-260">260</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-255" name="__codelineno-0-255"></a><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-0-256" name="__codelineno-0-256"></a>    <span class="sd">&quot;&quot;&quot;Return a string representation of the CompositionalEmbedding class.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-257" name="__codelineno-0-257"></a>    <span class="k">return</span> <span class="p">(</span>
-<a id="__codelineno-0-258" name="__codelineno-0-258"></a>        <span class="sa">f</span><span class="s2">&quot;CompositionalEmbedding(formula=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="si">}</span><span class="s2">, &quot;</span>
-<a id="__codelineno-0-259" name="__codelineno-0-259"></a>        <span class="sa">f</span><span class="s2">&quot;embedding=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="si">}</span><span class="s2">)&quot;</span>
-<a id="__codelineno-0-260" name="__codelineno-0-260"></a>    <span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-      </details>
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="AtomicEmbeddings.composition.CompositionalEmbedding.__str__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__str__</span><span class="p">()</span></code>
-
-</h3>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Return a string representation of the CompositionalEmbedding class.</p>
-
-      <details class="quote">
-        <summary>Source code in <code>AtomicEmbeddings/composition.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-262">262</a></span>
-<span class="normal"><a href="#__codelineno-0-263">263</a></span>
-<span class="normal"><a href="#__codelineno-0-264">264</a></span>
-<span class="normal"><a href="#__codelineno-0-265">265</a></span>
-<span class="normal"><a href="#__codelineno-0-266">266</a></span>
-<span class="normal"><a href="#__codelineno-0-267">267</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-262" name="__codelineno-0-262"></a><span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-0-263" name="__codelineno-0-263"></a>    <span class="sd">&quot;&quot;&quot;Return a string representation of the CompositionalEmbedding class.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-264" name="__codelineno-0-264"></a>    <span class="k">return</span> <span class="p">(</span>
-<a id="__codelineno-0-265" name="__codelineno-0-265"></a>        <span class="sa">f</span><span class="s2">&quot;CompositionalEmbedding(formula=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formula</span><span class="si">}</span><span class="s2">, &quot;</span>
-<a id="__codelineno-0-266" name="__codelineno-0-266"></a>        <span class="sa">f</span><span class="s2">&quot;embedding=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="si">}</span><span class="s2">)&quot;</span>
-<a id="__codelineno-0-267" name="__codelineno-0-267"></a>    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1820,7 +1601,12 @@ in the stats argument.</p>
 
       <details class="quote">
         <summary>Source code in <code>AtomicEmbeddings/composition.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-285">285</a></span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-280">280</a></span>
+<span class="normal"><a href="#__codelineno-0-281">281</a></span>
+<span class="normal"><a href="#__codelineno-0-282">282</a></span>
+<span class="normal"><a href="#__codelineno-0-283">283</a></span>
+<span class="normal"><a href="#__codelineno-0-284">284</a></span>
+<span class="normal"><a href="#__codelineno-0-285">285</a></span>
 <span class="normal"><a href="#__codelineno-0-286">286</a></span>
 <span class="normal"><a href="#__codelineno-0-287">287</a></span>
 <span class="normal"><a href="#__codelineno-0-288">288</a></span>
@@ -1877,74 +1663,69 @@ in the stats argument.</p>
 <span class="normal"><a href="#__codelineno-0-339">339</a></span>
 <span class="normal"><a href="#__codelineno-0-340">340</a></span>
 <span class="normal"><a href="#__codelineno-0-341">341</a></span>
-<span class="normal"><a href="#__codelineno-0-342">342</a></span>
-<span class="normal"><a href="#__codelineno-0-343">343</a></span>
-<span class="normal"><a href="#__codelineno-0-344">344</a></span>
-<span class="normal"><a href="#__codelineno-0-345">345</a></span>
-<span class="normal"><a href="#__codelineno-0-346">346</a></span>
-<span class="normal"><a href="#__codelineno-0-347">347</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-285" name="__codelineno-0-285"></a><span class="k">def</span> <span class="nf">composition_featuriser</span><span class="p">(</span>
-<a id="__codelineno-0-286" name="__codelineno-0-286"></a>    <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">CompositionalEmbedding</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
-<a id="__codelineno-0-287" name="__codelineno-0-287"></a>    <span class="n">embedding</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Embedding</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;magpie&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-288" name="__codelineno-0-288"></a>    <span class="n">stats</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span>
-<a id="__codelineno-0-289" name="__codelineno-0-289"></a>    <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-290" name="__codelineno-0-290"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<a id="__codelineno-0-291" name="__codelineno-0-291"></a>    <span class="sd">&quot;&quot;&quot;</span>
-<a id="__codelineno-0-292" name="__codelineno-0-292"></a><span class="sd">    Compute a feature vector for a composition.</span>
-<a id="__codelineno-0-293" name="__codelineno-0-293"></a>
-<a id="__codelineno-0-294" name="__codelineno-0-294"></a><span class="sd">    The feature vector is based on the statistics specified</span>
-<a id="__codelineno-0-295" name="__codelineno-0-295"></a><span class="sd">    in the stats argument.</span>
-<a id="__codelineno-0-296" name="__codelineno-0-296"></a>
-<a id="__codelineno-0-297" name="__codelineno-0-297"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-298" name="__codelineno-0-298"></a><span class="sd">        data (Union[pd.DataFrame, pd.Series, list, CompositionalEmbedding]):</span>
-<a id="__codelineno-0-299" name="__codelineno-0-299"></a><span class="sd">        A pandas DataFrame or Series containing a column named &#39;formula&#39;,</span>
-<a id="__codelineno-0-300" name="__codelineno-0-300"></a><span class="sd">        a list of formula, or a CompositionalEmbedding class</span>
-<a id="__codelineno-0-301" name="__codelineno-0-301"></a><span class="sd">        embedding (Union[Embedding, str], optional): A Embedding class or a string</span>
-<a id="__codelineno-0-302" name="__codelineno-0-302"></a><span class="sd">        stats (Union[str, list], optional): A list of statistics to be computed.</span>
-<a id="__codelineno-0-303" name="__codelineno-0-303"></a><span class="sd">        The default is [&#39;mean&#39;].</span>
-<a id="__codelineno-0-304" name="__codelineno-0-304"></a><span class="sd">        inplace (bool, optional): Whether to perform the operation in place on the data.</span>
-<a id="__codelineno-0-305" name="__codelineno-0-305"></a><span class="sd">        The default is False.</span>
-<a id="__codelineno-0-306" name="__codelineno-0-306"></a>
-<a id="__codelineno-0-307" name="__codelineno-0-307"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-308" name="__codelineno-0-308"></a><span class="sd">        Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector,</span>
-<a id="__codelineno-0-309" name="__codelineno-0-309"></a><span class="sd">        or a list of feature vectors is returned</span>
-<a id="__codelineno-0-310" name="__codelineno-0-310"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-311" name="__codelineno-0-311"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-<a id="__codelineno-0-312" name="__codelineno-0-312"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
-<a id="__codelineno-0-313" name="__codelineno-0-313"></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<a id="__codelineno-0-314" name="__codelineno-0-314"></a>        <span class="k">if</span> <span class="s2">&quot;formula&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-<a id="__codelineno-0-315" name="__codelineno-0-315"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-0-316" name="__codelineno-0-316"></a>                <span class="s2">&quot;The data must contain a column named &#39;formula&#39; to featurise.&quot;</span>
-<a id="__codelineno-0-317" name="__codelineno-0-317"></a>            <span class="p">)</span>
-<a id="__codelineno-0-318" name="__codelineno-0-318"></a>        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;composition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;formula&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span>
-<a id="__codelineno-0-319" name="__codelineno-0-319"></a>            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span>
-<a id="__codelineno-0-320" name="__codelineno-0-320"></a>        <span class="p">)</span>
-<a id="__codelineno-0-321" name="__codelineno-0-321"></a>        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;feature_vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;composition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span>
-<a id="__codelineno-0-322" name="__codelineno-0-322"></a>            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
-<a id="__codelineno-0-323" name="__codelineno-0-323"></a>        <span class="p">)</span>
-<a id="__codelineno-0-324" name="__codelineno-0-324"></a>        <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;composition&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-0-325" name="__codelineno-0-325"></a>        <span class="k">return</span> <span class="n">data</span>
-<a id="__codelineno-0-326" name="__codelineno-0-326"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-<a id="__codelineno-0-327" name="__codelineno-0-327"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
-<a id="__codelineno-0-328" name="__codelineno-0-328"></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<a id="__codelineno-0-329" name="__codelineno-0-329"></a>        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;composition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;formula&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span>
-<a id="__codelineno-0-330" name="__codelineno-0-330"></a>            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span>
-<a id="__codelineno-0-331" name="__codelineno-0-331"></a>        <span class="p">)</span>
-<a id="__codelineno-0-332" name="__codelineno-0-332"></a>        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;feature_vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;composition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span>
-<a id="__codelineno-0-333" name="__codelineno-0-333"></a>            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
-<a id="__codelineno-0-334" name="__codelineno-0-334"></a>        <span class="p">)</span>
-<a id="__codelineno-0-335" name="__codelineno-0-335"></a>        <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;composition&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-0-336" name="__codelineno-0-336"></a>        <span class="k">return</span> <span class="n">data</span>
-<a id="__codelineno-0-337" name="__codelineno-0-337"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-<a id="__codelineno-0-338" name="__codelineno-0-338"></a>        <span class="n">comps</span> <span class="o">=</span> <span class="p">[</span><span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
-<a id="__codelineno-0-339" name="__codelineno-0-339"></a>        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">comps</span><span class="p">)]</span>
-<a id="__codelineno-0-340" name="__codelineno-0-340"></a>
-<a id="__codelineno-0-341" name="__codelineno-0-341"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">CompositionalEmbedding</span><span class="p">):</span>
-<a id="__codelineno-0-342" name="__codelineno-0-342"></a>        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
-<a id="__codelineno-0-343" name="__codelineno-0-343"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-344" name="__codelineno-0-344"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-0-345" name="__codelineno-0-345"></a>            <span class="s2">&quot;The data must be a pandas DataFrame, Series, &quot;</span>
-<a id="__codelineno-0-346" name="__codelineno-0-346"></a>            <span class="s2">&quot;list or CompositionalEmbedding class.&quot;</span>
-<a id="__codelineno-0-347" name="__codelineno-0-347"></a>        <span class="p">)</span>
+<span class="normal"><a href="#__codelineno-0-342">342</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-280" name="__codelineno-0-280"></a><span class="k">def</span> <span class="nf">composition_featuriser</span><span class="p">(</span>
+<a id="__codelineno-0-281" name="__codelineno-0-281"></a>    <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">CompositionalEmbedding</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
+<a id="__codelineno-0-282" name="__codelineno-0-282"></a>    <span class="n">embedding</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Embedding</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;magpie&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-283" name="__codelineno-0-283"></a>    <span class="n">stats</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-284" name="__codelineno-0-284"></a>    <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-285" name="__codelineno-0-285"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<a id="__codelineno-0-286" name="__codelineno-0-286"></a>    <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-287" name="__codelineno-0-287"></a><span class="sd">    Compute a feature vector for a composition.</span>
+<a id="__codelineno-0-288" name="__codelineno-0-288"></a>
+<a id="__codelineno-0-289" name="__codelineno-0-289"></a><span class="sd">    The feature vector is based on the statistics specified</span>
+<a id="__codelineno-0-290" name="__codelineno-0-290"></a><span class="sd">    in the stats argument.</span>
+<a id="__codelineno-0-291" name="__codelineno-0-291"></a>
+<a id="__codelineno-0-292" name="__codelineno-0-292"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-293" name="__codelineno-0-293"></a><span class="sd">        data (Union[pd.DataFrame, pd.Series, list, CompositionalEmbedding]):</span>
+<a id="__codelineno-0-294" name="__codelineno-0-294"></a><span class="sd">        A pandas DataFrame or Series containing a column named &#39;formula&#39;,</span>
+<a id="__codelineno-0-295" name="__codelineno-0-295"></a><span class="sd">        a list of formula, or a CompositionalEmbedding class</span>
+<a id="__codelineno-0-296" name="__codelineno-0-296"></a><span class="sd">        embedding (Union[Embedding, str], optional): A Embedding class or a string</span>
+<a id="__codelineno-0-297" name="__codelineno-0-297"></a><span class="sd">        stats (Union[str, list], optional): A list of statistics to be computed.</span>
+<a id="__codelineno-0-298" name="__codelineno-0-298"></a><span class="sd">        The default is [&#39;mean&#39;].</span>
+<a id="__codelineno-0-299" name="__codelineno-0-299"></a><span class="sd">        inplace (bool, optional): Whether to perform the operation in place on the data.</span>
+<a id="__codelineno-0-300" name="__codelineno-0-300"></a><span class="sd">        The default is False.</span>
+<a id="__codelineno-0-301" name="__codelineno-0-301"></a>
+<a id="__codelineno-0-302" name="__codelineno-0-302"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-303" name="__codelineno-0-303"></a><span class="sd">        Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector,</span>
+<a id="__codelineno-0-304" name="__codelineno-0-304"></a><span class="sd">        or a list of feature vectors is returned</span>
+<a id="__codelineno-0-305" name="__codelineno-0-305"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-306" name="__codelineno-0-306"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<a id="__codelineno-0-307" name="__codelineno-0-307"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+<a id="__codelineno-0-308" name="__codelineno-0-308"></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="__codelineno-0-309" name="__codelineno-0-309"></a>        <span class="k">if</span> <span class="s2">&quot;formula&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<a id="__codelineno-0-310" name="__codelineno-0-310"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<a id="__codelineno-0-311" name="__codelineno-0-311"></a>                <span class="s2">&quot;The data must contain a column named &#39;formula&#39; to featurise.&quot;</span>
+<a id="__codelineno-0-312" name="__codelineno-0-312"></a>            <span class="p">)</span>
+<a id="__codelineno-0-313" name="__codelineno-0-313"></a>        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;composition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;formula&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span>
+<a id="__codelineno-0-314" name="__codelineno-0-314"></a>            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span>
+<a id="__codelineno-0-315" name="__codelineno-0-315"></a>        <span class="p">)</span>
+<a id="__codelineno-0-316" name="__codelineno-0-316"></a>        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;feature_vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;composition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span>
+<a id="__codelineno-0-317" name="__codelineno-0-317"></a>            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<a id="__codelineno-0-318" name="__codelineno-0-318"></a>        <span class="p">)</span>
+<a id="__codelineno-0-319" name="__codelineno-0-319"></a>        <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;composition&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-320" name="__codelineno-0-320"></a>        <span class="k">return</span> <span class="n">data</span>
+<a id="__codelineno-0-321" name="__codelineno-0-321"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+<a id="__codelineno-0-322" name="__codelineno-0-322"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+<a id="__codelineno-0-323" name="__codelineno-0-323"></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="__codelineno-0-324" name="__codelineno-0-324"></a>        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;composition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;formula&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span>
+<a id="__codelineno-0-325" name="__codelineno-0-325"></a>            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span>
+<a id="__codelineno-0-326" name="__codelineno-0-326"></a>        <span class="p">)</span>
+<a id="__codelineno-0-327" name="__codelineno-0-327"></a>        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;feature_vector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;composition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span>
+<a id="__codelineno-0-328" name="__codelineno-0-328"></a>            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<a id="__codelineno-0-329" name="__codelineno-0-329"></a>        <span class="p">)</span>
+<a id="__codelineno-0-330" name="__codelineno-0-330"></a>        <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;composition&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-331" name="__codelineno-0-331"></a>        <span class="k">return</span> <span class="n">data</span>
+<a id="__codelineno-0-332" name="__codelineno-0-332"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+<a id="__codelineno-0-333" name="__codelineno-0-333"></a>        <span class="n">comps</span> <span class="o">=</span> <span class="p">[</span><span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<a id="__codelineno-0-334" name="__codelineno-0-334"></a>        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">comps</span><span class="p">)]</span>
+<a id="__codelineno-0-335" name="__codelineno-0-335"></a>
+<a id="__codelineno-0-336" name="__codelineno-0-336"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">CompositionalEmbedding</span><span class="p">):</span>
+<a id="__codelineno-0-337" name="__codelineno-0-337"></a>        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<a id="__codelineno-0-338" name="__codelineno-0-338"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-339" name="__codelineno-0-339"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<a id="__codelineno-0-340" name="__codelineno-0-340"></a>            <span class="s2">&quot;The data must be a pandas DataFrame, Series, &quot;</span>
+<a id="__codelineno-0-341" name="__codelineno-0-341"></a>            <span class="s2">&quot;list or CompositionalEmbedding class.&quot;</span>
+<a id="__codelineno-0-342" name="__codelineno-0-342"></a>        <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -2119,13 +1900,13 @@ of element symbol:amount.</p>
       
       
         
-        <a href="../../tutorials/" class="md-footer__link md-footer__link--next" aria-label="Next: Tutorial" rel="next">
+        <a href="../plotter/" class="md-footer__link md-footer__link--next" aria-label="Next: Plotter module" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Tutorial
+              Plotter module
             </div>
           </div>
           <div class="md-footer__button md-icon">
