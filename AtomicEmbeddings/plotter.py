@@ -148,7 +148,11 @@ def multi_heatmap_plotter(
             **kwargs,
         )
         ax.set_title(
-            embedding.embedding_name, fontdict={"fontsize": 30, "fontweight": "bold"}
+            embedding.embedding_name,
+            fontdict={
+                # "fontsize": 30,
+                "fontweight": "bold"
+            },
         )
         if not show_axislabels:
             ax.set_xticklabels([])
