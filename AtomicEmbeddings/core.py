@@ -499,7 +499,7 @@ class Embedding:
             ele1 (str): element symbol
             ele2 (str): element symbol
             metric (str): name of a correlation metric.
-            Options are "spearman", "pearson" and "cosine".
+            Options are "spearman", "pearson" and "cosine_similarity".
 
         Returns:
             PearsonResult | SpearmanrResult | float: correlation/similarity metric
@@ -509,7 +509,7 @@ class Embedding:
 
         if metric in scipy_corrs:
             return scipy_corrs[metric](self.embeddings[ele1], self.embeddings[ele2])
-        elif metric == "cosine":
+        elif metric == "cosine_similarity":
             return cosine_similarity(self.embeddings[ele1], self.embeddings[ele2])
 
     def compute_distance_metric(
@@ -590,7 +590,7 @@ class Embedding:
         )
         return pearson_pivot
 
-    def distance_correlation_df(self, metric: str = "euclidean") -> pd.DataFrame:
+    def distance_df(self, metric: str = "euclidean") -> pd.DataFrame:
         """
         Return a dataframe with columns ["ele_1", "ele_2", metric].
 
@@ -649,7 +649,7 @@ class Embedding:
         Returns:
             distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
         """
-        corr_df = self.distance_correlation_df(metric=metric)
+        corr_df = self.distance_df(metric=metric)
         if sortby == "mendeleev":
             distance_pivot = corr_df.pivot_table(
                 values=metric, index="mend_1", columns="mend_2"

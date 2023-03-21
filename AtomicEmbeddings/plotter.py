@@ -10,6 +10,7 @@ from .core import Embedding
 def heatmap_plotter(
     embedding: Embedding,
     metric: str,
+    cmap: str = "Blues",
     sortaxisby: str = "mendeleev",
     ax: Optional[plt.axes] = None,
     show_axislabels: bool = True,
@@ -22,8 +23,10 @@ def heatmap_plotter(
     ----------
     embedding : Embedding
         The embeddings to be plotted.
-    metric : bool, optional
-        Whether to plot a metric distance heatmap, by default False
+    metric : str
+        The distance metric / similarity measure to be plotted.
+    cmap: str
+        The colourmap for the heatmap.
     sortaxisby : str, optional
         The attribute to sort the axis by, by default "mendeleev_number".
         Options are "mendeleev_number", "atomic_number"
@@ -56,7 +59,7 @@ def heatmap_plotter(
     ylabels = [i[1] for i in p.columns]
     sns.heatmap(
         p,
-        cmap="bwr",
+        cmap=cmap,
         square="True",
         linecolor="k",
         ax=ax,
