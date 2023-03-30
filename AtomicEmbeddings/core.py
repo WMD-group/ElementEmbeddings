@@ -435,7 +435,7 @@ class Embedding:
         ele_pairs = combinations_with_replacement(ele_list, 2)
         return ele_pairs
 
-    def correlation_df(self) -> pd.DataFrame:
+    def stats_correlation_df(self) -> pd.DataFrame:
         """Return a pandas.DataFrame with correlation metrics.
 
          The columns of returned dataframe are:
@@ -633,6 +633,48 @@ class Embedding:
 
         return corr_df
 
+    def correlation_df(self, metric: str = "pearson") -> pd.DataFrame:
+        """
+        Return a dataframe with columns ["ele_1", "ele_2", metric].
+
+        Allowed metrics:
+
+        * pearson
+        * spearman
+        * cosine_similarity
+
+
+        Args:
+            metric (str): A distance metric.
+
+        Returns:
+            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
+        """
+        ele_pairs = self.create_pairs()
+        table = []
+        for ele1, ele2 in ele_pairs:
+            dist = self.compute_correlation_metric(ele1, ele2, metric=metric)
+            table.append((ele1, ele2, dist))
+            if ele1 != ele2:
+                table.append((ele2, ele1, dist))
+        corr_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
+
+        mend_1 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_1"]]
+        mend_2 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_2"]]
+
+        Z_1 = [(pt[ele]["number"], ele) for ele in corr_df["ele_1"]]
+        Z_2 = [(pt[ele]["number"], ele) for ele in corr_df["ele_2"]]
+
+        corr_df["mend_1"] = mend_1
+        corr_df["mend_2"] = mend_2
+
+        corr_df["Z_1"] = Z_1
+        corr_df["Z_2"] = Z_2
+
+        corr_df = corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
+
+        return corr_df
+
     def distance_pivot_table(
         self, metric: str = "euclidean", sortby: str = "mendeleev"
     ) -> pd.DataFrame:
@@ -660,6 +702,34 @@ class Embedding:
                 values=metric, index="Z_1", columns="Z_2"
             )
             return distance_pivot
+
+    def correlation_pivot_table(
+        self, metric: str = "pearson", sortby: str = "mendeleev"
+    ) -> pd.DataFrame:
+        """
+        Return a pandas.DataFrame style pivot.
+
+        The index and column being either the mendeleev number or atomic number
+        of the element pairs and the values being a user-specified distance metric.
+
+        Args:
+            metric (str): A distance metric.
+            sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
+
+        Returns:
+            distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
+        """
+        corr_df = self.correlation_df(metric=metric)
+        if sortby == "mendeleev":
+            correlation_pivot = corr_df.pivot_table(
+                values=metric, index="mend_1", columns="mend_2"
+            )
+            return correlation_pivot
+        elif sortby == "atomic_number":
+            correlation_pivot = corr_df.pivot_table(
+                values=metric, index="Z_1", columns="Z_2"
+            )
+            return correlation_pivot
 
     def plot_pearson_correlation(self, figsize: Tuple[int, int] = (24, 24), **kwargs):
         """
