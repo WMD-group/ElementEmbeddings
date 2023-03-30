@@ -654,6 +654,8 @@ class Embedding:
         table = []
         for ele1, ele2 in ele_pairs:
             dist = self.compute_correlation_metric(ele1, ele2, metric=metric)
+            if metric in ["pearson", "spearman"]:
+                dist = dist[0]
             table.append((ele1, ele2, dist))
             if ele1 != ele2:
                 table.append((ele2, ele1, dist))

@@ -51,7 +51,7 @@ def heatmap_plotter(
         "energy",
     ]
     if metric in correlation_metrics:
-        p = embedding.correlation_pivot_table()
+        p = embedding.correlation_pivot_table(metric=metric, sortby=sortaxisby)
 
     elif metric in distance_metrics:
         p = embedding.distance_pivot_table(metric=metric, sortby=sortaxisby)
