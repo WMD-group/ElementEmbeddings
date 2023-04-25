@@ -28,6 +28,7 @@ from scipy.stats._stats_py import SpearmanrResult
 from sklearn import decomposition
 from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
+from umap import UMAP
 
 from .utils.io import NumpyEncoder
 from .utils.math import cosine_distance, cosine_similarity
@@ -77,6 +78,9 @@ class Embedding:
 
         # Dummy initialisation for results
         self._data = []
+        self._pca_data = None  # type: Optional[np.ndarray]
+        self._tsne_data = None  # type: Optional[np.ndarray]
+        self._umap_data = None  # type: Optional[np.ndarray]
 
     @staticmethod
     def load_data(embedding_name: Optional[str] = None):
@@ -810,17 +814,29 @@ class Embedding:
             table.append(temp_dict)
         pass
 
-    def calculate_PC(self, n_components: int, **kwargs):
+    def calculate_PC(self, n_components: int = 2, **kwargs):
         """Calculate the principal componenets (PC) of the embeddings."""
-        pass
+        embeddings_array = np.array(list(self.embeddings.values()))
 
-    def calculate_tSNE(self, **kwargs):
+        pca = decomposition.PCA(n_components=n_components)  # project to N dimensions
+        pca.fit(embeddings_array)
+        self.pca_data = pca.transform(embeddings_array)
+
+    def calculate_tSNE(self, n_components: int = 2, **kwargs):
         """Calculate t-SNE components."""
-        pass
+        embeddings_array = np.array(list(self.embeddings.values()))
 
-    def calculate_UMAP(self, **kwargs):
+        tsne = TSNE(n_components=n_components, **kwargs)
+        tsne_result = tsne.fit_transform(embeddings_array)
+        self.tsne_data = tsne_result
+
+    def calculate_UMAP(self, n_components: int = 2, **kwargs):
         """Calculate UMAP embeddings."""
-        pass
+        embeddings_array = np.array(list(self.embeddings.values()))
+
+        umap = UMAP(n_components=n_components, **kwargs)
+        umap_result = umap.fit_transform(embeddings_array)
+        self._umap_data = umap_result
 
     def plot_PCA_2D(
         self,
