@@ -91,6 +91,11 @@ def heatmap_plotter(
     ax.set_ylabel("")
 
 
+def dimension_plotter():
+    """Plot the reduced dimensions of the embeddings."""
+    pass
+
+
 def multi_heatmap_plotter(
     embeddings: List[Embedding],
     nrows: int,
