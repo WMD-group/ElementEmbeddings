@@ -92,6 +92,7 @@ def heatmap_plotter(
         ax.set_yticklabels(ylabels)
     ax.set_xlabel("")
     ax.set_ylabel("")
+    return ax
 
 
 def dimension_plotter(
