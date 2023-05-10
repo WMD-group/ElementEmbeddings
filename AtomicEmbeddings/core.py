@@ -28,6 +28,7 @@ from scipy.stats._stats_py import SpearmanrResult
 from sklearn import decomposition
 from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
+from sklearn.preprocessing import StandardScaler
 from umap import UMAP
 
 from .utils.io import NumpyEncoder
@@ -814,29 +815,49 @@ class Embedding:
             table.append(temp_dict)
         pass
 
-    def calculate_PC(self, n_components: int = 2, **kwargs):
+    def calculate_PC(self, n_components: int = 2, scale: bool = True, **kwargs):
         """Calculate the principal componenets (PC) of the embeddings."""
-        embeddings_array = np.array(list(self.embeddings.values()))
+        if scale:
+            embeddings_array = StandardScaler().fit_transform(
+                np.array(list(self.embeddings.values()))
+            )
+        else:
+            embeddings_array = np.array(list(self.embeddings.values()))
 
-        pca = decomposition.PCA(n_components=n_components)  # project to N dimensions
+        pca = decomposition.PCA(
+            n_components=n_components, **kwargs
+        )  # project to N dimensions
         pca.fit(embeddings_array)
-        self.pca_data = pca.transform(embeddings_array)
+        self._pca_data = pca.transform(embeddings_array)
+        return self._pca_data
 
-    def calculate_tSNE(self, n_components: int = 2, **kwargs):
+    def calculate_tSNE(self, n_components: int = 2, scale: bool = True, **kwargs):
         """Calculate t-SNE components."""
-        embeddings_array = np.array(list(self.embeddings.values()))
+        if scale:
+            embeddings_array = StandardScaler().fit_transform(
+                np.array(list(self.embeddings.values()))
+            )
+        else:
+            embeddings_array = np.array(list(self.embeddings.values()))
 
         tsne = TSNE(n_components=n_components, **kwargs)
         tsne_result = tsne.fit_transform(embeddings_array)
-        self.tsne_data = tsne_result
+        self._tsne_data = tsne_result
+        return self._tsne_data
 
-    def calculate_UMAP(self, n_components: int = 2, **kwargs):
+    def calculate_UMAP(self, n_components: int = 2, scale: bool = True, **kwargs):
         """Calculate UMAP embeddings."""
-        embeddings_array = np.array(list(self.embeddings.values()))
+        if scale:
+            embeddings_array = StandardScaler().fit_transform(
+                np.array(list(self.embeddings.values()))
+            )
+        else:
+            embeddings_array = np.array(list(self.embeddings.values()))
 
         umap = UMAP(n_components=n_components, **kwargs)
         umap_result = umap.fit_transform(embeddings_array)
         self._umap_data = umap_result
+        return self._umap_data
 
     def plot_PCA_2D(
         self,
