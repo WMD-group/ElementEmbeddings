@@ -2,6 +2,8 @@
 from typing import List, Optional, Tuple
 
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import seaborn as sns
 
 from .core import Embedding
@@ -91,9 +93,93 @@ def heatmap_plotter(
     ax.set_ylabel("")
 
 
-def dimension_plotter():
-    """Plot the reduced dimensions of the embeddings."""
-    pass
+def dimension_plotter(
+    embedding: Embedding,
+    ax: Optional[plt.axes] = None,
+    n_components: int = 2,
+    reducer: str = "umap",
+    **kwargs,
+):
+    """Plot the reduced dimensions of the embeddings.
+
+    Parameters
+    ----------
+    embedding : Embedding
+        The embedding to be plotted.
+    ax : Optional[plt.axes], optional
+        The axes to plot on, by default None
+    n_components : int, optional
+        The number of components to reduce to, by default 2
+    reducer : str, optional
+        The dimensionality reduction algorithm to use, by default "umap"
+    **kwargs
+        Additional keyword arguments to pass to the dimensionality reduction algorithm.
+
+    """
+    if reducer == "umap":
+        if embedding._umap_data and embedding._umap_data.shape[1] == n_components:
+            reduced = embedding._umap_data
+        else:
+            reduced = embedding.calculate_UMAP(n_components=n_components, **kwargs)
+    elif reducer == "tsne":
+        if embedding._tsne_data and embedding._tsne_data.shape[1] == n_components:
+            reduced = embedding._tsne_data
+        else:
+            reduced = embedding.calculate_tSNE(n_components=n_components, **kwargs)
+    elif reducer == "pca":
+        if embedding._pca_data and embedding._tsne_data.shape[1] == n_components:
+            reduced = embedding._pca_data
+        else:
+            reduced = embedding.calculate_tSNE(n_components=n_components, **kwargs)
+    else:
+        raise ValueError("Unrecognised reducer.")
+
+    if reduced.shape[1] == 2:
+        df = pd.DataFrame(
+            {
+                "x": reduced[:, 0],
+                "y": reduced[:, 1],
+                "element": np.array(embedding.element_list),
+                "group": list(embedding.element_groups_dict.values()),
+            }
+        )
+        if not ax:
+            fig, ax = plt.subplots()
+        sns.scatterplot(data=df, x="x", y="y", hue="group", ax=ax, **kwargs)
+        ax.set_xlabel("Dimension 1")
+        ax.set_ylabel("Dimension 2")
+        for i in range(len(df)):
+            plt.text(df["x"][i], df["y"][i], df["element"][i], fontsize=12)
+    elif reduced.shape[1] == 3:
+        df = pd.DataFrame(
+            {
+                "x": reduced[:, 0],
+                "y": reduced[:, 1],
+                "z": reduced[:, 2],
+                "element": np.array(embedding.element_list),
+                "group": list(embedding.element_groups_dict.values()),
+            }
+        )
+        if not ax:
+            fig = plt.figure()  # noqa: F841
+            ax = plt.axes(projection="3d")
+        ax.scatter3D(
+            df["x"],
+            df["y"],
+            df["z"],
+            # c=df["group"],
+            # **kwargs
+        )
+        ax.set_xlabel("Dimension 1")
+        ax.set_ylabel("Dimension 2")
+        ax.set_zlabel("Dimension 3")
+        for i in range(len(df)):
+            ax.text(df["x"][i], df["y"][i], df["z"][i], df["element"][i], fontsize=12)
+    else:
+        raise ValueError("Unrecognised number of dimensions.")
+    ax.set_title(embedding.embedding_name, fontdict={"fontweight": "bold"})
+    # fig.tight_layout()
+    return ax
 
 
 def multi_heatmap_plotter(
