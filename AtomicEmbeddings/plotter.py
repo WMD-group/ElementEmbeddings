@@ -22,23 +22,16 @@ def heatmap_plotter(
     """
     Plot multiple heatmaps of the embeddings.
 
-    Parameters
-    ----------
-    embedding : Embedding
-        The embeddings to be plotted.
-    metric : str
-        The distance metric / similarity measure to be plotted.
-    cmap: str
-        The colourmap for the heatmap.
-    sortaxisby : str, optional
-        The attribute to sort the axis by, by default "mendeleev_number".
+    Args:
+        embedding (Embedding): The embeddings to be plotted.
+        metric (str): The distance metric / similarity measure to be plotted.
+        cmap (str): The colourmap for the heatmap.
+        sortaxisby (str, optional): The attribute to sort the axis by,
+        by default "mendeleev_number".
         Options are "mendeleev_number", "atomic_number"
-    ax : Optional[plt.axes], optional
-        The axes to plot on, by default None
-    show_axislabels : bool, optional
-        Whether to show the axis, by default True
-    **kwargs
-        Additional keyword arguments to pass to seaborn.heatmap
+        ax (plt.axes, optional): The axes to plot on, by default None
+        show_axislabels (bool, optional): Whether to show the axis, by default True
+        **kwargs: Additional keyword arguments to pass to seaborn.heatmap
 
     """
     if not ax:
@@ -105,20 +98,14 @@ def dimension_plotter(
 ):
     """Plot the reduced dimensions of the embeddings.
 
-    Parameters
-    ----------
-    embedding : Embedding
-        The embedding to be plotted.
-    ax : Optional[plt.axes], optional
-        The axes to plot on, by default None
-    n_components : int, optional
-        The number of components to reduce to, by default 2
-    reducer : str, optional
-        The dimensionality reduction algorithm to use, by default "umap"
-    adjust_text : bool, optional
-        Whether to adjust the text labels to avoid overlap, by default True
-    **kwargs
-        Additional keyword arguments to pass to the dimensionality reduction algorithm.
+    Args:
+        embedding (Embedding): The embedding to be plotted.
+        ax (plt.axes, optional): The axes to plot on, by default None
+        n_components (int): The number of components to reduce to, by default 2
+        reducer (str): The dimensionality reduction algorithm to use, by default "umap"
+        adjust_text (bool): Whether to avoid overlap of the text labels, by default True
+        **kwargs:  Additional keyword arguments to pass to the
+          dimensionality reduction algorithm.
 
     """
     if reducer == "umap":
@@ -188,8 +175,6 @@ def dimension_plotter(
             df["x"],
             df["y"],
             df["z"],
-            # c=df["group"],
-            # **kwargs
         )
         ax.set_xlabel("Dimension 1")
         ax.set_ylabel("Dimension 2")
@@ -199,5 +184,4 @@ def dimension_plotter(
     else:
         raise ValueError("Unrecognised number of dimensions.")
     ax.set_title(embedding.embedding_name, fontdict={"fontweight": "bold"})
-    # fig.tight_layout()
     return ax
