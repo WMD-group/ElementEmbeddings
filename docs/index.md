@@ -1,6 +1,6 @@
-# Welcome to AtomicEmbeddings
+# Welcome to ElementEmbeddings
 
-This site contains the project documentation for the `AtomicEmbeddings` package which provides tools and examples of analysing and visualising elemental representation data.
+This site contains the project documentation for the `ElementEmbeddings` package which provides tools and examples of analysing and visualising elemental representation data.
 
 ## Table of Contents
 
@@ -14,4 +14,4 @@ The documentation consists of the following six parts:
 6. [Contributing](contribution.md)
 
 ## Project Overview
-::: AtomicEmbeddings
+::: elementembeddings

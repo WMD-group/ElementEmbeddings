@@ -1,16 +1,16 @@
-Here we will demonstrate how to use some of `AtomicEmbeddings`'s features. For full worked examples of using the package, please refer to the Jupyter notebooks in the [examples section of the Github repo](https://github.com/WMD-group/Atomic_Embeddings/tree/main/examples).
+Here we will demonstrate how to use some of `ElementEmbeddings`'s features. For full worked examples of using the package, please refer to the Jupyter notebooks in the [examples section of the Github repo](https://github.com/WMD-group/ElementEmbeddings/tree/main/examples).
 
-## Atomic_Embeddings
+## ElementEmbeddings
 
 The `Embedding` class lies at the heart of the package. It handles elemental representation data and enables analysis and visualisation.
 
 ```py
-from AtomicEmbeddings.core import Embedding 
+from elementembeddings.core import Embedding 
 
 # Load the magpie data
 magpie = Embedding.load_data('magpie')
 
-# Print out some of the properties of the Atomic_Embeddings class
+# Print out some of the properties of the ElementEmbeddings class
 
 # Print the dimensions of the embedding
 print(f'The magpie representation has embeddings of dimension {magpie.dim} \n') 
