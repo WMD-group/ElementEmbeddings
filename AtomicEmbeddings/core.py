@@ -790,31 +790,6 @@ class Embedding:
 
         return ax
 
-    def calculate(self, mode: str = "all") -> None:
-        """
-        Calculate the pairwise statistics of the elements present.
-
-        The pairwise statistics include the distance and correlation metrics
-
-        Args:
-            mode (str): Specifies which pairwise statistics to calculate. `mode="all"`
-                will calculate all available distance and correlation metrics;
-                `mode="correlation"` will only calculate correlation metrics
-                and `mode="distance"` will only calculate distance metrics.
-
-        Returns:
-            None
-        """
-        ele_pairs = self.create_pairs()
-        table = []
-
-        # columns = ["element_1", "element_2", "pearson_corr", ""]
-
-        for ele1, ele2 in ele_pairs:
-            temp_dict = {"element_1": ele1, "element_2": ele2}
-            table.append(temp_dict)
-        pass
-
     def calculate_PC(self, n_components: int = 2, scale: bool = True, **kwargs):
         """Calculate the principal componenets (PC) of the embeddings."""
         if scale:
