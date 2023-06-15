@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/about/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/about/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/contribution/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/contribution/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/installation/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/installation/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/reference/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/reference/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/tutorials/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/tutorials/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/python_api/composition/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/python_api/composition/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/python_api/core/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/python_api/core/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/python_api/plotter/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/python_api/plotter/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wmd-group.github.io/Atomic_Embeddings/python_api/python_api/</loc>
-         <lastmod>2023-05-12</lastmod>
+         <loc>https://wmd-group.github.io/ElementEmbeddings/python_api/python_api/</loc>
+         <lastmod>2023-06-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
