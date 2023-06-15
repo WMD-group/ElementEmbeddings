@@ -1,4 +1,4 @@
-Atomic_Embeddings
+ElementEmbeddings
 ====
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
@@ -8,7 +8,7 @@ Atomic_Embeddings
 [![CI Status](https://github.com/WMD-group/Atomic_Embeddings/actions/workflows/ci.yml/badge.svg)](https://github.com/WMD-group/Atomic_Embeddings/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/WMD-group/Atomic_Embeddings/branch/main/graph/badge.svg?token=OCMIM5SHL0)](https://codecov.io/gh/WMD-group/Atomic_Embeddings)
 
-The **Atomic Embeddings** package provides high-level tools for analysing elemental
+The **Element Embeddings** package provides high-level tools for analysing elemental
 embeddings data. This primarily involves visualising the correlation between
 embedding schemes using different statistical measures.
 
@@ -27,7 +27,7 @@ schemes in a consistent framework.
 Getting started
 --------
 
-Atomic_Embeddings's main feature, the Embedding class is accessible by
+ElementEmbeddings's main feature, the Embedding class is accessible by
 importing the class.
 
 Installation
@@ -36,19 +36,19 @@ Installation
 The latest version can be installed using:
 
 ```bash
-pip install git+git://github.com/WMD-group/Atomic_Embeddings.git
+pip install git+git://github.com/WMD-group/ElementEmbeddings.git
 ```
 
 For development, you can clone the repository and install the package in editable mode.
 To clone the repository and make a local installation, run the following commands:
 
 ```bash
-git clone https://github.com/WMD-group/Atomic_Embeddings.git
-cd Atomic_Embeddings
+git clone https://github.com/WMD-group/ElementEmbeddings.git
+cd ElementEmbeddings
 pip install --user -e .
 ```
 
-With -e pip will create links to the source folder so that that changes to the code will be immediately reflected on the PATH.
+With -e pip will create links to the source folder so that changes to the code will be immediately reflected on the PATH.
 
 Usage
 --------
