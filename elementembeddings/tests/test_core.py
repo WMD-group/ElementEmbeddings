@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats._result_classes import PearsonRResult
 
-from AtomicEmbeddings.core import Embedding
+from elementembeddings.core import Embedding
 
 
 class EmbeddingTest(unittest.TestCase):

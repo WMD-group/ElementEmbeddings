@@ -1,1 +1,1 @@
-::: AtomicEmbeddings.plotter
+::: elementembeddings.plotter

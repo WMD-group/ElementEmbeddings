@@ -2,13 +2,13 @@
 from setuptools import find_packages, setup
 
 VERSION = "0.1"
-DESCRIPTION = "Atomic Embeddings"
+DESCRIPTION = "Element Embeddings"
 LONG_DESCRIPTION = """A package for visualising
- and analysing atomic embedding vectors."""
+ and analysing element embedding vectors."""
 
 # Setting up
 setup(
-    name="AtomicEmbeddings",
+    name="ElementEmbeddings",
     version=VERSION,
     author="Anthony O. Onwuli",
     author_email="anthony.onwuli16@imperial.ac.uk",

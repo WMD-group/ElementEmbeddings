@@ -4,8 +4,8 @@ import unittest
 
 import matplotlib.pyplot as plt
 
-from AtomicEmbeddings.core import Embedding
-from AtomicEmbeddings.plotter import dimension_plotter, heatmap_plotter
+from elementembeddings.core import Embedding
+from elementembeddings.plotter import dimension_plotter, heatmap_plotter
 
 
 class heatmapTest(unittest.TestCase):

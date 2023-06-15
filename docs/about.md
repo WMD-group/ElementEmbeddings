@@ -1,14 +1,14 @@
-# About the AtomicEmbeddings package
+# About the ElementEmbeddings package
 ====
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![GitHub issues](https://img.shields.io/github/issues-raw/WMD-Group/Atomic_Embeddings)](https://github.com/WMD-group/Atomic_Embeddings/issues)
-[![CI Status](https://github.com/WMD-group/Atomic_Embeddings/actions/workflows/ci.yml/badge.svg)](https://github.com/WMD-group/Atomic_Embeddings/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/WMD-group/Atomic_Embeddings/branch/main/graph/badge.svg?token=OCMIM5SHL0)](https://codecov.io/gh/WMD-group/Atomic_Embeddings)
+[![GitHub issues](https://img.shields.io/github/issues-raw/WMD-Group/ElementEmbeddings)](https://github.com/WMD-group/ElementEmbeddings/issues)
+[![CI Status](https://github.com/WMD-group/ElementEmbeddings/actions/workflows/ci.yml/badge.svg)](https://github.com/WMD-group/ElementEmbeddings/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/WMD-group/ElementEmbeddings/branch/main/graph/badge.svg?token=OCMIM5SHL0)](https://codecov.io/gh/WMD-group/ElementEmbeddings)
 
-The **Atomic Embeddings** package provides high-level tools for analysing elemental
+The **ElementEmbeddings** package provides high-level tools for analysing elemental
 embeddings data. This primarily involves visualising the correlation between
 embedding schemes using different statistical measures.
 

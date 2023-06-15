@@ -1,7 +1,7 @@
 """Test the modules in the utils package."""
 import unittest
 
-from AtomicEmbeddings import utils
+from elementembeddings import utils
 
 
 # ------------ math.py functions ------------
