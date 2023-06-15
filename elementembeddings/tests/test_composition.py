@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from AtomicEmbeddings import composition, core
+from elementembeddings import composition, core
 
 
 # ------------ Compositon.py functions ------------
