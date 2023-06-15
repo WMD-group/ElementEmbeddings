@@ -1,4 +1,4 @@
-name: AtomicEmbeddings CI
+name: ElementEmbeddings CI
 
 on:
   pull_request:
