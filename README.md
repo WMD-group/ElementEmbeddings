@@ -57,7 +57,7 @@ For simple usage, you can instantiate an Embedding object using one of the embed
 
 ```python
 # Import the class
->>> from AtomicEmbeddings.core import Embedding
+>>> from elementembeddings.core import Embedding
 
 # Load the magpie data
 >>> magpie = Embedding.load_data('magpie')
