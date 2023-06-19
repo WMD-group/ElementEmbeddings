@@ -4,7 +4,6 @@ import unittest
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.stats._result_classes import PearsonRResult
 
 from elementembeddings.core import Embedding
 
@@ -259,7 +258,7 @@ class EmbeddingTest(unittest.TestCase):
         assert isinstance(magpie.to(fmt="csv"), str)
         assert isinstance(
             magpie.compute_correlation_metric("H", "O", metric="pearson"),
-            PearsonRResult,
+            float,
         )
         assert isinstance(
             magpie.compute_distance_metric(

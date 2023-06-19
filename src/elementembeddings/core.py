@@ -23,8 +23,6 @@ import seaborn as sns
 from numpy.linalg import norm
 from pymatgen.core import Element
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
-from scipy.stats._result_classes import PearsonRResult
-from scipy.stats._stats_py import SpearmanrResult
 from sklearn import decomposition
 from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
@@ -491,7 +489,7 @@ class Embedding:
 
     def compute_correlation_metric(
         self, ele1: str, ele2: str, metric: str = "pearson"
-    ) -> Union[PearsonRResult, SpearmanrResult, float]:
+    ) -> float:
         """
         Compute the correlation/similarity metric between two vectors.
 
@@ -507,13 +505,15 @@ class Embedding:
             Options are "spearman", "pearson" and "cosine_similarity".
 
         Returns:
-            PearsonResult | SpearmanrResult | float: correlation/similarity metric
+            float: correlation/similarity metric
         """
         # Define the allowable metrics
         scipy_corrs = {"pearson": pearsonr, "spearman": spearmanr}
 
         if metric in scipy_corrs:
-            return scipy_corrs[metric](self.embeddings[ele1], self.embeddings[ele2])
+            return scipy_corrs[metric](
+                self.embeddings[ele1], self.embeddings[ele2]
+            ).statistic
         elif metric == "cosine_similarity":
             return cosine_similarity(self.embeddings[ele1], self.embeddings[ele2])
 
@@ -659,8 +659,6 @@ class Embedding:
         table = []
         for ele1, ele2 in ele_pairs:
             dist = self.compute_correlation_metric(ele1, ele2, metric=metric)
-            if metric in ["pearson", "spearman"]:
-                dist = dist[0]
             table.append((ele1, ele2, dist))
             if ele1 != ele2:
                 table.append((ele2, ele1, dist))
