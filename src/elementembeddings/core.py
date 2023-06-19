@@ -11,6 +11,7 @@ Typical usage example:
 import fnmatch
 import json
 import random
+import warnings
 from itertools import combinations_with_replacement
 from os import path
 from typing import Dict, List, Optional, Tuple, Union
@@ -22,16 +23,20 @@ import seaborn as sns
 from numpy.linalg import norm
 from pymatgen.core import Element
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
-from scipy.stats._result_classes import PearsonRResult
-from scipy.stats._stats_py import SpearmanrResult
 from sklearn import decomposition
 from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
+from sklearn.preprocessing import StandardScaler
+from umap import UMAP
 
 from .utils.io import NumpyEncoder
+from .utils.math import cosine_distance, cosine_similarity
 
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, "data")
+pt_dir = path.join(data_directory, "element_data", "periodic-table-lookup-symbols.json")
+with open(pt_dir) as f:
+    pt = json.load(f)
 
 
 class Embedding:
@@ -43,14 +48,15 @@ class Embedding:
     Works like a standard python dictionary. The keys are {element: vector} pairs.
 
     Adds a few convenience methods related to elemental representations.
-
-    Args:
-        embeddings (dict): A {element_symbol: vector} dictionary
-        embedding_name (str): The name of the elemental representation
     """
 
     def __init__(self, embeddings: dict, embedding_name: Optional[str] = None):
-        """Initialise the Embedding class."""
+        """Initialise the Embedding class.
+
+        Args:
+            embeddings (dict): A {element_symbol: vector} dictionary
+            embedding_name (str): The name of the elemental representation
+        """
         self.embeddings = embeddings
         self.embedding_name = embedding_name
 
@@ -71,6 +77,9 @@ class Embedding:
 
         # Dummy initialisation for results
         self._data = []
+        self._pca_data = None  # type: Optional[np.ndarray]
+        self._tsne_data = None  # type: Optional[np.ndarray]
+        self._umap_data = None  # type: Optional[np.ndarray]
 
     @staticmethod
     def load_data(embedding_name: Optional[str] = None):
@@ -100,25 +109,27 @@ class Embedding:
             Embedding :class:`Embedding` instance.
         """
         _cbfv_files = {
-            "magpie": "magpie.json",
+            "magpie": "magpie.csv",
             "magpie_sc": "magpie_sc.json",
-            "mat2vec": "mat2vec.json",
+            "mat2vec": "mat2vec.csv",
             "matscholar": "matscholar-embedding.json",
             "megnet16": "megnet16.json",
             "mod_petti": "mod_petti.json",
             "oliynyk": "oliynyk.json",
             "oliynyk_sc": "oliynyk_sc.json",
-            "random_200": "random_200.csv",
+            "random_200": "random_200_new.csv",
             "skipatom": "skipatom_20201009_induced.csv",
         }
         _cbfv_names = list(_cbfv_files.keys())
         _cbfv_names_others = [
-            i for i in _cbfv_names if i not in ["skipatom", "random_200", "megnet16"]
+            i
+            for i in _cbfv_names
+            if i not in ["skipatom", "random_200", "megnet16", "magpie", "mat2vec"]
         ]
 
         # Get the embeddings
         if embedding_name in _cbfv_files:
-            if embedding_name == "skipatom" or embedding_name == "random_200":
+            if embedding_name in ["skipatom", "random_200", "magpie", "mat2vec"]:
                 _csv = path.join(data_directory, _cbfv_files[embedding_name])
                 df = pd.read_csv(_csv)
                 # Convert df to a dictionary of (ele:embeddings) pairs
@@ -427,12 +438,16 @@ class Embedding:
         ele_pairs = combinations_with_replacement(ele_list, 2)
         return ele_pairs
 
-    def correlation_df(self) -> pd.DataFrame:
+    def stats_correlation_df(self) -> pd.DataFrame:
         """Return a pandas.DataFrame with correlation metrics.
 
          The columns of returned dataframe are:
         [element_1, element_2, pearson_corr, euclid_dist].
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         ele_pairs = self.create_pairs()
         table = []
         for ele1, ele2 in ele_pairs:
@@ -474,28 +489,33 @@ class Embedding:
 
     def compute_correlation_metric(
         self, ele1: str, ele2: str, metric: str = "pearson"
-    ) -> Union[PearsonRResult, SpearmanrResult]:
+    ) -> float:
         """
-        Compute the correlation metric between two vectors.
+        Compute the correlation/similarity metric between two vectors.
 
         Allowed metrics:
         * Pearson
         * Spearman
+        * Cosine similarity
 
         Args:
             ele1 (str): element symbol
             ele2 (str): element symbol
             metric (str): name of a correlation metric.
-            Options are "spearman" or "pearson"
+            Options are "spearman", "pearson" and "cosine_similarity".
 
         Returns:
-            PearsonResult | SpearmanrResult
+            float: correlation/similarity metric
         """
         # Define the allowable metrics
         scipy_corrs = {"pearson": pearsonr, "spearman": spearmanr}
 
         if metric in scipy_corrs:
-            return scipy_corrs[metric](self.embeddings[ele1], self.embeddings[ele2])
+            return scipy_corrs[metric](
+                self.embeddings[ele1], self.embeddings[ele2]
+            ).statistic
+        elif metric == "cosine_similarity":
+            return cosine_similarity(self.embeddings[ele1], self.embeddings[ele2])
 
     def compute_distance_metric(
         self, ele1: str, ele2: str, metric: str = "euclidean"
@@ -510,6 +530,7 @@ class Embedding:
         * chebyshev
         * wasserstein
         * energy
+        * cosine_distance
 
         Args:
             ele1 (str): element symbol
@@ -524,7 +545,7 @@ class Embedding:
 
         scipy_metrics = {"wasserstein": wasserstein_distance, "energy": energy_distance}
 
-        valid_metrics = scikit_metrics + list(scipy_metrics.keys())
+        valid_metrics = scikit_metrics + list(scipy_metrics.keys()) + ["cosine"]
 
         # Validate if the elements are within the embedding vector
         if not all([self._is_el_in_embedding(ele1), self._is_el_in_embedding(ele2)]):
@@ -547,6 +568,8 @@ class Embedding:
 
         elif metric in scipy_metrics.keys():
             return scipy_metrics[metric](self.embeddings[ele1], self.embeddings[ele2])
+        elif metric == "cosine_distance":
+            return cosine_distance(self.embeddings[ele1], self.embeddings[ele2])
 
         else:
             print(
@@ -562,13 +585,17 @@ class Embedding:
         The index and column are the mendeleev number of the element pairs
         and the values being the pearson correlation metrics.
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         corr_df = self.correlation_df()
         pearson_pivot = corr_df.pivot_table(
             values="pearson_corr", index="mend_1", columns="mend_2"
         )
         return pearson_pivot
 
-    def distance_correlation_df(self, metric: str = "euclidean") -> pd.DataFrame:
+    def distance_df(self, metric: str = "euclidean") -> pd.DataFrame:
         """
         Return a dataframe with columns ["ele_1", "ele_2", metric].
 
@@ -598,31 +625,116 @@ class Embedding:
         mend_1 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_1"]]
         mend_2 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_2"]]
 
+        Z_1 = [(pt[ele]["number"], ele) for ele in corr_df["ele_1"]]
+        Z_2 = [(pt[ele]["number"], ele) for ele in corr_df["ele_2"]]
+
         corr_df["mend_1"] = mend_1
         corr_df["mend_2"] = mend_2
 
-        corr_df = corr_df[["ele_1", "ele_2", "mend_1", "mend_2", metric]]
+        corr_df["Z_1"] = Z_1
+        corr_df["Z_2"] = Z_2
+
+        corr_df = corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
 
         return corr_df
 
-    def distance_pivot_table(self, metric: str = "euclidean") -> pd.DataFrame:
+    def correlation_df(self, metric: str = "pearson") -> pd.DataFrame:
         """
-        Return a pandas.DataFrame style pivot.
+        Return a dataframe with columns ["ele_1", "ele_2", metric].
 
-        The index and column being the mendeleev number of the element pairs
-        and the values being a user-specified distance metric.
+        Allowed metrics:
+
+        * pearson
+        * spearman
+        * cosine_similarity
+
 
         Args:
             metric (str): A distance metric.
 
         Returns:
+            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
+        """
+        ele_pairs = self.create_pairs()
+        table = []
+        for ele1, ele2 in ele_pairs:
+            dist = self.compute_correlation_metric(ele1, ele2, metric=metric)
+            table.append((ele1, ele2, dist))
+            if ele1 != ele2:
+                table.append((ele2, ele1, dist))
+        corr_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
+
+        mend_1 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_1"]]
+        mend_2 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_2"]]
+
+        Z_1 = [(pt[ele]["number"], ele) for ele in corr_df["ele_1"]]
+        Z_2 = [(pt[ele]["number"], ele) for ele in corr_df["ele_2"]]
+
+        corr_df["mend_1"] = mend_1
+        corr_df["mend_2"] = mend_2
+
+        corr_df["Z_1"] = Z_1
+        corr_df["Z_2"] = Z_2
+
+        corr_df = corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
+
+        return corr_df
+
+    def distance_pivot_table(
+        self, metric: str = "euclidean", sortby: str = "mendeleev"
+    ) -> pd.DataFrame:
+        """
+        Return a pandas.DataFrame style pivot.
+
+        The index and column being either the mendeleev number or atomic number
+        of the element pairs and the values being a user-specified distance metric.
+
+        Args:
+            metric (str): A distance metric.
+            sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
+
+        Returns:
             distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
         """
-        corr_df = self.distance_correlation_df(metric=metric)
-        distance_pivot = corr_df.pivot_table(
-            values=metric, index="mend_1", columns="mend_2"
-        )
-        return distance_pivot
+        corr_df = self.distance_df(metric=metric)
+        if sortby == "mendeleev":
+            distance_pivot = corr_df.pivot_table(
+                values=metric, index="mend_1", columns="mend_2"
+            )
+            return distance_pivot
+        elif sortby == "atomic_number":
+            distance_pivot = corr_df.pivot_table(
+                values=metric, index="Z_1", columns="Z_2"
+            )
+            return distance_pivot
+
+    def correlation_pivot_table(
+        self, metric: str = "pearson", sortby: str = "mendeleev"
+    ) -> pd.DataFrame:
+        """
+        Return a pandas.DataFrame style pivot.
+
+        The index and column being either the mendeleev number or atomic number
+        of the element pairs and the values being a user-specified distance metric.
+
+        Args:
+            metric (str): A distance metric.
+            sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
+
+        Returns:
+            distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
+        """
+        corr_df = self.correlation_df(metric=metric)
+        if sortby == "mendeleev":
+            correlation_pivot = corr_df.pivot_table(
+                values=metric, index="mend_1", columns="mend_2"
+            )
+            return correlation_pivot
+        elif sortby == "atomic_number":
+            correlation_pivot = corr_df.pivot_table(
+                values=metric, index="Z_1", columns="Z_2"
+            )
+            return correlation_pivot
 
     def plot_pearson_correlation(self, figsize: Tuple[int, int] = (24, 24), **kwargs):
         """
@@ -636,6 +748,10 @@ class Embedding:
             ax (matplotlib Axes): An Axes object with the heatmap
 
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         pearson_pivot = self.pearson_pivot_table()
 
         plt.figure(figsize=figsize)
@@ -659,6 +775,10 @@ class Embedding:
             ax (matplotlib.axes.Axes): An Axes object with the heatmap
 
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         distance_pivot = self.distance_pivot_table(metric=metric)
 
         plt.figure(figsize=figsize)
@@ -668,42 +788,49 @@ class Embedding:
 
         return ax
 
-    def calculate(self, mode: str = "all") -> None:
-        """
-        Calculate the pairwise statistics of the elements present.
-
-        The pairwise statistics include the distance and correlation metrics
-
-        Args:
-            mode (str): Specifies which pairwise statistics to calculate. `mode="all"`
-                will calculate all available distance and correlation metrics;
-                `mode="correlation"` will only calculate correlation metrics
-                and `mode="distance"` will only calculate distance metrics.
-
-        Returns:
-            None
-        """
-        ele_pairs = self.create_pairs()
-        table = []
-
-        # columns = ["element_1", "element_2", "pearson_corr", ""]
-
-        for ele1, ele2 in ele_pairs:
-            temp_dict = {"element_1": ele1, "element_2": ele2}
-            table.append(temp_dict)
-        pass
-
-    def calculate_PC(self, n_components: int, **kwargs):
+    def calculate_PC(self, n_components: int = 2, scale: bool = True, **kwargs):
         """Calculate the principal componenets (PC) of the embeddings."""
-        pass
+        if scale:
+            embeddings_array = StandardScaler().fit_transform(
+                np.array(list(self.embeddings.values()))
+            )
+        else:
+            embeddings_array = np.array(list(self.embeddings.values()))
 
-    def calculate_tSNE(self, **kwargs):
+        pca = decomposition.PCA(
+            n_components=n_components, **kwargs
+        )  # project to N dimensions
+        pca.fit(embeddings_array)
+        self._pca_data = pca.transform(embeddings_array)
+        return self._pca_data
+
+    def calculate_tSNE(self, n_components: int = 2, scale: bool = True, **kwargs):
         """Calculate t-SNE components."""
-        pass
+        if scale:
+            embeddings_array = StandardScaler().fit_transform(
+                np.array(list(self.embeddings.values()))
+            )
+        else:
+            embeddings_array = np.array(list(self.embeddings.values()))
 
-    def calculate_UMAP(self, **kwargs):
+        tsne = TSNE(n_components=n_components, **kwargs)
+        tsne_result = tsne.fit_transform(embeddings_array)
+        self._tsne_data = tsne_result
+        return self._tsne_data
+
+    def calculate_UMAP(self, n_components: int = 2, scale: bool = True, **kwargs):
         """Calculate UMAP embeddings."""
-        pass
+        if scale:
+            embeddings_array = StandardScaler().fit_transform(
+                np.array(list(self.embeddings.values()))
+            )
+        else:
+            embeddings_array = np.array(list(self.embeddings.values()))
+
+        umap = UMAP(n_components=n_components, **kwargs)
+        umap_result = umap.fit_transform(embeddings_array)
+        self._umap_data = umap_result
+        return self._umap_data
 
     def plot_PCA_2D(
         self,

@@ -1,1 +1,1 @@
-::: AtomicEmbeddings.core
+::: elementembeddings.core

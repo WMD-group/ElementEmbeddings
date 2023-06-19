@@ -1,11 +1,11 @@
 # Project information
-site_name: AtomicEmbeddings
-site_url: https://wmd-group.github.io/Atomic_Embeddings/
+site_name: ElementEmbeddings
+site_url: https://wmd-group.github.io/ElementEmbeddings/
 site_author: Anthony Onwuli
 
 # Repository
-repo_url: https://github.com/WMD-group/Atomic_Embeddings
-repo_name: 'Atomic_Embeddings'
+repo_url: https://github.com/WMD-group/ElementEmbeddings
+repo_name: 'ElementEmbeddings'
 edit_uri: ""
 
 nav:
@@ -15,10 +15,11 @@ nav:
     - 'Python package':
       - 'Core module': 'python_api/core.md'
       - 'Composition module': 'python_api/composition.md'
+      - 'Plotter module': 'python_api/plotter.md'
     - Tutorial: tutorials.md
     - reference.md
     - Contributing: contribution.md
-    - Issue Tracker: https://github.com/WMD-group/Atomic_Embeddings/issues
+    - Issue Tracker: https://github.com/WMD-group/ElementEmbeddings/issues
 
 # Configuration
 theme:

@@ -4,9 +4,8 @@ import unittest
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.stats._result_classes import PearsonRResult
 
-from AtomicEmbeddings.core import Embedding
+from elementembeddings.core import Embedding
 
 
 class EmbeddingTest(unittest.TestCase):
@@ -35,7 +34,7 @@ class EmbeddingTest(unittest.TestCase):
         # Check if H is present in the embedding keys
         assert "H" in magpie.embeddings.keys()
         # Check dimensions
-        assert magpie.dim == 21
+        assert magpie.dim == 22
         # Check that a list is returned
         assert isinstance(magpie.element_list, list)
         # Check that the correct list is returned
@@ -259,7 +258,7 @@ class EmbeddingTest(unittest.TestCase):
         assert isinstance(magpie.to(fmt="csv"), str)
         assert isinstance(
             magpie.compute_correlation_metric("H", "O", metric="pearson"),
-            PearsonRResult,
+            float,
         )
         assert isinstance(
             magpie.compute_distance_metric(
@@ -268,16 +267,18 @@ class EmbeddingTest(unittest.TestCase):
             ),
             float,
         )
-        assert isinstance(magpie.distance_correlation_df(), pd.DataFrame)
-        assert magpie.distance_correlation_df().shape == (
+        assert isinstance(magpie.distance_df(), pd.DataFrame)
+        assert magpie.distance_df().shape == (
             len(list(magpie.create_pairs())) * 2 - len(magpie.embeddings),
-            5,
+            7,
         )
-        assert magpie.distance_correlation_df().columns.tolist() == [
+        assert magpie.distance_df().columns.tolist() == [
             "ele_1",
             "ele_2",
             "mend_1",
             "mend_2",
+            "Z_1",
+            "Z_2",
             "euclidean",
         ]
         assert isinstance(magpie.distance_pivot_table(), pd.DataFrame)

@@ -1,9 +1,9 @@
-name: AtomicEmbeddings CI
+name: ElementEmbeddings CI
 
 on:
-  push:
-    paths:
-      - "**.py" # run workflow if python files changed.
+  pull_request:
+    branches:
+      - main
 
 jobs:
 
@@ -34,7 +34,7 @@ jobs:
         pip install -r requirements.txt
         pip install pytest-cov
     - name: Run tests
-      run: python -m pytest --cov=AtomicEmbeddings --cov-report=xml -v
+      run: python -m pytest --cov=src/elementembeddings --cov-report=xml -v
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
