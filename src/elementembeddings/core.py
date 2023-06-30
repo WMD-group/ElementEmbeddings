@@ -510,10 +510,14 @@ class Embedding:
         # Define the allowable metrics
         scipy_corrs = {"pearson": pearsonr, "spearman": spearmanr}
 
-        if metric in scipy_corrs:
+        if metric == "pearson":
             return scipy_corrs[metric](
                 self.embeddings[ele1], self.embeddings[ele2]
             ).statistic
+        elif metric == "spearman":
+            return scipy_corrs[metric](
+                self.embeddings[ele1], self.embeddings[ele2]
+            ).correlation
         elif metric == "cosine_similarity":
             return cosine_similarity(self.embeddings[ele1], self.embeddings[ele2])
 
