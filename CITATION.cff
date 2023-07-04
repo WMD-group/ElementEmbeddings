@@ -1,0 +1,40 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: ElementEmbeddings
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Anthony
+    family-names: Onwuli
+    email: anthony.onwuli16@imperial.ac.uk
+    affiliation: Imperial College London
+    orcid: 'https://orcid.org/0000-0003-2107-153X'
+  - given-names: Aron
+    family-names: Walsh
+    email: a.walsh@imperial.ac.uk
+    affiliation: Imperial College London
+    orcid: 'https://orcid.org/0000-0001-5460-7033'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.8101633
+repository-code: 'https://github.com/WMD-group/ElementEmbeddings'
+url: 'https://wmd-group.github.io/ElementEmbeddings/'
+abstract: >-
+  The Element Embeddings package provides high-level tools
+  for analysing elemental embedding data. This primarily
+  involves visualising the correlation between embedding
+  schemes using different statistical measures.
+keywords:
+  - materials science
+  - computational chemistry
+  - materials informatics
+  - statistics
+  - element representation
+license: MIT
+commit: d3f30602abf825ba3dcd5f247694a174a358ef49
+version: '0.1'
+date-released: '2023-06-30'
