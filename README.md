@@ -33,7 +33,10 @@ importing the class.
 
 Installation
 --------
-
+The latest stable release can be installed via pip using:
+```bash
+pip install ElementEmbeddings
+```
 The latest version can be installed using:
 
 ```bash
@@ -46,7 +49,7 @@ To clone the repository and make a local installation, run the following command
 ```bash
 git clone https://github.com/WMD-group/ElementEmbeddings.git
 cd ElementEmbeddings
-pip install --user -e .
+pip install  -e .
 ```
 
 With -e pip will create links to the source folder so that changes to the code will be immediately reflected on the PATH.
