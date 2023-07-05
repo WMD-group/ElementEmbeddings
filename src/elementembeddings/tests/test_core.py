@@ -6,8 +6,11 @@ import numpy as np
 import pandas as pd
 
 from elementembeddings.core import Embedding
+import os
 
-
+test_files_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),"files")
+TEST_EMBEDDING_CSV = os.path.join(test_files_dir, "test_embedding.csv")
+TEST_EMBEDDING_JSON = os.path.join(test_files_dir, "test_embedding.json")
 class EmbeddingTest(unittest.TestCase):
     """Test the Embedding class."""
 
@@ -23,6 +26,13 @@ class EmbeddingTest(unittest.TestCase):
         assert megnet16.embedding_name == "megnet16"
         assert isinstance(skipatom.citation(), list)
         assert isinstance(megnet16.citation(), list)
+    def test_Embedding_file_input(self):
+        """Test that the Embedding class can load custom data."""
+        embedding_csv = Embedding.from_csv(TEST_EMBEDDING_CSV)
+        embedding_json = Embedding.from_json(TEST_EMBEDDING_JSON)
+        assert embedding_csv.dim == 10
+        assert embedding_json.dim == 10
+
 
     def test_Embeddings_class_magpie(self):
         """Test that the Embedding class can load the magpie data."""
