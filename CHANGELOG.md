@@ -12,8 +12,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- added pytest-subtests to dev reqs ([03f3108](https://github.com/WMD-group/ElementEmbeddings/commit/03f31088d5be656f9fe67d88bd850a1817bd862d) by Anthony Onwuli).
 - added doc and pypi badges to README ([8ea476c](https://github.com/WMD-group/ElementEmbeddings/commit/8ea476cf1422ca0d94d795fcd7b58ebd0ea858fe) by Anthony Onwuli).
 - Added citation file ([8d0baa1](https://github.com/WMD-group/ElementEmbeddings/commit/8d0baa1cd17b787e465300452d3c2d16a56c009b) by Anthony Onwuli).
+
+### Removed
+
+- removed pandas, pytest and pytest-subtests in reqs ([cd1bf77](https://github.com/WMD-group/ElementEmbeddings/commit/cd1bf776220250377bb7cd48cca6b08e9a968f1d) by Anthony Onwuli).
 
 <!-- insertion marker -->
 ## [v0.1](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.1) - 2023-06-30
