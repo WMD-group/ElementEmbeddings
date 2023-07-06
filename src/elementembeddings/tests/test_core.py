@@ -353,6 +353,9 @@ class EmbeddingTest(unittest.TestCase):
             "euclidean",
         ]
         assert isinstance(self.test_magpie.distance_pivot_table(), pd.DataFrame)
+        assert isinstance(
+            self.test_magpie.distance_pivot_table(sortby="atomic_number"), pd.DataFrame
+        )
         assert isinstance(self.test_magpie.plot_distance_correlation(), plt.Axes)
         assert isinstance(
             self.test_magpie.plot_distance_correlation(metric="euclidean"), plt.Axes
