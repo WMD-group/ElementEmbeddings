@@ -17,25 +17,29 @@ class EmbeddingTest(unittest.TestCase):
     """Test the Embedding class."""
 
     # High Level functions
+    @classmethod
+    def setUpClass(cls):
+        """Set up the test."""
+        cls.test_skipatom = Embedding.load_data("skipatom")
+        cls.test_megnet16 = Embedding.load_data("megnet16")
+        cls.test_matscholar = Embedding.load_data("matscholar")
+        cls.test_mod_petti = Embedding.load_data("mod_petti")
+        cls.test_magpie = Embedding.load_data("magpie")
 
-    def test_Embedding_loading(self):
-        """Test that the Embedding class can load the data."""
-        skipatom = Embedding.load_data("skipatom")
-        megnet16 = Embedding.load_data("megnet16")
-        matscholar = Embedding.load_data("matscholar")
-        mod_petti = Embedding.load_data("mod_petti")
-        assert skipatom.dim == 200
-        assert skipatom.embedding_name == "skipatom"
-        assert megnet16.dim == 16
-        assert megnet16.embedding_name == "megnet16"
-        assert matscholar.dim == 200
-        assert matscholar.embedding_name == "matscholar"
-        assert mod_petti.dim == 1
-        assert mod_petti.embedding_name == "mod_petti"
-        assert isinstance(skipatom.citation(), list)
-        assert isinstance(megnet16.citation(), list)
-        assert isinstance(matscholar.citation(), list)
-        assert isinstance(mod_petti.citation(), list)
+    def test_Embedding_attributes(self):
+        """Test attributes of the loaded embeddings."""
+        assert self.test_skipatom.dim == 200
+        assert self.test_skipatom.embedding_name == "skipatom"
+        assert self.test_megnet16.dim == 16
+        assert self.test_megnet16.embedding_name == "megnet16"
+        assert self.test_matscholar.dim == 200
+        assert self.test_matscholar.embedding_name == "matscholar"
+        assert self.test_mod_petti.dim == 1
+        assert self.test_mod_petti.embedding_name == "mod_petti"
+        assert isinstance(self.test_skipatom.citation(), list)
+        assert isinstance(self.test_megnet16.citation(), list)
+        assert isinstance(self.test_matscholar.citation(), list)
+        assert isinstance(self.test_mod_petti.citation(), list)
 
     def test_Embedding_file_input(self):
         """Test that the Embedding class can load custom data."""
@@ -46,7 +50,7 @@ class EmbeddingTest(unittest.TestCase):
 
     def test_Embeddings_class_magpie(self):
         """Test that the Embedding class can load the magpie data."""
-        magpie = Embedding.load_data("magpie")
+        magpie = self.test_magpie
         # Check if the embeddings attribute is a dict
         assert isinstance(magpie.embeddings, dict)
         # Check if the embedding vector is a numpy array
@@ -273,31 +277,51 @@ class EmbeddingTest(unittest.TestCase):
 
         # TO-DO
         # Create tests for checking dataframes and plotting functions
+
+    def test_as_dataframe(self):
+        """Test the as_dataframe method."""
+        magpie = self.test_magpie
         assert isinstance(magpie.as_dataframe(), pd.DataFrame)
         assert "H" in magpie.as_dataframe().index.tolist()
         assert isinstance(magpie.as_dataframe(columns="elements"), pd.DataFrame)
         assert "H" in magpie.as_dataframe(columns="elements").columns.tolist()
         self.assertRaises(ValueError, magpie.as_dataframe, columns="test")
 
-        assert isinstance(magpie.to(fmt="json"), str)
-        assert isinstance(magpie.to(fmt="csv"), str)
+    def test_to(self):
+        """Test the to method."""
+        assert isinstance(self.test_magpie.to(fmt="json"), str)
+        self.test_magpie.to(fmt="json", filename="test.json")
+        assert os.path.isfile("test.json")
+        os.remove("test.json")
+
+        assert isinstance(self.test_magpie.to(fmt="csv"), str)
+        self.test_magpie.to(fmt="csv", filename="test.csv")
+        assert os.path.isfile("test.csv")
+        os.remove("test.csv")
+
+    def test_compute_metric_functions(self):
+        """Test the compute metric functions."""
         assert isinstance(
-            magpie.compute_correlation_metric("H", "O", metric="pearson"),
+            self.test_magpie.compute_correlation_metric("H", "O", metric="pearson"),
             float,
         )
         assert isinstance(
-            magpie.compute_distance_metric(
+            self.test_magpie.compute_distance_metric(
                 "H",
                 "O",
             ),
             float,
         )
-        assert isinstance(magpie.distance_df(), pd.DataFrame)
-        assert magpie.distance_df().shape == (
-            len(list(magpie.create_pairs())) * 2 - len(magpie.embeddings),
+
+    def test_distance_dataframe_functions(self):
+        """Test the distance dataframe functions."""
+        assert isinstance(self.test_magpie.distance_df(), pd.DataFrame)
+        assert self.test_magpie.distance_df().shape == (
+            len(list(self.test_magpie.create_pairs())) * 2
+            - len(self.test_magpie.embeddings),
             7,
         )
-        assert magpie.distance_df().columns.tolist() == [
+        assert self.test_magpie.distance_df().columns.tolist() == [
             "ele_1",
             "ele_2",
             "mend_1",
@@ -306,8 +330,8 @@ class EmbeddingTest(unittest.TestCase):
             "Z_2",
             "euclidean",
         ]
-        assert isinstance(magpie.distance_pivot_table(), pd.DataFrame)
-        assert isinstance(magpie.plot_distance_correlation(), plt.Axes)
+        assert isinstance(self.test_magpie.distance_pivot_table(), pd.DataFrame)
+        assert isinstance(self.test_magpie.plot_distance_correlation(), plt.Axes)
         assert isinstance(
-            magpie.plot_distance_correlation(metric="euclidean"), plt.Axes
+            self.test_magpie.plot_distance_correlation(metric="euclidean"), plt.Axes
         )
