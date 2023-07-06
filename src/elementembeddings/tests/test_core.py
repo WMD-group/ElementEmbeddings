@@ -374,3 +374,11 @@ class EmbeddingTest(unittest.TestCase):
         assert "Li" not in self.test_skipatom.element_list
         assert "Ti" not in self.test_skipatom.element_list
         assert "Bi" not in self.test_skipatom.element_list
+
+    def test_tSNE(self):
+        """Test the tSNE function."""
+        assert isinstance(self.test_matscholar.calculate_tSNE(), np.ndarray)
+        assert self.test_matscholar.calculate_tSNE().shape == (
+            len(self.test_matscholar.element_list),
+            2,
+        )
