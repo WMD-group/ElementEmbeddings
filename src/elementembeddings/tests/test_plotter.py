@@ -33,12 +33,49 @@ class HeatmapTest(unittest.TestCase):
 class DimensionTest(unittest.TestCase):
     """Test the dimension_plotter function."""
 
-    def test_dimension_plotter(self):
+    @classmethod
+    def setUpClass(cls):
+        """Set up the test class."""
+        cls.test_skipatom = Embedding.load_data("skipatom")
+
+    def test_dimension_2d_plotter(self):
         """Test that the dimension_plotter function works."""
-        # Load the data
-        skipatom = Embedding.load_data("skipatom")
-        # Get the embeddings
         skipatom_pca_plot = dimension_plotter(
-            skipatom, n_components=2, reducer="pca", adjusttext=True
+            self.test_skipatom, n_components=2, reducer="pca", adjusttext=False
         )
         assert isinstance(skipatom_pca_plot, plt.Axes)
+        skipatom_tsne_plot = dimension_plotter(
+            self.test_skipatom, n_components=2, reducer="tsne", adjusttext=False
+        )
+        assert isinstance(skipatom_tsne_plot, plt.Axes)
+        skipatom_umap_plot = dimension_plotter(
+            self.test_skipatom, n_components=2, reducer="umap", adjusttext=True
+        )
+        assert isinstance(skipatom_umap_plot, plt.Axes)
+
+        self.assertRaises(
+            ValueError,
+            dimension_plotter,
+            self.test_skipatom,
+            n_components=2,
+            reducer="badreducer",
+        )
+
+    def test_dimension_2d_plotter_preloaded_reduction(self):
+        """Test that the dimension_plotter function works with a preloaded reduction."""
+        self.test_skipatom.calculate_PC()
+        self.test_skipatom.calculate_tSNE()
+        self.test_skipatom.calculate_UMAP()
+
+        skipatom_pca_plot = dimension_plotter(
+            self.test_skipatom, n_components=2, reducer="pca", adjusttext=False
+        )
+        assert isinstance(skipatom_pca_plot, plt.Axes)
+        skipatom_tsne_plot = dimension_plotter(
+            self.test_skipatom, n_components=2, reducer="tsne", adjusttext=False
+        )
+        assert isinstance(skipatom_tsne_plot, plt.Axes)
+        skipatom_umap_plot = dimension_plotter(
+            self.test_skipatom, n_components=2, reducer="umap", adjusttext=False
+        )
+        assert isinstance(skipatom_umap_plot, plt.Axes)
