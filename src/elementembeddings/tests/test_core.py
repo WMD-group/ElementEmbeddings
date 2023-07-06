@@ -274,6 +274,11 @@ class EmbeddingTest(unittest.TestCase):
         # TO-DO
         # Create tests for checking dataframes and plotting functions
         assert isinstance(magpie.as_dataframe(), pd.DataFrame)
+        assert "H" in magpie.as_dataframe().index.tolist()
+        assert isinstance(magpie.as_dataframe(columns="elements"), pd.DataFrame)
+        assert "H" in magpie.as_dataframe(columns="elements").columns.tolist()
+        self.assertRaises(ValueError, magpie.as_dataframe, columns="test")
+
         assert isinstance(magpie.to(fmt="json"), str)
         assert isinstance(magpie.to(fmt="csv"), str)
         assert isinstance(
