@@ -848,6 +848,10 @@ class Embedding:
             ax (matplotlib.axes.Axes): An Axes object with the PCA plot
 
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         embeddings_array = np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
 
@@ -908,6 +912,10 @@ class Embedding:
 
 
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         embeddings_array = np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
 
