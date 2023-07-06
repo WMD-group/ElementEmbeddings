@@ -313,8 +313,26 @@ class EmbeddingTest(unittest.TestCase):
             float,
         )
         assert isinstance(
+            self.test_magpie.compute_distance_metric("H", "O", "energy"),
+            float,
+        )
+        assert isinstance(
+            self.test_magpie.compute_distance_metric("H", "O", "cosine_distance"),
+            float,
+        )
+        assert isinstance(
             self.test_magpie.compute_correlation_metric("H", "O", metric="spearman"),
             float,
+        )
+
+        self.assertRaises(
+            ValueError, self.test_skipatom.compute_distance_metric, "He", "O"
+        )
+        self.assertRaises(
+            ValueError, self.test_skipatom.compute_distance_metric, "O", "He"
+        )
+        self.assertRaises(
+            ValueError, self.test_skipatom.compute_distance_metric, "Li", "O", "euclid"
         )
 
     def test_distance_dataframe_functions(self):
