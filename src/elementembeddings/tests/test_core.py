@@ -335,6 +335,7 @@ class EmbeddingTest(unittest.TestCase):
         assert isinstance(
             self.test_magpie.plot_distance_correlation(metric="euclidean"), plt.Axes
         )
+        assert isinstance(self.test_magpie.stats_correlation_df(), pd.DataFrame)
 
     def test_remove_elements(self):
         """Test the remove_elements function."""
