@@ -338,5 +338,13 @@ class EmbeddingTest(unittest.TestCase):
 
     def test_remove_elements(self):
         """Test the remove_elements function."""
+        assert isinstance(self.test_skipatom.remove_elements("H"), Embedding)
+        assert isinstance(self.test_skipatom.remove_elements(["H", "Li"]), Embedding)
         self.assertIsNone(self.test_skipatom.remove_elements("H", inplace=True))
-        assert "H" not in self.test_skipatom.element_list
+        self.assertFalse(self.test_skipatom._is_el_in_embedding("H"))
+        self.assertIsNone(
+            self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True)
+        )
+        assert "Li" not in self.test_skipatom.element_list
+        assert "Ti" not in self.test_skipatom.element_list
+        assert "Bi" not in self.test_skipatom.element_list
