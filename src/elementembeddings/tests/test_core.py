@@ -375,10 +375,26 @@ class EmbeddingTest(unittest.TestCase):
         assert "Ti" not in self.test_skipatom.element_list
         assert "Bi" not in self.test_skipatom.element_list
 
+    def test_PCA(self):
+        """Test the PCA function."""
+        assert isinstance(self.test_matscholar.calculate_PC(), np.ndarray)
+        assert self.test_matscholar.calculate_PC().shape == (
+            len(self.test_matscholar.element_list),
+            2,
+        )
+
     def test_tSNE(self):
         """Test the tSNE function."""
         assert isinstance(self.test_matscholar.calculate_tSNE(), np.ndarray)
         assert self.test_matscholar.calculate_tSNE().shape == (
+            len(self.test_matscholar.element_list),
+            2,
+        )
+
+    def test_UMAP(self):
+        """Test the UMAP function."""
+        assert isinstance(self.test_matscholar.calculate_UMAP(), np.ndarray)
+        assert self.test_matscholar.calculate_UMAP().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
