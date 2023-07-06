@@ -312,6 +312,10 @@ class EmbeddingTest(unittest.TestCase):
             ),
             float,
         )
+        assert isinstance(
+            self.test_magpie.compute_correlation_metric("H", "O", metric="spearman"),
+            float,
+        )
 
     def test_distance_dataframe_functions(self):
         """Test the distance dataframe functions."""
