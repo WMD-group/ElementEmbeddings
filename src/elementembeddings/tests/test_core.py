@@ -335,3 +335,8 @@ class EmbeddingTest(unittest.TestCase):
         assert isinstance(
             self.test_magpie.plot_distance_correlation(metric="euclidean"), plt.Axes
         )
+
+    def test_remove_elements(self):
+        """Test the remove_elements function."""
+        self.assertIsNone(self.test_skipatom.remove_elements("H", inplace=True))
+        assert "H" not in self.test_skipatom.element_list
