@@ -79,3 +79,20 @@ class DimensionTest(unittest.TestCase):
             self.test_skipatom, n_components=2, reducer="umap", adjusttext=False
         )
         assert isinstance(skipatom_umap_plot, plt.Axes)
+
+    def test_dimension_3d_plotter(self):
+        """Test that the dimension_plotter function works in 3D."""
+        skipatom_3d_pca_plot = dimension_plotter(
+            self.test_skipatom, n_components=3, reducer="pca", adjusttext=False
+        )
+        assert isinstance(skipatom_3d_pca_plot, plt.Axes)
+
+    def test_dimension_Nd_plotter(self):
+        """Test that the dimension_plotter function will fail in d>3."""
+        self.assertRaises(
+            ValueError,
+            dimension_plotter,
+            self.test_skipatom,
+            n_components=4,
+            reducer="pca",
+        )
