@@ -21,16 +21,20 @@ class EmbeddingTest(unittest.TestCase):
         skipatom = Embedding.load_data("skipatom")
         megnet16 = Embedding.load_data("megnet16")
         matscholar = Embedding.load_data("matscholar")
+        mod_petti = Embedding.load_data("mod_petti")
         assert skipatom.dim == 200
         assert skipatom.embedding_name == "skipatom"
         assert megnet16.dim == 16
         assert megnet16.embedding_name == "megnet16"
         assert matscholar.dim == 200
         assert matscholar.embedding_name == "matscholar"
+        assert mod_petti.dim == 1
+        assert mod_petti.embedding_name == "mod_petti"
         assert isinstance(skipatom.citation(), list)
         assert isinstance(megnet16.citation(), list)
         assert isinstance(matscholar.citation(), list)
-        
+        assert isinstance(mod_petti.citation(), list)
+
     def test_Embedding_file_input(self):
         """Test that the Embedding class can load custom data."""
         embedding_csv = Embedding.from_csv(TEST_EMBEDDING_CSV)
