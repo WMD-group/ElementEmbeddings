@@ -151,11 +151,6 @@ class Embedding:
                 _json = path.join(data_directory, _cbfv_files[embedding_name])
                 with open(_json) as f:
                     embedding_data = json.load(f)
-
-            # Load a json file from a file specified in the input
-            else:
-                with open(embedding_name) as f:
-                    embedding_data = json.load(f)
         else:
             raise (
                 ValueError(
