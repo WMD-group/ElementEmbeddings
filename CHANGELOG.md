@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Added dev & doc reqs and updated version no. ([e9278c5](https://github.com/WMD-group/ElementEmbeddings/commit/e9278c579a031643576f137196aad34e0f5ea98f) by Anthony Onwuli).
 - Added test for dimension plotter in 3D ([ef37daf](https://github.com/WMD-group/ElementEmbeddings/commit/ef37daff6aa824c3d9917fa1ba26fc37b95a9951) by Anthony Onwuli).
 - Added test for plotting euclidean heatmap ([e9cc5ed](https://github.com/WMD-group/ElementEmbeddings/commit/e9cc5ed5508e624420b1330973425572ff5b1628) by Anthony Onwuli).
 - Added deprecation warning to old plotting function ([542e2f2](https://github.com/WMD-group/ElementEmbeddings/commit/542e2f2e6bd96b0f0e1624192cb9a9a98fb3dfcc) by Anthony Onwuli).
@@ -29,8 +30,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added test embedding json file ([188aea4](https://github.com/WMD-group/ElementEmbeddings/commit/188aea48e21b3c3d5a1b9624a9885b94f14b2fcc) by Anthony Onwuli).
 - Added test embedding csv file ([173bcee](https://github.com/WMD-group/ElementEmbeddings/commit/173bcee057173ec1a48cdc7bb3141406236119ce) by Anthony Onwuli).
 
+### Fixed
+
+- Fixed spelling error for extras_require setup.py ([8e28e9a](https://github.com/WMD-group/ElementEmbeddings/commit/8e28e9a09550bfcaf21ec4d95989cd031d717596) by Anthony Onwuli).
+
 ### Removed
 
+- Removed outdated installation instructions ([c69817f](https://github.com/WMD-group/ElementEmbeddings/commit/c69817fef331e203fb3861e603c7c0176097e51f) by Anthony Onwuli).
 - Removed an else block from `load_data` ([5532de6](https://github.com/WMD-group/ElementEmbeddings/commit/5532de6d050580382f0fa9688be96f0e9cd231ec) by Anthony Onwuli).
 
 <!-- insertion marker -->
