@@ -36,5 +36,5 @@ keywords:
   - element representation
 license: MIT
 commit: d3f30602abf825ba3dcd5f247694a174a358ef49
-version: '0.1'
-date-released: '2023-06-30'
+version: '0.2.0'
+date-released: '2023-07-07'

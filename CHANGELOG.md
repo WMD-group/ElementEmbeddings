@@ -8,7 +8,41 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.1...HEAD)</small>
+<small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.1.1...HEAD)</small>
+
+### Added
+
+- Added dev & doc reqs and updated version no. ([e9278c5](https://github.com/WMD-group/ElementEmbeddings/commit/e9278c579a031643576f137196aad34e0f5ea98f) by Anthony Onwuli).
+- Added test for dimension plotter in 3D ([ef37daf](https://github.com/WMD-group/ElementEmbeddings/commit/ef37daff6aa824c3d9917fa1ba26fc37b95a9951) by Anthony Onwuli).
+- Added test for plotting euclidean heatmap ([e9cc5ed](https://github.com/WMD-group/ElementEmbeddings/commit/e9cc5ed5508e624420b1330973425572ff5b1628) by Anthony Onwuli).
+- Added deprecation warning to old plotting function ([542e2f2](https://github.com/WMD-group/ElementEmbeddings/commit/542e2f2e6bd96b0f0e1624192cb9a9a98fb3dfcc) by Anthony Onwuli).
+- Added functions to test PCA and UMAP for Embedding ([b7ccc8f](https://github.com/WMD-group/ElementEmbeddings/commit/b7ccc8f41384e5e6095090aa016088279b5a0439) by Anthony Onwuli).
+- Added test function for tSNE for Embedding class ([aaa1472](https://github.com/WMD-group/ElementEmbeddings/commit/aaa147279ba609984482813df2ce9530420da2be) by Anthony Onwuli).
+- Added more tests for compute metrics function ([c4055bc](https://github.com/WMD-group/ElementEmbeddings/commit/c4055bcdad6e5bd7832a8568767ced72cd9cdfd9) by Anthony Onwuli).
+- Added test for computing spearman's rank ([5f715aa](https://github.com/WMD-group/ElementEmbeddings/commit/5f715aaa3ba339b5e01012cb0a40c44652481b55) by Anthony Onwuli).
+- Added more dataframe test functions ([edeeb87](https://github.com/WMD-group/ElementEmbeddings/commit/edeeb8714ae80b194159738b562606819ffc3ccb) by Anthony Onwuli).
+- Added test for removing multiple elements ([b69d806](https://github.com/WMD-group/ElementEmbeddings/commit/b69d80699cad211166ff1b112886d19d387890b5) by Anthony Onwuli).
+- Added test function for removing elements ([664cbbf](https://github.com/WMD-group/ElementEmbeddings/commit/664cbbf1846757b7d018c199745b6227465c0268) by Anthony Onwuli).
+- Added setUpClass to test_core.py ([7cb8ab6](https://github.com/WMD-group/ElementEmbeddings/commit/7cb8ab6d3b731d04831cdfe83a90b926ab1e2a1b) by Anthony Onwuli).
+- Added tests for `as_dataframe` method ([7256c23](https://github.com/WMD-group/ElementEmbeddings/commit/7256c23d8d2840b77983424ee9247a90f1caaded) by Anthony Onwuli).
+- Added more tests to the Embedding loading function ([7f9f87b](https://github.com/WMD-group/ElementEmbeddings/commit/7f9f87b987a77f1d4b73cf9fed289a5d9a028417) by Anthony Onwuli).
+- Added test functions for loading csv and json ([87ba958](https://github.com/WMD-group/ElementEmbeddings/commit/87ba9581c506bc16aa377961da28c0cbe60e80de) by Anthony Onwuli).
+- Added test embedding json file ([188aea4](https://github.com/WMD-group/ElementEmbeddings/commit/188aea48e21b3c3d5a1b9624a9885b94f14b2fcc) by Anthony Onwuli).
+- Added test embedding csv file ([173bcee](https://github.com/WMD-group/ElementEmbeddings/commit/173bcee057173ec1a48cdc7bb3141406236119ce) by Anthony Onwuli).
+
+### Fixed
+
+- Fixed spelling error for extras_require setup.py ([8e28e9a](https://github.com/WMD-group/ElementEmbeddings/commit/8e28e9a09550bfcaf21ec4d95989cd031d717596) by Anthony Onwuli).
+
+### Removed
+
+- Removed outdated installation instructions ([c69817f](https://github.com/WMD-group/ElementEmbeddings/commit/c69817fef331e203fb3861e603c7c0176097e51f) by Anthony Onwuli).
+- Removed an else block from `load_data` ([5532de6](https://github.com/WMD-group/ElementEmbeddings/commit/5532de6d050580382f0fa9688be96f0e9cd231ec) by Anthony Onwuli).
+
+<!-- insertion marker -->
+## [v0.1.1](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.1.1) - 2023-07-05
+
+<small>[Compare with v0.1](https://github.com/WMD-group/ElementEmbeddings/compare/v0.1...v0.1.1)</small>
 
 ### Added
 
@@ -20,7 +54,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - removed pandas, pytest and pytest-subtests in reqs ([cd1bf77](https://github.com/WMD-group/ElementEmbeddings/commit/cd1bf776220250377bb7cd48cca6b08e9a968f1d) by Anthony Onwuli).
 
-<!-- insertion marker -->
 ## [v0.1](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.1) - 2023-06-30
 
 <small>[Compare with first commit](https://github.com/WMD-group/ElementEmbeddings/compare/262c7e99a438a3527fb73866093ae8cb1ee85ee6...v0.1)</small>

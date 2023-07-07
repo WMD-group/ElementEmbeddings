@@ -151,11 +151,6 @@ class Embedding:
                 _json = path.join(data_directory, _cbfv_files[embedding_name])
                 with open(_json) as f:
                     embedding_data = json.load(f)
-
-            # Load a json file from a file specified in the input
-            else:
-                with open(embedding_name) as f:
-                    embedding_data = json.load(f)
         else:
             raise (
                 ValueError(
@@ -853,6 +848,10 @@ class Embedding:
             ax (matplotlib.axes.Axes): An Axes object with the PCA plot
 
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         embeddings_array = np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
 
@@ -913,6 +912,10 @@ class Embedding:
 
 
         """
+        warnings.warn(
+            "This method is deprecated and will be removed in a future release. ",
+            DeprecationWarning,
+        )
         embeddings_array = np.array(list(self.embeddings.values()))
         element_array = np.array(self.element_list)
 

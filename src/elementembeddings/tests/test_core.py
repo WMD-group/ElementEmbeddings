@@ -1,4 +1,5 @@
 """Test the core module of AtomicEmbeddings."""
+import os
 import unittest
 
 import matplotlib.pyplot as plt
@@ -7,26 +8,49 @@ import pandas as pd
 
 from elementembeddings.core import Embedding
 
+test_files_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
+TEST_EMBEDDING_CSV = os.path.join(test_files_dir, "test_embedding.csv")
+TEST_EMBEDDING_JSON = os.path.join(test_files_dir, "test_embedding.json")
+
 
 class EmbeddingTest(unittest.TestCase):
     """Test the Embedding class."""
 
     # High Level functions
+    @classmethod
+    def setUpClass(cls):
+        """Set up the test."""
+        cls.test_skipatom = Embedding.load_data("skipatom")
+        cls.test_megnet16 = Embedding.load_data("megnet16")
+        cls.test_matscholar = Embedding.load_data("matscholar")
+        cls.test_mod_petti = Embedding.load_data("mod_petti")
+        cls.test_magpie = Embedding.load_data("magpie")
 
-    def test_Embedding_loading(self):
-        """Test that the Embedding class can load the data."""
-        skipatom = Embedding.load_data("skipatom")
-        megnet16 = Embedding.load_data("megnet16")
-        assert skipatom.dim == 200
-        assert skipatom.embedding_name == "skipatom"
-        assert megnet16.dim == 16
-        assert megnet16.embedding_name == "megnet16"
-        assert isinstance(skipatom.citation(), list)
-        assert isinstance(megnet16.citation(), list)
+    def test_Embedding_attributes(self):
+        """Test attributes of the loaded embeddings."""
+        assert self.test_skipatom.dim == 200
+        assert self.test_skipatom.embedding_name == "skipatom"
+        assert self.test_megnet16.dim == 16
+        assert self.test_megnet16.embedding_name == "megnet16"
+        assert self.test_matscholar.dim == 200
+        assert self.test_matscholar.embedding_name == "matscholar"
+        assert self.test_mod_petti.dim == 1
+        assert self.test_mod_petti.embedding_name == "mod_petti"
+        assert isinstance(self.test_skipatom.citation(), list)
+        assert isinstance(self.test_megnet16.citation(), list)
+        assert isinstance(self.test_matscholar.citation(), list)
+        assert isinstance(self.test_mod_petti.citation(), list)
+
+    def test_Embedding_file_input(self):
+        """Test that the Embedding class can load custom data."""
+        embedding_csv = Embedding.from_csv(TEST_EMBEDDING_CSV)
+        embedding_json = Embedding.from_json(TEST_EMBEDDING_JSON)
+        assert embedding_csv.dim == 10
+        assert embedding_json.dim == 10
 
     def test_Embeddings_class_magpie(self):
         """Test that the Embedding class can load the magpie data."""
-        magpie = Embedding.load_data("magpie")
+        magpie = self.test_magpie
         # Check if the embeddings attribute is a dict
         assert isinstance(magpie.embeddings, dict)
         # Check if the embedding vector is a numpy array
@@ -253,26 +277,73 @@ class EmbeddingTest(unittest.TestCase):
 
         # TO-DO
         # Create tests for checking dataframes and plotting functions
+
+    def test_as_dataframe(self):
+        """Test the as_dataframe method."""
+        magpie = self.test_magpie
         assert isinstance(magpie.as_dataframe(), pd.DataFrame)
-        assert isinstance(magpie.to(fmt="json"), str)
-        assert isinstance(magpie.to(fmt="csv"), str)
+        assert "H" in magpie.as_dataframe().index.tolist()
+        assert isinstance(magpie.as_dataframe(columns="elements"), pd.DataFrame)
+        assert "H" in magpie.as_dataframe(columns="elements").columns.tolist()
+        self.assertRaises(ValueError, magpie.as_dataframe, columns="test")
+
+    def test_to(self):
+        """Test the to method."""
+        assert isinstance(self.test_magpie.to(fmt="json"), str)
+        self.test_magpie.to(fmt="json", filename="test.json")
+        assert os.path.isfile("test.json")
+        os.remove("test.json")
+
+        assert isinstance(self.test_magpie.to(fmt="csv"), str)
+        self.test_magpie.to(fmt="csv", filename="test.csv")
+        assert os.path.isfile("test.csv")
+        os.remove("test.csv")
+
+    def test_compute_metric_functions(self):
+        """Test the compute metric functions."""
         assert isinstance(
-            magpie.compute_correlation_metric("H", "O", metric="pearson"),
+            self.test_magpie.compute_correlation_metric("H", "O", metric="pearson"),
             float,
         )
         assert isinstance(
-            magpie.compute_distance_metric(
+            self.test_magpie.compute_distance_metric(
                 "H",
                 "O",
             ),
             float,
         )
-        assert isinstance(magpie.distance_df(), pd.DataFrame)
-        assert magpie.distance_df().shape == (
-            len(list(magpie.create_pairs())) * 2 - len(magpie.embeddings),
+        assert isinstance(
+            self.test_magpie.compute_distance_metric("H", "O", "energy"),
+            float,
+        )
+        assert isinstance(
+            self.test_magpie.compute_distance_metric("H", "O", "cosine_distance"),
+            float,
+        )
+        assert isinstance(
+            self.test_magpie.compute_correlation_metric("H", "O", metric="spearman"),
+            float,
+        )
+
+        self.assertRaises(
+            ValueError, self.test_skipatom.compute_distance_metric, "He", "O"
+        )
+        self.assertRaises(
+            ValueError, self.test_skipatom.compute_distance_metric, "O", "He"
+        )
+        self.assertRaises(
+            ValueError, self.test_skipatom.compute_distance_metric, "Li", "O", "euclid"
+        )
+
+    def test_distance_dataframe_functions(self):
+        """Test the distance dataframe functions."""
+        assert isinstance(self.test_magpie.distance_df(), pd.DataFrame)
+        assert self.test_magpie.distance_df().shape == (
+            len(list(self.test_magpie.create_pairs())) * 2
+            - len(self.test_magpie.embeddings),
             7,
         )
-        assert magpie.distance_df().columns.tolist() == [
+        assert self.test_magpie.distance_df().columns.tolist() == [
             "ele_1",
             "ele_2",
             "mend_1",
@@ -281,8 +352,49 @@ class EmbeddingTest(unittest.TestCase):
             "Z_2",
             "euclidean",
         ]
-        assert isinstance(magpie.distance_pivot_table(), pd.DataFrame)
-        assert isinstance(magpie.plot_distance_correlation(), plt.Axes)
+        assert isinstance(self.test_magpie.distance_pivot_table(), pd.DataFrame)
         assert isinstance(
-            magpie.plot_distance_correlation(metric="euclidean"), plt.Axes
+            self.test_magpie.distance_pivot_table(sortby="atomic_number"), pd.DataFrame
+        )
+        assert isinstance(self.test_magpie.plot_distance_correlation(), plt.Axes)
+        assert isinstance(
+            self.test_magpie.plot_distance_correlation(metric="euclidean"), plt.Axes
+        )
+        assert isinstance(self.test_magpie.stats_correlation_df(), pd.DataFrame)
+
+    def test_remove_elements(self):
+        """Test the remove_elements function."""
+        assert isinstance(self.test_skipatom.remove_elements("H"), Embedding)
+        assert isinstance(self.test_skipatom.remove_elements(["H", "Li"]), Embedding)
+        self.assertIsNone(self.test_skipatom.remove_elements("H", inplace=True))
+        self.assertFalse(self.test_skipatom._is_el_in_embedding("H"))
+        self.assertIsNone(
+            self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True)
+        )
+        assert "Li" not in self.test_skipatom.element_list
+        assert "Ti" not in self.test_skipatom.element_list
+        assert "Bi" not in self.test_skipatom.element_list
+
+    def test_PCA(self):
+        """Test the PCA function."""
+        assert isinstance(self.test_matscholar.calculate_PC(), np.ndarray)
+        assert self.test_matscholar.calculate_PC().shape == (
+            len(self.test_matscholar.element_list),
+            2,
+        )
+
+    def test_tSNE(self):
+        """Test the tSNE function."""
+        assert isinstance(self.test_matscholar.calculate_tSNE(), np.ndarray)
+        assert self.test_matscholar.calculate_tSNE().shape == (
+            len(self.test_matscholar.element_list),
+            2,
+        )
+
+    def test_UMAP(self):
+        """Test the UMAP function."""
+        assert isinstance(self.test_matscholar.calculate_UMAP(), np.ndarray)
+        assert self.test_matscholar.calculate_UMAP().shape == (
+            len(self.test_matscholar.element_list),
+            2,
         )
