@@ -12,7 +12,6 @@ ElementEmbeddings
 [![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://wmd-group.github.io/ElementEmbeddings/)
 ![python version](https://img.shields.io/pypi/pyversions/elementembeddings)
 
-
 The **Element Embeddings** package provides high-level tools for analysing elemental
 embeddings data. This primarily involves visualising the correlation between
 embedding schemes using different statistical measures.
@@ -37,9 +36,18 @@ importing the class.
 
 Installation
 --------
+
 The latest stable release can be installed via pip using:
+
 ```bash
 pip install ElementEmbeddings
+```
+
+For installing the development or documentation dependencies via pip:
+
+```bash
+pip install "ElementEmbeddings[dev]"
+pip install "ElementEmbeddings[docs]"
 ```
 
 For development, you can clone the repository and install the package in editable mode.
@@ -75,4 +83,3 @@ We can access some of the properties of the `Embedding` class. For example, we c
 The magpie representation has embeddings of dimension 22
 ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk']
 ```
-
