@@ -37,7 +37,7 @@ setup(
         "umap-learn==0.5.3",
         "adjustText==0.8",
     ],
-    extra_requires={
+    extras_require={
         "dev": [
             "pre-commit==2.20.0",
             "black==23.3.0",
