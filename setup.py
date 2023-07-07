@@ -5,7 +5,7 @@ from setuptools import find_namespace_packages, setup
 
 module_dir = os.path.dirname(os.path.abspath(__file__))
 
-VERSION = "0.1.1"
+VERSION = "0.2.0"
 DESCRIPTION = "Element Embeddings"
 with open(os.path.join(module_dir, "README.md"), encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
@@ -37,6 +37,26 @@ setup(
         "umap-learn==0.5.3",
         "adjustText==0.8",
     ],
+    extra_requires={
+        "dev": [
+            "pre-commit==2.20.0",
+            "black==23.3.0",
+            "isort==5.12.0",
+            "pytest==7.2.1",
+            "pytest-subtests==0.10.0",
+            "nbqa==1.5.3",
+            "pyupgrade==3.3.1",
+            "flake8==6.0.0",
+            "autopep8==2.0.1",
+            "pytest-cov==4.1.0",
+        ],
+        "docs": [
+            "mkdocs==1.4.3",
+            "mkdocs-material==9.1.17",
+            "mkdocstrings ==0.21.2",
+            "mkdocstrings-python == 1.0.0",
+        ],
+    },
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.8",
