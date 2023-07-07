@@ -41,11 +41,6 @@ The latest stable release can be installed via pip using:
 ```bash
 pip install ElementEmbeddings
 ```
-The latest version can be installed using:
-
-```bash
-pip install git+git://github.com/WMD-group/ElementEmbeddings.git
-```
 
 For development, you can clone the repository and install the package in editable mode.
 To clone the repository and make a local installation, run the following commands:
