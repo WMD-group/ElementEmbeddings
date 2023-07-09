@@ -255,18 +255,18 @@ class CompositionalEmbedding:
     def __repr__(self):
         return (
             f"CompositionalEmbedding(formula={self.formula}, "
-            f"embedding={self.embedding})"
+            f"embedding={self.embedding_name})"
         )
 
     def __str__(self):
         return (
             f"CompositionalEmbedding(formula={self.formula}, "
-            f"embedding={self.embedding})"
+            f"embedding={self.embedding_name})"
         )
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return self.formula == other.formula and self.embedding == other.embedding
+            return self.formula == other.formula and self.embedding_name == other.embedding_name
         else:
             return False
 
