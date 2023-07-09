@@ -280,7 +280,7 @@ class CompositionalEmbedding:
 def composition_featuriser(
     data: Union[pd.DataFrame, pd.Series, CompositionalEmbedding, list],
     embedding: Union[Embedding, str] = "magpie",
-    stats: Union[str, list] = ["mean"],
+    stats: Union[str, list] = "mean",
     inplace: bool = False,
 ) -> pd.DataFrame:
     """
