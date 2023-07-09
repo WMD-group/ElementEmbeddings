@@ -212,7 +212,7 @@ class CompositionalEmbedding:
         "harmonic_mean": "_harmonic_mean_feature_vector",
     }
 
-    def feature_vector(self, stats: Union[str, list] = ["mean"]):
+    def feature_vector(self, stats: Union[str, list] = "mean"):
         """
         Compute a feature vector.
 
