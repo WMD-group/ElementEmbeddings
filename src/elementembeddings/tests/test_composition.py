@@ -116,3 +116,61 @@ class TestCompositionalEmbedding(unittest.TestCase):
         assert composition.composition_featuriser(formula_df).shape == (3, 2)
         assert isinstance(composition.composition_featuriser(formulas), list)
         assert len(composition.composition_featuriser(formulas)) == 3
+
+    def test_composition_distance(self):
+        """Test the distance method of the CompositionalEmbedding class."""
+        assert isinstance(
+            self.valid_magpie_compositions[0].distance(
+                self.valid_magpie_compositions[1]
+            ),
+            float,
+        )
+        assert (
+            self.valid_magpie_compositions[0].distance(
+                self.valid_magpie_compositions[1]
+            )
+            > 0
+        )
+
+        assert self.valid_magpie_compositions[0].distance(
+            self.valid_magpie_compositions[1]
+        ) == self.valid_magpie_compositions[1].distance(
+            self.valid_magpie_compositions[0]
+        )
+
+        self.assertAlmostEqual(
+            self.valid_magpie_compositions[0].distance(
+                self.valid_magpie_compositions[1]
+            ),
+            204.65052421,
+        )
+        assert (
+            self.valid_magpie_compositions[0].distance(
+                self.valid_magpie_compositions[0]
+            )
+            == 0
+        )
+        assert (
+            self.valid_magpie_compositions[0].distance(
+                self.valid_magpie_compositions[1], stats="mean"
+            )
+            > 0
+        )
+        assert (
+            self.valid_magpie_compositions[0].distance(
+                self.valid_magpie_compositions[0], stats="mean"
+            )
+            == 0
+        )
+        assert (
+            self.valid_magpie_compositions[0].distance(
+                self.valid_magpie_compositions[1], stats=["mean", "variance"]
+            )
+            > 0
+        )
+        assert (
+            self.valid_magpie_compositions[0].distance(
+                self.valid_magpie_compositions[0], stats=["mean", "variance"]
+            )
+            == 0
+        )
