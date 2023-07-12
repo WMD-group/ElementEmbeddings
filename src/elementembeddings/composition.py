@@ -6,13 +6,16 @@ Typical usage example:
 """
 import collections
 import re
-from typing import Dict, Union
+from typing import Dict, List, Optional, Union
 
 import numpy as np
 import pandas as pd
+from scipy.stats import energy_distance, wasserstein_distance
+from sklearn.metrics import DistanceMetric
 from tqdm import tqdm
 
 from .core import Embedding
+from .utils.math import cosine_distance
 
 tqdm.pandas()
 # Modified from pymatgen.core.Compositions
@@ -252,6 +255,36 @@ class CompositionalEmbedding:
             feature_vector.append(getattr(self, self._stats_functions_dict[s])())
         return np.concatenate(feature_vector)
 
+    def distance(
+        self,
+        comp_other,
+        distance_metric: str = "euclidean",
+        stats: Union[str, List[str]] = "mean",
+    ):
+        """
+        Compute the distance between two compositions.
+
+        Args:
+            comp_other (Union[str, CompositionalEmbedding]): The other composition.
+            distance_metric (str): The metric to be used. The default is 'euclidean'.
+
+        Returns:
+            float: The distance between the two CompositionalEmbedding objects.
+        """
+        if isinstance(comp_other, str):
+            comp_other = CompositionalEmbedding(comp_other, self.embedding)
+        if not isinstance(comp_other, CompositionalEmbedding):
+            raise ValueError(
+                "comp_other must be a string or a CompositionalEmbedding object."
+            )
+        if self.embedding_name != comp_other.embedding_name:
+            raise ValueError(
+                "The two CompositionalEmbedding objects must have the same embedding."
+            )
+        return _composition_distance(
+            self, comp_other, self.embedding, distance_metric, stats
+        )
+
     def __repr__(self):
         return (
             f"CompositionalEmbedding(formula={self.formula}, "
@@ -266,7 +299,10 @@ class CompositionalEmbedding:
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return self.formula == other.formula and self.embedding_name == other.embedding_name
+            return (
+                self.formula == other.formula
+                and self.embedding_name == other.embedding_name
+            )
         else:
             return False
 
@@ -275,6 +311,45 @@ class CompositionalEmbedding:
 
     def __hash__(self):
         return hash((self.formula, self.embedding))
+
+
+def _composition_distance(
+    comp1: Union[str, CompositionalEmbedding],
+    comp2: Union[str, CompositionalEmbedding],
+    embedding: Optional[Union[str, Embedding]] = None,
+    distance_metric: str = "euclidean",
+    stats: Union[str, List[str]] = "mean",
+) -> float:
+    """Compute the distance between two compositions."""
+    if not isinstance(comp1, CompositionalEmbedding):
+        comp1 = CompositionalEmbedding(comp1, embedding=embedding)
+    if not isinstance(comp2, CompositionalEmbedding):
+        comp2 = CompositionalEmbedding(comp2, embedding=embedding)
+    assert comp1.embedding_name == comp2.embedding_name
+
+    comp1_vec = comp1.feature_vector(stats=stats)
+    comp2_vec = comp2.feature_vector(stats=stats)
+
+    scikit_metrics = ["euclidean", "manhattan", "chebyshev"]
+
+    scipy_metrics = {"wasserstein": wasserstein_distance, "energy": energy_distance}
+
+    # valid_metrics = scikit_metrics + list(scipy_metrics.keys()) + ["cosine"]
+
+    if distance_metric in scikit_metrics:
+        distance = DistanceMetric.get_metric(distance_metric)
+
+        return distance.pairwise(
+            comp1_vec.reshape(1, -1),
+            comp2_vec.reshape(1, -1),
+        )[
+            0
+        ][0]
+
+    elif distance_metric in scipy_metrics.keys():
+        return scipy_metrics[distance_metric](comp1_vec, comp2_vec)
+    elif distance_metric == "cosine_distance":
+        return cosine_distance(comp1_vec, comp2_vec)
 
 
 def composition_featuriser(
