@@ -17,7 +17,7 @@ embeddings data. This primarily involves visualising the correlation between
 embedding schemes using different statistical measures.
 
 * **Documentation:** <https://wmd-group.github.io/ElementEmbeddings/>
-* **Examples:** <https://github.com/WMD-group/ElementEmbeddings/examples>
+* **Examples:** <https://github.com/WMD-group/ElementEmbeddings/tree/main/examples>
 
 Motivation
 --------
