@@ -8,7 +8,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.1.1...HEAD)</small>
+<small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.2.0...HEAD)</small>
+
+### Added
+
+- Added a link in the README.md ([bea710d](https://github.com/WMD-group/ElementEmbeddings/commit/bea710d80fd8394e949e03e60bfea8f081f79a27) by Anthony Onwuli).
+- Added examples folder link to README ([2ccbc64](https://github.com/WMD-group/ElementEmbeddings/commit/2ccbc6457d303b54289fe87268bdcf6a1ad2c4ec) by Anthony Onwuli).
+- Added distance example ([1d5b489](https://github.com/WMD-group/ElementEmbeddings/commit/1d5b489217256d3a54f90f61b03f889f063c98f5) by Anthony Onwuli).
+- Added test for composition distance function ([116d587](https://github.com/WMD-group/ElementEmbeddings/commit/116d587d074ceddcc0cd850588c43af74d6dbceb) by Anthony Onwuli).
+- Added distance function to composition class ([b827bc0](https://github.com/WMD-group/ElementEmbeddings/commit/b827bc0361f4e3e495679ccfe26eb94b9a8426df) by Anthony Onwuli).
+
+### Changed
+
+- changed default arg to a str from a list ([b5f7cd7](https://github.com/WMD-group/ElementEmbeddings/commit/b5f7cd79d9c50b0652cc02d22dedbc683f680fc2) by Anthony Onwuli).
+
+<!-- insertion marker -->
+## [v0.2.0](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.2.0) - 2023-07-07
+
+<small>[Compare with v0.1.1](https://github.com/WMD-group/ElementEmbeddings/compare/v0.1.1...v0.2.0)</small>
 
 ### Added
 
@@ -39,7 +56,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Removed outdated installation instructions ([c69817f](https://github.com/WMD-group/ElementEmbeddings/commit/c69817fef331e203fb3861e603c7c0176097e51f) by Anthony Onwuli).
 - Removed an else block from `load_data` ([5532de6](https://github.com/WMD-group/ElementEmbeddings/commit/5532de6d050580382f0fa9688be96f0e9cd231ec) by Anthony Onwuli).
 
-<!-- insertion marker -->
 ## [v0.1.1](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.1.1) - 2023-07-05
 
 <small>[Compare with v0.1](https://github.com/WMD-group/ElementEmbeddings/compare/v0.1...v0.1.1)</small>
