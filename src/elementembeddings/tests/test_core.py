@@ -30,12 +30,16 @@ class EmbeddingTest(unittest.TestCase):
         """Test attributes of the loaded embeddings."""
         assert self.test_skipatom.dim == 200
         assert self.test_skipatom.embedding_name == "skipatom"
+        assert self.test_skipatom.embedding_type == "vector"
         assert self.test_megnet16.dim == 16
         assert self.test_megnet16.embedding_name == "megnet16"
+        assert self.test_megnet16.embedding_type == "vector"
         assert self.test_matscholar.dim == 200
         assert self.test_matscholar.embedding_name == "matscholar"
-        assert self.test_mod_petti.dim == 1
+        assert self.test_matscholar.embedding_type == "vector"
+        assert self.test_mod_petti.dim == 103
         assert self.test_mod_petti.embedding_name == "mod_petti"
+        assert self.test_mod_petti.embedding_type == "linear"
         assert isinstance(self.test_skipatom.citation(), list)
         assert isinstance(self.test_megnet16.citation(), list)
         assert isinstance(self.test_matscholar.citation(), list)
@@ -48,7 +52,26 @@ class EmbeddingTest(unittest.TestCase):
         assert embedding_csv.dim == 10
         assert embedding_json.dim == 10
 
-    def test_Embeddings_class_magpie(self):
+    def test_Embedding_class_mod_petti(self):
+        """Test that the Embedding class can load the mod_petti data."""
+        mod_petti = self.test_mod_petti
+        # Check if the embeddings attribute is a dict
+        assert isinstance(mod_petti.embeddings, dict)
+        # Check if the embedding vector is a numpy array
+        assert isinstance(mod_petti.embeddings["H"], np.ndarray)
+        # Check if H is present in the embedding keys
+        assert "H" in mod_petti.embeddings.keys()
+        # Check dimensions
+        assert mod_petti.dim == 103
+        # Check embedding type
+        assert mod_petti.embedding_type == "linear"
+        # Check that a list is returned
+        assert isinstance(mod_petti.element_list, list)
+        # Check the the dimensons of the embedding vector
+        assert mod_petti.embeddings["H"].shape == (103,)
+
+
+    def test_Embedding_class_magpie(self):
         """Test that the Embedding class can load the magpie data."""
         magpie = self.test_magpie
         # Check if the embeddings attribute is a dict
