@@ -76,7 +76,6 @@ class Embedding:
         else:
             self.embedding_type: str = "linear"
 
-
         # Create one-hot vectors for a scalar representation
         if self.embedding_type == "linear":
             sorted_embedding = sorted(self.embeddings.items(), key=lambda x: x[1])

@@ -70,7 +70,6 @@ class EmbeddingTest(unittest.TestCase):
         # Check the the dimensons of the embedding vector
         assert mod_petti.embeddings["H"].shape == (103,)
 
-
     def test_Embedding_class_magpie(self):
         """Test that the Embedding class can load the magpie data."""
         magpie = self.test_magpie
