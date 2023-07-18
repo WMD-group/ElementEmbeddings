@@ -75,6 +75,25 @@ class Embedding:
         else:
             self.dim: int = int(1)
 
+        # Create one-hot vectors for a scalar representation
+        if self.dim == 1:
+            sorted_embedding = sorted(self.embeddings.items(), key=lambda x: x[1])
+            elements = np.loadtxt(
+                f"{data_directory}/element_data/ordered_periodic.txt", dtype=str
+            )
+            if self.embedding_name == "mod_petti":
+                sorted_embedding = {
+                    el: num for el, num in sorted_embedding if el in elements[:103]
+                }
+            else:
+                sorted_embedding = {
+                    el: num for el, num in sorted_embedding if el in elements
+                }
+            self.embeddings = {}
+            for el, num in sorted_embedding.items():
+                self.embeddings[el] = np.zeros(len(sorted_embedding))
+                self.embeddings[el][num] = 1
+
         # Dummy initialisation for results
         self._data = []
         self._pca_data = None  # type: Optional[np.ndarray]
