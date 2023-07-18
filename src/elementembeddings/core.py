@@ -71,12 +71,14 @@ class Embedding:
         # (i.e. is not a scalar int or float)
         # If the 'vector' is a scalar/float, the representation is linear (dim=1)
         if hasattr(_rand_embed, "__len__") and (not isinstance(_rand_embed, str)):
+            self.embedding_type: str = "vector"
             self.dim: int = len(random.choice(list(self.embeddings.values())))
         else:
-            self.dim: int = int(1)
+            self.embedding_type: str = "linear"
+
 
         # Create one-hot vectors for a scalar representation
-        if self.dim == 1:
+        if self.embedding_type == "linear":
             sorted_embedding = sorted(self.embeddings.items(), key=lambda x: x[1])
             elements = np.loadtxt(
                 f"{data_directory}/element_data/ordered_periodic.txt", dtype=str
@@ -93,6 +95,7 @@ class Embedding:
             for el, num in sorted_embedding.items():
                 self.embeddings[el] = np.zeros(len(sorted_embedding))
                 self.embeddings[el][num] = 1
+            self.dim = len(self.embeddings["H"])
 
         # Dummy initialisation for results
         self._data = []
@@ -119,6 +122,7 @@ class Embedding:
         | Oliynyk (scaled)        | oliynyk_sc   |
         | Random (200 dimensions) | random_200   |
         | SkipAtom                | skipatom     |
+        | Atomic Number           | atomic       |
 
 
         Args:
@@ -138,6 +142,7 @@ class Embedding:
             "oliynyk_sc": "oliynyk_sc.json",
             "random_200": "random_200_new.csv",
             "skipatom": "skipatom_20201009_induced.csv",
+            "atomic": "atomic.json",
         }
         _cbfv_names = list(_cbfv_files.keys())
         _cbfv_names_others = [
