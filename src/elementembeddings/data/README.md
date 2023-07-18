@@ -1,8 +1,24 @@
 # Elemental Embeddings
 
 The data contained in this folder is a collection of various elemental representation/embedding schemes
+## Linear representations
 
-## Magpie
+For the linear/scalar representations, the `Embedding` class will load these representations as one-hot vectors where the vector components are ordered following the scale (i.e. the `atomic` representation is ordered by atomic numbers).
+### Modified Pettifor scale
+
+The following paper describes the details of the modified Pettifor chemical scale:
+[The optimal one dimensional periodic table: a modified Pettifor chemical scale from data mining](https://iopscience.iop.org/article/10.1088/1367-2630/18/9/093011/meta)
+
+### Atomic numbers
+
+We included `atomic` as a linear representation to generate one-hot vectors corresponding to the atomic numbers
+
+## Vector representations
+
+The following representations are all vector representations (some are local, some are distributed) and the `Embedding` class will load these representations as they are.
+
+### Magpie
+
 The following paper describes the details of the Materials Agnostic Platform for Informatics and Exploration (Magpie) framework:
 [A general-purpose machine learning framework for predicting properties of inorganic materials](https://www.nature.com/articles/npjcompumats201628)
 
@@ -34,25 +50,21 @@ The 22 dimensional embedding vector includes the following elemental properties:
 
 * `magpie_sc` is scaled version of the magpie embeddings
 
-## mat2vec
+### mat2vec
 
 The following paper describes the implementation of mat2vec:
 [Unsupervised word embeddings capture latent knowledge from materials science literature](https://www.nature.com/articles/s41586-019-1335-8)
 
-## MatScholar
+### MatScholar
 
 The following paper describes the natural language processing implementation of Materials Scholar (matscholar):
 [Named Entity Recognition and Normalization Applied to Large-Scale Information Extraction from the Materials Science Literature](https://pubs.acs.org/doi/abs/10.1021/acs.jcim.9b00470)
 
-## MEGnet
+### MEGnet
 The following paper describes the details of the construction of the MatErials Graph Network (MEGNet):
 [Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals](https://doi.org/10.1021/acs.chemmater.9b01294)
 
-## Modified Pettifor scale
-The following paper describes the details of the modified Pettifor chemical scale:
-[The optimal one dimensional periodic table: a modified Pettifor chemical scale from data mining](https://iopscience.iop.org/article/10.1088/1367-2630/18/9/093011/meta)
-
-## Oliynkyk
+### Oliynkyk
 The following paper describes the details:
 [High-Throughput Machine-Learning-Driven Synthesis of Full-Heusler Compounds](https://pubs.acs.org/doi/full/10.1021/acs.chemmater.6b02724)
 
@@ -106,13 +118,13 @@ The 44 features of the embedding vector are formed of the following properties:
 * Cohesive_energy
 </details>
 
-* `oliynyk_sc` is scaled version of the oliynyk embeddings
+* `oliynyk_sc` is a scaled version of the oliynyk embeddings
 
-## Random
+### Random
 
 This is a set of 200-dimensional vectors in which the components are randomly generated
 
-The 118 200-dimensional vectors in `random_200_new` was generated using the following code:
+The 118 200-dimensional vectors in `random_200_new` were generated using the following code:
 
 ```python
 import numpy as np
@@ -120,7 +132,8 @@ import numpy as np
 mu , sigma = 0 , 0.1 # mean and standard deviation s = np.random.normal(mu, sigma, 1000)
 s = np.random.default_rng(seed=42).normal(mu, sigma, (118,200))
 ```
-## SkipAtom
+
+### SkipAtom
 
 The following paper describes the details:
 [Distributed representations of atoms and materials for machine learning](https://www.nature.com/articles/s41524-022-00729-3)
