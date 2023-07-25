@@ -143,60 +143,51 @@ class Embedding:
             "skipatom": "skipatom_20201009_induced.csv",
             "atomic": "atomic.json",
         }
-        _cbfv_names = list(_cbfv_files.keys())
-        _cbfv_names_others = [
-            i
-            for i in _cbfv_names
-            if i not in ["skipatom", "random_200", "megnet16", "magpie", "mat2vec"]
-        ]
 
-        # Get the embeddings
-        if embedding_name in _cbfv_files:
-            if embedding_name in ["skipatom", "random_200", "magpie", "mat2vec"]:
-                _csv = path.join(data_directory, _cbfv_files[embedding_name])
-                df = pd.read_csv(_csv)
-                # Convert df to a dictionary of (ele:embeddings) pairs
-                elements = list(df["element"])
-                df.drop(["element"], axis=1, inplace=True)
-                embeds_array = df.to_numpy()
-                embedding_data = {
-                    elements[i]: embeds_array[i] for i in range(len(embeds_array))
-                }
-
-            elif embedding_name == "megnet16":
-                megnet16_json = path.join(data_directory, _cbfv_files["megnet16"])
-                with open(megnet16_json) as f:
-                    embedding_data = json.load(f)
-                # Remove 'Null' key from megnet embedding
-                del embedding_data["Null"]
-
-            elif embedding_name in _cbfv_names_others:
-                _json = path.join(data_directory, _cbfv_files[embedding_name])
-                with open(_json) as f:
-                    embedding_data = json.load(f)
-        else:
-            raise (
-                ValueError(
-                    f"{embedding_name} not in the data directory or not in directory."
-                )
+        if _cbfv_files[embedding_name].endswith(".csv"):
+            return Embedding.from_csv(
+                path.join(
+                    data_directory,
+                    "element_representations",
+                    _cbfv_files[embedding_name],
+                ),
+                embedding_name,
             )
-        return Embedding(embedding_data, embedding_name)
+        elif "megnet" in _cbfv_files[embedding_name]:
+            return Embedding.from_json(
+                path.join(
+                    data_directory,
+                    "element_representations",
+                    _cbfv_files[embedding_name],
+                ),
+                embedding_name,
+            ).remove_elements(["Null"])
+        elif _cbfv_files[embedding_name].endswith(".json"):
+            return Embedding.from_json(
+                path.join(
+                    data_directory,
+                    "element_representations",
+                    _cbfv_files[embedding_name],
+                ),
+                embedding_name,
+            )
 
     @staticmethod
-    def from_json(embedding_json):
+    def from_json(embedding_json, embedding_name: Optional[str] = None):
         """
         Create an instance of the Embedding class from a json file.
 
         Args:
             embedding_json (str): Filepath of the json file
+            embedding_name (str): The name of the elemental representation
         """
         # Need to add validation handling for JSONs in different formats
         with open(embedding_json) as f:
             embedding_data = json.load(f)
-        return Embedding(embedding_data)
+        return Embedding(embedding_data, embedding_name)
 
     @staticmethod
-    def from_csv(embedding_csv):
+    def from_csv(embedding_csv, embedding_name: Optional[str] = None):
         """
         Create an instance of the Embedding class from a csv file.
 
@@ -204,6 +195,8 @@ class Embedding:
 
         Args:
             embedding_csv (str): Filepath of the csv file
+            embedding_name (str): The name of the elemental representation
+
         """
         # Need to add validation handling for csv files
         df = pd.read_csv(embedding_csv)
@@ -213,7 +206,7 @@ class Embedding:
         embedding_data = {
             elements[i]: embeds_array[i] for i in range(len(embeds_array))
         }
-        return Embedding(embedding_data)
+        return Embedding(embedding_data, embedding_name)
 
     def as_dataframe(self, columns: str = "components") -> pd.DataFrame:
         """
