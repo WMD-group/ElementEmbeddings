@@ -23,7 +23,7 @@ setup(
     packages=find_namespace_packages(where="src"),
     package_dir={"": "src"},
     package_data={
-        "elementembeddings.data": ["*.json", "*.csv"],
+        "elementembeddings.data.element_representations": ["*.json", "*.csv"],
         "elementembeddings.data.element_data": ["*.json", "*.txt"],
     },
     test_suite="elementembeddings.tests.test",
