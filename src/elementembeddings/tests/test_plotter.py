@@ -96,3 +96,37 @@ class DimensionTest(unittest.TestCase):
             n_components=4,
             reducer="pca",
         )
+
+    def test_kwargs_plotter(self):
+        """Test that the dimension_plotter function works with kwargs."""
+        pca_params = {"svd_solver": "full", "random_state": 42}
+        tsne_params = {"n_iter": 1000, "random_state": 42, "perplexity": 100}
+        umap_params = {"n_neighbors": 15, "random_state": 42}
+        scatter_params = {"s": 1}
+        skipatom_pca_plot = dimension_plotter(
+            self.test_skipatom,
+            n_components=2,
+            reducer="pca",
+            adjusttext=False,
+            reducer_params=pca_params,
+            scatter_params=scatter_params,
+        )
+        assert isinstance(skipatom_pca_plot, plt.Axes)
+        skipatom_tsne_plot = dimension_plotter(
+            self.test_skipatom,
+            n_components=2,
+            reducer="tsne",
+            adjusttext=False,
+            scatter_params=scatter_params,
+            reducer_params=tsne_params,
+        )
+        assert isinstance(skipatom_tsne_plot, plt.Axes)
+        skipatom_umap_plot = dimension_plotter(
+            self.test_skipatom,
+            n_components=2,
+            reducer="umap",
+            adjusttext=False,
+            scatter_params=scatter_params,
+            reducer_params=umap_params,
+        )
+        assert isinstance(skipatom_umap_plot, plt.Axes)
