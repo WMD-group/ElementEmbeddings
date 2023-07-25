@@ -94,7 +94,8 @@ def dimension_plotter(
     n_components: int = 2,
     reducer: str = "umap",
     adjusttext: bool = True,
-    **kwargs,
+    reducer_params: Optional[dict] = None,
+    scatter_params: Optional[dict] = None,
 ):
     """Plot the reduced dimensions of the embeddings.
 
@@ -104,10 +105,14 @@ def dimension_plotter(
         n_components (int): The number of components to reduce to, by default 2
         reducer (str): The dimensionality reduction algorithm to use, by default "umap"
         adjust_text (bool): Whether to avoid overlap of the text labels, by default True
-        **kwargs:  Additional keyword arguments to pass to the
-          dimensionality reduction algorithm.
+        reducer_params (dict, optional): Additional keyword arguments to pass to
+        the reducer, by default None
+        scatter_params (dict, optional): Additional keyword arguments to pass to
+        the scatterplot, by default None
 
     """
+    if reducer_params is None:
+        reducer_params = {}
     if reducer == "umap":
         if (
             embedding._umap_data is not None
@@ -115,7 +120,9 @@ def dimension_plotter(
         ):
             reduced = embedding._umap_data
         else:
-            reduced = embedding.calculate_UMAP(n_components=n_components, **kwargs)
+            reduced = embedding.calculate_UMAP(
+                n_components=n_components, **reducer_params
+            )
     elif reducer == "tsne":
         if (
             embedding._tsne_data is not None
@@ -123,7 +130,9 @@ def dimension_plotter(
         ):
             reduced = embedding._tsne_data
         else:
-            reduced = embedding.calculate_tSNE(n_components=n_components, **kwargs)
+            reduced = embedding.calculate_tSNE(
+                n_components=n_components, **reducer_params
+            )
     elif reducer == "pca":
         if (
             embedding._pca_data is not None
@@ -131,7 +140,9 @@ def dimension_plotter(
         ):
             reduced = embedding._pca_data
         else:
-            reduced = embedding.calculate_PC(n_components=n_components, **kwargs)
+            reduced = embedding.calculate_PC(
+                n_components=n_components, **reducer_params
+            )
     else:
         raise ValueError("Unrecognised reducer.")
 
@@ -146,7 +157,9 @@ def dimension_plotter(
         )
         if not ax:
             fig, ax = plt.subplots()
-        sns.scatterplot(data=df, x="x", y="y", hue="Group", ax=ax, **kwargs)
+        if scatter_params is None:
+            scatter_params = {}
+        sns.scatterplot(data=df, x="x", y="y", hue="Group", ax=ax, **scatter_params)
         ax.set_xlabel("Dimension 1")
         ax.set_ylabel("Dimension 2")
         texts = [
