@@ -87,17 +87,17 @@ class EmbeddingTest(unittest.TestCase):
         # Check if H is present in the embedding keys
         assert "H" in atomic.embeddings.keys()
         # Check dimensions
-        assert atomic.dim == 119
+        assert atomic.dim == 118
         # Check embedding type
         assert atomic.embedding_type == "linear"
         # Check that a list is returned
         assert isinstance(atomic.element_list, list)
         # Check the the dimensons of the embedding vector
-        assert atomic.embeddings["H"].shape == (119,)
+        assert atomic.embeddings["H"].shape == (118,)
         # Check that the embedding vector is not all zeros
         assert not np.all(atomic.embeddings["H"] == 0)
         # Check the the embedding vector for H is correct
-        test_H = np.zeros(119)
+        test_H = np.zeros(118)
         test_H[0] = 1
         assert np.all(atomic.embeddings["H"] == test_H)
 
