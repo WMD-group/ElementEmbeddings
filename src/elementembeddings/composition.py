@@ -378,6 +378,10 @@ def composition_featuriser(
         Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector,
         or a list of feature vectors is returned
     """
+    if isinstance(stats, str):
+        stats = [stats]
+    if isinstance(data, pd.Series):
+        data = data.to_frame(name="formula")
     if isinstance(data, pd.DataFrame):
         if not inplace:
             data = data.copy()
@@ -385,25 +389,19 @@ def composition_featuriser(
             raise ValueError(
                 "The data must contain a column named 'formula' to featurise."
             )
-        data["composition"] = data["formula"].progress_apply(
-            lambda x: CompositionalEmbedding(x, embedding)
-        )
-        data["feature_vector"] = data["composition"].progress_apply(
-            lambda x: x.feature_vector(stats)
-        )
-        data.drop("composition", axis=1, inplace=True)
-        return data
-    elif isinstance(data, pd.Series):
-        if not inplace:
-            data = data.copy()
-        data["composition"] = data["formula"].progress_apply(
-            lambda x: CompositionalEmbedding(x, embedding)
-        )
-        data["feature_vector"] = data["composition"].progress_apply(
-            lambda x: x.feature_vector(stats)
-        )
-        data.drop("composition", axis=1, inplace=True)
-        return data
+        print("Featurising compositions...")
+        comps = [
+            CompositionalEmbedding(x, embedding) for x in tqdm(data["formula"].tolist())
+        ]
+        print("Computing feature vectors...")
+        fvs = [x.feature_vector(stats) for x in tqdm(comps)]
+        feature_names = comps[0].embedding.feature_labels
+        feature_names = [
+            f"{stat}_{feature}" for stat in stats for feature in feature_names
+        ]
+        data_new = pd.concat([data, pd.DataFrame(fvs, columns=feature_names)], axis=1)
+        # data.columns = []
+        return data_new
     elif isinstance(data, list):
         comps = [CompositionalEmbedding(x, embedding) for x in data]
         return [x.feature_vector(stats) for x in tqdm(comps)]
