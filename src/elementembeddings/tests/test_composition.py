@@ -113,7 +113,7 @@ class TestCompositionalEmbedding(unittest.TestCase):
         formulas = self.formulas[:3]
         formula_df = pd.DataFrame(formulas, columns=["formula"])
         assert isinstance(composition.composition_featuriser(formula_df), pd.DataFrame)
-        assert composition.composition_featuriser(formula_df).shape == (3, 2)
+        assert composition.composition_featuriser(formula_df).shape == (3, 23)
         assert isinstance(composition.composition_featuriser(formulas), list)
         assert len(composition.composition_featuriser(formulas)) == 3
 

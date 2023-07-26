@@ -50,15 +50,22 @@ class Embedding:
     Adds a few convenience methods related to elemental representations.
     """
 
-    def __init__(self, embeddings: dict, embedding_name: Optional[str] = None):
+    def __init__(
+        self,
+        embeddings: dict,
+        embedding_name: Optional[str] = None,
+        feature_labels: Optional[List[str]] = None,
+    ):
         """Initialise the Embedding class.
 
         Args:
             embeddings (dict): A {element_symbol: vector} dictionary
             embedding_name (str): The name of the elemental representation
+            feature_labels (list(str)): A list of feature labels
         """
         self.embeddings = embeddings
         self.embedding_name = embedding_name
+        self.feature_labels = feature_labels
 
         # Grab a random value from the embedding vector
         _rand_embed = random.choice(list(self.embeddings.values()))
@@ -67,9 +74,11 @@ class Embedding:
             self.embeddings = {
                 ele: np.array(self.embeddings[ele]) for ele in self.embeddings
             }
+
         # Determines if the embedding vector has a length attribute
         # (i.e. is not a scalar int or float)
-        # If the 'vector' is a scalar/float, the representation is linear (dim=1)
+        # If the 'vector' is a scalar/float, the representation is linear
+        # A linear representation gets converted to a one-hot vector
         if hasattr(_rand_embed, "__len__") and (not isinstance(_rand_embed, str)):
             self.embedding_type: str = "vector"
             self.dim: int = len(random.choice(list(self.embeddings.values())))
@@ -88,13 +97,20 @@ class Embedding:
                 }
             else:
                 sorted_embedding = {
-                    el: num for el, num in sorted_embedding if el in elements
+                    el: num for el, num in sorted_embedding if el in elements[:118]
                 }
+            self.feature_labels = list(sorted_embedding.keys())
             self.embeddings = {}
+
             for el, num in sorted_embedding.items():
                 self.embeddings[el] = np.zeros(len(sorted_embedding))
                 self.embeddings[el][num] = 1
-            self.dim = len(self.embeddings["H"])
+            self.dim = len(random.choice(list(self.embeddings.values())))
+
+        if not self.feature_labels:
+            self.feature_labels = list(range(self.dim))
+        else:
+            self.feature_labels = self.feature_labels
 
         # Dummy initialisation for results
         self._data = []
@@ -143,60 +159,51 @@ class Embedding:
             "skipatom": "skipatom_20201009_induced.csv",
             "atomic": "atomic.json",
         }
-        _cbfv_names = list(_cbfv_files.keys())
-        _cbfv_names_others = [
-            i
-            for i in _cbfv_names
-            if i not in ["skipatom", "random_200", "megnet16", "magpie", "mat2vec"]
-        ]
 
-        # Get the embeddings
-        if embedding_name in _cbfv_files:
-            if embedding_name in ["skipatom", "random_200", "magpie", "mat2vec"]:
-                _csv = path.join(data_directory, _cbfv_files[embedding_name])
-                df = pd.read_csv(_csv)
-                # Convert df to a dictionary of (ele:embeddings) pairs
-                elements = list(df["element"])
-                df.drop(["element"], axis=1, inplace=True)
-                embeds_array = df.to_numpy()
-                embedding_data = {
-                    elements[i]: embeds_array[i] for i in range(len(embeds_array))
-                }
-
-            elif embedding_name == "megnet16":
-                megnet16_json = path.join(data_directory, _cbfv_files["megnet16"])
-                with open(megnet16_json) as f:
-                    embedding_data = json.load(f)
-                # Remove 'Null' key from megnet embedding
-                del embedding_data["Null"]
-
-            elif embedding_name in _cbfv_names_others:
-                _json = path.join(data_directory, _cbfv_files[embedding_name])
-                with open(_json) as f:
-                    embedding_data = json.load(f)
-        else:
-            raise (
-                ValueError(
-                    f"{embedding_name} not in the data directory or not in directory."
-                )
+        if _cbfv_files[embedding_name].endswith(".csv"):
+            return Embedding.from_csv(
+                path.join(
+                    data_directory,
+                    "element_representations",
+                    _cbfv_files[embedding_name],
+                ),
+                embedding_name,
             )
-        return Embedding(embedding_data, embedding_name)
+        elif "megnet" in _cbfv_files[embedding_name]:
+            return Embedding.from_json(
+                path.join(
+                    data_directory,
+                    "element_representations",
+                    _cbfv_files[embedding_name],
+                ),
+                embedding_name,
+            ).remove_elements(["Null"])
+        elif _cbfv_files[embedding_name].endswith(".json"):
+            return Embedding.from_json(
+                path.join(
+                    data_directory,
+                    "element_representations",
+                    _cbfv_files[embedding_name],
+                ),
+                embedding_name,
+            )
 
     @staticmethod
-    def from_json(embedding_json):
+    def from_json(embedding_json, embedding_name: Optional[str] = None):
         """
         Create an instance of the Embedding class from a json file.
 
         Args:
             embedding_json (str): Filepath of the json file
+            embedding_name (str): The name of the elemental representation
         """
         # Need to add validation handling for JSONs in different formats
         with open(embedding_json) as f:
             embedding_data = json.load(f)
-        return Embedding(embedding_data)
+        return Embedding(embedding_data, embedding_name)
 
     @staticmethod
-    def from_csv(embedding_csv):
+    def from_csv(embedding_csv, embedding_name: Optional[str] = None):
         """
         Create an instance of the Embedding class from a csv file.
 
@@ -204,16 +211,19 @@ class Embedding:
 
         Args:
             embedding_csv (str): Filepath of the csv file
+            embedding_name (str): The name of the elemental representation
+
         """
         # Need to add validation handling for csv files
         df = pd.read_csv(embedding_csv)
         elements = list(df["element"])
         df.drop(["element"], axis=1, inplace=True)
+        feature_labels = list(df.columns)
         embeds_array = df.to_numpy()
         embedding_data = {
             elements[i]: embeds_array[i] for i in range(len(embeds_array))
         }
-        return Embedding(embedding_data)
+        return Embedding(embedding_data, embedding_name, feature_labels)
 
     def as_dataframe(self, columns: str = "components") -> pd.DataFrame:
         """
@@ -224,7 +234,7 @@ class Embedding:
 
         Args:
             columns (str): A string to specify if the columns are the vector components
-            and the index is the elements (`columns='components')
+            and the index is the elements (`columns='components'`)
             or the columns are the elements (`columns='elements'`).
 
         Returns:
@@ -233,7 +243,7 @@ class Embedding:
 
         """
         embedding = self.embeddings
-        df = pd.DataFrame(embedding)
+        df = pd.DataFrame(embedding, index=self.feature_labels)
         if columns == "components":
             return df.T
         elif columns == "elements":
