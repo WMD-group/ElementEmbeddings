@@ -39,7 +39,7 @@ setup(
     ],
     extras_require={
         "dev": [
-            "pre-commit==2.20.0",
+            "pre-commit==3.3.3",
             "black==23.3.0",
             "isort==5.12.0",
             "pytest==7.2.1",
