@@ -340,6 +340,30 @@ class Embedding:
             np.mean(np.array(list(self.embeddings.values()))), 0
         ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
 
+    def standardise(self, inplace: bool = False):
+        """Standardise the embeddings.
+
+        Mean is 0 and standard deviation is 1.
+        """
+        if self._is_standardised():
+            warnings.warn(
+                "Embedding is already standardised. "
+                "Mean is 0 and standard deviation is 1."
+            )
+            return None
+        else:
+            embeddings_copy = self.embeddings.copy()
+            embeddings_array = np.array(list(embeddings_copy.values()))
+            embeddings_array = StandardScaler().fit_transform(embeddings_array)
+            for el, emb in zip(embeddings_copy.keys(), embeddings_array):
+                embeddings_copy[el] = emb
+
+            if inplace:
+                self.embeddings = embeddings_copy
+                return None
+            else:
+                return Embedding(embeddings_copy, self.embedding_name)
+
     def citation(self) -> List[str]:
         """Return a citation for the embedding."""
         if self.embedding_name in ["magpie", "magpie_sc"]:

@@ -52,6 +52,13 @@ class EmbeddingTest(unittest.TestCase):
         assert self.test_magpie.is_standardised is False
         assert self.test_magpie_sc.is_standardised is True
 
+    def test_Embedding_standardisation(self):
+        """Test the standardisation method of the Embedding class."""
+        assert self.test_magpie.is_standardised is False
+        assert self.test_magpie.standardise().is_standardised is True
+        assert self.test_skipatom.is_standardised is False
+        assert self.test_skipatom.standardise().is_standardised is True
+
     def test_Embedding_file_input(self):
         """Test that the Embedding class can load custom data."""
         embedding_csv = Embedding.from_csv(TEST_EMBEDDING_CSV)
