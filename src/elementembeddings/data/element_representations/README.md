@@ -1,13 +1,20 @@
 # Elemental Embeddings
 
-The data contained in this folder is a collection of various elemental representation/embedding schemes
+The data contained in this folder is a collection of various elemental representation/embedding schemes. We provide the literature source for these representations as well as the data source for which the files were obtained. A majority of these representations have been obtained from the following repositories:
+
+* [lrcfmd/ElMD](https://github.com/lrcfmd/ElMD/tree/master)
+* [Kaaiian/CBFV](https://github.com/Kaaiian/CBFV/tree/master)
+
 ## Linear representations
 
 For the linear/scalar representations, the `Embedding` class will load these representations as one-hot vectors where the vector components are ordered following the scale (i.e. the `atomic` representation is ordered by atomic numbers).
+
 ### Modified Pettifor scale
 
 The following paper describes the details of the modified Pettifor chemical scale:
-[The optimal one dimensional periodic table: a modified Pettifor chemical scale from data mining](https://iopscience.iop.org/article/10.1088/1367-2630/18/9/093011/meta)
+[The optimal one-dimensional periodic table: a modified Pettifor chemical scale from data mining](https://iopscience.iop.org/article/10.1088/1367-2630/18/9/093011/meta)
+
+[Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/mod_petti.json)
 
 ### Atomic numbers
 
@@ -24,6 +31,8 @@ The following paper describes the details of the Materials Agnostic Platform for
 
 The source code for Magpie can be found
 [here](https://bitbucket.org/wolverton/magpie/src/master/)
+
+[Data source](https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/magpie.csv)
 
 The 22 dimensional embedding vector includes the following elemental properties:
 
@@ -48,25 +57,35 @@ The 22 dimensional embedding vector includes the following elemental properties:
 * Space Group Number
 </details>
 
-* `magpie_sc` is scaled version of the magpie embeddings
+* `magpie_sc` is a scaled version of the magpie embeddings. [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/magpie_sc.json)
 
 ### mat2vec
 
 The following paper describes the implementation of mat2vec:
 [Unsupervised word embeddings capture latent knowledge from materials science literature](https://www.nature.com/articles/s41586-019-1335-8)
 
+[Data source](https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/mat2vec.csv)
+
 ### MatScholar
 
 The following paper describes the natural language processing implementation of Materials Scholar (matscholar):
 [Named Entity Recognition and Normalization Applied to Large-Scale Information Extraction from the Materials Science Literature](https://pubs.acs.org/doi/abs/10.1021/acs.jcim.9b00470)
 
+[Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/matscholar.json)
+
 ### MEGnet
+
 The following paper describes the details of the construction of the MatErials Graph Network (MEGNet):
 [Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals](https://doi.org/10.1021/acs.chemmater.9b01294)
 
-### Oliynkyk
+[Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/megnet16.json)
+
+### Oliynyk
+
 The following paper describes the details:
 [High-Throughput Machine-Learning-Driven Synthesis of Full-Heusler Compounds](https://pubs.acs.org/doi/full/10.1021/acs.chemmater.6b02724)
+
+[Data source](https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/oliynyk.csv)
 
 The 44 features of the embedding vector are formed of the following properties:
 <details>
@@ -118,7 +137,7 @@ The 44 features of the embedding vector are formed of the following properties:
 * Cohesive_energy
 </details>
 
-* `oliynyk_sc` is a scaled version of the oliynyk embeddings
+* `oliynyk_sc` is a scaled version of the oliynyk embeddings: [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/oliynyk_sc.json)
 
 ### Random
 
@@ -129,7 +148,7 @@ The 118 200-dimensional vectors in `random_200_new` were generated using the fol
 ```python
 import numpy as np
 
-mu , sigma = 0 , 0.1 # mean and standard deviation s = np.random.normal(mu, sigma, 1000)
+mu , sigma = 0 , 1 # mean and standard deviation s = np.random.normal(mu, sigma, 1000)
 s = np.random.default_rng(seed=42).normal(mu, sigma, (118,200))
 ```
 
@@ -137,3 +156,5 @@ s = np.random.default_rng(seed=42).normal(mu, sigma, (118,200))
 
 The following paper describes the details:
 [Distributed representations of atoms and materials for machine learning](https://www.nature.com/articles/s41524-022-00729-3)
+
+[Data source](https://github.com/lantunes/skipatom/blob/main/data/skipatom_20201009_induced.csv)
