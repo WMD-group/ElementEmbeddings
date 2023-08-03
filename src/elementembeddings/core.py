@@ -862,13 +862,26 @@ class Embedding:
 
         return ax
 
-    def calculate_PC(self, n_components: int = 2, scale: bool = True, **kwargs):
-        """Calculate the principal componenets (PC) of the embeddings."""
-        if scale:
-            embeddings_array = StandardScaler().fit_transform(
-                np.array(list(self.embeddings.values()))
-            )
+    def calculate_PC(self, n_components: int = 2, standardise: bool = True, **kwargs):
+        """Calculate the principal componenets (PC) of the embeddings.
+
+        Args:
+            n_components (int): The number of components to project the embeddings to.
+            standardise (bool): Whether to standardise the embeddings before projecting.
+            **kwargs: Other keyword arguments to be passed to PCA.
+        """
+        if standardise:
+            if self.is_standardised:
+                embeddings_array = np.array(list(self.embeddings.values()))
+            else:
+                self.standardise(inplace=True)
+                embeddings_array = np.array(list(self.embeddings.values()))
         else:
+            warnings.warn(
+                """It is recommended to scale the embeddings
+                before projecting with PCA.
+                To do so, set `standardise=True`."""
+            )
             embeddings_array = np.array(list(self.embeddings.values()))
 
         pca = decomposition.PCA(
@@ -878,13 +891,26 @@ class Embedding:
         self._pca_data = pca.transform(embeddings_array)
         return self._pca_data
 
-    def calculate_tSNE(self, n_components: int = 2, scale: bool = True, **kwargs):
-        """Calculate t-SNE components."""
-        if scale:
-            embeddings_array = StandardScaler().fit_transform(
-                np.array(list(self.embeddings.values()))
-            )
+    def calculate_tSNE(self, n_components: int = 2, standardise: bool = True, **kwargs):
+        """Calculate t-SNE components.
+
+        Args:
+            n_components (int): The number of components to project the embeddings to.
+            standardise (bool): Whether to standardise the embeddings before projecting.
+            **kwargs: Other keyword arguments to be passed to t-SNE.
+        """
+        if standardise:
+            if self.is_standardised:
+                embeddings_array = np.array(list(self.embeddings.values()))
+            else:
+                self.standardise(inplace=True)
+                embeddings_array = np.array(list(self.embeddings.values()))
         else:
+            warnings.warn(
+                """It is recommended to scale the embeddings
+                before projecting with t-SNE.
+                To do so, set `standardise=True`."""
+            )
             embeddings_array = np.array(list(self.embeddings.values()))
 
         tsne = TSNE(n_components=n_components, **kwargs)
@@ -892,13 +918,26 @@ class Embedding:
         self._tsne_data = tsne_result
         return self._tsne_data
 
-    def calculate_UMAP(self, n_components: int = 2, scale: bool = True, **kwargs):
-        """Calculate UMAP embeddings."""
-        if scale:
-            embeddings_array = StandardScaler().fit_transform(
-                np.array(list(self.embeddings.values()))
-            )
+    def calculate_UMAP(self, n_components: int = 2, standardise: bool = True, **kwargs):
+        """Calculate UMAP embeddings.
+
+        Args:
+            n_components (int): The number of components to project the embeddings to.
+            standardise (bool): Whether to scale the embeddings before projecting.
+            **kwargs: Other keyword arguments to be passed to UMAP.
+        """
+        if standardise:
+            if self.is_standardised:
+                embeddings_array = np.array(list(self.embeddings.values()))
+            else:
+                self.standardise(inplace=True)
+                embeddings_array = np.array(list(self.embeddings.values()))
         else:
+            warnings.warn(
+                """It is recommended to scale the embeddings
+                before projecting with UMAP.
+                To do so, set `standardise=True`."""
+            )
             embeddings_array = np.array(list(self.embeddings.values()))
 
         umap = UMAP(n_components=n_components, **kwargs)
