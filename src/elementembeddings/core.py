@@ -344,11 +344,12 @@ class Embedding:
         """Standardise the embeddings.
 
         Mean is 0 and standard deviation is 1.
+
         """
         if self._is_standardised():
             warnings.warn(
                 "Embedding is already standardised. "
-                "Mean is 0 and standard deviation is 1."
+                "Returning None and not changing the embedding."
             )
             return None
         else:
@@ -360,6 +361,7 @@ class Embedding:
 
             if inplace:
                 self.embeddings = embeddings_copy
+                self.is_standardised = True
                 return None
             else:
                 return Embedding(embeddings_copy, self.embedding_name)
