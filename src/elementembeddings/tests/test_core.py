@@ -1,4 +1,5 @@
 """Test the core module of AtomicEmbeddings."""
+import copy
 import os
 import unittest
 
@@ -58,6 +59,8 @@ class EmbeddingTest(unittest.TestCase):
         assert self.test_magpie.standardise().is_standardised is True
         assert self.test_skipatom.is_standardised is False
         assert self.test_skipatom.standardise().is_standardised is True
+        assert self.test_skipatom.standardise().standardise() is None
+        assert copy.deepcopy(self.test_magpie).standardise(inplace=True) is None
 
     def test_Embedding_file_input(self):
         """Test that the Embedding class can load custom data."""
