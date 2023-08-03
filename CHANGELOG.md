@@ -12,14 +12,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Add images to resources folder ([99cd979](https://github.com/WMD-group/ElementEmbeddings/commit/99cd979a51a40618e86ed4dc125b3e2c93e992b3) by Anthony Onwuli).
+- Add oliynyk csv load_data method ([7fa064a](https://github.com/WMD-group/ElementEmbeddings/commit/7fa064ab6b8deb5eb516312b01a8160c7c78b565) by Anthony Onwuli).
+- Add data sources to representation README ([0a27e35](https://github.com/WMD-group/ElementEmbeddings/commit/0a27e358ee62df0ec1e96dd8b869935beed60ae2) by Anthony Onwuli).
+- Add csv file for oliynyk representation ([9f4de0d](https://github.com/WMD-group/ElementEmbeddings/commit/9f4de0dc407c22a6291e594dc8270cd5f27c5852) by Anthony Onwuli).
+- Add method for standardising embeddings ([c3b3b65](https://github.com/WMD-group/ElementEmbeddings/commit/c3b3b6565527d4b9ec86f530626c42d3adf2f0a7) by Anthony Onwuli).
+- Add class attribute for checking standardisation ([c3647e6](https://github.com/WMD-group/ElementEmbeddings/commit/c3647e682c67a1d4ca8a326d919cbd4bc487560e) by Anthony Onwuli).
+- Added example of featurising a formula dataframe ([96dd41a](https://github.com/WMD-group/ElementEmbeddings/commit/96dd41ac66dbcc88ce164c0dd32d79bd6d683bb6) by Anthony Onwuli).
+- Add feature labels to composition featuriser ([d8e2b64](https://github.com/WMD-group/ElementEmbeddings/commit/d8e2b64790a756896bde2803684c5c059976d3e4) by Anthony Onwuli).
+- Added feature labels to Embedding class ([5e58483](https://github.com/WMD-group/ElementEmbeddings/commit/5e58483da14050fef618ac3220d3c7f62f284dc9) by Anthony Onwuli).
+- Added tests for kwargs in dimension plotter ([3eba22b](https://github.com/WMD-group/ElementEmbeddings/commit/3eba22b291de218a8dda6aadd69f2a42d68034cd) by Anthony Onwuli).
+- Add params argument to dimension plotter ([a041175](https://github.com/WMD-group/ElementEmbeddings/commit/a04117578d97ef3f837a87ba2ae229774048be21) by Anthony Onwuli).
+- Add test for one-hot atomic number Embedding ([27da6c3](https://github.com/WMD-group/ElementEmbeddings/commit/27da6c37868be4b7b35cc5e0f0db0a7502290a19) by Anthony Onwuli).
+- Add test for modified pettifor scale Embedding ([4870b25](https://github.com/WMD-group/ElementEmbeddings/commit/4870b2546ae95f6265bbc48dee60178e118064dd) by Anthony Onwuli).
+- Added linear atomic number representation ([4f26c51](https://github.com/WMD-group/ElementEmbeddings/commit/4f26c51dc9fba834dece653e6d762f8e13c90bd2) by Anthony Onwuli).
+- Add one-hot rep for modified petti scale ([68154da](https://github.com/WMD-group/ElementEmbeddings/commit/68154da7dc341db670e22348ec4f038b9b791ed5) by Anthony Onwuli).
 - Added a link in the README.md ([bea710d](https://github.com/WMD-group/ElementEmbeddings/commit/bea710d80fd8394e949e03e60bfea8f081f79a27) by Anthony Onwuli).
 - Added examples folder link to README ([2ccbc64](https://github.com/WMD-group/ElementEmbeddings/commit/2ccbc6457d303b54289fe87268bdcf6a1ad2c4ec) by Anthony Onwuli).
 - Added distance example ([1d5b489](https://github.com/WMD-group/ElementEmbeddings/commit/1d5b489217256d3a54f90f61b03f889f063c98f5) by Anthony Onwuli).
 - Added test for composition distance function ([116d587](https://github.com/WMD-group/ElementEmbeddings/commit/116d587d074ceddcc0cd850588c43af74d6dbceb) by Anthony Onwuli).
 - Added distance function to composition class ([b827bc0](https://github.com/WMD-group/ElementEmbeddings/commit/b827bc0361f4e3e495679ccfe26eb94b9a8426df) by Anthony Onwuli).
 
+### Fixed
+
+- Fix package name in contributing.md ([075e657](https://github.com/WMD-group/ElementEmbeddings/commit/075e657d260aa72fca91c7f8cc57466235788426) by Anthony Onwuli).
+- Fixed bug with is_standarised attribute ([ebaf773](https://github.com/WMD-group/ElementEmbeddings/commit/ebaf773134c8ab4988f071da9eca2193e4340f60) by Anthony Onwuli).
+- Fixed composistion featuriser test ([3b729c9](https://github.com/WMD-group/ElementEmbeddings/commit/3b729c9584bf7cc4de2fd5c70baff41c8753800b) by Anthony Onwuli).
+- Fixed dim for linear/scalar representations ([f6cc681](https://github.com/WMD-group/ElementEmbeddings/commit/f6cc681ee4f343240f5bb4d49cf9dfc5fa89f455) by Anthony Onwuli).
+
 ### Changed
 
+- Changed load_data method ([c558480](https://github.com/WMD-group/ElementEmbeddings/commit/c558480e230d3502edd4ad9aa648a710b6782f1e) by Anthony Onwuli).
 - changed default arg to a str from a list ([b5f7cd7](https://github.com/WMD-group/ElementEmbeddings/commit/b5f7cd79d9c50b0652cc02d22dedbc683f680fc2) by Anthony Onwuli).
 
 <!-- insertion marker -->

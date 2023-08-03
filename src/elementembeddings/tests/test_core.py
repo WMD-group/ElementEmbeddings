@@ -1,4 +1,5 @@
 """Test the core module of AtomicEmbeddings."""
+import copy
 import os
 import unittest
 
@@ -26,6 +27,7 @@ class EmbeddingTest(unittest.TestCase):
         cls.test_mod_petti = Embedding.load_data("mod_petti")
         cls.test_magpie = Embedding.load_data("magpie")
         cls.test_atomic = Embedding.load_data("atomic")
+        cls.test_magpie_sc = Embedding.load_data("magpie_sc")
 
     def test_Embedding_attributes(self):
         """Test attributes of the loaded embeddings."""
@@ -45,6 +47,20 @@ class EmbeddingTest(unittest.TestCase):
         assert isinstance(self.test_megnet16.citation(), list)
         assert isinstance(self.test_matscholar.citation(), list)
         assert isinstance(self.test_mod_petti.citation(), list)
+
+    def test_Embedding_standardised(self):
+        """Test that the Embedding class can check if the data is standardised."""
+        assert self.test_magpie.is_standardised is False
+        assert self.test_magpie_sc.is_standardised is True
+
+    def test_Embedding_standardisation(self):
+        """Test the standardisation method of the Embedding class."""
+        assert self.test_magpie.is_standardised is False
+        assert self.test_magpie.standardise().is_standardised is True
+        assert self.test_skipatom.is_standardised is False
+        assert self.test_skipatom.standardise().is_standardised is True
+        assert self.test_skipatom.standardise().standardise() is None
+        assert copy.deepcopy(self.test_magpie).standardise(inplace=True) is None
 
     def test_Embedding_file_input(self):
         """Test that the Embedding class can load custom data."""
