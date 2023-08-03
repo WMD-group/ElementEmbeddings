@@ -31,7 +31,7 @@ setup(
         "numpy==1.23.3",
         "scipy==1.10.1",
         "pymatgen>2022.9.21",
-        "seaborn==0.12.1",
+        "seaborn==0.12.2",
         "matplotlib==3.7.1",
         "scikit-learn==1.3.0",
         "umap-learn==0.5.3",
@@ -39,7 +39,7 @@ setup(
     ],
     extras_require={
         "dev": [
-            "pre-commit==2.20.0",
+            "pre-commit==3.3.3",
             "black==23.3.0",
             "isort==5.12.0",
             "pytest==7.2.1",
@@ -47,14 +47,14 @@ setup(
             "nbqa==1.5.3",
             "pyupgrade==3.3.1",
             "flake8==6.0.0",
-            "autopep8==2.0.1",
+            "autopep8==2.0.2",
             "pytest-cov==4.1.0",
         ],
         "docs": [
             "mkdocs==1.4.3",
             "mkdocs-material==9.1.17",
             "mkdocstrings ==0.21.2",
-            "mkdocstrings-python == 1.0.0",
+            "mkdocstrings-python == 1.2.1",
         ],
     },
     classifiers=[
