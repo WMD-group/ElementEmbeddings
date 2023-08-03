@@ -66,6 +66,15 @@ class Embedding:
         self.embeddings = embeddings
         self.embedding_name = embedding_name
         self.feature_labels = feature_labels
+        if not self._is_standardised():
+            warnings.warn(
+                "Embedding is not standardised. "
+                "It is recommended that you standardise your embeddings before use. "
+                "Use the standardise() method to standardise your embeddings."
+            )
+            self.is_standardised = False
+        else:
+            self.is_standardised = True
 
         # Grab a random value from the embedding vector
         _rand_embed = random.choice(list(self.embeddings.values()))
@@ -321,6 +330,15 @@ class Embedding:
                 for el in elements:
                     del embeddings_copy[el]
             return Embedding(embeddings_copy, self.embedding_name)
+
+    def _is_standardised(self):
+        """Check if the embeddings are standardised.
+
+        Mean must be 0 and standard deviation must be 1.
+        """
+        return np.isclose(
+            np.mean(np.array(list(self.embeddings.values()))), 0
+        ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
 
     def citation(self) -> List[str]:
         """Return a citation for the embedding."""
