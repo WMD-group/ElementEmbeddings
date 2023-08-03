@@ -162,7 +162,7 @@ class Embedding:
             "matscholar": "matscholar-embedding.json",
             "megnet16": "megnet16.json",
             "mod_petti": "mod_petti.json",
-            "oliynyk": "oliynyk.json",
+            "oliynyk": "oliynyk.csv",
             "oliynyk_sc": "oliynyk_sc.json",
             "random_200": "random_200_new.csv",
             "skipatom": "skipatom_20201009_induced.csv",
