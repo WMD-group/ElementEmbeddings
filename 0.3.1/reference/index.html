@@ -1,0 +1,830 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Anthony Onwuli">
+      
+      
+        <link rel="canonical" href="https://wmd-group.github.io/ElementEmbeddings/0.3.1/reference/">
+      
+      
+        <link rel="prev" href="../tutorials/">
+      
+      
+        <link rel="next" href="../contribution/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.12">
+    
+    
+      
+        <title>Elemental Embeddings - ElementEmbeddings</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#elemental-embeddings" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version.
+  <a href="../..">
+    <strong>Click here to go to latest.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),outdated=__md_get("__outdated",sessionStorage);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ElementEmbeddings" class="md-header__button md-logo" aria-label="ElementEmbeddings" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ElementEmbeddings
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Elemental Embeddings
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/WMD-group/ElementEmbeddings" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ElementEmbeddings
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ElementEmbeddings" class="md-nav__button md-logo" aria-label="ElementEmbeddings" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    ElementEmbeddings
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/WMD-group/ElementEmbeddings" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ElementEmbeddings
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Python package
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Python package
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/core/" class="md-nav__link">
+        Core module
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/composition/" class="md-nav__link">
+        Composition module
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/plotter/" class="md-nav__link">
+        Plotter module
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Elemental Embeddings
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Elemental Embeddings
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linear-representations" class="md-nav__link">
+    Linear representations
+  </a>
+  
+    <nav class="md-nav" aria-label="Linear representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modified-pettifor-scale" class="md-nav__link">
+    Modified Pettifor scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atomic-numbers" class="md-nav__link">
+    Atomic numbers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-representations" class="md-nav__link">
+    Vector representations
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magpie" class="md-nav__link">
+    Magpie
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mat2vec" class="md-nav__link">
+    mat2vec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matscholar" class="md-nav__link">
+    MatScholar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#megnet" class="md-nav__link">
+    MEGnet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oliynyk" class="md-nav__link">
+    Oliynyk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random" class="md-nav__link">
+    Random
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skipatom" class="md-nav__link">
+    SkipAtom
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/WMD-group/ElementEmbeddings/issues" class="md-nav__link">
+        Issue Tracker
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linear-representations" class="md-nav__link">
+    Linear representations
+  </a>
+  
+    <nav class="md-nav" aria-label="Linear representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modified-pettifor-scale" class="md-nav__link">
+    Modified Pettifor scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atomic-numbers" class="md-nav__link">
+    Atomic numbers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-representations" class="md-nav__link">
+    Vector representations
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magpie" class="md-nav__link">
+    Magpie
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mat2vec" class="md-nav__link">
+    mat2vec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matscholar" class="md-nav__link">
+    MatScholar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#megnet" class="md-nav__link">
+    MEGnet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oliynyk" class="md-nav__link">
+    Oliynyk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random" class="md-nav__link">
+    Random
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skipatom" class="md-nav__link">
+    SkipAtom
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="elemental-embeddings">Elemental Embeddings</h1>
+<p>The data contained in this repository are a collection of various elemental representation/embedding schemes. We provide the literature source for these representations as well as the data source for which the files were obtained. A majority of these representations have been obtained from the following repositories:</p>
+<ul>
+<li><a href="https://github.com/lrcfmd/ElMD/tree/master">lrcfmd/ElMD</a></li>
+<li><a href="https://github.com/Kaaiian/CBFV/tree/master">Kaaiian/CBFV</a></li>
+</ul>
+<h2 id="linear-representations">Linear representations</h2>
+<p>For the linear/scalar representations, the <code>Embedding</code> class will load these representations as one-hot vectors where the vector components are ordered following the scale (i.e. the <code>atomic</code> representation is ordered by atomic numbers).</p>
+<h3 id="modified-pettifor-scale">Modified Pettifor scale</h3>
+<p>The following paper describes the details of the modified Pettifor chemical scale:
+<a href="https://iopscience.iop.org/article/10.1088/1367-2630/18/9/093011/meta">The optimal one-dimensional periodic table: a modified Pettifor chemical scale from data mining</a></p>
+<p><a href="https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/mod_petti.json">Data source</a></p>
+<h3 id="atomic-numbers">Atomic numbers</h3>
+<p>We included <code>atomic</code> as a linear representation to generate one-hot vectors corresponding to the atomic numbers</p>
+<h2 id="vector-representations">Vector representations</h2>
+<p>The following representations are all vector representations (some are local, some are distributed) and the <code>Embedding</code> class will load these representations as they are.</p>
+<h3 id="magpie">Magpie</h3>
+<p>The following paper describes the details of the Materials Agnostic Platform for Informatics and Exploration (Magpie) framework:
+<a href="https://www.nature.com/articles/npjcompumats201628">A general-purpose machine learning framework for predicting properties of inorganic materials</a></p>
+<p>The source code for Magpie can be found
+<a href="https://bitbucket.org/wolverton/magpie/src/master/">here</a></p>
+<p><a href="https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/magpie.csv">Data source</a></p>
+<p>The 22 dimensional embedding vector includes the following elemental properties:</p>
+<details>
+    <summary>Click to see the 22 properties</summary>
+
+* Number;
+* Mendeleev number;
+* Atomic weight;
+* Melting temperature;
+* Group number;
+* Period;
+* Covalent Radius; 
+* Electronegativity;
+* no. of s, p, d, f  valence electrons (4 features);
+* no. of valence electrons;
+* no. of unfilled: s, p, d, f orbitals (4 features),
+* no. of unfilled orbtials
+* GSvolume_pa (DFT volume per atom of T=0K ground state from the OQMD)
+* GSbandgap(DFT bandgap energy of T=0K ground state from the OQMD)
+* GSmagmom (DFT magnetic moment of T=0K ground state from the OQMD)
+* Space Group Number
+</details>
+
+<ul>
+<li><code>magpie_sc</code> is a scaled version of the magpie embeddings. <a href="https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/magpie_sc.json">Data source</a></li>
+</ul>
+<h3 id="mat2vec">mat2vec</h3>
+<p>The following paper describes the implementation of mat2vec:
+<a href="https://www.nature.com/articles/s41586-019-1335-8">Unsupervised word embeddings capture latent knowledge from materials science literature</a></p>
+<p><a href="https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/mat2vec.csv">Data source</a></p>
+<h3 id="matscholar">MatScholar</h3>
+<p>The following paper describes the natural language processing implementation of Materials Scholar (matscholar):
+<a href="https://pubs.acs.org/doi/abs/10.1021/acs.jcim.9b00470">Named Entity Recognition and Normalization Applied to Large-Scale Information Extraction from the Materials Science Literature</a></p>
+<p><a href="https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/matscholar.json">Data source</a></p>
+<h3 id="megnet">MEGnet</h3>
+<p>The following paper describes the details of the construction of the MatErials Graph Network (MEGNet):
+<a href="https://doi.org/10.1021/acs.chemmater.9b01294">Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals</a></p>
+<p><a href="https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/megnet16.json">Data source</a></p>
+<h3 id="oliynyk">Oliynyk</h3>
+<p>The following paper describes the details:
+<a href="https://pubs.acs.org/doi/full/10.1021/acs.chemmater.6b02724">High-Throughput Machine-Learning-Driven Synthesis of Full-Heusler Compounds</a></p>
+<p><a href="https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/oliynyk.csv">Data source</a></p>
+<p>The 44 features of the embedding vector are formed of the following properties:</p>
+<details>
+    <summary> Click to see the 44 features!</summary>
+
+* Number
+* Atomic_Weight
+* Period
+* Group
+* Families
+* Metal
+* Nonmetal
+* Metalliod
+* Mendeleev_Number
+* l_quantum_number
+* Atomic_Radius
+* Miracle_Radius_[pm]
+* Covalent_Radius
+* Zunger_radii_sum
+* Ionic_radius
+* crystal_radius
+* Pauling_Electronegativity
+* MB_electonegativity
+* Gordy_electonegativity
+* Mulliken_EN
+* Allred-Rockow_electronegativity
+* Metallic_valence
+* Number_of_valence_electrons
+* Gilmor_number_of_valence_electron
+* valence_s
+* valence_p
+* valence_d
+* valence_f
+* Number_of_unfilled_s_valence_electrons
+* Number_of_unfilled_p_valence_electrons
+* Number_of_unfilled_d_valence_electrons
+* Number_of_unfilled_f_valence_electrons
+* Outer_shell_electrons
+* 1st_ionization_potential_(kJ/mol)
+* Polarizability(A^3)
+* Melting_point_(K)
+* Boiling_Point_(K)
+* Density_(g/mL)
+* Specific_heat_(J/g_K)_
+* Heat_of_fusion_(kJ/mol)_
+* Heat_of_vaporization_(kJ/mol)_
+* Thermal_conductivity_(W/(m_K))_
+* Heat_atomization(kJ/mol)
+* Cohesive_energy
+</details>
+
+<ul>
+<li><code>oliynyk_sc</code> is a scaled version of the oliynyk embeddings: <a href="https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/oliynyk_sc.json">Data source</a></li>
+</ul>
+<h3 id="random">Random</h3>
+<p>This is a set of 200-dimensional vectors in which the components are randomly generated</p>
+<p>The 118 200-dimensional vectors in <code>random_200_new</code> were generated using the following code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">mu</span> <span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">1</span> <span class="c1"># mean and standard deviation s = np.random.normal(mu, sigma, 1000)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="p">(</span><span class="mi">118</span><span class="p">,</span><span class="mi">200</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="skipatom">SkipAtom</h3>
+<p>The following paper describes the details:
+<a href="https://www.nature.com/articles/s41524-022-00729-3">Distributed representations of atoms and materials for machine learning</a></p>
+<p><a href="https://github.com/lantunes/skipatom/blob/main/data/skipatom_20201009_induced.csv">Data source</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c2be25ad.min.js"></script>
+      
+    
+  </body>
+</html>
