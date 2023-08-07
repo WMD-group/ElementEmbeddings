@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 <small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.3.0...HEAD)</small>
 
+### Added
+
+- Add arg for formula in featuriser function ([13dc313](https://github.com/WMD-group/ElementEmbeddings/commit/13dc313b40753aa267c878b86a33ba76944a5228) by Anthony Onwuli).
+
 ### Removed
 
 - Removed warning ([271f61e](https://github.com/WMD-group/ElementEmbeddings/commit/271f61e8653b706a6dd716bf6c0ced9396965750) by Anthony Onwuli).
