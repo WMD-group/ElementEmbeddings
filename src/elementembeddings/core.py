@@ -14,13 +14,10 @@ import random
 import warnings
 from itertools import combinations_with_replacement
 from os import path
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Union
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
-from numpy.linalg import norm
 from pymatgen.core import Element
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
 from sklearn import decomposition
@@ -510,55 +507,6 @@ class Embedding:
         ele_pairs = combinations_with_replacement(ele_list, 2)
         return ele_pairs
 
-    def stats_correlation_df(self) -> pd.DataFrame:
-        """Return a pandas.DataFrame with correlation metrics.
-
-         The columns of returned dataframe are:
-        [element_1, element_2, pearson_corr, euclid_dist].
-        """
-        warnings.warn(
-            "This method is deprecated and will be removed in a future release. ",
-            DeprecationWarning,
-        )
-        ele_pairs = self.create_pairs()
-        table = []
-        for ele1, ele2 in ele_pairs:
-            pearson = pearsonr(self.embeddings[ele1], self.embeddings[ele2])
-            dist = norm(self.embeddings[ele1] - self.embeddings[ele2])
-
-            table.append((ele1, ele2, pearson[0], dist))
-            if ele1 != ele2:
-                table.append((ele2, ele1, pearson[0], dist))
-
-        corr_df = pd.DataFrame(
-            table,
-            columns=[
-                "ele_1",
-                "ele_2",
-                "pearson_corr",
-                "euclid_dist",
-            ],
-        )
-
-        mend_1 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_1"]]
-        mend_2 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_2"]]
-
-        corr_df["mend_1"] = mend_1
-        corr_df["mend_2"] = mend_2
-
-        corr_df = corr_df[
-            [
-                "ele_1",
-                "ele_2",
-                "mend_1",
-                "mend_2",
-                "euclid_dist",
-                "pearson_corr",
-            ]
-        ]
-
-        return corr_df
-
     def compute_correlation_metric(
         self, ele1: str, ele2: str, metric: str = "pearson"
     ) -> float:
@@ -653,23 +601,6 @@ class Embedding:
                 f"Use one of the following metrics:{valid_metrics}"
             )
             raise ValueError
-
-    def pearson_pivot_table(self) -> pd.DataFrame:
-        """
-        Return a pandas.DataFrame style pivot object.
-
-        The index and column are the mendeleev number of the element pairs
-        and the values being the pearson correlation metrics.
-        """
-        warnings.warn(
-            "This method is deprecated and will be removed in a future release. ",
-            DeprecationWarning,
-        )
-        corr_df = self.correlation_df()
-        pearson_pivot = corr_df.pivot_table(
-            values="pearson_corr", index="mend_1", columns="mend_2"
-        )
-        return pearson_pivot
 
     def distance_df(self, metric: str = "euclidean") -> pd.DataFrame:
         """
@@ -812,58 +743,6 @@ class Embedding:
             )
             return correlation_pivot
 
-    def plot_pearson_correlation(self, figsize: Tuple[int, int] = (24, 24), **kwargs):
-        """
-        Plot the heatmap of the pearson correlation values.
-
-        Args:
-            figsize (tuple): A tuple of (width, height).
-            **kwargs: Other keyword arguments to be passed to sns.heatmap
-
-        Returns:
-            ax (matplotlib Axes): An Axes object with the heatmap
-
-        """
-        warnings.warn(
-            "This method is deprecated and will be removed in a future release. ",
-            DeprecationWarning,
-        )
-        pearson_pivot = self.pearson_pivot_table()
-
-        plt.figure(figsize=figsize)
-        ax = sns.heatmap(
-            pearson_pivot, cmap="bwr", square=True, linecolor="k", **kwargs
-        )
-
-        return ax
-
-    def plot_distance_correlation(
-        self, metric: str = "euclidean", figsize: Tuple[int, int] = (24, 24), **kwargs
-    ):
-        """
-        Plot the heatmap of the pairwise distance metrics.
-
-        Args:
-            metric (str): A valid distance metric
-            figsize (tuple): A tuple of (width, height)
-
-        Returns:
-            ax (matplotlib.axes.Axes): An Axes object with the heatmap
-
-        """
-        warnings.warn(
-            "This method is deprecated and will be removed in a future release. ",
-            DeprecationWarning,
-        )
-        distance_pivot = self.distance_pivot_table(metric=metric)
-
-        plt.figure(figsize=figsize)
-        ax = sns.heatmap(
-            distance_pivot, cmap="bwr", square=True, linecolor="k", **kwargs
-        )
-
-        return ax
-
     def calculate_PC(self, n_components: int = 2, standardise: bool = True, **kwargs):
         """Calculate the principal componenets (PC) of the embeddings.
 
@@ -946,128 +825,3 @@ class Embedding:
         umap_result = umap.fit_transform(embeddings_array)
         self._umap_data = umap_result
         return self._umap_data
-
-    def plot_PCA_2D(
-        self,
-        figsize: Tuple[int, int] = (16, 12),
-        points_hue: str = "group",
-        points_size: int = 200,
-        **kwargs,
-    ):
-        """Plot a PCA plot of the atomic embedding.
-
-        Args:
-            figsize (tuple): A tuple of (width, height)
-            points_size (float): The marker size
-
-        Returns:
-            ax (matplotlib.axes.Axes): An Axes object with the PCA plot
-
-        """
-        warnings.warn(
-            "This method is deprecated and will be removed in a future release. ",
-            DeprecationWarning,
-        )
-        embeddings_array = np.array(list(self.embeddings.values()))
-        element_array = np.array(self.element_list)
-
-        pca = decomposition.PCA(n_components=2)  # project to 2 dimensions
-
-        pca.fit(embeddings_array)
-        X = pca.transform(embeddings_array)
-
-        pca_dim1 = X[:, 0]
-        pca_dim2 = X[:, 1]
-
-        # Create a dataframe to store the dimensions, labels and group info for the PCA
-        pca_df = pd.DataFrame(
-            {
-                "pca_dim1": pca_dim1,
-                "pca_dim2": pca_dim2,
-                "element": element_array,
-                "group": list(self.element_groups_dict.values()),
-            }
-        )
-        fig, ax = plt.subplots(figsize=figsize)
-
-        sns.scatterplot(
-            x="pca_dim1",
-            y="pca_dim2",
-            data=pca_df,
-            hue=points_hue,
-            s=points_size,
-            **kwargs,
-            ax=ax,
-        )
-
-        plt.xlabel("Dimension 1")
-        plt.ylabel("Dimension 2")
-
-        for i in range(len(X)):
-            plt.text(x=pca_dim1[i], y=pca_dim2[i], s=element_array[i])
-
-        return plt
-
-    def plot_tSNE(
-        self,
-        n_components: str = 2,
-        figsize: Tuple[int, int] = (16, 12),
-        points_hue: str = "group",
-        points_size: int = 200,
-        **kwargs,
-    ):
-        """Plot a t-SNE plot of the atomic embedding.
-
-        Args:
-            n_components (int): Number of t-SNE components to plot.
-            figsize (tuple): A tuple of (width, height)
-            points_size (float): The marker size
-
-        Returns:
-            ax (matplotlib.axes.Axes): An Axes object with the PCA plot
-
-
-        """
-        warnings.warn(
-            "This method is deprecated and will be removed in a future release. ",
-            DeprecationWarning,
-        )
-        embeddings_array = np.array(list(self.embeddings.values()))
-        element_array = np.array(self.element_list)
-
-        tsne = TSNE(n_components)
-        tsne_result = tsne.fit_transform(embeddings_array)
-
-        tsne_df = pd.DataFrame(
-            {
-                "tsne_dim1": tsne_result[:, 0],
-                "tsne_dim2": tsne_result[:, 1],
-                "element": element_array,
-                "group": list(self.element_groups_dict.values()),
-            }
-        )
-        # Create the t-SNE plot
-        fig, ax = plt.subplots(figsize=figsize)
-        sns.scatterplot(
-            x="tsne_dim1",
-            y="tsne_dim2",
-            data=tsne_df,
-            hue=points_hue,
-            s=points_size,
-            ax=ax,
-        )
-        # lim = (tsne_result.min()-5, tsne_result.max()+5)
-        # ax.set_xlim(lim)
-        # ax.set_ylim(lim)
-        plt.xlabel("Dimension 1")
-        plt.ylabel("Dimension 2")
-
-        # Label the points
-        for i in range(tsne_df.shape[0]):
-            plt.text(
-                x=tsne_df["tsne_dim1"][i],
-                y=tsne_df["tsne_dim2"][i],
-                s=tsne_df["element"][i],
-            )
-
-        return plt
