@@ -354,6 +354,7 @@ def _composition_distance(
 
 def composition_featuriser(
     data: Union[pd.DataFrame, pd.Series, CompositionalEmbedding, list],
+    formula_column: str = "formula",
     embedding: Union[Embedding, str] = "magpie",
     stats: Union[str, list] = "mean",
     inplace: bool = False,
@@ -385,13 +386,14 @@ def composition_featuriser(
     if isinstance(data, pd.DataFrame):
         if not inplace:
             data = data.copy()
-        if "formula" not in data.columns:
+        if formula_column not in data.columns:
             raise ValueError(
-                "The data must contain a column named 'formula' to featurise."
+                f"The data must contain a column named {formula_column}  to featurise."
             )
         print("Featurising compositions...")
         comps = [
-            CompositionalEmbedding(x, embedding) for x in tqdm(data["formula"].tolist())
+            CompositionalEmbedding(x, embedding)
+            for x in tqdm(data[formula_column].tolist())
         ]
         print("Computing feature vectors...")
         fvs = [x.feature_vector(stats) for x in tqdm(comps)]
