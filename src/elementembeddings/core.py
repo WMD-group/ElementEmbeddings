@@ -64,11 +64,6 @@ class Embedding:
         self.embedding_name = embedding_name
         self.feature_labels = feature_labels
         if not self._is_standardised():
-            warnings.warn(
-                "Embedding is not standardised. "
-                "It is recommended that you standardise your embeddings before use. "
-                "Use the standardise() method to standardise your embeddings."
-            )
             self.is_standardised = False
         else:
             self.is_standardised = True
