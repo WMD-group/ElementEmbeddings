@@ -8,10 +8,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.2.0...HEAD)</small>
+<small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.3.0...HEAD)</small>
+
+### Removed
+
+- Removed warning ([271f61e](https://github.com/WMD-group/ElementEmbeddings/commit/271f61e8653b706a6dd716bf6c0ced9396965750) by Anthony Onwuli).
+
+<!-- insertion marker -->
+## [v0.3.0](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.3.0) - 2023-08-07
+
+<small>[Compare with v0.2.0](https://github.com/WMD-group/ElementEmbeddings/compare/v0.2.0...v0.3.0)</small>
 
 ### Added
 
+- Add full dataframe to README ([fb0cf03](https://github.com/WMD-group/ElementEmbeddings/commit/fb0cf036979094fe6255d120ee523f5338583da8) by Anthony Onwuli).
+- Add mike to dev requirements ([c6cdeae](https://github.com/WMD-group/ElementEmbeddings/commit/c6cdeaebc0fe169898befda246d272c24e3f7e30) by Anthony Onwuli).
+- Add changes to CHANGELOG.md ([fb2e072](https://github.com/WMD-group/ElementEmbeddings/commit/fb2e072e6a590d6b6744e5e311db0679e2fd16d5) by Anthony Onwuli).
 - Add images to resources folder ([99cd979](https://github.com/WMD-group/ElementEmbeddings/commit/99cd979a51a40618e86ed4dc125b3e2c93e992b3) by Anthony Onwuli).
 - Add oliynyk csv load_data method ([7fa064a](https://github.com/WMD-group/ElementEmbeddings/commit/7fa064ab6b8deb5eb516312b01a8160c7c78b565) by Anthony Onwuli).
 - Add data sources to representation README ([0a27e35](https://github.com/WMD-group/ElementEmbeddings/commit/0a27e358ee62df0ec1e96dd8b869935beed60ae2) by Anthony Onwuli).
@@ -45,7 +57,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Changed load_data method ([c558480](https://github.com/WMD-group/ElementEmbeddings/commit/c558480e230d3502edd4ad9aa648a710b6782f1e) by Anthony Onwuli).
 - changed default arg to a str from a list ([b5f7cd7](https://github.com/WMD-group/ElementEmbeddings/commit/b5f7cd79d9c50b0652cc02d22dedbc683f680fc2) by Anthony Onwuli).
 
-<!-- insertion marker -->
+### Removed
+
+- Remove deprecated functions ([df014b4](https://github.com/WMD-group/ElementEmbeddings/commit/df014b42e7ca4f9df8de1c160e708d8dcdc85819) by Anthony Onwuli).
+
 ## [v0.2.0](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.2.0) - 2023-07-07
 
 <small>[Compare with v0.1.1](https://github.com/WMD-group/ElementEmbeddings/compare/v0.1.1...v0.2.0)</small>
