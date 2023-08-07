@@ -26,6 +26,13 @@ theme:
   name: material
   custom_dir: docs/.overrides
 
+
+# Customisation
+extra:
+  version:
+    provider: mike
+
+
 plugins:
     - mkdocstrings
     - search
@@ -39,11 +46,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - attr_list
+  - md_in_html
 
 # Configuration
 
-
-# Customisation
-extra:
-  version:
-    provider: mike

@@ -7,13 +7,19 @@
 [![GitHub issues](https://img.shields.io/github/issues-raw/WMD-Group/ElementEmbeddings)](https://github.com/WMD-group/ElementEmbeddings/issues)
 [![CI Status](https://github.com/WMD-group/ElementEmbeddings/actions/workflows/ci.yml/badge.svg)](https://github.com/WMD-group/ElementEmbeddings/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/WMD-group/ElementEmbeddings/branch/main/graph/badge.svg?token=OCMIM5SHL0)](https://codecov.io/gh/WMD-group/ElementEmbeddings)
+[![DOI](https://zenodo.org/badge/493285385.svg)](https://zenodo.org/badge/latestdoi/493285385)
+[![PyPI](https://img.shields.io/pypi/v/ElementEmbeddings)](https://pypi.org/project/ElementEmbeddings/)
+[![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://wmd-group.github.io/ElementEmbeddings/)
+![python version](https://img.shields.io/pypi/pyversions/elementembeddings)
 
-The **ElementEmbeddings** package provides high-level tools for analysing elemental
+The **Element Embeddings** package provides high-level tools for analysing elemental
 embeddings data. This primarily involves visualising the correlation between
 embedding schemes using different statistical measures.
 
-Motivation
---------
+* **Documentation:** <https://wmd-group.github.io/ElementEmbeddings/>
+* **Examples:** <https://github.com/WMD-group/ElementEmbeddings/tree/main/examples>
+
+## Motivation
 
 Machine learning approaches for materials informatics have become increasingly
 widespread. Some of these involve the use of deep learning

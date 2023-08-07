@@ -5,7 +5,7 @@ from setuptools import find_namespace_packages, setup
 
 module_dir = os.path.dirname(os.path.abspath(__file__))
 
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 DESCRIPTION = "Element Embeddings"
 with open(os.path.join(module_dir, "README.md"), encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
@@ -55,6 +55,7 @@ setup(
             "mkdocs-material==9.1.17",
             "mkdocstrings ==0.21.2",
             "mkdocstrings-python == 1.2.1",
+            "mike ==1.1.2",
         ],
     },
     classifiers=[
