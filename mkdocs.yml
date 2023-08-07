@@ -26,6 +26,13 @@ theme:
   name: material
   custom_dir: docs/.overrides
 
+
+# Customisation
+extra:
+  version:
+    provider: mike
+
+
 plugins:
     - mkdocstrings
     - search
@@ -42,8 +49,3 @@ markdown_extensions:
 
 # Configuration
 
-
-# Customisation
-extra:
-  version:
-    provider: mike
