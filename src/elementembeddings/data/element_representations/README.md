@@ -87,6 +87,8 @@ The following paper describes the details:
 
 [Data source](https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/oliynyk.csv)
 
+We have preprocessed the original `oliynyk.csv` to account for the missing values. The preprocessed file is called `oliynyk_preprocessed.csv` which is now the default file which is called by `load_data`.
+
 The 44 features of the embedding vector are formed of the following properties:
 <details>
     <summary> Click to see the 44 features!</summary>
