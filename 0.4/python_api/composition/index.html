@@ -1686,7 +1686,7 @@ the statistics specified in the stats argument.</p>
 
 
 <h2 id="elementembeddings.composition.composition_featuriser" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">composition_featuriser</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">formula_column</span><span class="o">=</span><span class="s1">&#39;formula&#39;</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="s1">&#39;magpie&#39;</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">composition_featuriser</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="s1">&#39;magpie&#39;</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 </h2>
 
@@ -1837,71 +1837,67 @@ in the stats argument.</p>
 <span class="normal"><a href="#__codelineno-0-412">412</a></span>
 <span class="normal"><a href="#__codelineno-0-413">413</a></span>
 <span class="normal"><a href="#__codelineno-0-414">414</a></span>
-<span class="normal"><a href="#__codelineno-0-415">415</a></span>
-<span class="normal"><a href="#__codelineno-0-416">416</a></span>
-<span class="normal"><a href="#__codelineno-0-417">417</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-355" name="__codelineno-0-355"></a><span class="k">def</span> <span class="nf">composition_featuriser</span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-415">415</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-355" name="__codelineno-0-355"></a><span class="k">def</span> <span class="nf">composition_featuriser</span><span class="p">(</span>
 <a id="__codelineno-0-356" name="__codelineno-0-356"></a>    <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">CompositionalEmbedding</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
-<a id="__codelineno-0-357" name="__codelineno-0-357"></a>    <span class="n">formula_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;formula&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-358" name="__codelineno-0-358"></a>    <span class="n">embedding</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Embedding</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;magpie&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-359" name="__codelineno-0-359"></a>    <span class="n">stats</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-360" name="__codelineno-0-360"></a>    <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-361" name="__codelineno-0-361"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<a id="__codelineno-0-362" name="__codelineno-0-362"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<a id="__codelineno-0-363" name="__codelineno-0-363"></a><span class="sd">    Compute a feature vector for a composition.</span>
-<a id="__codelineno-0-364" name="__codelineno-0-364"></a>
-<a id="__codelineno-0-365" name="__codelineno-0-365"></a><span class="sd">    The feature vector is based on the statistics specified</span>
-<a id="__codelineno-0-366" name="__codelineno-0-366"></a><span class="sd">    in the stats argument.</span>
-<a id="__codelineno-0-367" name="__codelineno-0-367"></a>
-<a id="__codelineno-0-368" name="__codelineno-0-368"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-369" name="__codelineno-0-369"></a><span class="sd">        data (Union[pd.DataFrame, pd.Series, list, CompositionalEmbedding]):</span>
-<a id="__codelineno-0-370" name="__codelineno-0-370"></a><span class="sd">        A pandas DataFrame or Series containing a column named &#39;formula&#39;,</span>
-<a id="__codelineno-0-371" name="__codelineno-0-371"></a><span class="sd">        a list of formula, or a CompositionalEmbedding class</span>
-<a id="__codelineno-0-372" name="__codelineno-0-372"></a><span class="sd">        embedding (Union[Embedding, str], optional): A Embedding class or a string</span>
-<a id="__codelineno-0-373" name="__codelineno-0-373"></a><span class="sd">        stats (Union[str, list], optional): A list of statistics to be computed.</span>
-<a id="__codelineno-0-374" name="__codelineno-0-374"></a><span class="sd">        The default is [&#39;mean&#39;].</span>
-<a id="__codelineno-0-375" name="__codelineno-0-375"></a><span class="sd">        inplace (bool, optional): Whether to perform the operation in place on the data.</span>
-<a id="__codelineno-0-376" name="__codelineno-0-376"></a><span class="sd">        The default is False.</span>
-<a id="__codelineno-0-377" name="__codelineno-0-377"></a>
-<a id="__codelineno-0-378" name="__codelineno-0-378"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-379" name="__codelineno-0-379"></a><span class="sd">        Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector,</span>
-<a id="__codelineno-0-380" name="__codelineno-0-380"></a><span class="sd">        or a list of feature vectors is returned</span>
-<a id="__codelineno-0-381" name="__codelineno-0-381"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-382" name="__codelineno-0-382"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<a id="__codelineno-0-383" name="__codelineno-0-383"></a>        <span class="n">stats</span> <span class="o">=</span> <span class="p">[</span><span class="n">stats</span><span class="p">]</span>
-<a id="__codelineno-0-384" name="__codelineno-0-384"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-<a id="__codelineno-0-385" name="__codelineno-0-385"></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;formula&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-386" name="__codelineno-0-386"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-<a id="__codelineno-0-387" name="__codelineno-0-387"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
-<a id="__codelineno-0-388" name="__codelineno-0-388"></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<a id="__codelineno-0-389" name="__codelineno-0-389"></a>        <span class="k">if</span> <span class="n">formula_column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-<a id="__codelineno-0-390" name="__codelineno-0-390"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-0-391" name="__codelineno-0-391"></a>                <span class="sa">f</span><span class="s2">&quot;The data must contain a column named </span><span class="si">{</span><span class="n">formula_column</span><span class="si">}</span><span class="s2">  to featurise.&quot;</span>
-<a id="__codelineno-0-392" name="__codelineno-0-392"></a>            <span class="p">)</span>
-<a id="__codelineno-0-393" name="__codelineno-0-393"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Featurising compositions...&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-394" name="__codelineno-0-394"></a>        <span class="n">comps</span> <span class="o">=</span> <span class="p">[</span>
-<a id="__codelineno-0-395" name="__codelineno-0-395"></a>            <span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span>
-<a id="__codelineno-0-396" name="__codelineno-0-396"></a>            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">formula_column</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-<a id="__codelineno-0-397" name="__codelineno-0-397"></a>        <span class="p">]</span>
-<a id="__codelineno-0-398" name="__codelineno-0-398"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing feature vectors...&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-399" name="__codelineno-0-399"></a>        <span class="n">fvs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">comps</span><span class="p">)]</span>
-<a id="__codelineno-0-400" name="__codelineno-0-400"></a>        <span class="n">feature_names</span> <span class="o">=</span> <span class="n">comps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">feature_labels</span>
-<a id="__codelineno-0-401" name="__codelineno-0-401"></a>        <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span>
-<a id="__codelineno-0-402" name="__codelineno-0-402"></a>            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">stats</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">feature_names</span>
-<a id="__codelineno-0-403" name="__codelineno-0-403"></a>        <span class="p">]</span>
-<a id="__codelineno-0-404" name="__codelineno-0-404"></a>        <span class="n">data_new</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">fvs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-0-405" name="__codelineno-0-405"></a>        <span class="c1"># data.columns = []</span>
-<a id="__codelineno-0-406" name="__codelineno-0-406"></a>        <span class="k">return</span> <span class="n">data_new</span>
-<a id="__codelineno-0-407" name="__codelineno-0-407"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-<a id="__codelineno-0-408" name="__codelineno-0-408"></a>        <span class="n">comps</span> <span class="o">=</span> <span class="p">[</span><span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
-<a id="__codelineno-0-409" name="__codelineno-0-409"></a>        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">comps</span><span class="p">)]</span>
-<a id="__codelineno-0-410" name="__codelineno-0-410"></a>
-<a id="__codelineno-0-411" name="__codelineno-0-411"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">CompositionalEmbedding</span><span class="p">):</span>
-<a id="__codelineno-0-412" name="__codelineno-0-412"></a>        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
-<a id="__codelineno-0-413" name="__codelineno-0-413"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-414" name="__codelineno-0-414"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<a id="__codelineno-0-415" name="__codelineno-0-415"></a>            <span class="s2">&quot;The data must be a pandas DataFrame, Series, &quot;</span>
-<a id="__codelineno-0-416" name="__codelineno-0-416"></a>            <span class="s2">&quot;list or CompositionalEmbedding class.&quot;</span>
-<a id="__codelineno-0-417" name="__codelineno-0-417"></a>        <span class="p">)</span>
+<a id="__codelineno-0-357" name="__codelineno-0-357"></a>    <span class="n">embedding</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Embedding</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;magpie&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-358" name="__codelineno-0-358"></a>    <span class="n">stats</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-359" name="__codelineno-0-359"></a>    <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-360" name="__codelineno-0-360"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<a id="__codelineno-0-361" name="__codelineno-0-361"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-362" name="__codelineno-0-362"></a><span class="sd">    Compute a feature vector for a composition.</span>
+<a id="__codelineno-0-363" name="__codelineno-0-363"></a>
+<a id="__codelineno-0-364" name="__codelineno-0-364"></a><span class="sd">    The feature vector is based on the statistics specified</span>
+<a id="__codelineno-0-365" name="__codelineno-0-365"></a><span class="sd">    in the stats argument.</span>
+<a id="__codelineno-0-366" name="__codelineno-0-366"></a>
+<a id="__codelineno-0-367" name="__codelineno-0-367"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-368" name="__codelineno-0-368"></a><span class="sd">        data (Union[pd.DataFrame, pd.Series, list, CompositionalEmbedding]):</span>
+<a id="__codelineno-0-369" name="__codelineno-0-369"></a><span class="sd">        A pandas DataFrame or Series containing a column named &#39;formula&#39;,</span>
+<a id="__codelineno-0-370" name="__codelineno-0-370"></a><span class="sd">        a list of formula, or a CompositionalEmbedding class</span>
+<a id="__codelineno-0-371" name="__codelineno-0-371"></a><span class="sd">        embedding (Union[Embedding, str], optional): A Embedding class or a string</span>
+<a id="__codelineno-0-372" name="__codelineno-0-372"></a><span class="sd">        stats (Union[str, list], optional): A list of statistics to be computed.</span>
+<a id="__codelineno-0-373" name="__codelineno-0-373"></a><span class="sd">        The default is [&#39;mean&#39;].</span>
+<a id="__codelineno-0-374" name="__codelineno-0-374"></a><span class="sd">        inplace (bool, optional): Whether to perform the operation in place on the data.</span>
+<a id="__codelineno-0-375" name="__codelineno-0-375"></a><span class="sd">        The default is False.</span>
+<a id="__codelineno-0-376" name="__codelineno-0-376"></a>
+<a id="__codelineno-0-377" name="__codelineno-0-377"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-378" name="__codelineno-0-378"></a><span class="sd">        Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector,</span>
+<a id="__codelineno-0-379" name="__codelineno-0-379"></a><span class="sd">        or a list of feature vectors is returned</span>
+<a id="__codelineno-0-380" name="__codelineno-0-380"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-381" name="__codelineno-0-381"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-0-382" name="__codelineno-0-382"></a>        <span class="n">stats</span> <span class="o">=</span> <span class="p">[</span><span class="n">stats</span><span class="p">]</span>
+<a id="__codelineno-0-383" name="__codelineno-0-383"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+<a id="__codelineno-0-384" name="__codelineno-0-384"></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;formula&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-385" name="__codelineno-0-385"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<a id="__codelineno-0-386" name="__codelineno-0-386"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+<a id="__codelineno-0-387" name="__codelineno-0-387"></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="__codelineno-0-388" name="__codelineno-0-388"></a>        <span class="k">if</span> <span class="s2">&quot;formula&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<a id="__codelineno-0-389" name="__codelineno-0-389"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<a id="__codelineno-0-390" name="__codelineno-0-390"></a>                <span class="s2">&quot;The data must contain a column named &#39;formula&#39; to featurise.&quot;</span>
+<a id="__codelineno-0-391" name="__codelineno-0-391"></a>            <span class="p">)</span>
+<a id="__codelineno-0-392" name="__codelineno-0-392"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Featurising compositions...&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-393" name="__codelineno-0-393"></a>        <span class="n">comps</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-0-394" name="__codelineno-0-394"></a>            <span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;formula&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<a id="__codelineno-0-395" name="__codelineno-0-395"></a>        <span class="p">]</span>
+<a id="__codelineno-0-396" name="__codelineno-0-396"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing feature vectors...&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-397" name="__codelineno-0-397"></a>        <span class="n">fvs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">comps</span><span class="p">)]</span>
+<a id="__codelineno-0-398" name="__codelineno-0-398"></a>        <span class="n">feature_names</span> <span class="o">=</span> <span class="n">comps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">feature_labels</span>
+<a id="__codelineno-0-399" name="__codelineno-0-399"></a>        <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-0-400" name="__codelineno-0-400"></a>            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">stats</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">feature_names</span>
+<a id="__codelineno-0-401" name="__codelineno-0-401"></a>        <span class="p">]</span>
+<a id="__codelineno-0-402" name="__codelineno-0-402"></a>        <span class="n">data_new</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">fvs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-403" name="__codelineno-0-403"></a>        <span class="c1"># data.columns = []</span>
+<a id="__codelineno-0-404" name="__codelineno-0-404"></a>        <span class="k">return</span> <span class="n">data_new</span>
+<a id="__codelineno-0-405" name="__codelineno-0-405"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+<a id="__codelineno-0-406" name="__codelineno-0-406"></a>        <span class="n">comps</span> <span class="o">=</span> <span class="p">[</span><span class="n">CompositionalEmbedding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">embedding</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<a id="__codelineno-0-407" name="__codelineno-0-407"></a>        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">comps</span><span class="p">)]</span>
+<a id="__codelineno-0-408" name="__codelineno-0-408"></a>
+<a id="__codelineno-0-409" name="__codelineno-0-409"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">CompositionalEmbedding</span><span class="p">):</span>
+<a id="__codelineno-0-410" name="__codelineno-0-410"></a>        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<a id="__codelineno-0-411" name="__codelineno-0-411"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-412" name="__codelineno-0-412"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<a id="__codelineno-0-413" name="__codelineno-0-413"></a>            <span class="s2">&quot;The data must be a pandas DataFrame, Series, &quot;</span>
+<a id="__codelineno-0-414" name="__codelineno-0-414"></a>            <span class="s2">&quot;list or CompositionalEmbedding class.&quot;</span>
+<a id="__codelineno-0-415" name="__codelineno-0-415"></a>        <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
