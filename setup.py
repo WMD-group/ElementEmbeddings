@@ -46,7 +46,7 @@ setup(
             "pytest-subtests==0.10.0",
             "nbqa==1.5.3",
             "pyupgrade==3.3.1",
-            "flake8==6.0.0",
+            "flake8==6.1.0",
             "autopep8==2.0.2",
             "pytest-cov==4.1.0",
         ],
