@@ -26,6 +26,7 @@ from sklearn.metrics import DistanceMetric
 from sklearn.preprocessing import StandardScaler
 from umap import UMAP
 
+from .utils.config import DEFAULT_EMBEDDINGS
 from .utils.io import NumpyEncoder
 from .utils.math import cosine_distance, cosine_similarity
 
@@ -147,44 +148,30 @@ class Embedding:
         Returns:
             Embedding :class:`Embedding` instance.
         """
-        _cbfv_files = {
-            "magpie": "magpie.csv",
-            "magpie_sc": "magpie_sc.json",
-            "mat2vec": "mat2vec.csv",
-            "matscholar": "matscholar-embedding.json",
-            "megnet16": "megnet16.json",
-            "mod_petti": "mod_petti.json",
-            "oliynyk": "oliynyk_preprocessed.csv",
-            "oliynyk_sc": "oliynyk_sc.json",
-            "random_200": "random_200_new.csv",
-            "skipatom": "skipatom_20201009_induced.csv",
-            "atomic": "atomic.json",
-        }
-
-        if _cbfv_files[embedding_name].endswith(".csv"):
+        if DEFAULT_EMBEDDINGS[embedding_name].endswith(".csv"):
             return Embedding.from_csv(
                 path.join(
                     data_directory,
                     "element_representations",
-                    _cbfv_files[embedding_name],
+                    DEFAULT_EMBEDDINGS[embedding_name],
                 ),
                 embedding_name,
             )
-        elif "megnet" in _cbfv_files[embedding_name]:
+        elif "megnet" in DEFAULT_EMBEDDINGS[embedding_name]:
             return Embedding.from_json(
                 path.join(
                     data_directory,
                     "element_representations",
-                    _cbfv_files[embedding_name],
+                    DEFAULT_EMBEDDINGS[embedding_name],
                 ),
                 embedding_name,
             ).remove_elements(["Null"])
-        elif _cbfv_files[embedding_name].endswith(".json"):
+        elif DEFAULT_EMBEDDINGS[embedding_name].endswith(".json"):
             return Embedding.from_json(
                 path.join(
                     data_directory,
                     "element_representations",
-                    _cbfv_files[embedding_name],
+                    DEFAULT_EMBEDDINGS[embedding_name],
                 ),
                 embedding_name,
             )
