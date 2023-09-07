@@ -5,7 +5,7 @@ from setuptools import find_namespace_packages, setup
 
 module_dir = os.path.dirname(os.path.abspath(__file__))
 
-VERSION = "0.4"
+VERSION = "0.5"
 DESCRIPTION = "Element Embeddings"
 with open(os.path.join(module_dir, "README.md"), encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
@@ -57,12 +57,14 @@ setup(
             "mkdocstrings-python == 1.2.1",
             "mike ==1.1.2",
         ],
+        "ml": ["torch", "matbench"],
     },
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3,11",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Science/Research",
         "Operating System :: OS Independent",
