@@ -393,10 +393,13 @@ def composition_featuriser(
         print("Featurising compositions...")
         comps = [
             CompositionalEmbedding(x, embedding)
-            for x in tqdm(data[formula_column].tolist())
+            for x in tqdm(
+                data[formula_column].tolist(),
+                desc="Creating CompositionalEmbedding objects...",
+            )
         ]
         print("Computing feature vectors...")
-        fvs = [x.feature_vector(stats) for x in tqdm(comps)]
+        fvs = [x.feature_vector(stats) for x in tqdm(comps, desc="Featurising...")]
         feature_names = comps[0].embedding.feature_labels
         feature_names = [
             f"{stat}_{feature}" for stat in stats for feature in feature_names
@@ -405,8 +408,11 @@ def composition_featuriser(
         # data.columns = []
         return data_new
     elif isinstance(data, list):
-        comps = [CompositionalEmbedding(x, embedding) for x in data]
-        return [x.feature_vector(stats) for x in tqdm(comps)]
+        comps = [
+            CompositionalEmbedding(x, embedding)
+            for x in tqdm(data, desc="Creating CompositionalEmbedding objects...")
+        ]
+        return [x.feature_vector(stats) for x in tqdm(comps, desc="Featurising...")]
 
     elif isinstance(data, CompositionalEmbedding):
         return data.feature_vector(stats)
