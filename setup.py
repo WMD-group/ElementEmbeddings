@@ -57,7 +57,7 @@ setup(
             "mkdocstrings-python == 1.2.1",
             "mike ==1.1.2",
         ],
-        "ml": ["torch", "matbench"],
+        "ml": ["torch", "matbench", "lightning"],
     },
     classifiers=[
         "Programming Language :: Python",
