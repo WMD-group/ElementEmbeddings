@@ -51,7 +51,7 @@ setup(
             "pytest-cov==4.1.0",
         ],
         "docs": [
-            "mkdocs==1.4.3",
+            "mkdocs==1.5.3",
             "mkdocs-material==9.1.17",
             "mkdocstrings ==0.21.2",
             "mkdocstrings-python == 1.2.1",
