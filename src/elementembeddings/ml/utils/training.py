@@ -17,7 +17,7 @@ class LightningRegressor(pl.LightningModule):
         """
         super().__init__()
         self.backbone = backbone
-        self.save_hyperparameters()
+        self.save_hyperparameters(ignore=["backbone"])
 
     def mean_absolute_error(self, y_hat, y):
         """Compute the mean absolute error.
