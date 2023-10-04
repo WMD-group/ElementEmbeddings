@@ -60,3 +60,13 @@ class TorchStandardScaler:
         """
         self.fit(X)
         return self.transform(X)
+
+    def inverse_transform(self, X: torch.Tensor):
+        """Reverse the standardisation of the data.
+
+        Args:
+            X (torch.Tensor): Data to reverse the standardisation of.
+        """
+        X *= self.std + self.eps
+        X += self.mean
+        return X
