@@ -49,6 +49,7 @@ setup(
             "flake8==6.0.0",
             "autopep8==2.0.2",
             "pytest-cov==4.1.0",
+            "pytest-mpl==0.16.1",
         ],
         "docs": [
             "mkdocs==1.5.3",
