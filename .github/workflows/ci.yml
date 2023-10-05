@@ -31,10 +31,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip wheel
-        pip install -r requirements.txt
-        pip install pytest-cov
+        python -m pip install -e ".[dev]"
+
     - name: Run tests
-      run: python -m pytest --cov=src/elementembeddings --cov-report=xml -v
+      run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings --cov-report=xml -v
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
