@@ -59,10 +59,6 @@ class EmbeddingBase(ABC):
         if not self.feature_labels:
             self.feature_labels = list(range(self.dim))
 
-        self._pca_data = None
-        self._tsne_data = None
-        self._umap_data = None
-
     @staticmethod
     @abstractmethod
     def load_data(embedding_name: str):
@@ -150,8 +146,7 @@ class EmbeddingBase(ABC):
             n_components=n_components, **kwargs
         )  # project to N dimensions
         pca.fit(embeddings_array)
-        self._pca_data = pca.transform(embeddings_array)
-        return self._pca_data
+        return pca.transform(embeddings_array)
 
     def calculate_tsne(self, n_components: int = 2, standardise: bool = True, **kwargs):
         """Calculate t-SNE components.
@@ -177,8 +172,7 @@ class EmbeddingBase(ABC):
 
         tsne = TSNE(n_components=n_components, **kwargs)
         tsne_result = tsne.fit_transform(embeddings_array)
-        self._tsne_data = tsne_result
-        return self._tsne_data
+        return tsne_result
 
     def calculate_umap(self, n_components: int = 2, standardise: bool = True, **kwargs):
         """Calculate UMAP embeddings.
@@ -204,5 +198,5 @@ class EmbeddingBase(ABC):
 
         umap = UMAP(n_components=n_components, **kwargs)
         umap_result = umap.fit_transform(embeddings_array)
-        self._umap_data = umap_result
-        return self._umap_data
+
+        return umap_result
