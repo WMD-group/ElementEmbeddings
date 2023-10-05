@@ -440,24 +440,24 @@ class EmbeddingTest(unittest.TestCase):
 
     def test_PCA(self):
         """Test the PCA function."""
-        assert isinstance(self.test_matscholar.calculate_PC(), np.ndarray)
-        assert self.test_matscholar.calculate_PC().shape == (
+        assert isinstance(self.test_matscholar.calculate_pca(), np.ndarray)
+        assert self.test_matscholar.calculate_pca().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
 
     def test_tSNE(self):
         """Test the tSNE function."""
-        assert isinstance(self.test_matscholar.calculate_tSNE(), np.ndarray)
-        assert self.test_matscholar.calculate_tSNE().shape == (
+        assert isinstance(self.test_matscholar.calculate_tsne(), np.ndarray)
+        assert self.test_matscholar.calculate_tsne().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
 
     def test_UMAP(self):
         """Test the UMAP function."""
-        assert isinstance(self.test_matscholar.calculate_UMAP(), np.ndarray)
-        assert self.test_matscholar.calculate_UMAP().shape == (
+        assert isinstance(self.test_matscholar.calculate_umap(), np.ndarray)
+        assert self.test_matscholar.calculate_umap().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
