@@ -104,7 +104,7 @@ def dimension_plotter(
         ax (plt.axes, optional): The axes to plot on, by default None
         n_components (int): The number of components to reduce to, by default 2
         reducer (str): The dimensionality reduction algorithm to use, by default "umap"
-        adjust_text (bool): Whether to avoid overlap of the text labels, by default True
+        adjusttext (bool): Whether to avoid overlap of the text labels, by default True
         reducer_params (dict, optional): Additional keyword arguments to pass to
         the reducer, by default None
         scatter_params (dict, optional): Additional keyword arguments to pass to
