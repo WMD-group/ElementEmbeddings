@@ -114,35 +114,11 @@ def dimension_plotter(
     if reducer_params is None:
         reducer_params = {}
     if reducer == "umap":
-        if (
-            embedding._umap_data is not None
-            and embedding._umap_data.shape[1] == n_components
-        ):
-            reduced = embedding._umap_data
-        else:
-            reduced = embedding.calculate_umap(
-                n_components=n_components, **reducer_params
-            )
+        reduced = embedding.calculate_umap(n_components=n_components, **reducer_params)
     elif reducer == "tsne":
-        if (
-            embedding._tsne_data is not None
-            and embedding._tsne_data.shape[1] == n_components
-        ):
-            reduced = embedding._tsne_data
-        else:
-            reduced = embedding.calculate_tsne(
-                n_components=n_components, **reducer_params
-            )
+        reduced = embedding.calculate_tsne(n_components=n_components, **reducer_params)
     elif reducer == "pca":
-        if (
-            embedding._pca_data is not None
-            and embedding._pca_data.shape[1] == n_components
-        ):
-            reduced = embedding._pca_data
-        else:
-            reduced = embedding.calculate_pca(
-                n_components=n_components, **reducer_params
-            )
+        reduced = embedding.calculate_pca(n_components=n_components, **reducer_params)
     else:
         raise ValueError("Unrecognised reducer.")
 
