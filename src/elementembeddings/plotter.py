@@ -120,7 +120,7 @@ def dimension_plotter(
         ):
             reduced = embedding._umap_data
         else:
-            reduced = embedding.calculate_UMAP(
+            reduced = embedding.calculate_umap(
                 n_components=n_components, **reducer_params
             )
     elif reducer == "tsne":
@@ -130,7 +130,7 @@ def dimension_plotter(
         ):
             reduced = embedding._tsne_data
         else:
-            reduced = embedding.calculate_tSNE(
+            reduced = embedding.calculate_tsne(
                 n_components=n_components, **reducer_params
             )
     elif reducer == "pca":
@@ -140,7 +140,7 @@ def dimension_plotter(
         ):
             reduced = embedding._pca_data
         else:
-            reduced = embedding.calculate_PC(
+            reduced = embedding.calculate_pca(
                 n_components=n_components, **reducer_params
             )
     else:

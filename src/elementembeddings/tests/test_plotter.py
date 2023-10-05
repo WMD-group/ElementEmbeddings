@@ -63,9 +63,9 @@ class DimensionTest(unittest.TestCase):
 
     def test_dimension_2d_plotter_preloaded_reduction(self):
         """Test that the dimension_plotter function works with a preloaded reduction."""
-        self.test_skipatom.calculate_PC()
-        self.test_skipatom.calculate_tSNE()
-        self.test_skipatom.calculate_UMAP()
+        self.test_skipatom.calculate_pca()
+        self.test_skipatom.calculate_tsne()
+        self.test_skipatom.calculate_umap()
 
         skipatom_pca_plot = dimension_plotter(
             self.test_skipatom, n_components=2, reducer="pca", adjusttext=False
