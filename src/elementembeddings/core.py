@@ -20,12 +20,10 @@ import numpy as np
 import pandas as pd
 from pymatgen.core import Element
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
-from sklearn import decomposition
-from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
 from sklearn.preprocessing import StandardScaler
-from umap import UMAP
 
+from ._base import EmbeddingBase
 from .utils.io import NumpyEncoder
 from .utils.math import cosine_distance, cosine_similarity
 
@@ -36,7 +34,7 @@ with open(pt_dir) as f:
     pt = json.load(f)
 
 
-class Embedding:
+class Embedding(EmbeddingBase):
     """
     Represent an elemental representation.
 
@@ -738,85 +736,68 @@ class Embedding:
             )
             return correlation_pivot
 
-    def calculate_PC(self, n_components: int = 2, standardise: bool = True, **kwargs):
-        """Calculate the principal componenets (PC) of the embeddings.
+
+class SpeciesEmbedding(EmbeddingBase):
+    """
+    Represent an ion representation.
+
+    To load an embedding distributed from the package use the load_data() method.
+
+    Works like a standard python dictionary. The keys are {species: vector} pairs.
+    """
+
+    def __init__(
+        self,
+        embeddings: dict,
+        embedding_name: Optional[str] = None,
+        feature_labels: Optional[List[str]] = None,
+    ):
+        """
+        Create an instance of the SpeciesEmbedding class.
 
         Args:
-            n_components (int): The number of components to project the embeddings to.
-            standardise (bool): Whether to standardise the embeddings before projecting.
-            **kwargs: Other keyword arguments to be passed to PCA.
+            embeddings (dict): A dictionary of {species: vector} pairs.
+            embedding_name (str): The name of the species representation
+            feature_labels (list(str)): A list of feature labels for the embedding
+
         """
-        if standardise:
-            if self.is_standardised:
-                embeddings_array = np.array(list(self.embeddings.values()))
-            else:
-                self.standardise(inplace=True)
-                embeddings_array = np.array(list(self.embeddings.values()))
-        else:
-            warnings.warn(
-                """It is recommended to scale the embeddings
-                before projecting with PCA.
-                To do so, set `standardise=True`."""
-            )
-            embeddings_array = np.array(list(self.embeddings.values()))
+        self.embeddings = embeddings
+        self.embedding_name = embedding_name
+        self.feature_labels = feature_labels
 
-        pca = decomposition.PCA(
-            n_components=n_components, **kwargs
-        )  # project to N dimensions
-        pca.fit(embeddings_array)
-        self._pca_data = pca.transform(embeddings_array)
-        return self._pca_data
-
-    def calculate_tSNE(self, n_components: int = 2, standardise: bool = True, **kwargs):
-        """Calculate t-SNE components.
+    @staticmethod
+    def load_data(embedding_name: str):
+        """
+        Create an instance of the `SpeciesEmbedding` class from a preset embedding file.
 
         Args:
-            n_components (int): The number of components to project the embeddings to.
-            standardise (bool): Whether to standardise the embeddings before projecting.
-            **kwargs: Other keyword arguments to be passed to t-SNE.
+            embedding_name (str): The name of the species representation
+
+        Returns:
+            SpeciesEmbedding :class:`SpeciesEmbedding` instance.
         """
-        if standardise:
-            if self.is_standardised:
-                embeddings_array = np.array(list(self.embeddings.values()))
-            else:
-                self.standardise(inplace=True)
-                embeddings_array = np.array(list(self.embeddings.values()))
-        else:
-            warnings.warn(
-                """It is recommended to scale the embeddings
-                before projecting with t-SNE.
-                To do so, set `standardise=True`."""
-            )
-            embeddings_array = np.array(list(self.embeddings.values()))
+        pass
 
-        tsne = TSNE(n_components=n_components, **kwargs)
-        tsne_result = tsne.fit_transform(embeddings_array)
-        self._tsne_data = tsne_result
-        return self._tsne_data
+    @staticmethod
+    def from_csv(csv_path, embedding_name: Optional[str] = None):
+        """
+        Create an instance of the SpeciesEmbedding class from a csv file.
 
-    def calculate_UMAP(self, n_components: int = 2, standardise: bool = True, **kwargs):
-        """Calculate UMAP embeddings.
+        The first column of the csv file must contain the species and be named species.
 
         Args:
-            n_components (int): The number of components to project the embeddings to.
-            standardise (bool): Whether to scale the embeddings before projecting.
-            **kwargs: Other keyword arguments to be passed to UMAP.
-        """
-        if standardise:
-            if self.is_standardised:
-                embeddings_array = np.array(list(self.embeddings.values()))
-            else:
-                self.standardise(inplace=True)
-                embeddings_array = np.array(list(self.embeddings.values()))
-        else:
-            warnings.warn(
-                """It is recommended to scale the embeddings
-                before projecting with UMAP.
-                To do so, set `standardise=True`."""
-            )
-            embeddings_array = np.array(list(self.embeddings.values()))
+            csv_path (str): Filepath of the csv file
+            embedding_name (str): The name of the species representation
 
-        umap = UMAP(n_components=n_components, **kwargs)
-        umap_result = umap.fit_transform(embeddings_array)
-        self._umap_data = umap_result
-        return self._umap_data
+        Returns:
+            SpeciesEmbedding :class:`SpeciesEmbedding` instance.
+
+        """
+        # Need to add validation handling for csv files
+        df = pd.read_csv(csv_path)
+        species = list(df["species"])
+        df.drop(["species"], axis=1, inplace=True)
+        feature_labels = list(df.columns)
+        embeds_array = df.to_numpy()
+        embedding_data = {species[i]: embeds_array[i] for i in range(len(embeds_array))}
+        return SpeciesEmbedding(embedding_data, embedding_name, feature_labels)
