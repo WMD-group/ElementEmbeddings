@@ -29,7 +29,9 @@ class HeatmapTest(unittest.TestCase):
         )
         assert isinstance(skipatom_cos_plot, plt.Axes)
         skipatom_euc_plot = heatmap_plotter(
-            self.test_skipatom, metric="euclidean", show_axislabels=False
+            self.test_skipatom,
+            metric="euclidean",
+            show_axislabels=False,
         )
         assert isinstance(skipatom_euc_plot, plt.Axes)
 
@@ -103,15 +105,24 @@ class DimensionTest(unittest.TestCase):
     def test_dimension_2d_plotter(self):
         """Test that the dimension_plotter function works."""
         skipatom_pca_plot = dimension_plotter(
-            self.test_skipatom, n_components=2, reducer="pca", adjusttext=False
+            self.test_skipatom,
+            n_components=2,
+            reducer="pca",
+            adjusttext=False,
         )
         assert isinstance(skipatom_pca_plot, plt.Axes)
         skipatom_tsne_plot = dimension_plotter(
-            self.test_skipatom, n_components=2, reducer="tsne", adjusttext=False
+            self.test_skipatom,
+            n_components=2,
+            reducer="tsne",
+            adjusttext=False,
         )
         assert isinstance(skipatom_tsne_plot, plt.Axes)
         skipatom_umap_plot = dimension_plotter(
-            self.test_skipatom, n_components=2, reducer="umap", adjusttext=True
+            self.test_skipatom,
+            n_components=2,
+            reducer="umap",
+            adjusttext=True,
         )
         assert isinstance(skipatom_umap_plot, plt.Axes)
 
@@ -126,7 +137,10 @@ class DimensionTest(unittest.TestCase):
     def test_dimension_3d_plotter(self):
         """Test that the dimension_plotter function works in 3D."""
         skipatom_3d_pca_plot = dimension_plotter(
-            self.test_skipatom, n_components=3, reducer="pca", adjusttext=False
+            self.test_skipatom,
+            n_components=3,
+            reducer="pca",
+            adjusttext=False,
         )
         assert isinstance(skipatom_3d_pca_plot, plt.Axes)
 

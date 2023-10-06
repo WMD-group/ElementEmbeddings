@@ -19,11 +19,11 @@ class EmbeddingBase(ABC):
         embeddings: dict,
         embedding_name: Optional[str] = None,
         feature_labels: Optional[List[str]] = None,
-    ):
-        """
-        Initialise the embedding base class.
+    ) -> None:
+        """Initialise the embedding base class.
 
         Args:
+        ----
             embeddings (dict): A dictionary of embeddings.
             embedding_name (str): The name of the embedding.
             feature_labels (list): A list of feature labels.
@@ -71,10 +71,10 @@ class EmbeddingBase(ABC):
 
     @staticmethod
     def from_json(json_path: str, embedding_name: Optional[str] = None):
-        """
-        Create an embedding from a json file.
+        """Create an embedding from a json file.
 
         Args:
+        ----
             json_path (str): The path to the json file.
             embedding_name (str): The name of the embedding.
         """
@@ -88,7 +88,8 @@ class EmbeddingBase(ABC):
         Mean must be 0 and standard deviation must be 1.
         """
         return np.isclose(
-            np.mean(np.array(list(self.embeddings.values()))), 0
+            np.mean(np.array(list(self.embeddings.values()))),
+            0,
         ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
 
     def standardise(self, inplace: bool = False):
@@ -97,15 +98,17 @@ class EmbeddingBase(ABC):
         Mean is 0 and standard deviation is 1.
 
         Args:
+        ----
             inplace (bool): Whether to change the embedding in place.
 
         Returns:
+        -------
             None if inplace is True, otherwise returns the standardised embedding.
         """
         if self._is_standardised():
             warnings.warn(
                 "Embedding is already standardised."
-                "Returning None and not changing the embedding"
+                "Returning None and not changing the embedding",
             )
             return None
         else:
@@ -117,6 +120,7 @@ class EmbeddingBase(ABC):
             if inplace:
                 self.embeddings = embeddings_copy
                 self.is_standardised = True
+                return None
             else:
                 return EmbeddingBase(embeddings_copy, self.embedding_name)
 
@@ -124,6 +128,7 @@ class EmbeddingBase(ABC):
         """Calculate the principal components (PC) of the embeddings.
 
         Args:
+        ----
             n_components (int): The number of components to project the embeddings to.
             standardise (bool): Whether to standardise the embeddings before projecting.
             **kwargs: Other keyword arguments to be passed to PCA.
@@ -132,18 +137,19 @@ class EmbeddingBase(ABC):
             if self.is_standardised:
                 embeddings_array = np.array(list(self.embeddings.values()))
             else:
-                self.standardise(inplace=True)
+                self = self.standardise()
                 embeddings_array = np.array(list(self.embeddings.values()))
         else:
             warnings.warn(
                 """It is recommended to scale the embeddings
                 before projecting with PCA.
-                To do so, set `standardise=True`."""
+                To do so, set `standardise=True`.""",
             )
             embeddings_array = np.array(list(self.embeddings.values()))
 
         pca = decomposition.PCA(
-            n_components=n_components, **kwargs
+            n_components=n_components,
+            **kwargs,
         )  # project to N dimensions
         pca.fit(embeddings_array)
         return pca.transform(embeddings_array)
@@ -152,6 +158,7 @@ class EmbeddingBase(ABC):
         """Calculate t-SNE components.
 
         Args:
+        ----
             n_components (int): The number of components to project the embeddings to.
             standardise (bool): Whether to standardise the embeddings before projecting.
             **kwargs: Other keyword arguments to be passed to t-SNE.
@@ -160,24 +167,24 @@ class EmbeddingBase(ABC):
             if self.is_standardised:
                 embeddings_array = np.array(list(self.embeddings.values()))
             else:
-                self.standardise(inplace=True)
+                self = self.standardise()
                 embeddings_array = np.array(list(self.embeddings.values()))
         else:
             warnings.warn(
                 """It is recommended to scale the embeddings
                 before projecting with t-SNE.
-                To do so, set `standardise=True`."""
+                To do so, set `standardise=True`.""",
             )
             embeddings_array = np.array(list(self.embeddings.values()))
 
         tsne = TSNE(n_components=n_components, **kwargs)
-        tsne_result = tsne.fit_transform(embeddings_array)
-        return tsne_result
+        return tsne.fit_transform(embeddings_array)
 
     def calculate_umap(self, n_components: int = 2, standardise: bool = True, **kwargs):
         """Calculate UMAP embeddings.
 
         Args:
+        ----
             n_components (int): The number of components to project the embeddings to.
             standardise (bool): Whether to scale the embeddings before projecting.
             **kwargs: Other keyword arguments to be passed to UMAP.
@@ -186,17 +193,15 @@ class EmbeddingBase(ABC):
             if self.is_standardised:
                 embeddings_array = np.array(list(self.embeddings.values()))
             else:
-                self.standardise(inplace=True)
+                self = self.standardise()
                 embeddings_array = np.array(list(self.embeddings.values()))
         else:
             warnings.warn(
                 """It is recommended to scale the embeddings
                 before projecting with UMAP.
-                To do so, set `standardise=True`."""
+                To do so, set `standardise=True`.""",
             )
             embeddings_array = np.array(list(self.embeddings.values()))
 
         umap = UMAP(n_components=n_components, **kwargs)
-        umap_result = umap.fit_transform(embeddings_array)
-
-        return umap_result
+        return umap.fit_transform(embeddings_array)

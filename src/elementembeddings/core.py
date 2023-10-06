@@ -1,5 +1,4 @@
-"""
-Provides the `Embedding` class.
+"""Provides the `Embedding` class.
 
 This module enables the user load in elemetal representation data
 and analyse it using statistical functions.
@@ -35,8 +34,7 @@ with open(pt_dir) as f:
 
 
 class Embedding(EmbeddingBase):
-    """
-    Represent an elemental representation.
+    """Represent an elemental representation.
 
     To load an embedding distributed from the package use the load_data() method.
 
@@ -50,10 +48,11 @@ class Embedding(EmbeddingBase):
         embeddings: dict,
         embedding_name: Optional[str] = None,
         feature_labels: Optional[List[str]] = None,
-    ):
+    ) -> None:
         """Initialise the Embedding class.
 
         Args:
+        ----
             embeddings (dict): A {element_symbol: vector} dictionary
             embedding_name (str): The name of the elemental representation
             feature_labels (list(str)): A list of feature labels
@@ -88,7 +87,8 @@ class Embedding(EmbeddingBase):
         if self.embedding_type == "linear":
             sorted_embedding = sorted(self.embeddings.items(), key=lambda x: x[1])
             elements = np.loadtxt(
-                f"{data_directory}/element_data/ordered_periodic.txt", dtype=str
+                f"{data_directory}/element_data/ordered_periodic.txt",
+                dtype=str,
             )
             if self.embedding_name == "mod_petti":
                 sorted_embedding = {
@@ -119,8 +119,7 @@ class Embedding(EmbeddingBase):
 
     @staticmethod
     def load_data(embedding_name: Optional[str] = None):
-        """
-        Create an instance of the `Embedding` class from a default embedding file.
+        """Create an instance of the `Embedding` class from a default embedding file.
 
         The default embeddings are in the table below:
 
@@ -140,9 +139,11 @@ class Embedding(EmbeddingBase):
 
 
         Args:
+        ----
             embedding_name (str): The str_name of an embedding file.
 
         Returns:
+        -------
             Embedding :class:`Embedding` instance.
         """
         _cbfv_files = {
@@ -186,13 +187,14 @@ class Embedding(EmbeddingBase):
                 ),
                 embedding_name,
             )
+        return None
 
     @staticmethod
     def from_json(embedding_json, embedding_name: Optional[str] = None):
-        """
-        Create an instance of the Embedding class from a json file.
+        """Create an instance of the Embedding class from a json file.
 
         Args:
+        ----
             embedding_json (str): Filepath of the json file
             embedding_name (str): The name of the elemental representation
         """
@@ -203,12 +205,12 @@ class Embedding(EmbeddingBase):
 
     @staticmethod
     def from_csv(embedding_csv, embedding_name: Optional[str] = None):
-        """
-        Create an instance of the Embedding class from a csv file.
+        """Create an instance of the Embedding class from a csv file.
 
         The first column of the csv file must contain the elements and be named element.
 
         Args:
+        ----
             embedding_csv (str): Filepath of the csv file
             embedding_name (str): The name of the elemental representation
 
@@ -216,7 +218,7 @@ class Embedding(EmbeddingBase):
         # Need to add validation handling for csv files
         df = pd.read_csv(embedding_csv)
         elements = list(df["element"])
-        df.drop(["element"], axis=1, inplace=True)
+        df = df.drop(["element"], axis=1)
         feature_labels = list(df.columns)
         embeds_array = df.to_numpy()
         embedding_data = {
@@ -225,18 +227,19 @@ class Embedding(EmbeddingBase):
         return Embedding(embedding_data, embedding_name, feature_labels)
 
     def as_dataframe(self, columns: str = "components") -> pd.DataFrame:
-        """
-        Return the embedding as a pandas Dataframe.
+        """Return the embedding as a pandas Dataframe.
 
         The first column is the elements and each other
         column represents a component of the embedding.
 
         Args:
+        ----
             columns (str): A string to specify if the columns are the vector components
             and the index is the elements (`columns='components'`)
             or the columns are the elements (`columns='elements'`).
 
         Returns:
+        -------
             df (pandas.DataFrame): A pandas dataframe object
 
 
@@ -248,18 +251,21 @@ class Embedding(EmbeddingBase):
         elif columns == "elements":
             return df
         else:
+            msg = (
+                f"{columns} is not a valid keyword argument. "
+                f"Choose either 'components' or 'elements"
+            )
             raise (
                 ValueError(
-                    f"{columns} is not a valid keyword argument. "
-                    "Choose either 'components' or 'elements"
+                    msg,
                 )
             )
 
     def to(self, fmt: str = "", filename: Optional[str] = ""):
-        """
-        Output the embedding to a file.
+        """Output the embedding to a file.
 
         Args:
+        ----
             fmt (str): The file format to output the embedding to.
             Options include "json" and "csv".
             filename (str): The name of the file to be outputted
@@ -275,6 +281,7 @@ class Embedding(EmbeddingBase):
                     filename = filename + ".json"
                 with open(filename, "w") as file:
                     file.write(j)
+                    return None
             else:
                 return j
         elif fmt == "csv" or fnmatch.fnmatch(filename, "*.csv"):
@@ -282,11 +289,13 @@ class Embedding(EmbeddingBase):
                 if not filename.endswith(".csv"):
                     filename = filename + ".csv"
                 self.as_dataframe().to_csv(filename, index_label="element")
+                return None
             else:
                 return self.as_dataframe().to_csv(index_label="element")
 
         else:
-            raise ValueError(f"{str(fmt)} is an invalid file format")
+            msg = f"{fmt!s} is an invalid file format"
+            raise ValueError(msg)
 
     @property
     def element_list(self) -> list:
@@ -295,10 +304,10 @@ class Embedding(EmbeddingBase):
 
     def remove_elements(self, elements: Union[str, List[str]], inplace: bool = False):
         # TO-DO allow removal by atomic numbers
-        """
-        Remove elements from the Embedding instance.
+        """Remove elements from the Embedding instance.
 
         Args:
+        ----
             elements (str,list(str)): An element symbol or a list of element symbols
             inplace (bool): If True, elements are removed from the Embedding instance.
             If false, the original embedding instance is unchanged
@@ -327,7 +336,8 @@ class Embedding(EmbeddingBase):
         Mean must be 0 and standard deviation must be 1.
         """
         return np.isclose(
-            np.mean(np.array(list(self.embeddings.values()))), 0
+            np.mean(np.array(list(self.embeddings.values()))),
+            0,
         ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
 
     def standardise(self, inplace: bool = False):
@@ -339,7 +349,7 @@ class Embedding(EmbeddingBase):
         if self._is_standardised():
             warnings.warn(
                 "Embedding is already standardised. "
-                "Returning None and not changing the embedding."
+                "Returning None and not changing the embedding.",
             )
             return None
         else:
@@ -370,7 +380,7 @@ class Embedding(EmbeddingBase):
                 "number={1},"
                 "pages={1--7},"
                 "year={2016},"
-                "publisher={Nature Publishing Group}}"
+                "publisher={Nature Publishing Group}}",
             ]
         elif self.embedding_name == "mat2vec":
             citation = [
@@ -385,7 +395,7 @@ class Embedding(EmbeddingBase):
                 "number={7763},"
                 "pages={95--98},"
                 "year={2019},"
-                "publisher={Nature Publishing Group} }"
+                "publisher={Nature Publishing Group} }",
             ]
         elif self.embedding_name == "matscholar":
             citation = [
@@ -401,7 +411,7 @@ class Embedding(EmbeddingBase):
                 "number={9},"
                 "pages={3692--3702},"
                 "year={2019},"
-                "publisher={ACS Publications} }"
+                "publisher={ACS Publications} }",
             ]
 
         elif self.embedding_name == "megnet16":
@@ -416,7 +426,7 @@ class Embedding(EmbeddingBase):
                 "number={9},"
                 "pages={3564--3572},"
                 "year={2019},"
-                "publisher={ACS Publications} }"
+                "publisher={ACS Publications} }",
             ]
 
         elif self.embedding_name in ["oliynyk", "oliynyk_sc"]:
@@ -432,7 +442,7 @@ class Embedding(EmbeddingBase):
                 "number={20},"
                 "pages={7324--7331},"
                 "year={2016},"
-                "publisher={ACS Publications} }"
+                "publisher={ACS Publications} }",
             ]
 
         elif self.embedding_name == "skipatom":
@@ -446,7 +456,7 @@ class Embedding(EmbeddingBase):
                 "number={1},"
                 "pages={1--9},"
                 "year={2022},"
-                "publisher={Nature Publishing Group} }"
+                "publisher={Nature Publishing Group} }",
             ]
         elif self.embedding_name == "mod_petti":
             citation = [
@@ -460,7 +470,7 @@ class Embedding(EmbeddingBase):
                 "number={9},"
                 "pages={093011},"
                 "year={2016},"
-                "publisher={IOP Publishing} }"
+                "publisher={IOP Publishing} }",
             ]
 
         else:
@@ -469,23 +479,19 @@ class Embedding(EmbeddingBase):
         return citation
 
     def _is_el_in_embedding(self, el: str) -> bool:
-        """
-        Check if an element is in the `Embedding` object.
+        """Check if an element is in the `Embedding` object.
 
         Args:
+        ----
             el (str): An element symbol
         Returns:
             bool: True if el is in the Embedding, else False
         """
-        if el in self.element_list:
-            return True
-        else:
-            return False
+        return el in self.element_list
 
     @property
     def element_groups_dict(self) -> Dict[str, str]:
-        """
-        Return a dictionary of {element: element type} pairs.
+        """Return a dictionary of {element: element type} pairs.
 
         e.g. {'He':'Noble gas'}
 
@@ -497,14 +503,15 @@ class Embedding(EmbeddingBase):
     def create_pairs(self):
         """Create all possible pairs of elements."""
         ele_list = self.element_list
-        ele_pairs = combinations_with_replacement(ele_list, 2)
-        return ele_pairs
+        return combinations_with_replacement(ele_list, 2)
 
     def compute_correlation_metric(
-        self, ele1: str, ele2: str, metric: str = "pearson"
+        self,
+        ele1: str,
+        ele2: str,
+        metric: str = "pearson",
     ) -> float:
-        """
-        Compute the correlation/similarity metric between two vectors.
+        """Compute the correlation/similarity metric between two vectors.
 
         Allowed metrics:
         * Pearson
@@ -512,12 +519,14 @@ class Embedding(EmbeddingBase):
         * Cosine similarity
 
         Args:
+        ----
             ele1 (str): element symbol
             ele2 (str): element symbol
             metric (str): name of a correlation metric.
             Options are "spearman", "pearson" and "cosine_similarity".
 
         Returns:
+        -------
             float: correlation/similarity metric
         """
         # Define the allowable metrics
@@ -525,20 +534,25 @@ class Embedding(EmbeddingBase):
 
         if metric == "pearson":
             return scipy_corrs[metric](
-                self.embeddings[ele1], self.embeddings[ele2]
+                self.embeddings[ele1],
+                self.embeddings[ele2],
             ).statistic
         elif metric == "spearman":
             return scipy_corrs[metric](
-                self.embeddings[ele1], self.embeddings[ele2]
+                self.embeddings[ele1],
+                self.embeddings[ele2],
             ).correlation
         elif metric == "cosine_similarity":
             return cosine_similarity(self.embeddings[ele1], self.embeddings[ele2])
+        return None
 
     def compute_distance_metric(
-        self, ele1: str, ele2: str, metric: str = "euclidean"
+        self,
+        ele1: str,
+        ele2: str,
+        metric: str = "euclidean",
     ) -> float:
-        """
-        Compute distance metric between two vectors.
+        """Compute distance metric between two vectors.
 
         Allowed metrics:
 
@@ -550,11 +564,13 @@ class Embedding(EmbeddingBase):
         * cosine_distance
 
         Args:
+        ----
             ele1 (str): element symbol
             ele2 (str): element symbol
             metric (str): name of a distance metric
 
         Returns:
+        -------
             distance (float): distance between embedding vectors
         """
         # Define the allowable metrics
@@ -583,7 +599,7 @@ class Embedding(EmbeddingBase):
                 self.embeddings[ele2].reshape(1, -1),
             )[0][0]
 
-        elif metric in scipy_metrics.keys():
+        elif metric in scipy_metrics:
             return scipy_metrics[metric](self.embeddings[ele1], self.embeddings[ele2])
         elif metric == "cosine_distance":
             return cosine_distance(self.embeddings[ele1], self.embeddings[ele2])
@@ -591,13 +607,12 @@ class Embedding(EmbeddingBase):
         else:
             print(
                 "Invalid distance metric."
-                f"Use one of the following metrics:{valid_metrics}"
+                f"Use one of the following metrics:{valid_metrics}",
             )
             raise ValueError
 
     def distance_df(self, metric: str = "euclidean") -> pd.DataFrame:
-        """
-        Return a dataframe with columns ["ele_1", "ele_2", metric].
+        """Return a dataframe with columns ["ele_1", "ele_2", metric].
 
         Allowed metrics:
 
@@ -608,9 +623,11 @@ class Embedding(EmbeddingBase):
         * energy
 
         Args:
+        ----
             metric (str): A distance metric.
 
         Returns:
+        -------
             df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
         """
         ele_pairs = self.create_pairs()
@@ -634,13 +651,10 @@ class Embedding(EmbeddingBase):
         corr_df["Z_1"] = Z_1
         corr_df["Z_2"] = Z_2
 
-        corr_df = corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
-
-        return corr_df
+        return corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
 
     def correlation_df(self, metric: str = "pearson") -> pd.DataFrame:
-        """
-        Return a dataframe with columns ["ele_1", "ele_2", metric].
+        """Return a dataframe with columns ["ele_1", "ele_2", metric].
 
         Allowed metrics:
 
@@ -650,9 +664,11 @@ class Embedding(EmbeddingBase):
 
 
         Args:
+        ----
             metric (str): A distance metric.
 
         Returns:
+        -------
             df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
         """
         ele_pairs = self.create_pairs()
@@ -676,70 +692,79 @@ class Embedding(EmbeddingBase):
         corr_df["Z_1"] = Z_1
         corr_df["Z_2"] = Z_2
 
-        corr_df = corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
-
-        return corr_df
+        return corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
 
     def distance_pivot_table(
-        self, metric: str = "euclidean", sortby: str = "mendeleev"
+        self,
+        metric: str = "euclidean",
+        sortby: str = "mendeleev",
     ) -> pd.DataFrame:
-        """
-        Return a pandas.DataFrame style pivot.
+        """Return a pandas.DataFrame style pivot.
 
         The index and column being either the mendeleev number or atomic number
         of the element pairs and the values being a user-specified distance metric.
 
         Args:
+        ----
             metric (str): A distance metric.
             sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
 
         Returns:
+        -------
             distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
         """
         corr_df = self.distance_df(metric=metric)
         if sortby == "mendeleev":
-            distance_pivot = corr_df.pivot_table(
-                values=metric, index="mend_1", columns="mend_2"
+            return corr_df.pivot_table(
+                values=metric,
+                index="mend_1",
+                columns="mend_2",
             )
-            return distance_pivot
         elif sortby == "atomic_number":
-            distance_pivot = corr_df.pivot_table(
-                values=metric, index="Z_1", columns="Z_2"
+            return corr_df.pivot_table(
+                values=metric,
+                index="Z_1",
+                columns="Z_2",
             )
-            return distance_pivot
+        return None
 
     def correlation_pivot_table(
-        self, metric: str = "pearson", sortby: str = "mendeleev"
+        self,
+        metric: str = "pearson",
+        sortby: str = "mendeleev",
     ) -> pd.DataFrame:
-        """
-        Return a pandas.DataFrame style pivot.
+        """Return a pandas.DataFrame style pivot.
 
         The index and column being either the mendeleev number or atomic number
         of the element pairs and the values being a user-specified distance metric.
 
         Args:
+        ----
             metric (str): A distance metric.
             sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
 
         Returns:
+        -------
             distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
         """
         corr_df = self.correlation_df(metric=metric)
         if sortby == "mendeleev":
-            correlation_pivot = corr_df.pivot_table(
-                values=metric, index="mend_1", columns="mend_2"
+            return corr_df.pivot_table(
+                values=metric,
+                index="mend_1",
+                columns="mend_2",
             )
-            return correlation_pivot
         elif sortby == "atomic_number":
-            correlation_pivot = corr_df.pivot_table(
-                values=metric, index="Z_1", columns="Z_2"
+            return corr_df.pivot_table(
+                values=metric,
+                index="Z_1",
+                columns="Z_2",
             )
-            return correlation_pivot
+        return None
 
 
 class SpeciesEmbedding(EmbeddingBase):
-    """
-    Represent an ion representation.
+    """Represent an ion representation.
 
     To load an embedding distributed from the package use the load_data() method.
 
@@ -751,11 +776,11 @@ class SpeciesEmbedding(EmbeddingBase):
         embeddings: dict,
         embedding_name: Optional[str] = None,
         feature_labels: Optional[List[str]] = None,
-    ):
-        """
-        Create an instance of the SpeciesEmbedding class.
+    ) -> None:
+        """Create an instance of the SpeciesEmbedding class.
 
         Args:
+        ----
             embeddings (dict): A dictionary of {species: vector} pairs.
             embedding_name (str): The name of the species representation
             feature_labels (list(str)): A list of feature labels for the embedding
@@ -767,36 +792,37 @@ class SpeciesEmbedding(EmbeddingBase):
 
     @staticmethod
     def load_data(embedding_name: str):
-        """
-        Create an instance of the `SpeciesEmbedding` class from a preset embedding file.
+        """Create a `SpeciesEmbedding` from a preset embedding file.
 
         Args:
+        ----
             embedding_name (str): The name of the species representation
 
         Returns:
+        -------
             SpeciesEmbedding :class:`SpeciesEmbedding` instance.
         """
-        pass
 
     @staticmethod
     def from_csv(csv_path, embedding_name: Optional[str] = None):
-        """
-        Create an instance of the SpeciesEmbedding class from a csv file.
+        """Create an instance of the SpeciesEmbedding class from a csv file.
 
         The first column of the csv file must contain the species and be named species.
 
         Args:
+        ----
             csv_path (str): Filepath of the csv file
             embedding_name (str): The name of the species representation
 
         Returns:
+        -------
             SpeciesEmbedding :class:`SpeciesEmbedding` instance.
 
         """
         # Need to add validation handling for csv files
         df = pd.read_csv(csv_path)
         species = list(df["species"])
-        df.drop(["species"], axis=1, inplace=True)
+        df = df.drop(["species"], axis=1)
         feature_labels = list(df.columns)
         embeds_array = df.to_numpy()
         embedding_data = {species[i]: embeds_array[i] for i in range(len(embeds_array))}

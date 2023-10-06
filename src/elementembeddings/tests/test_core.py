@@ -76,7 +76,7 @@ class EmbeddingTest(unittest.TestCase):
         # Check if the embedding vector is a numpy array
         assert isinstance(mod_petti.embeddings["H"], np.ndarray)
         # Check if H is present in the embedding keys
-        assert "H" in mod_petti.embeddings.keys()
+        assert "H" in mod_petti.embeddings
         # Check dimensions
         assert mod_petti.dim == 103
         # Check embedding type
@@ -100,7 +100,7 @@ class EmbeddingTest(unittest.TestCase):
         # Check if the embedding vector is a numpy array
         assert isinstance(atomic.embeddings["H"], np.ndarray)
         # Check if H is present in the embedding keys
-        assert "H" in atomic.embeddings.keys()
+        assert "H" in atomic.embeddings
         # Check dimensions
         assert atomic.dim == 118
         # Check embedding type
@@ -124,7 +124,7 @@ class EmbeddingTest(unittest.TestCase):
         # Check if the embedding vector is a numpy array
         assert isinstance(magpie.embeddings["H"], np.ndarray)
         # Check if H is present in the embedding keys
-        assert "H" in magpie.embeddings.keys()
+        assert "H" in magpie.embeddings
         # Check dimensions
         assert magpie.dim == 22
         # Check that a list is returned
@@ -394,13 +394,23 @@ class EmbeddingTest(unittest.TestCase):
         )
 
         self.assertRaises(
-            ValueError, self.test_skipatom.compute_distance_metric, "He", "O"
+            ValueError,
+            self.test_skipatom.compute_distance_metric,
+            "He",
+            "O",
         )
         self.assertRaises(
-            ValueError, self.test_skipatom.compute_distance_metric, "O", "He"
+            ValueError,
+            self.test_skipatom.compute_distance_metric,
+            "O",
+            "He",
         )
         self.assertRaises(
-            ValueError, self.test_skipatom.compute_distance_metric, "Li", "O", "euclid"
+            ValueError,
+            self.test_skipatom.compute_distance_metric,
+            "Li",
+            "O",
+            "euclid",
         )
 
     def test_distance_dataframe_functions(self):
@@ -422,17 +432,18 @@ class EmbeddingTest(unittest.TestCase):
         ]
         assert isinstance(self.test_magpie.distance_pivot_table(), pd.DataFrame)
         assert isinstance(
-            self.test_magpie.distance_pivot_table(sortby="atomic_number"), pd.DataFrame
+            self.test_magpie.distance_pivot_table(sortby="atomic_number"),
+            pd.DataFrame,
         )
 
     def test_remove_elements(self):
         """Test the remove_elements function."""
         assert isinstance(self.test_skipatom.remove_elements("H"), Embedding)
         assert isinstance(self.test_skipatom.remove_elements(["H", "Li"]), Embedding)
-        self.assertIsNone(self.test_skipatom.remove_elements("H", inplace=True))
-        self.assertFalse(self.test_skipatom._is_el_in_embedding("H"))
-        self.assertIsNone(
-            self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True)
+        assert self.test_skipatom.remove_elements("H", inplace=True) is None
+        assert not self.test_skipatom._is_el_in_embedding("H")
+        assert (
+            self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True) is None
         )
         assert "Li" not in self.test_skipatom.element_list
         assert "Ti" not in self.test_skipatom.element_list

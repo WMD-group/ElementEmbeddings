@@ -19,10 +19,10 @@ def heatmap_plotter(
     show_axislabels: bool = True,
     **kwargs,
 ):
-    """
-    Plot multiple heatmaps of the embeddings.
+    """Plot multiple heatmaps of the embeddings.
 
     Args:
+    ----
         embedding (Embedding): The embeddings to be plotted.
         metric (str): The distance metric / similarity measure to be plotted.
         cmap (str): The colourmap for the heatmap.
@@ -69,8 +69,7 @@ def heatmap_plotter(
     ax.set_title(
         embedding.embedding_name,
         fontdict={
-            # "fontsize": 30,
-            "fontweight": "bold"
+            "fontweight": "bold",
         },
     )
     if not show_axislabels:
@@ -100,6 +99,7 @@ def dimension_plotter(
     """Plot the reduced dimensions of the embeddings.
 
     Args:
+    ----
         embedding (Embedding): The embedding to be plotted.
         ax (plt.axes, optional): The axes to plot on, by default None
         n_components (int): The number of components to reduce to, by default 2
@@ -120,7 +120,8 @@ def dimension_plotter(
     elif reducer == "pca":
         reduced = embedding.calculate_pca(n_components=n_components, **reducer_params)
     else:
-        raise ValueError("Unrecognised reducer.")
+        msg = "Unrecognised reducer."
+        raise ValueError(msg)
 
     if reduced.shape[1] == 2:
         df = pd.DataFrame(
@@ -129,7 +130,7 @@ def dimension_plotter(
                 "y": reduced[:, 1],
                 "element": np.array(embedding.element_list),
                 "Group": list(embedding.element_groups_dict.values()),
-            }
+            },
         )
         if not ax:
             fig, ax = plt.subplots()
@@ -144,7 +145,9 @@ def dimension_plotter(
         ]
         if adjusttext:
             adjust_text(
-                texts, arrowprops=dict(arrowstyle="-", color="gray", lw=0.5), ax=ax
+                texts,
+                arrowprops={"arrowstyle": "-", "color": "gray", "lw": 0.5},
+                ax=ax,
             )
 
     elif reduced.shape[1] == 3:
@@ -155,7 +158,7 @@ def dimension_plotter(
                 "z": reduced[:, 2],
                 "element": np.array(embedding.element_list),
                 "group": list(embedding.element_groups_dict.values()),
-            }
+            },
         )
         if not ax:
             fig = plt.figure()  # noqa: F841
@@ -171,6 +174,7 @@ def dimension_plotter(
         for i in range(len(df)):
             ax.text(df["x"][i], df["y"][i], df["z"][i], df["element"][i], fontsize=12)
     else:
-        raise ValueError("Unrecognised number of dimensions.")
+        msg = "Unrecognised number of dimensions."
+        raise ValueError(msg)
     ax.set_title(embedding.embedding_name, fontdict={"fontweight": "bold"})
     return ax
