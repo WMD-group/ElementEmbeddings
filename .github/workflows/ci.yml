@@ -40,7 +40,7 @@ jobs:
         
 
     - name: Run tests
-      run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings --cov-report=xml -v
+      run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --mpl-hash-library=mpl371_ft261.json --cov=src/elementembeddings --cov-report=xml -v
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
