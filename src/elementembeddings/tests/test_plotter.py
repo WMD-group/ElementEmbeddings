@@ -96,7 +96,7 @@ class DimensionTest(unittest.TestCase):
             ax=ax,
             n_components=2,
             reducer="umap",
-            adjusttext=True,
+            adjusttext=False,
             reducer_params=umap_params,
             scatter_params=self.scatter_params,
         )
