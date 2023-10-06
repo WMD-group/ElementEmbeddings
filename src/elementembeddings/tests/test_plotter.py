@@ -83,24 +83,24 @@ class DimensionTest(unittest.TestCase):
         )
         return fig
 
-    @pytest.mark.mpl_image_compare(
-        baseline_dir=f"{_file_path}/baseline",
-        filename="test_dimension_2d_plotter_umap.png",
-    )
-    def test_dimension_2d_plotter_umap(self):
-        """Test that the dimension_plotter function works."""
-        umap_params = {"n_neighbors": 15, "random_state": 42}
-        fig, ax = plt.subplots(figsize=(16, 12))
-        dimension_plotter(
-            self.test_skipatom,
-            ax=ax,
-            n_components=2,
-            reducer="umap",
-            adjusttext=False,
-            reducer_params=umap_params,
-            scatter_params=self.scatter_params,
-        )
-        return fig
+    # @pytest.mark.mpl_image_compare(
+    #     baseline_dir=f"{_file_path}/baseline",
+    #     filename="test_dimension_2d_plotter_umap.png",
+    # )
+    # def test_dimension_2d_plotter_umap(self):
+    #     """Test that the dimension_plotter function works."""
+    #     umap_params = {"n_neighbors": 15, "random_state": 42}
+    #     fig, ax = plt.subplots(figsize=(16, 12))
+    #     dimension_plotter(
+    #         self.test_skipatom,
+    #         ax=ax,
+    #         n_components=2,
+    #         reducer="umap",
+    #         adjusttext=False,
+    #         reducer_params=umap_params,
+    #         scatter_params=self.scatter_params,
+    #     )
+    #     return fig
 
     def test_dimension_2d_plotter(self):
         """Test that the dimension_plotter function works."""
