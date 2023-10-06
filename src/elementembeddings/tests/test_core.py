@@ -440,24 +440,36 @@ class EmbeddingTest(unittest.TestCase):
 
     def test_PCA(self):
         """Test the PCA function."""
-        assert isinstance(self.test_matscholar.calculate_pca(), np.ndarray)
+        pca_params = {"svd_solver": "full", "random_state": 42}
+        assert isinstance(self.test_matscholar.calculate_pca(**pca_params), np.ndarray)
         assert self.test_matscholar.calculate_pca().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
+        pca1 = self.test_matscholar.calculate_pca(**pca_params)
+        pca2 = self.test_matscholar.calculate_pca(**pca_params)
+        assert (pca1 == pca2).all()
 
     def test_tSNE(self):
         """Test the tSNE function."""
+        tsne_params = {"n_iter": 1000, "random_state": 42, "perplexity": 50}
         assert isinstance(self.test_matscholar.calculate_tsne(), np.ndarray)
         assert self.test_matscholar.calculate_tsne().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
+        tsne1 = self.test_matscholar.calculate_tsne(**tsne_params)
+        tsne2 = self.test_matscholar.calculate_tsne(**tsne_params)
+        assert (tsne1 == tsne2).all()
 
     def test_UMAP(self):
         """Test the UMAP function."""
+        umap_params = {"n_neighbors": 15, "random_state": 42}
         assert isinstance(self.test_matscholar.calculate_umap(), np.ndarray)
         assert self.test_matscholar.calculate_umap().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
+        umap1 = self.test_matscholar.calculate_umap(**umap_params)
+        umap2 = self.test_matscholar.calculate_umap(**umap_params)
+        assert (umap1 == umap2).all()
