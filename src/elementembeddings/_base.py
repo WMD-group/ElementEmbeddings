@@ -5,10 +5,14 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 import numpy as np
+from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
 from sklearn import decomposition
 from sklearn.manifold import TSNE
+from sklearn.metrics import DistanceMetric
 from sklearn.preprocessing import StandardScaler
 from umap import UMAP
+
+from .utils.math import cosine_distance, cosine_similarity
 
 
 class EmbeddingBase(ABC):
@@ -92,6 +96,10 @@ class EmbeddingBase(ABC):
             0,
         ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
 
+    def _is_el_sp_in_embedding(self, el_sp: str):
+        """Check if an element/species is in the embedding."""
+        return el_sp in self.embeddings.keys()
+
     def standardise(self, inplace: bool = False):
         """Standardise the embedding.
 
@@ -137,7 +145,7 @@ class EmbeddingBase(ABC):
             if self.is_standardised:
                 embeddings_array = np.array(list(self.embeddings.values()))
             else:
-                self = self.standardise()
+                self.standardise(inplace=True)
                 embeddings_array = np.array(list(self.embeddings.values()))
         else:
             warnings.warn(
@@ -167,7 +175,7 @@ class EmbeddingBase(ABC):
             if self.is_standardised:
                 embeddings_array = np.array(list(self.embeddings.values()))
             else:
-                self = self.standardise()
+                self.standardise(inplace=True)
                 embeddings_array = np.array(list(self.embeddings.values()))
         else:
             warnings.warn(
@@ -193,7 +201,7 @@ class EmbeddingBase(ABC):
             if self.is_standardised:
                 embeddings_array = np.array(list(self.embeddings.values()))
             else:
-                self = self.standardise()
+                self.standardise(inplace=True)
                 embeddings_array = np.array(list(self.embeddings.values()))
         else:
             warnings.warn(
@@ -205,3 +213,109 @@ class EmbeddingBase(ABC):
 
         umap = UMAP(n_components=n_components, **kwargs)
         return umap.fit_transform(embeddings_array)
+
+    def compute_correlation_metric(
+        self,
+        el_sp1: str,
+        el_sp2: str,
+        metric: str = "pearson",
+    ) -> float:
+        """Compute the correlation/similarity metric between two elements/species.
+
+        Allowed metrics:
+        * Pearson
+        * Spearman
+        * Cosine similarity
+
+        Args:
+        ----
+            ele1 (str): element symbol
+            ele2 (str): element symbol
+            metric (str): name of a correlation metric.
+            Options are "spearman", "pearson" and "cosine_similarity".
+
+        Returns:
+        -------
+            float: correlation/similarity metric
+        """
+        if metric == "pearson":
+            return pearsonr(self.embeddings[el_sp1], self.embeddings[el_sp2])[0]
+        elif metric == "spearman":
+            return spearmanr(self.embeddings[el_sp1], self.embeddings[el_sp2])[0]
+        elif metric == "cosine_similarity":
+            return cosine_similarity(self.embeddings[el_sp1], self.embeddings[el_sp2])
+        else:
+            raise ValueError(f"Unknown metric: {metric}")
+
+    def compute_distance_metric(
+        self,
+        el_sp1: str,
+        el_sp2: str,
+        metric: str = "euclidean",
+    ) -> float:
+        """Compute distance metric between two vectors.
+
+        Allowed metrics:
+
+        * euclidean
+        * manhattan
+        * chebyshev
+        * wasserstein
+        * energy
+        * cosine_distance
+
+        Args:
+        ----
+            el_sp1 (str): element symbol
+            el_sp2 (str): element symbol
+            metric (str): name of a distance metric
+
+        Returns:
+        -------
+            distance (float): distance between embedding vectors
+        """
+        # Define the allowable metrics
+        scikit_metrics = ["euclidean", "manhattan", "chebyshev"]
+
+        scipy_metrics = {"wasserstein": wasserstein_distance, "energy": energy_distance}
+
+        valid_metrics = scikit_metrics + list(scipy_metrics.keys()) + ["cosine"]
+
+        # Validate if the elements are within the embedding vector
+        if not all(
+            [self._is_el_sp_in_embedding(el_sp1), self._is_el_sp_in_embedding(el_sp2)]
+        ):
+            if not self._is_el_sp_in_embedding(el_sp1):
+                print(
+                    f"{el_sp1} is not an element/species included within the embeddings"
+                )
+                raise ValueError
+
+            elif not self._is_el_sp_in_embedding(el_sp2):
+                print(
+                    f"{el_sp2} is not an element/species included within the embeddings"
+                )
+                raise ValueError
+
+        # Compute the distance measure
+        if metric in scikit_metrics:
+            distance = DistanceMetric.get_metric(metric)
+
+            return distance.pairwise(
+                self.embeddings[el_sp1].reshape(1, -1),
+                self.embeddings[el_sp2].reshape(1, -1),
+            )[0][0]
+
+        elif metric in scipy_metrics:
+            return scipy_metrics[metric](
+                self.embeddings[el_sp1], self.embeddings[el_sp2]
+            )
+        elif metric == "cosine_distance":
+            return cosine_distance(self.embeddings[el_sp1], self.embeddings[el_sp2])
+
+        else:
+            print(
+                "Invalid distance metric."
+                f"Use one of the following metrics:{valid_metrics}",
+            )
+            raise ValueError
