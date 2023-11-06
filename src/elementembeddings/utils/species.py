@@ -20,9 +20,15 @@ def parse_species(species: str) -> Tuple[str, int]:
         ox_state *= -1
 
     # Handle cases of X+ or X- (instead of X1+ or X1-)
-    if "+" in species and ox_state == 0:
+    # as well as X0+ and X0-
+
+    if ox_state == 0 and "0" in species:
+        ox_state = 0
+
+    elif "+" in species and ox_state == 0:
         ox_state = 1
 
-    if ox_state == 0 and "-" in species:
+    elif ox_state == 0 and "-" in species:
         ox_state = -1
+
     return ele, ox_state

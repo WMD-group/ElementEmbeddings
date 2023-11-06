@@ -46,6 +46,9 @@ class TestSpecies(unittest.TestCase):
     def test_parse_species(self):
         """Test the parse_species function."""
         assert species.parse_species("Fe") == ("Fe", 0)
+        assert species.parse_species("Fe0") == ("Fe", 0)
+        assert species.parse_species("Fe0+") == ("Fe", 0)
+        assert species.parse_species("Fe0-") == ("Fe", 0)
         assert species.parse_species("Fe1+") == ("Fe", 1)
         assert species.parse_species("Fe1-") == ("Fe", -1)
         assert species.parse_species("Fe+") == ("Fe", 1)
