@@ -100,6 +100,10 @@ class EmbeddingBase(ABC):
         """Check if an element/species is in the embedding."""
         return el_sp in self.embeddings.keys()
 
+    def _embeddings_keys_list(self):
+        """Return the keys of the embedding as a list."""
+        return list(self.embeddings.keys())
+
     def standardise(self, inplace: bool = False):
         """Standardise the embedding.
 
@@ -238,6 +242,21 @@ class EmbeddingBase(ABC):
         -------
             float: correlation/similarity metric
         """
+        # Validate if the elements are within the embedding vector
+        if not all(
+            [self._is_el_sp_in_embedding(el_sp1), self._is_el_sp_in_embedding(el_sp2)]
+        ):
+            if not self._is_el_sp_in_embedding(el_sp1):
+                print(
+                    f"{el_sp1} is not an element/species included within the embeddings"
+                )
+                raise ValueError
+
+            elif not self._is_el_sp_in_embedding(el_sp2):
+                print(
+                    f"{el_sp2} is not an element/species included within the embeddings"
+                )
+                raise ValueError
         if metric == "pearson":
             return pearsonr(self.embeddings[el_sp1], self.embeddings[el_sp2])[0]
         elif metric == "spearman":
