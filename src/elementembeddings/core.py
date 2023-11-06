@@ -21,6 +21,7 @@ from pymatgen.core import Element
 from sklearn.preprocessing import StandardScaler
 
 from ._base import EmbeddingBase
+from .utils.config import CITATIONS, DEFAULT_ELEMENT_EMBEDDINGS
 from .utils.io import NumpyEncoder
 from .utils.species import parse_species
 
@@ -144,48 +145,35 @@ class Embedding(EmbeddingBase):
         -------
             Embedding :class:`Embedding` instance.
         """
-        _cbfv_files = {
-            "magpie": "magpie.csv",
-            "magpie_sc": "magpie_sc.json",
-            "mat2vec": "mat2vec.csv",
-            "matscholar": "matscholar-embedding.json",
-            "megnet16": "megnet16.json",
-            "mod_petti": "mod_petti.json",
-            "oliynyk": "oliynyk_preprocessed.csv",
-            "oliynyk_sc": "oliynyk_sc.json",
-            "random_200": "random_200_new.csv",
-            "skipatom": "skipatom_20201009_induced.csv",
-            "atomic": "atomic.json",
-        }
-
-        if _cbfv_files[embedding_name].endswith(".csv"):
+        if DEFAULT_ELEMENT_EMBEDDINGS[embedding_name].endswith(".csv"):
             return Embedding.from_csv(
                 path.join(
                     data_directory,
                     "element_representations",
-                    _cbfv_files[embedding_name],
+                    DEFAULT_ELEMENT_EMBEDDINGS[embedding_name],
                 ),
                 embedding_name,
             )
-        elif "megnet" in _cbfv_files[embedding_name]:
+        elif "megnet" in DEFAULT_ELEMENT_EMBEDDINGS[embedding_name]:
             return Embedding.from_json(
                 path.join(
                     data_directory,
                     "element_representations",
-                    _cbfv_files[embedding_name],
+                    DEFAULT_ELEMENT_EMBEDDINGS[embedding_name],
                 ),
                 embedding_name,
             ).remove_elements(["Null"])
-        elif _cbfv_files[embedding_name].endswith(".json"):
+        elif DEFAULT_ELEMENT_EMBEDDINGS[embedding_name].endswith(".json"):
             return Embedding.from_json(
                 path.join(
                     data_directory,
                     "element_representations",
-                    _cbfv_files[embedding_name],
+                    DEFAULT_ELEMENT_EMBEDDINGS[embedding_name],
                 ),
                 embedding_name,
             )
-        return None
+        else:
+            return None
 
     @staticmethod
     def from_json(embedding_json, embedding_name: Optional[str] = None):
@@ -298,7 +286,7 @@ class Embedding(EmbeddingBase):
     @property
     def element_list(self) -> list:
         """Return the elements of the embedding."""
-        return list(self.embeddings.keys())
+        return self._embeddings_keys_list()
 
     def remove_elements(self, elements: Union[str, List[str]], inplace: bool = False):
         # TO-DO allow removal by atomic numbers
@@ -328,16 +316,6 @@ class Embedding(EmbeddingBase):
                     del embeddings_copy[el]
             return Embedding(embeddings_copy, self.embedding_name)
 
-    # def _is_standardised(self):
-    #     """Check if the embeddings are standardised.
-    #
-    #     Mean must be 0 and standard deviation must be 1.
-    #     """
-    #     return np.isclose(
-    #         np.mean(np.array(list(self.embeddings.values()))),
-    #         0,
-    #     ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
-
     def standardise(self, inplace: bool = False):
         """Standardise the embeddings.
 
@@ -366,126 +344,11 @@ class Embedding(EmbeddingBase):
 
     def citation(self) -> List[str]:
         """Return a citation for the embedding."""
-        if self.embedding_name in ["magpie", "magpie_sc"]:
-            citation = [
-                "@article{ward2016general,"
-                "title={A general-purpose machine learning framework for "
-                "predicting properties of inorganic materials},"
-                "author={Ward, Logan and Agrawal, Ankit and Choudhary, Alok "
-                "and Wolverton, Christopher},"
-                "journal={npj Computational Materials},"
-                "volume={2},"
-                "number={1},"
-                "pages={1--7},"
-                "year={2016},"
-                "publisher={Nature Publishing Group}}",
-            ]
-        elif self.embedding_name == "mat2vec":
-            citation = [
-                "@article{tshitoyan2019unsupervised,"
-                "title={Unsupervised word embeddings capture latent knowledge "
-                "from materials science literature},"
-                "author={Tshitoyan, Vahe and Dagdelen, John and Weston, Leigh "
-                "and Dunn, Alexander and Rong, Ziqin and Kononova, Olga "
-                "and Persson, Kristin A and Ceder, Gerbrand and Jain, Anubhav},"
-                "journal={Nature},"
-                "volume={571},"
-                "number={7763},"
-                "pages={95--98},"
-                "year={2019},"
-                "publisher={Nature Publishing Group} }",
-            ]
-        elif self.embedding_name == "matscholar":
-            citation = [
-                "@article{weston2019named,"
-                "title={Named entity recognition and normalization applied to "
-                "large-scale information extraction from the materials "
-                "science literature},"
-                "author={Weston, Leigh and Tshitoyan, Vahe and Dagdelen, John and "
-                "Kononova, Olga and Trewartha, Amalie and Persson, Kristin A and "
-                "Ceder, Gerbrand and Jain, Anubhav},"
-                "journal={Journal of chemical information and modeling},"
-                "volume={59},"
-                "number={9},"
-                "pages={3692--3702},"
-                "year={2019},"
-                "publisher={ACS Publications} }",
-            ]
-
-        elif self.embedding_name == "megnet16":
-            citation = [
-                "@article{chen2019graph,"
-                "title={Graph networks as a universal machine learning framework "
-                "for molecules and crystals},"
-                "author={Chen, Chi and Ye, Weike and Zuo, Yunxing and "
-                "Zheng, Chen and Ong, Shyue Ping},"
-                "journal={Chemistry of Materials},"
-                "volume={31},"
-                "number={9},"
-                "pages={3564--3572},"
-                "year={2019},"
-                "publisher={ACS Publications} }",
-            ]
-
-        elif self.embedding_name in ["oliynyk", "oliynyk_sc"]:
-            citation = [
-                "              @article{oliynyk2016high,"
-                "title={High-throughput machine-learning-driven synthesis "
-                "of full-Heusler compounds},"
-                "author={Oliynyk, Anton O and Antono, Erin and Sparks, Taylor D and "
-                "Ghadbeigi, Leila and Gaultois, Michael W and "
-                "Meredig, Bryce and Mar, Arthur},"
-                "journal={Chemistry of Materials},"
-                "volume={28},"
-                "number={20},"
-                "pages={7324--7331},"
-                "year={2016},"
-                "publisher={ACS Publications} }",
-            ]
-
-        elif self.embedding_name == "skipatom":
-            citation = [
-                "@article{antunes2022distributed,"
-                "title={Distributed representations of atoms and materials "
-                "for machine learning},"
-                "author={Antunes, Luis M and Grau-Crespo, Ricardo and Butler, Keith T},"
-                "journal={npj Computational Materials},"
-                "volume={8},"
-                "number={1},"
-                "pages={1--9},"
-                "year={2022},"
-                "publisher={Nature Publishing Group} }",
-            ]
-        elif self.embedding_name == "mod_petti":
-            citation = [
-                "@article{glawe2016optimal,"
-                "title={The optimal one dimensional periodic table: "
-                "a modified Pettifor chemical scale from data mining},"
-                "author={Glawe, Henning and Sanna, Antonio and Gross, "
-                "EKU and Marques, Miguel AL},"
-                "journal={New Journal of Physics},"
-                "volume={18},"
-                "number={9},"
-                "pages={093011},"
-                "year={2016},"
-                "publisher={IOP Publishing} }",
-            ]
-
-        else:
-            citation = []
-
+        try:
+            citation = CITATIONS[self.embedding_name]
+        except KeyError:
+            citation = None
         return citation
-
-    def _is_el_in_embedding(self, el: str) -> bool:
-        """Check if an element is in the `Embedding` object.
-
-        Args:
-        ----
-            el (str): An element symbol
-        Returns:
-            bool: True if el is in the Embedding, else False
-        """
-        return el in self.element_list
 
     @property
     def element_groups_dict(self) -> Dict[str, str]:
