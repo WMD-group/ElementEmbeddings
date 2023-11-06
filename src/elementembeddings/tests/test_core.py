@@ -340,7 +340,7 @@ class EmbeddingTest(unittest.TestCase):
         assert "H" not in magpie.remove_elements("H").element_list
         assert isinstance(magpie.citation(), list)
         assert isinstance(magpie.citation()[0], str)
-        assert magpie._is_el_in_embedding("H")
+        assert magpie._is_el_sp_in_embedding("H")
         assert isinstance(magpie.correlation_df(), pd.DataFrame)
 
         # TO-DO
@@ -441,7 +441,7 @@ class EmbeddingTest(unittest.TestCase):
         assert isinstance(self.test_skipatom.remove_elements("H"), Embedding)
         assert isinstance(self.test_skipatom.remove_elements(["H", "Li"]), Embedding)
         assert self.test_skipatom.remove_elements("H", inplace=True) is None
-        assert not self.test_skipatom._is_el_in_embedding("H")
+        assert not self.test_skipatom._is_el_sp_in_embedding("H")
         assert (
             self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True) is None
         )
