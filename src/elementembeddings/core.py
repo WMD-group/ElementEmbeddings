@@ -18,13 +18,11 @@ from typing import Dict, List, Optional, Union
 import numpy as np
 import pandas as pd
 from pymatgen.core import Element
-from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
-from sklearn.metrics import DistanceMetric
 from sklearn.preprocessing import StandardScaler
 
 from ._base import EmbeddingBase
 from .utils.io import NumpyEncoder
-from .utils.math import cosine_distance, cosine_similarity
+from .utils.species import parse_species
 
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, "data")
@@ -330,15 +328,15 @@ class Embedding(EmbeddingBase):
                     del embeddings_copy[el]
             return Embedding(embeddings_copy, self.embedding_name)
 
-    def _is_standardised(self):
-        """Check if the embeddings are standardised.
-
-        Mean must be 0 and standard deviation must be 1.
-        """
-        return np.isclose(
-            np.mean(np.array(list(self.embeddings.values()))),
-            0,
-        ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
+    # def _is_standardised(self):
+    #     """Check if the embeddings are standardised.
+    #
+    #     Mean must be 0 and standard deviation must be 1.
+    #     """
+    #     return np.isclose(
+    #         np.mean(np.array(list(self.embeddings.values()))),
+    #         0,
+    #     ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
 
     def standardise(self, inplace: bool = False):
         """Standardise the embeddings.
@@ -504,112 +502,6 @@ class Embedding(EmbeddingBase):
         """Create all possible pairs of elements."""
         ele_list = self.element_list
         return combinations_with_replacement(ele_list, 2)
-
-    def compute_correlation_metric(
-        self,
-        ele1: str,
-        ele2: str,
-        metric: str = "pearson",
-    ) -> float:
-        """Compute the correlation/similarity metric between two vectors.
-
-        Allowed metrics:
-        * Pearson
-        * Spearman
-        * Cosine similarity
-
-        Args:
-        ----
-            ele1 (str): element symbol
-            ele2 (str): element symbol
-            metric (str): name of a correlation metric.
-            Options are "spearman", "pearson" and "cosine_similarity".
-
-        Returns:
-        -------
-            float: correlation/similarity metric
-        """
-        # Define the allowable metrics
-        scipy_corrs = {"pearson": pearsonr, "spearman": spearmanr}
-
-        if metric == "pearson":
-            return scipy_corrs[metric](
-                self.embeddings[ele1],
-                self.embeddings[ele2],
-            ).statistic
-        elif metric == "spearman":
-            return scipy_corrs[metric](
-                self.embeddings[ele1],
-                self.embeddings[ele2],
-            ).correlation
-        elif metric == "cosine_similarity":
-            return cosine_similarity(self.embeddings[ele1], self.embeddings[ele2])
-        return None
-
-    def compute_distance_metric(
-        self,
-        ele1: str,
-        ele2: str,
-        metric: str = "euclidean",
-    ) -> float:
-        """Compute distance metric between two vectors.
-
-        Allowed metrics:
-
-        * euclidean
-        * manhattan
-        * chebyshev
-        * wasserstein
-        * energy
-        * cosine_distance
-
-        Args:
-        ----
-            ele1 (str): element symbol
-            ele2 (str): element symbol
-            metric (str): name of a distance metric
-
-        Returns:
-        -------
-            distance (float): distance between embedding vectors
-        """
-        # Define the allowable metrics
-        scikit_metrics = ["euclidean", "manhattan", "chebyshev"]
-
-        scipy_metrics = {"wasserstein": wasserstein_distance, "energy": energy_distance}
-
-        valid_metrics = scikit_metrics + list(scipy_metrics.keys()) + ["cosine"]
-
-        # Validate if the elements are within the embedding vector
-        if not all([self._is_el_in_embedding(ele1), self._is_el_in_embedding(ele2)]):
-            if not self._is_el_in_embedding(ele1):
-                print(f"{ele1} is not an element included within the atomic embeddings")
-                raise ValueError
-
-            elif not self._is_el_in_embedding(ele2):
-                print(f"{ele2} is not an element included within the atomic embeddings")
-                raise ValueError
-
-        # Compute the distance measure
-        if metric in scikit_metrics:
-            distance = DistanceMetric.get_metric(metric)
-
-            return distance.pairwise(
-                self.embeddings[ele1].reshape(1, -1),
-                self.embeddings[ele2].reshape(1, -1),
-            )[0][0]
-
-        elif metric in scipy_metrics:
-            return scipy_metrics[metric](self.embeddings[ele1], self.embeddings[ele2])
-        elif metric == "cosine_distance":
-            return cosine_distance(self.embeddings[ele1], self.embeddings[ele2])
-
-        else:
-            print(
-                "Invalid distance metric."
-                f"Use one of the following metrics:{valid_metrics}",
-            )
-            raise ValueError
 
     def distance_df(self, metric: str = "euclidean") -> pd.DataFrame:
         """Return a dataframe with columns ["ele_1", "ele_2", metric].
@@ -802,6 +694,7 @@ class SpeciesEmbedding(EmbeddingBase):
         -------
             SpeciesEmbedding :class:`SpeciesEmbedding` instance.
         """
+        raise NotImplementedError
 
     @staticmethod
     def from_csv(csv_path, embedding_name: Optional[str] = None):
@@ -827,3 +720,75 @@ class SpeciesEmbedding(EmbeddingBase):
         embeds_array = df.to_numpy()
         embedding_data = {species[i]: embeds_array[i] for i in range(len(embeds_array))}
         return SpeciesEmbedding(embedding_data, embedding_name, feature_labels)
+
+    @property
+    def species_list(self) -> list:
+        """Return the species of the embedding."""
+        return list(self.embeddings.keys())
+
+    @property
+    def element_list(self) -> list:
+        """Return the elements of the embedding."""
+        return list({parse_species(species)[0] for species in self.species_list})
+
+    def remove_species(self, species: Union[str, List[str]], inplace: bool = False):
+        """Remove species from the SpeciesEmbedding instance.
+
+        Args:
+        ----
+            species (str,list(str)): A species or a list of species
+            inplace (bool): If True, species are removed
+            from the SpeciesEmbedding instance.
+            If false, the original SpeciesEmbedding instance is unchanged
+            and a new SpeciesEmbedding instance with the species removed is created.
+
+        """
+        if inplace:
+            if isinstance(species, str):
+                del self.embeddings[species]
+            elif isinstance(species, list):
+                for sp in species:
+                    del self.embeddings[sp]
+            return None
+        else:
+            embeddings_copy = self.embeddings.copy()
+            if isinstance(species, str):
+                del embeddings_copy[species]
+            elif isinstance(species, list):
+                for sp in species:
+                    del embeddings_copy[sp]
+            return SpeciesEmbedding(embeddings_copy, self.embedding_name)
+
+    def create_pairs(self):
+        """Create all possible pairs of species."""
+        return combinations_with_replacement(self.species_list, 2)
+
+    @property
+    def ion_type_dict(self) -> Dict[str, str]:
+        """Return a dictionary of {species: ion type} pairs.
+
+        e.g. {'Fe2+':'cation'}
+
+        """
+        ion_dict = {}
+        for species in self.species_list:
+            el, charge = parse_species(species)
+            if charge > 0:
+                ion_dict[species] = "cation"
+            elif charge < 0:
+                ion_dict[species] = "anion"
+            else:
+                ion_dict[species] = "neutral"
+
+        return ion_dict
+
+    @property
+    def species_groups_dict(self) -> Dict[str, str]:
+        """Return a dictionary of {species: element type} pairs.
+
+        e.g. {'Fe2+':'transition metal'}
+
+        """
+        with open(path.join(data_directory, "element_data/element_group.json")) as f:
+            _dict = json.load(f)
+        return {i: _dict[parse_species(i)[0]] for i in self.species_list}
