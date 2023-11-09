@@ -167,7 +167,7 @@ def dimension_plotter(
                 "y": reduced[:, 1],
                 "z": reduced[:, 2],
                 "element": el_sp_array,
-                "group": list(embedding.groups_dict.values()),
+                "group": list(group_dict.values()),
             },
         )
         if include_species:
