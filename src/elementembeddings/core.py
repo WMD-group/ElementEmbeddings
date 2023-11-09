@@ -15,7 +15,6 @@ from typing import Dict, List, Optional, Union
 
 import numpy as np
 import pandas as pd
-from pymatgen.core import Element
 from sklearn.preprocessing import StandardScaler
 
 from ._base import EmbeddingBase
@@ -285,157 +284,6 @@ class Embedding(EmbeddingBase):
             _dict = json.load(f)
         return {i: _dict[i] for i in self.element_list}
 
-    def distance_df(self, metric: str = "euclidean") -> pd.DataFrame:
-        """Return a dataframe with columns ["ele_1", "ele_2", metric].
-
-        Allowed metrics:
-
-        * euclidean
-        * manhattan
-        * chebyshev
-        * wasserstein
-        * energy
-
-        Args:
-        ----
-            metric (str): A distance metric.
-
-        Returns:
-        -------
-            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
-        """
-        ele_pairs = self.create_pairs()
-        table = []
-        for ele1, ele2 in ele_pairs:
-            dist = self.compute_distance_metric(ele1, ele2, metric=metric)
-            table.append((ele1, ele2, dist))
-            if ele1 != ele2:
-                table.append((ele2, ele1, dist))
-        corr_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
-
-        mend_1 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_1"]]
-        mend_2 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_2"]]
-
-        Z_1 = [(pt[ele]["number"], ele) for ele in corr_df["ele_1"]]
-        Z_2 = [(pt[ele]["number"], ele) for ele in corr_df["ele_2"]]
-
-        corr_df["mend_1"] = mend_1
-        corr_df["mend_2"] = mend_2
-
-        corr_df["Z_1"] = Z_1
-        corr_df["Z_2"] = Z_2
-
-        return corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
-
-    def correlation_df(self, metric: str = "pearson") -> pd.DataFrame:
-        """Return a dataframe with columns ["ele_1", "ele_2", metric].
-
-        Allowed metrics:
-
-        * pearson
-        * spearman
-        * cosine_similarity
-
-
-        Args:
-        ----
-            metric (str): A distance metric.
-
-        Returns:
-        -------
-            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
-        """
-        ele_pairs = self.create_pairs()
-        table = []
-        for ele1, ele2 in ele_pairs:
-            dist = self.compute_correlation_metric(ele1, ele2, metric=metric)
-            table.append((ele1, ele2, dist))
-            if ele1 != ele2:
-                table.append((ele2, ele1, dist))
-        corr_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
-
-        mend_1 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_1"]]
-        mend_2 = [(Element(ele).mendeleev_no, ele) for ele in corr_df["ele_2"]]
-
-        Z_1 = [(pt[ele]["number"], ele) for ele in corr_df["ele_1"]]
-        Z_2 = [(pt[ele]["number"], ele) for ele in corr_df["ele_2"]]
-
-        corr_df["mend_1"] = mend_1
-        corr_df["mend_2"] = mend_2
-
-        corr_df["Z_1"] = Z_1
-        corr_df["Z_2"] = Z_2
-
-        return corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
-
-    def distance_pivot_table(
-        self,
-        metric: str = "euclidean",
-        sortby: str = "mendeleev",
-    ) -> pd.DataFrame:
-        """Return a pandas.DataFrame style pivot.
-
-        The index and column being either the mendeleev number or atomic number
-        of the element pairs and the values being a user-specified distance metric.
-
-        Args:
-        ----
-            metric (str): A distance metric.
-            sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
-
-        Returns:
-        -------
-            distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
-        """
-        corr_df = self.distance_df(metric=metric)
-        if sortby == "mendeleev":
-            return corr_df.pivot_table(
-                values=metric,
-                index="mend_1",
-                columns="mend_2",
-            )
-        elif sortby == "atomic_number":
-            return corr_df.pivot_table(
-                values=metric,
-                index="Z_1",
-                columns="Z_2",
-            )
-        return None
-
-    def correlation_pivot_table(
-        self,
-        metric: str = "pearson",
-        sortby: str = "mendeleev",
-    ) -> pd.DataFrame:
-        """Return a pandas.DataFrame style pivot.
-
-        The index and column being either the mendeleev number or atomic number
-        of the element pairs and the values being a user-specified distance metric.
-
-        Args:
-        ----
-            metric (str): A distance metric.
-            sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
-
-        Returns:
-        -------
-            distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
-        """
-        corr_df = self.correlation_df(metric=metric)
-        if sortby == "mendeleev":
-            return corr_df.pivot_table(
-                values=metric,
-                index="mend_1",
-                columns="mend_2",
-            )
-        elif sortby == "atomic_number":
-            return corr_df.pivot_table(
-                values=metric,
-                index="Z_1",
-                columns="Z_2",
-            )
-        return None
-
 
 class SpeciesEmbedding(EmbeddingBase):
     """Represent an ion representation.
@@ -551,3 +399,40 @@ class SpeciesEmbedding(EmbeddingBase):
         with open(path.join(data_directory, "element_data/element_group.json")) as f:
             _dict = json.load(f)
         return {i: _dict[parse_species(i)[0]] for i in self.species_list}
+
+    def distance_df(self, metric="euclidean") -> pd.DataFrame:
+        """Return a dataframe of the distance between species.
+
+        Args:
+        ----
+            metric (str): The metric to use to calculate the distance.
+            Options are 'euclidean', 'cosine', 'manhattan' and 'chebyshev'.
+
+        Returns:
+        -------
+            df (pandas.DataFrame): A pandas dataframe object
+        """
+        return (
+            super()
+            .distance_df(metric)
+            .rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
+        )
+
+    def correlation_df(self, metric: str = "pearson") -> pd.DataFrame:
+        """Return a dataframe of the correlation between species.
+
+        Args:
+        ----
+            metric (str): The metric to use to calculate the correlation.
+            Options are 'pearson' and 'spearman'.
+
+        Returns:
+        -------
+            df (pandas.DataFrame): A pandas dataframe object
+
+        """
+        return (
+            super()
+            .correlation_df(metric)
+            .rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
+        )
