@@ -41,7 +41,7 @@ class EmbeddingTest(unittest.TestCase):
         assert self.test_matscholar.embedding_type == "vector"
         assert self.test_mod_petti.dim == 103
         assert self.test_mod_petti.embedding_name == "mod_petti"
-        assert self.test_mod_petti.embedding_type == "linear"
+        assert self.test_mod_petti.embedding_type == "one-hot"
         assert isinstance(self.test_skipatom.citation(), list)
         assert isinstance(self.test_megnet16.citation(), list)
         assert isinstance(self.test_matscholar.citation(), list)
@@ -80,7 +80,7 @@ class EmbeddingTest(unittest.TestCase):
         # Check dimensions
         assert mod_petti.dim == 103
         # Check embedding type
-        assert mod_petti.embedding_type == "linear"
+        assert mod_petti.embedding_type == "one-hot"
         # Check that a list is returned
         assert isinstance(mod_petti.element_list, list)
         # Check the the dimensons of the embedding vector
@@ -104,7 +104,7 @@ class EmbeddingTest(unittest.TestCase):
         # Check dimensions
         assert atomic.dim == 118
         # Check embedding type
-        assert atomic.embedding_type == "linear"
+        assert atomic.embedding_type == "one-hot"
         # Check that a list is returned
         assert isinstance(atomic.element_list, list)
         # Check the the dimensons of the embedding vector
