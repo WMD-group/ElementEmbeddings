@@ -2,6 +2,8 @@ import json
 import random
 import warnings
 from abc import ABC, abstractmethod
+from itertools import combinations_with_replacement
+from os import path
 from typing import List, Optional
 
 import numpy as np
@@ -13,6 +15,9 @@ from sklearn.preprocessing import StandardScaler
 from umap import UMAP
 
 from .utils.math import cosine_distance, cosine_similarity
+
+module_directory = path.abspath(path.dirname(__file__))
+data_directory = path.join(module_directory, "data")
 
 
 class EmbeddingBase(ABC):
@@ -59,6 +64,29 @@ class EmbeddingBase(ABC):
         else:
             self.embedding_type: str = "one-hot"
 
+            # If the embedding is a one-hot vector,
+            # the dimension is the number of elements/species
+            sorted_embedding = sorted(self.embeddings.items(), key=lambda x: x[1])
+            elements = np.loadtxt(
+                f"{data_directory}/element_data/ordered_periodic.txt",
+                dtype=str,
+            )
+            # Exceptions for mod_petti
+            if self.embedding_name == "mod_petti":
+                sorted_embedding = {
+                    el: num for el, num in sorted_embedding if el in elements[:103]
+                }
+            else:
+                sorted_embedding = {
+                    el: num for el, num in sorted_embedding if el in elements[:118]
+                }
+            self.feature_labels = list(sorted_embedding.keys())
+            self.embeddings = {}
+            for el, num in sorted_embedding.items():
+                self.embeddings[el] = np.zeros(len(sorted_embedding))
+                self.embeddings[el][num] = 1
+            self.dim = len(random.choice(list(self.embeddings.values())))
+
         # If feature labels are not provided, use the range of the embedding dimension
         if not self.feature_labels:
             self.feature_labels = list(range(self.dim))
@@ -103,6 +131,10 @@ class EmbeddingBase(ABC):
     def _embeddings_keys_list(self):
         """Return the keys of the embedding as a list."""
         return list(self.embeddings.keys())
+
+    def create_pairs(self):
+        """Create all possible pairs of elements/species."""
+        return combinations_with_replacement(self._embeddings_keys_list(), 2)
 
     def standardise(self, inplace: bool = False):
         """Standardise the embedding.
