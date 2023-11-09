@@ -7,7 +7,9 @@ from os import path
 from typing import List, Optional
 
 import numpy as np
+import pandas as pd
 from openTSNE import TSNE
+from pymatgen.core import Element
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
 from sklearn import decomposition
 from sklearn.metrics import DistanceMetric
@@ -15,9 +17,13 @@ from sklearn.preprocessing import StandardScaler
 from umap import UMAP
 
 from .utils.math import cosine_distance, cosine_similarity
+from .utils.species import parse_species
 
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, "data")
+pt_dir = path.join(data_directory, "element_data", "periodic-table-lookup-symbols.json")
+with open(pt_dir) as f:
+    pt = json.load(f)
 
 
 class EmbeddingBase(ABC):
@@ -370,3 +376,166 @@ class EmbeddingBase(ABC):
                 f"Use one of the following metrics:{valid_metrics}",
             )
             raise ValueError
+
+    def distance_df(self, metric: str = "euclidean") -> pd.DataFrame:
+        """Return a dataframe with columns ["ele_1", "ele_2", metric].
+
+        Allowed metrics:
+
+        * euclidean
+        * manhattan
+        * chebyshev
+        * wasserstein
+        * energy
+
+        Args:
+        ----
+            metric (str): A distance metric.
+
+        Returns:
+        -------
+            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
+        """
+        ele_pairs = self.create_pairs()
+        table = []
+        for ele1, ele2 in ele_pairs:
+            dist = self.compute_distance_metric(ele1, ele2, metric=metric)
+            table.append((ele1, ele2, dist))
+            if ele1 != ele2:
+                table.append((ele2, ele1, dist))
+        dist_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
+
+        mend_1 = [
+            (Element(parse_species(ele)[0]).mendeleev_no, ele)
+            for ele in dist_df["ele_1"]
+        ]
+        mend_2 = [
+            (Element(parse_species(ele)[0]).mendeleev_no, ele)
+            for ele in dist_df["ele_2"]
+        ]
+
+        Z_1 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in dist_df["ele_1"]]
+        Z_2 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in dist_df["ele_2"]]
+
+        dist_df["mend_1"] = mend_1
+        dist_df["mend_2"] = mend_2
+
+        dist_df["Z_1"] = Z_1
+        dist_df["Z_2"] = Z_2
+
+        return dist_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
+
+    def correlation_df(self, metric: str = "pearson") -> pd.DataFrame:
+        """Return a dataframe with columns ["ele_1", "ele_2", metric].
+
+        Allowed metrics:
+
+        * pearson
+        * spearman
+        * cosine_similarity
+
+
+        Args:
+        ----
+            metric (str): A correlation/similarity metric.
+
+        Returns:
+        -------
+            df (pandas.DataFrame): A dataframe with columns ["ele_1", "ele_2", metric].
+        """
+        ele_pairs = self.create_pairs()
+        table = []
+        for ele1, ele2 in ele_pairs:
+            corr = self.compute_correlation_metric(ele1, ele2, metric=metric)
+            table.append((ele1, ele2, corr))
+            if ele1 != ele2:
+                table.append((ele2, ele1, corr))
+        corr_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
+
+        mend_1 = [
+            (Element(parse_species(ele)[0]).mendeleev_no, ele)
+            for ele in corr_df["ele_1"]
+        ]
+        mend_2 = [
+            (Element(parse_species(ele)[0]).mendeleev_no, ele)
+            for ele in corr_df["ele_2"]
+        ]
+
+        Z_1 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in corr_df["ele_1"]]
+        Z_2 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in corr_df["ele_2"]]
+
+        corr_df["mend_1"] = mend_1
+        corr_df["mend_2"] = mend_2
+
+        corr_df["Z_1"] = Z_1
+        corr_df["Z_2"] = Z_2
+
+        return corr_df[["ele_1", "ele_2", "mend_1", "mend_2", "Z_1", "Z_2", metric]]
+
+    def distance_pivot_table(
+        self,
+        metric: str = "euclidean",
+        sortby: str = "mendeleev",
+    ) -> pd.DataFrame:
+        """Return a pandas.DataFrame style pivot.
+
+        The index and column being either the mendeleev number or atomic number
+        of the element pairs and the values being a user-specified distance metric.
+
+        Args:
+        ----
+            metric (str): A distance metric.
+            sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
+
+        Returns:
+        -------
+            distance_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
+        """
+        corr_df = self.distance_df(metric=metric)
+        if sortby == "mendeleev":
+            return corr_df.pivot_table(
+                values=metric,
+                index="mend_1",
+                columns="mend_2",
+            )
+        elif sortby == "atomic_number":
+            return corr_df.pivot_table(
+                values=metric,
+                index="Z_1",
+                columns="Z_2",
+            )
+        return None
+
+    def correlation_pivot_table(
+        self,
+        metric: str = "pearson",
+        sortby: str = "mendeleev",
+    ) -> pd.DataFrame:
+        """Return a pandas.DataFrame style pivot.
+
+        The index and column being either the mendeleev number or atomic number
+        of the element pairs and the values being a user-specified distance metric.
+
+        Args:
+        ----
+            metric (str): A correlation/similarity metric.
+            sortby (str): Sort the pivot table by either "mendeleev" or "atomic_number".
+
+        Returns:
+        -------
+            correlation_pivot (pandas.DataFrame): A pandas DataFrame pivot table.
+        """
+        corr_df = self.correlation_df(metric=metric)
+        if sortby == "mendeleev":
+            return corr_df.pivot_table(
+                values=metric,
+                index="mend_1",
+                columns="mend_2",
+            )
+        elif sortby == "atomic_number":
+            return corr_df.pivot_table(
+                values=metric,
+                index="Z_1",
+                columns="Z_2",
+            )
+        return None
