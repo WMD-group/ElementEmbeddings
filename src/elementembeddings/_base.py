@@ -7,9 +7,9 @@ from os import path
 from typing import List, Optional
 
 import numpy as np
+from openTSNE import TSNE
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
 from sklearn import decomposition
-from sklearn.manifold import TSNE
 from sklearn.metrics import DistanceMetric
 from sklearn.preprocessing import StandardScaler
 from umap import UMAP
@@ -222,7 +222,7 @@ class EmbeddingBase(ABC):
             embeddings_array = np.array(list(self.embeddings.values()))
 
         tsne = TSNE(n_components=n_components, **kwargs)
-        return tsne.fit_transform(embeddings_array)
+        return tsne.fit(embeddings_array)
 
     def calculate_umap(self, n_components: int = 2, standardise: bool = True, **kwargs):
         """Calculate UMAP embeddings.
