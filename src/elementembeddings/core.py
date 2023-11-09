@@ -9,9 +9,7 @@ Typical usage example:
 
 import fnmatch
 import json
-import random
 import warnings
-from itertools import combinations_with_replacement
 from os import path
 from typing import Dict, List, Optional, Union
 
@@ -41,80 +39,6 @@ class Embedding(EmbeddingBase):
 
     Adds a few convenience methods related to elemental representations.
     """
-
-    def __init__(
-        self,
-        embeddings: dict,
-        embedding_name: Optional[str] = None,
-        feature_labels: Optional[List[str]] = None,
-    ) -> None:
-        """Initialise the Embedding class.
-
-        Args:
-        ----
-            embeddings (dict): A {element_symbol: vector} dictionary
-            embedding_name (str): The name of the elemental representation
-            feature_labels (list(str)): A list of feature labels
-        """
-        self.embeddings = embeddings
-        self.embedding_name = embedding_name
-        self.feature_labels = feature_labels
-        if not self._is_standardised():
-            self.is_standardised = False
-        else:
-            self.is_standardised = True
-
-        # Grab a random value from the embedding vector
-        _rand_embed = random.choice(list(self.embeddings.values()))
-        # Convert embeddings to numpy array if not already a numpy array
-        if not isinstance(_rand_embed, np.ndarray):
-            self.embeddings = {
-                ele: np.array(self.embeddings[ele]) for ele in self.embeddings
-            }
-
-        # Determines if the embedding vector has a length attribute
-        # (i.e. is not a scalar int or float)
-        # If the 'vector' is a scalar/float, the representation is linear
-        # A linear representation gets converted to a one-hot vector
-        if hasattr(_rand_embed, "__len__") and (not isinstance(_rand_embed, str)):
-            self.embedding_type: str = "vector"
-            self.dim: int = len(random.choice(list(self.embeddings.values())))
-        else:
-            self.embedding_type: str = "linear"
-
-        # Create one-hot vectors for a scalar representation
-        if self.embedding_type == "linear":
-            sorted_embedding = sorted(self.embeddings.items(), key=lambda x: x[1])
-            elements = np.loadtxt(
-                f"{data_directory}/element_data/ordered_periodic.txt",
-                dtype=str,
-            )
-            if self.embedding_name == "mod_petti":
-                sorted_embedding = {
-                    el: num for el, num in sorted_embedding if el in elements[:103]
-                }
-            else:
-                sorted_embedding = {
-                    el: num for el, num in sorted_embedding if el in elements[:118]
-                }
-            self.feature_labels = list(sorted_embedding.keys())
-            self.embeddings = {}
-
-            for el, num in sorted_embedding.items():
-                self.embeddings[el] = np.zeros(len(sorted_embedding))
-                self.embeddings[el][num] = 1
-            self.dim = len(random.choice(list(self.embeddings.values())))
-
-        if not self.feature_labels:
-            self.feature_labels = list(range(self.dim))
-        else:
-            self.feature_labels = self.feature_labels
-
-        # Dummy initialisation for results
-        self._data = []
-        self._pca_data = None  # type: Optional[np.ndarray]
-        self._tsne_data = None  # type: Optional[np.ndarray]
-        self._umap_data = None  # type: Optional[np.ndarray]
 
     @staticmethod
     def load_data(embedding_name: Optional[str] = None):
@@ -361,11 +285,6 @@ class Embedding(EmbeddingBase):
             _dict = json.load(f)
         return {i: _dict[i] for i in self.element_list}
 
-    def create_pairs(self):
-        """Create all possible pairs of elements."""
-        ele_list = self.element_list
-        return combinations_with_replacement(ele_list, 2)
-
     def distance_df(self, metric: str = "euclidean") -> pd.DataFrame:
         """Return a dataframe with columns ["ele_1", "ele_2", metric].
 
@@ -526,25 +445,6 @@ class SpeciesEmbedding(EmbeddingBase):
     Works like a standard python dictionary. The keys are {species: vector} pairs.
     """
 
-    def __init__(
-        self,
-        embeddings: dict,
-        embedding_name: Optional[str] = None,
-        feature_labels: Optional[List[str]] = None,
-    ) -> None:
-        """Create an instance of the SpeciesEmbedding class.
-
-        Args:
-        ----
-            embeddings (dict): A dictionary of {species: vector} pairs.
-            embedding_name (str): The name of the species representation
-            feature_labels (list(str)): A list of feature labels for the embedding
-
-        """
-        self.embeddings = embeddings
-        self.embedding_name = embedding_name
-        self.feature_labels = feature_labels
-
     @staticmethod
     def load_data(embedding_name: str):
         """Create a `SpeciesEmbedding` from a preset embedding file.
@@ -621,10 +521,6 @@ class SpeciesEmbedding(EmbeddingBase):
                 for sp in species:
                     del embeddings_copy[sp]
             return SpeciesEmbedding(embeddings_copy, self.embedding_name)
-
-    def create_pairs(self):
-        """Create all possible pairs of species."""
-        return combinations_with_replacement(self.species_list, 2)
 
     @property
     def ion_type_dict(self) -> Dict[str, str]:
