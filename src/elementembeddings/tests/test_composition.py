@@ -182,3 +182,13 @@ class TestCompositionalEmbedding(unittest.TestCase):
             )
             == 0
         )
+
+        assert self.valid_magpie_compositions[0].distance(
+            self.formulas[1],
+            stats=["mean", "variance"],
+            distance_metric="cosine_distance",
+        ) == self.valid_magpie_compositions[1].distance(
+            self.valid_magpie_compositions[0],
+            stats=["mean", "variance"],
+            distance_metric="cosine_distance",
+        )

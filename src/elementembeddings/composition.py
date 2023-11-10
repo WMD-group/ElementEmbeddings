@@ -145,11 +145,6 @@ class CompositionalEmbedding:
         """Total number of atoms in Composition."""
         return self._natoms
 
-    @property
-    def embedding_dim(self) -> int:
-        """Dimension of the embedding."""
-        return self.embedding.dim
-
     def as_dict(self) -> dict:
         # TO-DO: Need to create a dict representation for the embedding class
         """Return the CompositionalEmbedding class as a dict."""
@@ -158,9 +153,6 @@ class CompositionalEmbedding:
             "composition": self.composition,
             "fractional_composition": self.fractional_composition,
         }
-        # Se
-
-        # Set an attribute
 
     def _mean_feature_vector(self) -> np.ndarray:
         """Compute a weighted mean feature vector based of the embedding.
@@ -241,12 +233,6 @@ class CompositionalEmbedding:
         ]
         if isinstance(stats, str):
             stats = [stats]
-        if not isinstance(stats, list):
-            msg = "Stats argument must be a list of strings"
-            raise ValueError(msg)
-        if not all(isinstance(s, str) for s in stats):
-            msg = "Stats argument must be a list of strings"
-            raise ValueError(msg)
         if not all(s in implemented_stats for s in stats):
             msg = (
                 f" {[stat for stat in stats if stat not in implemented_stats]} "
