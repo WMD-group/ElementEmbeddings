@@ -6,11 +6,12 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from elementembeddings.core import Embedding
+from elementembeddings.core import Embedding, SpeciesEmbedding
 
 test_files_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
 TEST_EMBEDDING_CSV = os.path.join(test_files_dir, "test_embedding.csv")
 TEST_EMBEDDING_JSON = os.path.join(test_files_dir, "test_embedding.json")
+TEST_SPECIES_EMBEDDING_CSV = os.path.join(test_files_dir, "test_species_embedding.csv")
 
 
 class EmbeddingTest(unittest.TestCase):
@@ -484,3 +485,94 @@ class EmbeddingTest(unittest.TestCase):
         umap1 = self.test_matscholar.calculate_umap(**umap_params)
         umap2 = self.test_matscholar.calculate_umap(**umap_params)
         assert (umap1 == umap2).all()
+
+
+class SpeciesEmbeddingTest(unittest.TestCase):
+    """Test the SpeciesEmbedding class."""
+
+    # High Level functions
+    @classmethod
+    def setUpClass(cls):
+        """Set up the test."""
+        cls.test_species_embedding = SpeciesEmbedding.from_csv(
+            TEST_SPECIES_EMBEDDING_CSV
+        )
+
+    def test_species_list(self):
+        """Test the species_list attribute."""
+        assert isinstance(self.test_species_embedding.species_list, list)
+        assert len(self.test_species_embedding.species_list) == 11
+        assert self.test_species_embedding.species_list[0] == "H+"
+
+    def test_element_list(self):
+        """Test the element_list attribute."""
+        assert isinstance(self.test_species_embedding.element_list, list)
+        assert len(self.test_species_embedding.element_list) == 10
+        assert "H" in self.test_species_embedding.element_list
+
+    def test_species_groups_dict(self):
+        """Test the species_groups_dict attribute."""
+        assert isinstance(self.test_species_embedding.species_groups_dict, dict)
+        assert len(self.test_species_embedding.species_groups_dict) == 11
+        assert self.test_species_embedding.species_groups_dict["H+"] == "Others"
+
+    def test_ion_type_dict(self):
+        """Test the ion_type_dict attribute."""
+        assert isinstance(self.test_species_embedding.ion_type_dict, dict)
+        assert len(self.test_species_embedding.ion_type_dict) == 11
+        assert self.test_species_embedding.ion_type_dict["H+"] == "cation"
+        assert self.test_species_embedding.ion_type_dict["H-"] == "anion"
+        assert self.test_species_embedding.ion_type_dict["Pt0+"] == "neutral"
+
+    def test_remove_species(self):
+        """Test the remove_species function."""
+        test_copy = copy.deepcopy(self.test_species_embedding)
+        assert test_copy.remove_species("H+", inplace=True) is None
+        assert "H+" not in test_copy.species_list
+        assert test_copy.remove_species(["H-", "Na+"], inplace=True) is None
+        # assert len(self.test_species_embedding.species_list) == 9
+        assert "H-" not in self.test_species_embedding.remove_species("H-").species_list
+        assert (
+            len(
+                self.test_species_embedding.remove_species(
+                    ["H-", "Na+", "F-"]
+                ).species_list
+            )
+            == 8
+        )
+
+    def test_distance_df(self):
+        """Test the distance_df function."""
+        assert isinstance(self.test_species_embedding.distance_df(), pd.DataFrame)
+        assert self.test_species_embedding.distance_df().shape == (
+            len(list(self.test_species_embedding.create_pairs())) * 2
+            - len(self.test_species_embedding.embeddings),
+            7,
+        )
+        assert self.test_species_embedding.distance_df().columns.tolist() == [
+            "species_1",
+            "species_2",
+            "mend_1",
+            "mend_2",
+            "Z_1",
+            "Z_2",
+            "euclidean",
+        ]
+
+    def test_correlation_df(self):
+        """Test the correlation_df function."""
+        assert isinstance(self.test_species_embedding.correlation_df(), pd.DataFrame)
+        assert self.test_species_embedding.correlation_df().shape == (
+            len(list(self.test_species_embedding.create_pairs())) * 2
+            - len(self.test_species_embedding.embeddings),
+            7,
+        )
+        assert self.test_species_embedding.correlation_df().columns.tolist() == [
+            "species_1",
+            "species_2",
+            "mend_1",
+            "mend_2",
+            "Z_1",
+            "Z_2",
+            "pearson",
+        ]
