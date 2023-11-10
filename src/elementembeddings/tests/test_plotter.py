@@ -6,10 +6,15 @@ import unittest
 import matplotlib.pyplot as plt
 import pytest
 
-from elementembeddings.core import Embedding
+from elementembeddings.core import Embedding, SpeciesEmbedding
 from elementembeddings.plotter import dimension_plotter, heatmap_plotter
 
 _file_path = os.path.dirname(__file__)
+test_files_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
+
+TEST_SPECIES_EMBEDDING_JSON = os.path.join(
+    test_files_dir, "test_skipspecies_2022_10_28_dim30.json"
+)
 
 
 class HeatmapTest(unittest.TestCase):
@@ -43,6 +48,9 @@ class DimensionTest(unittest.TestCase):
     def setUpClass(cls):
         """Set up the test class."""
         cls.test_skipatom = Embedding.load_data("skipatom")
+        cls.test_species = SpeciesEmbedding.from_json(
+            TEST_SPECIES_EMBEDDING_JSON, "skipspecies30"
+        )
         cls.scatter_params = {"s": 50}
 
     @pytest.mark.mpl_image_compare(
@@ -188,6 +196,69 @@ class DimensionTest(unittest.TestCase):
         )
         assert isinstance(skipatom_umap_plot, plt.Axes)
 
+    @pytest.mark.mpl_image_compare(
+        baseline_dir=f"{_file_path}/baseline",
+        filename="test_dimension_2d_plotter_tsne_skipspecies.png",
+    )
+    def test_dimension_2d_plotter_tsne_skipspecies(self):
+        """Test that the dimension_plotter function works for skipspecies."""
+        tsne_params = {"n_iter": 1000, "random_state": 42, "perplexity": 50}
+        fig, ax = plt.subplots(figsize=(16, 12))
+        dimension_plotter(
+            self.test_species,
+            ax=ax,
+            n_components=2,
+            reducer="tsne",
+            adjusttext=False,
+            reducer_params=tsne_params,
+            scatter_params=self.scatter_params,
+            include_species=[
+                "H+",
+                "O2-",
+                "Li+",
+                "Na+",
+                "K+",
+                "Rb+",
+                "Cs+",
+                "F-",
+                "Cl-",
+                "Br-",
+                "I-",
+                "Mn2+",
+            ],
+        )
+        return fig
 
-if __name__ == "__main__":
-    unittest.main()
+    @pytest.mark.mpl_image_compare(
+        baseline_dir=f"{_file_path}/baseline",
+        filename="test_dimension_3d_plotter_tsne_skipspecies.png",
+    )
+    def test_dimension_3d_plotter_tsne_skipspecies(self):
+        """Test that the dimension_plotter function works for skipspecies."""
+        tsne_params = {"n_iter": 1000, "random_state": 42, "perplexity": 50}
+        fig = plt.figure()
+        ax = fig.add_subplot(projection="3d")
+        dimension_plotter(
+            self.test_species,
+            ax=ax,
+            n_components=3,
+            reducer="tsne",
+            adjusttext=False,
+            reducer_params=tsne_params,
+            scatter_params=self.scatter_params,
+            include_species=[
+                "H+",
+                "O2-",
+                "Li+",
+                "Na+",
+                "K+",
+                "Rb+",
+                "Cs+",
+                "F-",
+                "Cl-",
+                "Br-",
+                "I-",
+                "Mn2+",
+            ],
+        )
+        return fig
