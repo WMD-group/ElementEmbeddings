@@ -332,6 +332,25 @@ class SpeciesEmbedding(EmbeddingBase):
         embedding_data = {species[i]: embeds_array[i] for i in range(len(embeds_array))}
         return SpeciesEmbedding(embedding_data, embedding_name, feature_labels)
 
+    @staticmethod
+    def from_json(json_path, embedding_name: Optional[str] = None):
+        """Create an instance of the SpeciesEmbedding class from a json file.
+
+        Args:
+        ----
+            json_path (str): Filepath of the json file
+            embedding_name (str): The name of the species representation
+
+        Returns:
+        -------
+            SpeciesEmbedding :class:`SpeciesEmbedding` instance.
+
+        """
+        # Need to add validation handling for json files
+        with open(json_path) as f:
+            embedding_data = json.load(f)
+        return SpeciesEmbedding(embedding_data, embedding_name)
+
     @property
     def species_list(self) -> list:
         """Return the species of the embedding."""
