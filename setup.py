@@ -31,7 +31,7 @@ setup(
         "numpy==1.23.3",
         "scipy==1.10.1",
         "pymatgen>2022.9.21",
-        "seaborn==0.12.2",
+        "seaborn==0.13.0",
         "matplotlib==3.7.1",
         "scikit-learn==1.3.0",
         "umap-learn==0.5.3",
