@@ -31,7 +31,7 @@ setup(
         "numpy==1.23.3",
         "scipy==1.10.1",
         "pymatgen>2022.9.21",
-        "seaborn==0.12.2",
+        "seaborn==0.13.0",
         "matplotlib==3.7.1",
         "scikit-learn==1.3.0",
         "umap-learn==0.5.3",
@@ -40,11 +40,11 @@ setup(
     extras_require={
         "dev": [
             "pre-commit==3.3.3",
-            "black==23.3.0",
+            "black==23.11.0",
             "isort==5.12.0",
             "pytest==7.2.1",
             "pytest-subtests==0.10.0",
-            "nbqa==1.5.3",
+            "nbqa==1.7.1",
             "flake8==6.1.0",
             "pyupgrade==3.13.0",
             "autopep8==2.0.2",
