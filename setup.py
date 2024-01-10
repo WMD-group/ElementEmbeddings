@@ -28,7 +28,7 @@ setup(
     },
     test_suite="elementembeddings.tests.test",
     install_requires=[
-        "numpy==1.23.3",
+        "numpy==1.26.2",
         "scipy==1.10.1",
         "pymatgen>2022.9.21",
         "seaborn==0.13.0",
