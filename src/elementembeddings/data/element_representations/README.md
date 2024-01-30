@@ -160,3 +160,7 @@ The following paper describes the details:
 [Distributed representations of atoms and materials for machine learning](https://www.nature.com/articles/s41524-022-00729-3)
 
 [Data source](https://github.com/lantunes/skipatom/blob/main/data/skipatom_20201009_induced.csv)
+
+### CrystaLLM
+
+The following paper describes the details behind the crystal structure generation model which uses large language modelling: [Crystal Structure Generation with Autoregressive Large Language Modeling](https://arxiv.org/abs/2307.04340)

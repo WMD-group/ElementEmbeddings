@@ -10,6 +10,7 @@ autopep8 ==2.0.2
 pytest-cov ==4.1.0
 mkdocs ==1.5.3
 mkdocs-material == 9.1.17
+mike ==1.1.2
+pytest-mpl ==0.16.1
 mkdocstrings ==0.23.0
 mkdocstrings-python == 1.7.3
-mike ==1.1.2

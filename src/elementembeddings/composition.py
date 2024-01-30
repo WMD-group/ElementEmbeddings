@@ -1,5 +1,4 @@
-"""
-This module provides a class for handling compositional embeddings.
+"""This module provides a class for handling compositional embeddings.
 
 Typical usage example:
     Fe2O3_magpie = CompositionalEmbedding("Fe2O3", "magpie")
@@ -23,16 +22,17 @@ tqdm.pandas()
 
 def formula_parser(formula: str) -> Dict[str, float]:
     # TO-DO: Add validation to check composition contains real elements.
-    """
-    Parse a string formula.
+    """Parse a string formula.
 
     Returns a dictionary of the composition with key:value pairs
     of element symbol:amount.
 
     Args:
+    ----
         formula (str): A string formula e.g. CsPbI3, Li7La3Zr2O12
 
     Returns:
+    -------
         (dict): A dictionary of the composition
 
     """
@@ -67,7 +67,8 @@ def _get_sym_dict(formula: str, factor: Union[int, float]) -> Dict[str, float]:
         sym_dict[el] += amt * factor
         formula = formula.replace(m.group(), "", 1)
     if formula.strip():
-        raise ValueError(f"{formula} is an invalid formula")
+        msg = f"{formula} is an invalid formula"
+        raise ValueError(msg)
 
     return sym_dict
 
@@ -85,17 +86,17 @@ def _get_fractional_composition(formula: str) -> Dict[str, float]:
 
 # Class to handle compositional embeddings
 class CompositionalEmbedding:
-    """
-    Class to handle compositional embeddings.
+    """Class to handle compositional embeddings.
 
     Args:
+    ----
         formula (str): A string formula e.g. CsPbI3, Li7La3Zr2O12
         embedding (Union[str, Embedding]): Either a string name of the embedding
         or an Embedding instance
         x (int, optional): The non-stoichiometric amount.
     """
 
-    def __init__(self, formula: str, embedding: Union[str, Embedding], x=1):
+    def __init__(self, formula: str, embedding: Union[str, Embedding], x=1) -> None:
         """Initialise a CompositionalEmbedding instance."""
         self.embedding = embedding
 
@@ -110,9 +111,10 @@ class CompositionalEmbedding:
         # Set an attribute for the comp dict
         comp_dict = formula_parser(self.formula)
         self._natoms = 0
-        for el, v in comp_dict.items():
+        for v in comp_dict.values():
             if v < 0:
-                raise ValueError("Formula cannot contain negative amounts of elements")
+                msg = "Formula cannot contain negative amounts of elements"
+                raise ValueError(msg)
             self._natoms += abs(v)
 
         self.composition = comp_dict
@@ -121,7 +123,7 @@ class CompositionalEmbedding:
         self.element_list = list(self.composition.keys())
         # Set an attribute for the element matrix
         self.el_matrix = np.zeros(
-            shape=(len(self.composition), len(self.embedding.embeddings["H"]))
+            shape=(len(self.composition), len(self.embedding.embeddings["H"])),
         )
         for i, k in enumerate(self.composition.keys()):
             self.el_matrix[i] = self.embedding.embeddings[k]
@@ -143,11 +145,6 @@ class CompositionalEmbedding:
         """Total number of atoms in Composition."""
         return self._natoms
 
-    @property
-    def embedding_dim(self) -> int:
-        """Dimension of the embedding."""
-        return self.embedding.dim
-
     def as_dict(self) -> dict:
         # TO-DO: Need to create a dict representation for the embedding class
         """Return the CompositionalEmbedding class as a dict."""
@@ -155,16 +152,10 @@ class CompositionalEmbedding:
             "formula": self.formula,
             "composition": self.composition,
             "fractional_composition": self.fractional_composition,
-            # 'embedding':self.embedding.as_
         }
-        # Se
-
-        # Set an attribute
-        pass
 
     def _mean_feature_vector(self) -> np.ndarray:
-        """
-        Compute a weighted mean feature vector based of the embedding.
+        """Compute a weighted mean feature vector based of the embedding.
 
         The dimension of the feature vector is the same as the embedding.
 
@@ -201,7 +192,7 @@ class CompositionalEmbedding:
     def _harmonic_mean_feature_vector(self) -> np.ndarray:
         """Compute the harmonic mean feature vector."""
         return np.reciprocal(
-            np.dot(self.norm_stoich_vector, np.reciprocal(self.el_matrix))
+            np.dot(self.norm_stoich_vector, np.reciprocal(self.el_matrix)),
         )
 
     _stats_functions_dict = {
@@ -216,17 +207,18 @@ class CompositionalEmbedding:
     }
 
     def feature_vector(self, stats: Union[str, list] = "mean"):
-        """
-        Compute a feature vector.
+        """Compute a feature vector.
 
         The feature vector is a concatenation of
         the statistics specified in the stats argument.
 
         Args:
+        ----
             stats (list): A list of strings specifying the statistics to be computed.
             The default is ['mean'].
 
         Returns:
+        -------
             np.ndarray: A feature vector of dimension (len(stats) * embedding_dim).
         """
         implemented_stats = [
@@ -241,14 +233,13 @@ class CompositionalEmbedding:
         ]
         if isinstance(stats, str):
             stats = [stats]
-        if not isinstance(stats, list):
-            raise ValueError("Stats argument must be a list of strings")
-        if not all([isinstance(s, str) for s in stats]):
-            raise ValueError("Stats argument must be a list of strings")
-        if not all([s in implemented_stats for s in stats]):
-            raise ValueError(
+        if not all(s in implemented_stats for s in stats):
+            msg = (
                 f" {[stat for stat in stats if stat not in implemented_stats]} "
-                "are not valid statistics."
+                f"are not valid statistics."
+            )
+            raise ValueError(
+                msg,
             )
         feature_vector = []
         for s in stats:
@@ -261,37 +252,44 @@ class CompositionalEmbedding:
         distance_metric: str = "euclidean",
         stats: Union[str, List[str]] = "mean",
     ):
-        """
-        Compute the distance between two compositions.
+        """Compute the distance between two compositions.
 
         Args:
+        ----
             comp_other (Union[str, CompositionalEmbedding]): The other composition.
             distance_metric (str): The metric to be used. The default is 'euclidean'.
 
         Returns:
+        -------
             float: The distance between the two CompositionalEmbedding objects.
         """
         if isinstance(comp_other, str):
             comp_other = CompositionalEmbedding(comp_other, self.embedding)
         if not isinstance(comp_other, CompositionalEmbedding):
+            msg = "comp_other must be a string or a CompositionalEmbedding object."
             raise ValueError(
-                "comp_other must be a string or a CompositionalEmbedding object."
+                msg,
             )
         if self.embedding_name != comp_other.embedding_name:
+            msg = "The two CompositionalEmbedding objects must have the same embedding."
             raise ValueError(
-                "The two CompositionalEmbedding objects must have the same embedding."
+                msg,
             )
         return _composition_distance(
-            self, comp_other, self.embedding, distance_metric, stats
+            self,
+            comp_other,
+            self.embedding,
+            distance_metric,
+            stats,
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"CompositionalEmbedding(formula={self.formula}, "
             f"embedding={self.embedding_name})"
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"CompositionalEmbedding(formula={self.formula}, "
             f"embedding={self.embedding_name})"
@@ -334,8 +332,6 @@ def _composition_distance(
 
     scipy_metrics = {"wasserstein": wasserstein_distance, "energy": energy_distance}
 
-    # valid_metrics = scikit_metrics + list(scipy_metrics.keys()) + ["cosine"]
-
     if distance_metric in scikit_metrics:
         distance = DistanceMetric.get_metric(distance_metric)
 
@@ -346,10 +342,11 @@ def _composition_distance(
             0
         ][0]
 
-    elif distance_metric in scipy_metrics.keys():
+    elif distance_metric in scipy_metrics:
         return scipy_metrics[distance_metric](comp1_vec, comp2_vec)
     elif distance_metric == "cosine_distance":
         return cosine_distance(comp1_vec, comp2_vec)
+    return None
 
 
 def composition_featuriser(
@@ -359,13 +356,13 @@ def composition_featuriser(
     stats: Union[str, list] = "mean",
     inplace: bool = False,
 ) -> pd.DataFrame:
-    """
-    Compute a feature vector for a composition.
+    """Compute a feature vector for a composition.
 
     The feature vector is based on the statistics specified
     in the stats argument.
 
     Args:
+    ----
         data (Union[pd.DataFrame, pd.Series, list, CompositionalEmbedding]):
         A pandas DataFrame or Series containing a column named 'formula',
         a list of formula, or a CompositionalEmbedding class
@@ -376,6 +373,7 @@ def composition_featuriser(
         The default is False.
 
     Returns:
+    -------
         Union[pd.DataFrame,list]: A pandas DataFrame containing the feature vector,
         or a list of feature vectors is returned
     """
@@ -387,8 +385,11 @@ def composition_featuriser(
         if not inplace:
             data = data.copy()
         if formula_column not in data.columns:
-            raise ValueError(
+            msg = (
                 f"The data must contain a column named {formula_column}  to featurise."
+            )
+            raise ValueError(
+                msg,
             )
         print("Featurising compositions...")
         comps = [
@@ -401,9 +402,7 @@ def composition_featuriser(
         feature_names = [
             f"{stat}_{feature}" for stat in stats for feature in feature_names
         ]
-        data_new = pd.concat([data, pd.DataFrame(fvs, columns=feature_names)], axis=1)
-        # data.columns = []
-        return data_new
+        return pd.concat([data, pd.DataFrame(fvs, columns=feature_names)], axis=1)
     elif isinstance(data, list):
         comps = [CompositionalEmbedding(x, embedding) for x in data]
         return [x.feature_vector(stats) for x in tqdm(comps)]
@@ -411,7 +410,10 @@ def composition_featuriser(
     elif isinstance(data, CompositionalEmbedding):
         return data.feature_vector(stats)
     else:
+        msg = (
+            "The data must be a pandas DataFrame, Series,"
+            " list or CompositionalEmbedding class."
+        )
         raise ValueError(
-            "The data must be a pandas DataFrame, Series, "
-            "list or CompositionalEmbedding class."
+            msg,
         )

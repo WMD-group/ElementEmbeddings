@@ -3,6 +3,7 @@ import unittest
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from elementembeddings import composition, core
 
@@ -36,7 +37,7 @@ class TestComposition(unittest.TestCase):
 
     def test_formula_parser_with_invalid_formula(self):
         """Test the formula_parser function with an invalid formula."""
-        with self.assertRaises(ValueError):
+        with pytest.raises(ValueError):
             composition.formula_parser("Sr3Sc2(GeO4)3)")
 
     def test__get_fractional_composition(self):
@@ -82,15 +83,17 @@ class TestCompositionalEmbedding(unittest.TestCase):
 
     def test_CompositionalEmbedding_negative_formula(self):
         """Test the Composition class with a negative formula."""
-        with self.assertRaises(ValueError):
+        with pytest.raises(ValueError):
             composition.CompositionalEmbedding(
-                formula=self.formulas[4], embedding="magpie"
+                formula=self.formulas[4],
+                embedding="magpie",
             )
 
     def test__mean_feature_vector(self):
         """Test the _mean_feature_vector function."""
         assert isinstance(
-            self.valid_magpie_compositions[1]._mean_feature_vector(), np.ndarray
+            self.valid_magpie_compositions[1]._mean_feature_vector(),
+            np.ndarray,
         )
         # Test that the feature vector function works
 
@@ -101,11 +104,12 @@ class TestCompositionalEmbedding(unittest.TestCase):
             np.ndarray,
         )
         assert len(
-            self.valid_magpie_compositions[0].feature_vector(stats=self.stats)
+            self.valid_magpie_compositions[0].feature_vector(stats=self.stats),
         ) == self.valid_magpie_compositions[0].embedding.dim * len(self.stats)
         # Test that the feature vector function works with a single stat
         assert isinstance(
-            self.valid_magpie_compositions[0].feature_vector(stats="mean"), np.ndarray
+            self.valid_magpie_compositions[0].feature_vector(stats="mean"),
+            np.ndarray,
         )
 
     def test_composition_featuriser(self):
@@ -121,56 +125,70 @@ class TestCompositionalEmbedding(unittest.TestCase):
         """Test the distance method of the CompositionalEmbedding class."""
         assert isinstance(
             self.valid_magpie_compositions[0].distance(
-                self.valid_magpie_compositions[1]
+                self.valid_magpie_compositions[1],
             ),
             float,
         )
         assert (
             self.valid_magpie_compositions[0].distance(
-                self.valid_magpie_compositions[1]
+                self.valid_magpie_compositions[1],
             )
             > 0
         )
 
         assert self.valid_magpie_compositions[0].distance(
-            self.valid_magpie_compositions[1]
+            self.valid_magpie_compositions[1],
         ) == self.valid_magpie_compositions[1].distance(
-            self.valid_magpie_compositions[0]
+            self.valid_magpie_compositions[0],
         )
 
         self.assertAlmostEqual(
             self.valid_magpie_compositions[0].distance(
-                self.valid_magpie_compositions[1]
+                self.valid_magpie_compositions[1],
             ),
             204.65052421,
         )
         assert (
             self.valid_magpie_compositions[0].distance(
-                self.valid_magpie_compositions[0]
+                self.valid_magpie_compositions[0],
             )
             == 0
         )
         assert (
             self.valid_magpie_compositions[0].distance(
-                self.valid_magpie_compositions[1], stats="mean"
+                self.valid_magpie_compositions[1],
+                stats="mean",
             )
             > 0
         )
         assert (
             self.valid_magpie_compositions[0].distance(
-                self.valid_magpie_compositions[0], stats="mean"
+                self.valid_magpie_compositions[0],
+                stats="mean",
             )
             == 0
         )
         assert (
             self.valid_magpie_compositions[0].distance(
-                self.valid_magpie_compositions[1], stats=["mean", "variance"]
+                self.valid_magpie_compositions[1],
+                stats=["mean", "variance"],
             )
             > 0
         )
         assert (
             self.valid_magpie_compositions[0].distance(
-                self.valid_magpie_compositions[0], stats=["mean", "variance"]
+                self.valid_magpie_compositions[0],
+                stats=["mean", "variance"],
             )
             == 0
+        )
+
+        assert self.valid_magpie_compositions[0].distance(
+            self.formulas[1],
+            stats=["mean", "variance"],
+            distance_metric="cosine_distance",
+        ) == self.valid_magpie_compositions[1].distance(
+            self.valid_magpie_compositions[0],
+            stats=["mean", "variance"],
+            distance_metric="cosine_distance",
         )

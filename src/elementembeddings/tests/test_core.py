@@ -6,11 +6,12 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from elementembeddings.core import Embedding
+from elementembeddings.core import Embedding, SpeciesEmbedding
 
 test_files_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
 TEST_EMBEDDING_CSV = os.path.join(test_files_dir, "test_embedding.csv")
 TEST_EMBEDDING_JSON = os.path.join(test_files_dir, "test_embedding.json")
+TEST_SPECIES_EMBEDDING_CSV = os.path.join(test_files_dir, "test_species_embedding.csv")
 
 
 class EmbeddingTest(unittest.TestCase):
@@ -41,7 +42,7 @@ class EmbeddingTest(unittest.TestCase):
         assert self.test_matscholar.embedding_type == "vector"
         assert self.test_mod_petti.dim == 103
         assert self.test_mod_petti.embedding_name == "mod_petti"
-        assert self.test_mod_petti.embedding_type == "linear"
+        assert self.test_mod_petti.embedding_type == "one-hot"
         assert isinstance(self.test_skipatom.citation(), list)
         assert isinstance(self.test_megnet16.citation(), list)
         assert isinstance(self.test_matscholar.citation(), list)
@@ -76,11 +77,11 @@ class EmbeddingTest(unittest.TestCase):
         # Check if the embedding vector is a numpy array
         assert isinstance(mod_petti.embeddings["H"], np.ndarray)
         # Check if H is present in the embedding keys
-        assert "H" in mod_petti.embeddings.keys()
+        assert "H" in mod_petti.embeddings
         # Check dimensions
         assert mod_petti.dim == 103
         # Check embedding type
-        assert mod_petti.embedding_type == "linear"
+        assert mod_petti.embedding_type == "one-hot"
         # Check that a list is returned
         assert isinstance(mod_petti.element_list, list)
         # Check the the dimensons of the embedding vector
@@ -100,11 +101,11 @@ class EmbeddingTest(unittest.TestCase):
         # Check if the embedding vector is a numpy array
         assert isinstance(atomic.embeddings["H"], np.ndarray)
         # Check if H is present in the embedding keys
-        assert "H" in atomic.embeddings.keys()
+        assert "H" in atomic.embeddings
         # Check dimensions
         assert atomic.dim == 118
         # Check embedding type
-        assert atomic.embedding_type == "linear"
+        assert atomic.embedding_type == "one-hot"
         # Check that a list is returned
         assert isinstance(atomic.element_list, list)
         # Check the the dimensons of the embedding vector
@@ -124,7 +125,7 @@ class EmbeddingTest(unittest.TestCase):
         # Check if the embedding vector is a numpy array
         assert isinstance(magpie.embeddings["H"], np.ndarray)
         # Check if H is present in the embedding keys
-        assert "H" in magpie.embeddings.keys()
+        assert "H" in magpie.embeddings
         # Check dimensions
         assert magpie.dim == 22
         # Check that a list is returned
@@ -340,7 +341,7 @@ class EmbeddingTest(unittest.TestCase):
         assert "H" not in magpie.remove_elements("H").element_list
         assert isinstance(magpie.citation(), list)
         assert isinstance(magpie.citation()[0], str)
-        assert magpie._is_el_in_embedding("H")
+        assert magpie._is_el_sp_in_embedding("H")
         assert isinstance(magpie.correlation_df(), pd.DataFrame)
 
         # TO-DO
@@ -394,13 +395,23 @@ class EmbeddingTest(unittest.TestCase):
         )
 
         self.assertRaises(
-            ValueError, self.test_skipatom.compute_distance_metric, "He", "O"
+            ValueError,
+            self.test_skipatom.compute_distance_metric,
+            "He",
+            "O",
         )
         self.assertRaises(
-            ValueError, self.test_skipatom.compute_distance_metric, "O", "He"
+            ValueError,
+            self.test_skipatom.compute_distance_metric,
+            "O",
+            "He",
         )
         self.assertRaises(
-            ValueError, self.test_skipatom.compute_distance_metric, "Li", "O", "euclid"
+            ValueError,
+            self.test_skipatom.compute_distance_metric,
+            "Li",
+            "O",
+            "euclid",
         )
 
     def test_distance_dataframe_functions(self):
@@ -422,17 +433,18 @@ class EmbeddingTest(unittest.TestCase):
         ]
         assert isinstance(self.test_magpie.distance_pivot_table(), pd.DataFrame)
         assert isinstance(
-            self.test_magpie.distance_pivot_table(sortby="atomic_number"), pd.DataFrame
+            self.test_magpie.distance_pivot_table(sortby="atomic_number"),
+            pd.DataFrame,
         )
 
     def test_remove_elements(self):
         """Test the remove_elements function."""
         assert isinstance(self.test_skipatom.remove_elements("H"), Embedding)
         assert isinstance(self.test_skipatom.remove_elements(["H", "Li"]), Embedding)
-        self.assertIsNone(self.test_skipatom.remove_elements("H", inplace=True))
-        self.assertFalse(self.test_skipatom._is_el_in_embedding("H"))
-        self.assertIsNone(
-            self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True)
+        assert self.test_skipatom.remove_elements("H", inplace=True) is None
+        assert not self.test_skipatom._is_el_sp_in_embedding("H")
+        assert (
+            self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True) is None
         )
         assert "Li" not in self.test_skipatom.element_list
         assert "Ti" not in self.test_skipatom.element_list
@@ -440,24 +452,127 @@ class EmbeddingTest(unittest.TestCase):
 
     def test_PCA(self):
         """Test the PCA function."""
-        assert isinstance(self.test_matscholar.calculate_PC(), np.ndarray)
-        assert self.test_matscholar.calculate_PC().shape == (
+        pca_params = {"svd_solver": "full", "random_state": 42}
+        assert isinstance(self.test_matscholar.calculate_pca(**pca_params), np.ndarray)
+        assert self.test_matscholar.calculate_pca().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
+        pca1 = self.test_matscholar.calculate_pca(**pca_params)
+        pca2 = self.test_matscholar.calculate_pca(**pca_params)
+        assert (pca1 == pca2).all()
 
     def test_tSNE(self):
         """Test the tSNE function."""
-        assert isinstance(self.test_matscholar.calculate_tSNE(), np.ndarray)
-        assert self.test_matscholar.calculate_tSNE().shape == (
+        tsne_params = {"n_iter": 1000, "random_state": 42, "perplexity": 50}
+        assert isinstance(self.test_matscholar.calculate_tsne(), np.ndarray)
+        assert self.test_matscholar.calculate_tsne().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
+        tsne1 = self.test_matscholar.calculate_tsne(**tsne_params)
+        tsne2 = self.test_matscholar.calculate_tsne(**tsne_params)
+        assert (tsne1 == tsne2).all()
 
     def test_UMAP(self):
         """Test the UMAP function."""
-        assert isinstance(self.test_matscholar.calculate_UMAP(), np.ndarray)
-        assert self.test_matscholar.calculate_UMAP().shape == (
+        umap_params = {"n_neighbors": 15, "random_state": 42}
+        assert isinstance(self.test_matscholar.calculate_umap(), np.ndarray)
+        assert self.test_matscholar.calculate_umap().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
+        umap1 = self.test_matscholar.calculate_umap(**umap_params)
+        umap2 = self.test_matscholar.calculate_umap(**umap_params)
+        assert (umap1 == umap2).all()
+
+
+class SpeciesEmbeddingTest(unittest.TestCase):
+    """Test the SpeciesEmbedding class."""
+
+    # High Level functions
+    @classmethod
+    def setUpClass(cls):
+        """Set up the test."""
+        cls.test_species_embedding = SpeciesEmbedding.from_csv(
+            TEST_SPECIES_EMBEDDING_CSV
+        )
+
+    def test_species_list(self):
+        """Test the species_list attribute."""
+        assert isinstance(self.test_species_embedding.species_list, list)
+        assert len(self.test_species_embedding.species_list) == 11
+        assert self.test_species_embedding.species_list[0] == "H+"
+
+    def test_element_list(self):
+        """Test the element_list attribute."""
+        assert isinstance(self.test_species_embedding.element_list, list)
+        assert len(self.test_species_embedding.element_list) == 10
+        assert "H" in self.test_species_embedding.element_list
+
+    def test_species_groups_dict(self):
+        """Test the species_groups_dict attribute."""
+        assert isinstance(self.test_species_embedding.species_groups_dict, dict)
+        assert len(self.test_species_embedding.species_groups_dict) == 11
+        assert self.test_species_embedding.species_groups_dict["H+"] == "Others"
+
+    def test_ion_type_dict(self):
+        """Test the ion_type_dict attribute."""
+        assert isinstance(self.test_species_embedding.ion_type_dict, dict)
+        assert len(self.test_species_embedding.ion_type_dict) == 11
+        assert self.test_species_embedding.ion_type_dict["H+"] == "cation"
+        assert self.test_species_embedding.ion_type_dict["H-"] == "anion"
+        assert self.test_species_embedding.ion_type_dict["Pt0+"] == "neutral"
+
+    def test_remove_species(self):
+        """Test the remove_species function."""
+        test_copy = copy.deepcopy(self.test_species_embedding)
+        assert test_copy.remove_species("H+", inplace=True) is None
+        assert "H+" not in test_copy.species_list
+        assert test_copy.remove_species(["H-", "Na+"], inplace=True) is None
+        # assert len(self.test_species_embedding.species_list) == 9
+        assert "H-" not in self.test_species_embedding.remove_species("H-").species_list
+        assert (
+            len(
+                self.test_species_embedding.remove_species(
+                    ["H-", "Na+", "F-"]
+                ).species_list
+            )
+            == 8
+        )
+
+    def test_distance_df(self):
+        """Test the distance_df function."""
+        assert isinstance(self.test_species_embedding.distance_df(), pd.DataFrame)
+        assert self.test_species_embedding.distance_df().shape == (
+            len(list(self.test_species_embedding.create_pairs())) * 2
+            - len(self.test_species_embedding.embeddings),
+            7,
+        )
+        assert self.test_species_embedding.distance_df().columns.tolist() == [
+            "species_1",
+            "species_2",
+            "mend_1",
+            "mend_2",
+            "Z_1",
+            "Z_2",
+            "euclidean",
+        ]
+
+    def test_correlation_df(self):
+        """Test the correlation_df function."""
+        assert isinstance(self.test_species_embedding.correlation_df(), pd.DataFrame)
+        assert self.test_species_embedding.correlation_df().shape == (
+            len(list(self.test_species_embedding.create_pairs())) * 2
+            - len(self.test_species_embedding.embeddings),
+            7,
+        )
+        assert self.test_species_embedding.correlation_df().columns.tolist() == [
+            "species_1",
+            "species_2",
+            "mend_1",
+            "mend_2",
+            "Z_1",
+            "Z_2",
+            "pearson",
+        ]
