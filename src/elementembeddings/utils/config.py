@@ -11,6 +11,7 @@ DEFAULT_ELEMENT_EMBEDDINGS = {
     "random_200": "random_200_new.csv",
     "skipatom": "skipatom_20201009_induced.csv",
     "atomic": "atomic.json",
+    "crystallm": "crystallm_v24c.dim512_atom_vectors.csv",
 }
 
 CITATIONS = {
@@ -135,4 +136,26 @@ CITATIONS = {
         "year={2016},"
         "publisher={IOP Publishing} }",
     ],
+    "crystallm": [
+        "@article{antunes2023crystal,"
+        "title={Crystal structure generation "
+        "with autoregressive large language modeling},"
+        "author={Antunes, Luis M and Butler, Keith T and Grau-Crespo, Ricardo},"
+        "journal={arXiv preprint arXiv:2307.04340},"
+        "year={2023}}",
+    ],
+}
+
+ELEMENT_GROUPS_PALETTES = {
+    "Alkali": "tab:blue",
+    "Alkaline": "tab:cyan",
+    "Lanthanoid": "tab:purple",
+    "TM": "tab:orange",
+    "Post-TM": "tab:green",
+    "Metalloid": "tab:pink",
+    "Halogen": "tab:red",
+    "Noble gas": "tab:olive",
+    "Chalcogen": "tab:brown",
+    "Others": "tab:gray",
+    "Actinoid": "thistle",
 }
