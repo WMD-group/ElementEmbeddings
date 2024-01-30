@@ -8,6 +8,7 @@ import seaborn as sns
 from adjustText import adjust_text
 
 from .core import Embedding, SpeciesEmbedding
+from .utils.config import ELEMENT_GROUPS_PALETTES
 
 
 def heatmap_plotter(
@@ -146,7 +147,15 @@ def dimension_plotter(
             fig, ax = plt.subplots()
         if scatter_params is None:
             scatter_params = {}
-        sns.scatterplot(data=df, x="x", y="y", hue="Group", ax=ax, **scatter_params)
+        sns.scatterplot(
+            data=df,
+            x="x",
+            y="y",
+            hue="Group",
+            ax=ax,
+            palette=ELEMENT_GROUPS_PALETTES,
+            **scatter_params,
+        )
         ax.set_xlabel("Dimension 1")
         ax.set_ylabel("Dimension 2")
         texts = [
