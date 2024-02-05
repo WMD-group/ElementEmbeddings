@@ -40,7 +40,7 @@ setup(
     extras_require={
         "dev": [
             "pre-commit==3.6.0",
-            "black==23.11.0",
+            "black==24.1.1",
             "isort==5.13.2",
             "pytest==7.2.1",
             "pytest-subtests==0.10.0",
@@ -55,7 +55,7 @@ setup(
             "mkdocs-material==9.1.17",
             "mkdocstrings ==0.23.0",
             "mkdocstrings-python == 1.7.3",
-            "mike ==1.1.2",
+            "mike ==2.0.0",
         ],
     },
     classifiers=[
