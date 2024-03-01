@@ -4,7 +4,7 @@ isort ==5.13.2
 pytest ==7.2.1
 pytest-subtests ==0.10.0
 nbqa ==1.7.1
-flake8 ==6.1.0
+flake8 ==7.0.0
 pyupgrade ==3.13.0
 autopep8 ==2.0.2
 pytest-cov ==4.1.0
