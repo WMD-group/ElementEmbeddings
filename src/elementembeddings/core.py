@@ -361,6 +361,26 @@ class SpeciesEmbedding(EmbeddingBase):
         """Return the elements of the embedding."""
         return list({parse_species(species)[0] for species in self.species_list})
 
+    def get_element_oxi_states(self, el: str) -> list:
+        """Return the oxidation states for a given element.
+
+        Args:
+        ----
+            el (str): An element symbol
+
+        Returns:
+        -------
+            oxidation_states (list[int]): A list of oxidation states
+        """
+        assert (
+            el in self.element_list
+        ), f"There are no species of the element {el} in this SpeciesEmbedding"
+        parsed_species = [parse_species(species) for species in self.species_list]
+
+        el_species_list = [species for species in parsed_species if species[0] == el]
+        oxidation_states = [species[1] for species in el_species_list]
+        return sorted(oxidation_states)
+
     def remove_species(self, species: Union[str, List[str]], inplace: bool = False):
         """Remove species from the SpeciesEmbedding instance.
 
@@ -455,3 +475,27 @@ class SpeciesEmbedding(EmbeddingBase):
             .correlation_df(metric)
             .rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
         )
+
+    def to(self, fmt: str = "", filename: Optional[str] = ""):
+        """Output the embedding to a file.
+
+        Args:
+        ----
+            fmt (str): The file format to output the embedding to.
+            Options include "json" and "csv".
+            filename (str): The name of the file to be outputted
+        Returns:
+            (str) if filename not specified, otherwise None.
+        """
+        fmt = fmt.lower()
+
+        if fmt == "json" or fnmatch.fnmatch(filename, "*.json"):
+            j = json.dumps(self.embeddings, cls=NumpyEncoder)
+            if filename:
+                if not filename.endswith(".json"):
+                    filename = filename + ".json"
+                with open(filename, "w") as file:
+                    file.write(j)
+                    return None
+            else:
+                return j
