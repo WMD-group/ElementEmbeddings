@@ -11,6 +11,25 @@ def parse_species(species: str) -> Tuple[str, int]:
     :return: a tuple of the atomic symbol and oxidation state
 
     """
+    try:
+        ele, oxi_state = re.match(r"([A-Za-z]+)([0-9]*[\+\-])", species).groups()
+        if oxi_state[-1] in ["+", "-"]:
+            charge = (int(oxi_state[:-1] or 1)) * (-1 if "-" in oxi_state else 1)
+            return ele, charge
+        else:
+            return ele, 0
+    except AttributeError:
+        return _parse_species_old(species)
+
+
+def _parse_species_old(species: str) -> Tuple[str, int]:
+    """
+    Parse a species string into its atomic symbol and oxidation state.
+
+    :param species: the species string
+    :return: a tuple of the atomic symbol and oxidation state
+
+    """
     ele = re.match(r"[A-Za-z]+", species).group(0)
 
     charge_match = re.search(r"\d+", species)
