@@ -53,7 +53,7 @@ setup(
         "docs": [
             "mkdocs==1.5.3",
             "mkdocs-material==9.5.16",
-            "mkdocstrings ==0.23.0",
+            "mkdocstrings ==0.24.2",
             "mkdocstrings-python == 1.9.0",
             "mike ==2.0.0",
         ],
