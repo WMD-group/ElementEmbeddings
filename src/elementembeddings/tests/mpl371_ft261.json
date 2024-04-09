@@ -1,0 +1,6 @@
+{
+  "elementembeddings.tests.test_plotter.DimensionTest.test_dimension_2d_plotter_pca": "96f375ead24056341c80eac947b71c55c9b8770b0d94935cbe26c822e7cb4a76",
+  "elementembeddings.tests.test_plotter.DimensionTest.test_dimension_2d_plotter_tsne": "ba79047e3da57a925d6f1fae946cfe07960ebd2e90c4ef7ff87ab2a82ecb9fe0",
+  "elementembeddings.tests.test_plotter.DimensionTest.test_dimension_2d_plotter_tsne_skipspecies": "1dd3826b98f8f4544c00557180c8ac419d5b9d7bb322d92b2383c6ec21b05cf6",
+  "elementembeddings.tests.test_plotter.DimensionTest.test_dimension_3d_plotter_tsne_skipspecies": "bafe42ab19a36946e747c4a86ce4887ae92655bb7712918c91122f77c8090625"
+}

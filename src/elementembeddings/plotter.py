@@ -1,5 +1,5 @@
 """Provides the plotting functions for visualising Embeddings."""
-from typing import Optional
+from typing import Optional, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -7,11 +7,12 @@ import pandas as pd
 import seaborn as sns
 from adjustText import adjust_text
 
-from .core import Embedding
+from .core import Embedding, SpeciesEmbedding
+from .utils.config import ELEMENT_GROUPS_PALETTES
 
 
 def heatmap_plotter(
-    embedding: Embedding,
+    embedding: Union[Embedding, SpeciesEmbedding],
     metric: str,
     cmap: str = "Blues",
     sortaxisby: str = "mendeleev",
@@ -19,10 +20,10 @@ def heatmap_plotter(
     show_axislabels: bool = True,
     **kwargs,
 ):
-    """
-    Plot multiple heatmaps of the embeddings.
+    """Plot multiple heatmaps of the embeddings.
 
     Args:
+    ----
         embedding (Embedding): The embeddings to be plotted.
         metric (str): The distance metric / similarity measure to be plotted.
         cmap (str): The colourmap for the heatmap.
@@ -69,8 +70,7 @@ def heatmap_plotter(
     ax.set_title(
         embedding.embedding_name,
         fontdict={
-            # "fontsize": 30,
-            "fontweight": "bold"
+            "fontweight": "bold",
         },
     )
     if not show_axislabels:
@@ -96,70 +96,66 @@ def dimension_plotter(
     adjusttext: bool = True,
     reducer_params: Optional[dict] = None,
     scatter_params: Optional[dict] = None,
+    include_species: Optional[list] = None,
 ):
     """Plot the reduced dimensions of the embeddings.
 
     Args:
+    ----
         embedding (Embedding): The embedding to be plotted.
         ax (plt.axes, optional): The axes to plot on, by default None
         n_components (int): The number of components to reduce to, by default 2
         reducer (str): The dimensionality reduction algorithm to use, by default "umap"
-        adjust_text (bool): Whether to avoid overlap of the text labels, by default True
+        adjusttext (bool): Whether to avoid overlap of the text labels, by default True
         reducer_params (dict, optional): Additional keyword arguments to pass to
         the reducer, by default None
         scatter_params (dict, optional): Additional keyword arguments to pass to
         the scatterplot, by default None
+        include_species (list, optional): The elements/species to include in the plot,
 
     """
     if reducer_params is None:
         reducer_params = {}
     if reducer == "umap":
-        if (
-            embedding._umap_data is not None
-            and embedding._umap_data.shape[1] == n_components
-        ):
-            reduced = embedding._umap_data
-        else:
-            reduced = embedding.calculate_UMAP(
-                n_components=n_components, **reducer_params
-            )
+        reduced = embedding.calculate_umap(n_components=n_components, **reducer_params)
     elif reducer == "tsne":
-        if (
-            embedding._tsne_data is not None
-            and embedding._tsne_data.shape[1] == n_components
-        ):
-            reduced = embedding._tsne_data
-        else:
-            reduced = embedding.calculate_tSNE(
-                n_components=n_components, **reducer_params
-            )
+        reduced = embedding.calculate_tsne(n_components=n_components, **reducer_params)
     elif reducer == "pca":
-        if (
-            embedding._pca_data is not None
-            and embedding._pca_data.shape[1] == n_components
-        ):
-            reduced = embedding._pca_data
-        else:
-            reduced = embedding.calculate_PC(
-                n_components=n_components, **reducer_params
-            )
+        reduced = embedding.calculate_pca(n_components=n_components, **reducer_params)
     else:
-        raise ValueError("Unrecognised reducer.")
+        msg = "Unrecognised reducer."
+        raise ValueError(msg)
 
+    if isinstance(embedding, Embedding):
+        group_dict = embedding.element_groups_dict
+        el_sp_array = np.array(embedding.element_list)
+    elif isinstance(embedding, SpeciesEmbedding):
+        group_dict = embedding.species_groups_dict
+        el_sp_array = np.array(embedding.species_list)
     if reduced.shape[1] == 2:
         df = pd.DataFrame(
             {
                 "x": reduced[:, 0],
                 "y": reduced[:, 1],
-                "element": np.array(embedding.element_list),
-                "Group": list(embedding.element_groups_dict.values()),
-            }
+                "element": el_sp_array,
+                "Group": list(group_dict.values()),
+            },
         )
+        if include_species:
+            df = df[df["element"].isin(include_species)].reset_index(drop=True)
         if not ax:
             fig, ax = plt.subplots()
         if scatter_params is None:
             scatter_params = {}
-        sns.scatterplot(data=df, x="x", y="y", hue="Group", ax=ax, **scatter_params)
+        sns.scatterplot(
+            data=df,
+            x="x",
+            y="y",
+            hue="Group",
+            ax=ax,
+            palette=ELEMENT_GROUPS_PALETTES,
+            **scatter_params,
+        )
         ax.set_xlabel("Dimension 1")
         ax.set_ylabel("Dimension 2")
         texts = [
@@ -168,7 +164,9 @@ def dimension_plotter(
         ]
         if adjusttext:
             adjust_text(
-                texts, arrowprops=dict(arrowstyle="-", color="gray", lw=0.5), ax=ax
+                texts,
+                arrowprops={"arrowstyle": "-", "color": "gray", "lw": 0.5},
+                ax=ax,
             )
 
     elif reduced.shape[1] == 3:
@@ -177,10 +175,12 @@ def dimension_plotter(
                 "x": reduced[:, 0],
                 "y": reduced[:, 1],
                 "z": reduced[:, 2],
-                "element": np.array(embedding.element_list),
-                "group": list(embedding.element_groups_dict.values()),
-            }
+                "element": el_sp_array,
+                "group": list(group_dict.values()),
+            },
         )
+        if include_species:
+            df = df[df["element"].isin(include_species)].reset_index(drop=True)
         if not ax:
             fig = plt.figure()  # noqa: F841
             ax = plt.axes(projection="3d")
@@ -195,6 +195,7 @@ def dimension_plotter(
         for i in range(len(df)):
             ax.text(df["x"][i], df["y"][i], df["z"][i], df["element"][i], fontsize=12)
     else:
-        raise ValueError("Unrecognised number of dimensions.")
+        msg = "Unrecognised number of dimensions."
+        raise ValueError(msg)
     ax.set_title(embedding.embedding_name, fontdict={"fontweight": "bold"})
     return ax

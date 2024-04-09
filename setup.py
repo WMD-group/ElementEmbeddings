@@ -36,6 +36,7 @@ setup(
         "scikit-learn>=1.3.0",
         "umap-learn>=0.5.3",
         "adjustText>=0.8",
+        "openTSNE>=1.0.0",
     ],
     extras_require={
         "dev": [
@@ -49,6 +50,7 @@ setup(
             "pyupgrade==3.13.0",
             "autopep8==2.0.2",
             "pytest-cov==4.1.0",
+            "pytest-mpl==0.16.1",
         ],
         "docs": [
             "mkdocs==1.5.3",

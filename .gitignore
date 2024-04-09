@@ -216,3 +216,8 @@ testing/
 presentation/
 *.svg
 *.pdf
+
+# Pycharm
+.idea/
+
+*thesis*
