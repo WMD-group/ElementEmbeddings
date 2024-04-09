@@ -5,7 +5,7 @@ from setuptools import find_namespace_packages, setup
 
 module_dir = os.path.dirname(os.path.abspath(__file__))
 
-VERSION = "0.4"
+VERSION = "0.4.1"
 DESCRIPTION = "Element Embeddings"
 with open(os.path.join(module_dir, "README.md"), encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
@@ -28,25 +28,24 @@ setup(
     },
     test_suite="elementembeddings.tests.test",
     install_requires=[
-        "numpy==1.23.3",
-        "scipy==1.10.1",
+        "numpy>=1.23.3",
+        "scipy>=1.10.1",
         "pymatgen>2022.9.21",
-        "seaborn==0.12.2",
-        "matplotlib==3.7.1",
-        "scikit-learn==1.3.0",
-        "umap-learn==0.5.3",
-        "adjustText==0.8",
-        "openTSNE==1.0.0",
+        "seaborn>=0.13.0",
+        "matplotlib>=3.7.1",
+        "scikit-learn>=1.3.0",
+        "umap-learn>=0.5.3",
+        "adjustText>=0.8",
     ],
     extras_require={
         "dev": [
-            "pre-commit==3.3.3",
-            "black==23.3.0",
-            "isort==5.12.0",
-            "pytest==7.2.1",
+            "pre-commit==3.6.0",
+            "black==24.3.0",
+            "isort==5.13.2",
+            "pytest==8.0.2",
             "pytest-subtests==0.10.0",
-            "nbqa==1.5.3",
-            "flake8==6.1.0",
+            "nbqa==1.7.1",
+            "flake8==7.0.0",
             "pyupgrade==3.13.0",
             "autopep8==2.0.2",
             "pytest-cov==4.1.0",
@@ -54,10 +53,10 @@ setup(
         ],
         "docs": [
             "mkdocs==1.5.3",
-            "mkdocs-material==9.1.17",
-            "mkdocstrings ==0.23.0",
-            "mkdocstrings-python == 1.7.3",
-            "mike ==1.1.2",
+            "mkdocs-material==9.5.16",
+            "mkdocstrings ==0.24.2",
+            "mkdocstrings-python == 1.9.0",
+            "mike ==2.0.0",
         ],
     },
     classifiers=[
