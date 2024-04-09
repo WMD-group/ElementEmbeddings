@@ -36,6 +36,7 @@ setup(
         "scikit-learn>=1.3.0",
         "umap-learn>=0.5.3",
         "adjustText>=0.8",
+        "openTSNE>=1.0.0",
     ],
     extras_require={
         "dev": [
