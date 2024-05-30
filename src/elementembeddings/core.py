@@ -58,6 +58,8 @@ class Embedding(EmbeddingBase):
         | Random (200 dimensions) | random_200   |
         | SkipAtom                | skipatom     |
         | Atomic Number           | atomic       |
+        | Crystallm               | crystallm    |
+        | XenonPy                 | xenonpy      |
 
 
         Args:
