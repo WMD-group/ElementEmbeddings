@@ -145,7 +145,7 @@ CITATIONS = {
         "journal={arXiv preprint arXiv:2307.04340},"
         "year={2023}}",
     ],
-    "xenonpy": []
+    "xenonpy": [],
 }
 
 ELEMENT_GROUPS_PALETTES = {
