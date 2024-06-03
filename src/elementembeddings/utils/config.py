@@ -12,6 +12,7 @@ DEFAULT_ELEMENT_EMBEDDINGS = {
     "skipatom": "skipatom_20201009_induced.csv",
     "atomic": "atomic.json",
     "crystallm": "crystallm_v24c.dim512_atom_vectors.csv",
+    "xenonpy": "xenonpy_element_features.csv",
 }
 
 CITATIONS = {
@@ -144,6 +145,7 @@ CITATIONS = {
         "journal={arXiv preprint arXiv:2307.04340},"
         "year={2023}}",
     ],
+    "xenonpy": [],
 }
 
 ELEMENT_GROUPS_PALETTES = {

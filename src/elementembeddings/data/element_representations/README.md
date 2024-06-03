@@ -164,3 +164,10 @@ The following paper describes the details:
 ### CrystaLLM
 
 The following paper describes the details behind the crystal structure generation model which uses large language modelling: [Crystal Structure Generation with Autoregressive Large Language Modeling](https://arxiv.org/abs/2307.04340)
+
+### XenonPy
+
+The XenonPy embedding uses the 58 features which are commonly used in publications that use the [XenonPy package](https://github.com/yoshida-lab/XenonPy).
+See the following publications:
+* [Representation of materials by kernel mean embedding](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.108.134107) 
+* [Crystal structure prediction with machine learning-based element substitution](https://www.sciencedirect.com/science/article/pii/S0927025622002555)
