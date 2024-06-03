@@ -167,4 +167,7 @@ The following paper describes the details behind the crystal structure generatio
 
 ### XenonPy
 
-The XenonPy embedding uses the 58 features which are commonly used in publications that use the [XenonPy package](.
+The XenonPy embedding uses the 58 features which are commonly used in publications that use the [XenonPy package](https://github.com/yoshida-lab/XenonPy).
+See the following publications:
+* [Representation of materials by kernel mean embedding](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.108.134107) 
+* [Crystal structure prediction with machine learning-based element substitution](https://www.sciencedirect.com/science/article/pii/S0927025622002555)
