@@ -37,6 +37,7 @@ setup(
         "umap-learn>=0.5.3",
         "adjustText>=0.8",
         "openTSNE>=1.0.0",
+        "typing-extensions",
     ],
     extras_require={
         "dev": [
