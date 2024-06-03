@@ -54,7 +54,7 @@ setup(
             "pytest-mpl==0.16.1",
         ],
         "docs": [
-            "mkdocs==1.5.3",
+            "mkdocs==1.6.0",
             "mkdocs-material==9.5.16",
             "mkdocstrings ==0.25.1",
             "mkdocstrings-python == 1.9.0",
