@@ -1,6 +1,6 @@
 # Elemental Embeddings
 
-The data contained in this repository are a collection of various elemental representation/embedding schemes. We provide the literature source for these representations as well as the data source for which the files were obtained. A majority of these representations have been obtained from the following repositories:
+The data contained in this repository are a collection of various elemental representation/embedding schemes. We provide the literature source for these representations as well as the data source for which the files were obtained. Some representations have been obtained from the following repositories:
 
 * [lrcfmd/ElMD](https://github.com/lrcfmd/ElMD/tree/master)
 * [Kaaiian/CBFV](https://github.com/Kaaiian/CBFV/tree/master)
@@ -24,7 +24,14 @@ We included `atomic` as a linear representation to generate one-hot vectors corr
 
 The following representations are all vector representations (some are local, some are distributed) and the `Embedding` class will load these representations as they are.
 
-### Magpie
+### cgnf
+
+The following paper describes the implementation of the composition graph neural fingerprint (cgnf) from the node embedding vectors of a pre-trained crystal graph convolution neural network:
+[Synthesizability of materials stoichiometry using semi-supervised learning](https://www.sciencedirect.com/science/article/pii/S2590238524002273)
+
+[Data source](https://github.com/kaist-amsg/Synthesizability-stoi-CGNF/blob/main/cgcnn_hd_rcut4_nn8.element_embedding.json)
+
+### magpie
 
 The following paper describes the details of the Materials Agnostic Platform for Informatics and Exploration (Magpie) framework:
 [A general-purpose machine learning framework for predicting properties of inorganic materials](https://www.nature.com/articles/npjcompumats201628)
@@ -66,21 +73,21 @@ The following paper describes the implementation of mat2vec:
 
 [Data source](https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/mat2vec.csv)
 
-### MatScholar
+### matscholar
 
 The following paper describes the natural language processing implementation of Materials Scholar (matscholar):
 [Named Entity Recognition and Normalization Applied to Large-Scale Information Extraction from the Materials Science Literature](https://pubs.acs.org/doi/abs/10.1021/acs.jcim.9b00470)
 
 [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/matscholar.json)
 
-### MEGnet
+### megnet
 
 The following paper describes the details of the construction of the MatErials Graph Network (MEGNet):
-[Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals](https://doi.org/10.1021/acs.chemmater.9b01294)
+[Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals](https://doi.org/10.1021/acs.chemmater.9b01294). The 16 dimensional vectors are drawn from the atomic weights of a model trained to predict the formation energies of crystalline materials.
 
 [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/megnet16.json)
 
-### Oliynyk
+### oliynyk
 
 The following paper describes the details:
 [High-Throughput Machine-Learning-Driven Synthesis of Full-Heusler Compounds](https://pubs.acs.org/doi/full/10.1021/acs.chemmater.6b02724)
@@ -139,7 +146,7 @@ The 44 features of the embedding vector are formed of the following properties:
 
 * `oliynyk_sc` is a scaled version of the oliynyk embeddings: [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/oliynyk_sc.json)
 
-### Random
+### random
 
 This is a set of 200-dimensional vectors in which the components are randomly generated
 
@@ -152,7 +159,7 @@ mu , sigma = 0 , 1 # mean and standard deviation s = np.random.normal(mu, sigma,
 s = np.random.default_rng(seed=42).normal(mu, sigma, (118,200))
 ```
 
-### SkipAtom
+### skipatom
 
 The following paper describes the details:
 [Distributed representations of atoms and materials for machine learning](https://www.nature.com/articles/s41524-022-00729-3)

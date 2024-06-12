@@ -166,6 +166,14 @@ Please use the [issue tracker](https://github.com/WMD-group/ElementEmbeddings/is
 
 We welcome new contributions to this project. See [the contributing guide](contributing.md) for detailed instructions on how to contribute to our project.
 
+### Add an embedding scheme
+
+The steps required to add a new representation scheme are:
+1. Add data file to [data/element_representations](src/elementembeddings/data/element_representations).
+2. Edit docstring table in [core.py](src/elementembeddings/core.py).
+3. Edit [utils/config.py](src/elementembeddings/utils/config.py) to include the representation in `DEFAULT_ELEMENT_EMBEDDINGS` and `CITATIONS`.
+4. Add the represention to the documentation in the [reference.md](docs/reference.md) file.
+
 ### Developer
 
 * [Anthony Onwuli](https://github.com/AntObi) (Department of Materials, Imperial College London)
