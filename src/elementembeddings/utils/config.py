@@ -13,6 +13,7 @@ DEFAULT_ELEMENT_EMBEDDINGS = {
     "atomic": "atomic.json",
     "crystallm": "crystallm_v24c.dim512_atom_vectors.csv",
     "xenonpy": "xenonpy_element_features.csv",
+    "cgnf": "cgnf.json",
 }
 
 CITATIONS = {
@@ -146,6 +147,18 @@ CITATIONS = {
         "year={2023}}",
     ],
     "xenonpy": [],
+    "cgnf": [
+        "@article{jang2024synthesizability,"
+        "title={Synthesizability of materials stoichiometry "
+        "using semi-supervised learning},"
+        "author={Jang, Jidon and Noh, Juhwan and Zhou, Lan "
+        "and Gu, Geun Ho and Gregoire, John M and Jung, Yousung},"
+        "journal={Matter},"
+        "volume={7},"
+        "number={6},"
+        "pages={2294--2312},"
+        "year={2024}",
+    ],
 }
 
 ELEMENT_GROUPS_PALETTES = {

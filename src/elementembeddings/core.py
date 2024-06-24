@@ -52,14 +52,15 @@ class Embedding(EmbeddingBase):
         | Mat2Vec                 | mat2vec      |
         | Matscholar              | matscholar   |
         | Megnet (16 dimensions)  | megnet16     |
-        | Modified pettifor scale | mod_petti    |
+        | Modified Pettifor scale | mod_petti    |
         | Oliynyk                 | oliynyk      |
         | Oliynyk (scaled)        | oliynyk_sc   |
         | Random (200 dimensions) | random_200   |
         | SkipAtom                | skipatom     |
         | Atomic Number           | atomic       |
-        | Crystallm               | crystallm    |
+        | CrystaLLM               | crystallm    |
         | XenonPy                 | xenonpy      |
+        | Cgnf                    | cgnf         |
 
 
         Args:
