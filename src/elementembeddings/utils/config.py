@@ -149,8 +149,10 @@ CITATIONS = {
     "xenonpy": [],
     "cgnf": [
         "@article{jang2024synthesizability,"
-        "title={Synthesizability of materials stoichiometry using semi-supervised learning},"
-        "author={Jang, Jidon and Noh, Juhwan and Zhou, Lan and Gu, Geun Ho and Gregoire, John M and Jung, Yousung},"
+        "title={Synthesizability of materials stoichiometry "
+        "using semi-supervised learning},"
+        "author={Jang, Jidon and Noh, Juhwan and Zhou, Lan "
+        "and Gu, Geun Ho and Gregoire, John M and Jung, Yousung},"
         "journal={Matter},"
         "volume={7},"
         "number={6},"
