@@ -9,6 +9,7 @@ from adjustText import adjust_text
 
 from .core import Embedding, SpeciesEmbedding
 from .utils.config import ELEMENT_GROUPS_PALETTES
+from .utils.species import get_sign, parse_species
 
 
 def heatmap_plotter(
@@ -89,7 +90,7 @@ def heatmap_plotter(
 
 
 def dimension_plotter(
-    embedding: Embedding,
+    embedding: Union[Embedding, SpeciesEmbedding],
     ax: Optional[plt.axes] = None,
     n_components: int = 2,
     reducer: str = "umap",
@@ -129,39 +130,72 @@ def dimension_plotter(
     if isinstance(embedding, Embedding):
         group_dict = embedding.element_groups_dict
         el_sp_array = np.array(embedding.element_list)
+
+        data = {
+            "x": reduced[:, 0],
+            "y": reduced[:, 1],
+            "element": el_sp_array,
+            "Group": list(group_dict.values()),
+        }
     elif isinstance(embedding, SpeciesEmbedding):
         group_dict = embedding.species_groups_dict
         el_sp_array = np.array(embedding.species_list)
+        ion_type = embedding.ion_type_dict
+        data = {
+            "x": reduced[:, 0],
+            "y": reduced[:, 1],
+            "element": el_sp_array,
+            "Group": list(group_dict.values()),
+            "ion_type": list(ion_type.values()),
+        }
     if reduced.shape[1] == 2:
-        df = pd.DataFrame(
-            {
-                "x": reduced[:, 0],
-                "y": reduced[:, 1],
-                "element": el_sp_array,
-                "Group": list(group_dict.values()),
-            },
-        )
+        df = pd.DataFrame(data)
         if include_species:
             df = df[df["element"].isin(include_species)].reset_index(drop=True)
         if not ax:
             fig, ax = plt.subplots()
         if scatter_params is None:
             scatter_params = {}
-        sns.scatterplot(
-            data=df,
-            x="x",
-            y="y",
-            hue="Group",
-            ax=ax,
-            palette=ELEMENT_GROUPS_PALETTES,
-            **scatter_params,
-        )
+        if isinstance(embedding, SpeciesEmbedding):
+            sns.scatterplot(
+                data=df,
+                x="x",
+                y="y",
+                hue="Group",
+                ax=ax,
+                palette=ELEMENT_GROUPS_PALETTES,
+                style="ion_type",
+                **scatter_params,
+            )
+            # Convert the species to (element, charge) format
+            parsed_species = [parse_species(spec) for spec in df["element"].tolist()]
+            signs = [get_sign(charge) for _, charge in parsed_species]
+
+            species_labels = [
+                rf"$\mathregular{{{element}^{{{abs(charge)}{sign}}}}}}}$"
+                for (element, charge), sign in zip(parsed_species, signs)
+            ]
+
+            texts = [
+                ax.text(df["x"][i], df["y"][i], species_labels[i], fontsize=12)
+                for i in range(len(df))
+            ]
+        elif isinstance(embedding, Embedding):
+            sns.scatterplot(
+                data=df,
+                x="x",
+                y="y",
+                hue="Group",
+                ax=ax,
+                palette=ELEMENT_GROUPS_PALETTES,
+                **scatter_params,
+            )
+            texts = [
+                ax.text(df["x"][i], df["y"][i], df["element"][i], fontsize=12)
+                for i in range(len(df))
+            ]
         ax.set_xlabel("Dimension 1")
         ax.set_ylabel("Dimension 2")
-        texts = [
-            ax.text(df["x"][i], df["y"][i], df["element"][i], fontsize=12)
-            for i in range(len(df))
-        ]
         if adjusttext:
             adjust_text(
                 texts,

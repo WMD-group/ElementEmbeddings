@@ -520,9 +520,9 @@ class SpeciesEmbeddingTest(unittest.TestCase):
         """Test the ion_type_dict attribute."""
         assert isinstance(self.test_species_embedding.ion_type_dict, dict)
         assert len(self.test_species_embedding.ion_type_dict) == 11
-        assert self.test_species_embedding.ion_type_dict["H+"] == "cation"
-        assert self.test_species_embedding.ion_type_dict["H-"] == "anion"
-        assert self.test_species_embedding.ion_type_dict["Pt0+"] == "neutral"
+        assert self.test_species_embedding.ion_type_dict["H+"] == "Cation"
+        assert self.test_species_embedding.ion_type_dict["H-"] == "Anion"
+        assert self.test_species_embedding.ion_type_dict["Pt0+"] == "Neutral"
 
     def test_remove_species(self):
         """Test the remove_species function."""

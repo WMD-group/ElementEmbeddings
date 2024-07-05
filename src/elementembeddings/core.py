@@ -398,18 +398,42 @@ class SpeciesEmbedding(EmbeddingBase):
         """
         if inplace:
             if isinstance(species, str):
-                del self.embeddings[species]
+                try:
+                    del self.embeddings[species]
+                except KeyError:
+                    warnings.warn(
+                        f"{species} is not in the SpeciesEmbedding. "
+                        "Skipping this species.",
+                    )
             elif isinstance(species, list):
                 for sp in species:
-                    del self.embeddings[sp]
+                    try:
+                        del self.embeddings[sp]
+                    except KeyError:
+                        warnings.warn(
+                            f"{sp} is not in the SpeciesEmbedding. "
+                            "Skipping this species.",
+                        )
             return None
         else:
             embeddings_copy = self.embeddings.copy()
             if isinstance(species, str):
-                del embeddings_copy[species]
+                try:
+                    del embeddings_copy[species]
+                except KeyError:
+                    warnings.warn(
+                        f"{species} is not in the SpeciesEmbedding. "
+                        "Skipping this species.",
+                    )
             elif isinstance(species, list):
                 for sp in species:
-                    del embeddings_copy[sp]
+                    try:
+                        del embeddings_copy[sp]
+                    except KeyError:
+                        warnings.warn(
+                            f"{sp} is not in the SpeciesEmbedding. "
+                            "Skipping this species.",
+                        )
             return SpeciesEmbedding(embeddings_copy, self.embedding_name)
 
     @property
@@ -423,11 +447,11 @@ class SpeciesEmbedding(EmbeddingBase):
         for species in self.species_list:
             el, charge = parse_species(species)
             if charge > 0:
-                ion_dict[species] = "cation"
+                ion_dict[species] = "Cation"
             elif charge < 0:
-                ion_dict[species] = "anion"
+                ion_dict[species] = "Anion"
             else:
-                ion_dict[species] = "neutral"
+                ion_dict[species] = "Neutral"
 
         return ion_dict
 
