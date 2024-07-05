@@ -51,3 +51,21 @@ def _parse_species_old(species: str) -> Tuple[str, int]:
         ox_state = -1
 
     return ele, ox_state
+
+
+def get_sign(charge: int) -> str:
+    """Get string representation of a number's sign.
+
+    Args:
+        charge (int): The number whose sign to derive.
+
+    Returns:
+        sign (str): either '+', '-', or '' for neutral.
+
+    """
+    if charge > 0:
+        return "+"
+    elif charge < 0:
+        return "-"
+    else:
+        return ""
