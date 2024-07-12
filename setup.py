@@ -58,7 +58,7 @@ setup(
             "mkdocs-material==9.5.16",
             "mkdocstrings ==0.25.1",
             "mkdocstrings-python == 1.9.0",
-            "mike ==2.0.0",
+            "mike ==2.1.2",
         ],
     },
     classifiers=[
