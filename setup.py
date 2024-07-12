@@ -51,7 +51,7 @@ setup(
             "pyupgrade==3.13.0",
             "autopep8==2.0.2",
             "pytest-cov==5.0.0",
-            "pytest-mpl==0.16.1",
+            "pytest-mpl==0.17.0",
         ],
         "docs": [
             "mkdocs==1.6.0",
