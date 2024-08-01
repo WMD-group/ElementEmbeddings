@@ -1,5 +1,5 @@
 pre-commit ==3.7.1
-black ==24.3.0
+black ==24.4.2
 isort ==5.13.2
 pytest ==8.2.2
 pytest-subtests ==0.10.0
