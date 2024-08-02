@@ -31,6 +31,10 @@ The following paper describes the implementation of the composition graph neural
 
 [Data source](https://github.com/kaist-amsg/Synthesizability-stoi-CGNF/blob/main/cgcnn_hd_rcut4_nn8.element_embedding.json)
 
+### crystallm
+
+The following paper describes the details behind the generative crystal structure model based on a large language model: [Crystal Structure Generation with Autoregressive Large Language Modeling](https://arxiv.org/abs/2307.04340)
+
 ### magpie
 
 The following paper describes the details of the Materials Agnostic Platform for Informatics and Exploration (Magpie) framework:
@@ -165,3 +169,10 @@ The following paper describes the details:
 [Distributed representations of atoms and materials for machine learning](https://www.nature.com/articles/s41524-022-00729-3)
 
 [Data source](https://github.com/lantunes/skipatom/blob/main/data/skipatom_20201009_induced.csv)
+
+### xenonpy
+
+The XenonPy embedding uses the 58 features which are commonly used in publications that use the [XenonPy package](https://github.com/yoshida-lab/XenonPy).
+See the following publications:
+* [Representation of materials by kernel mean embedding](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.108.134107) 
+* [Crystal structure prediction with machine learning-based element substitution](https://www.sciencedirect.com/science/article/pii/S0927025622002555)

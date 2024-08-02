@@ -172,7 +172,7 @@ The steps required to add a new representation scheme are:
 1. Add data file to [data/element_representations](src/elementembeddings/data/element_representations).
 2. Edit docstring table in [core.py](src/elementembeddings/core.py).
 3. Edit [utils/config.py](src/elementembeddings/utils/config.py) to include the representation in `DEFAULT_ELEMENT_EMBEDDINGS` and `CITATIONS`.
-4. Add the represention to the documentation in the [reference.md](docs/reference.md) file.
+4. Update the documentation [reference.md](docs/reference.md) and [README.md](src/elementembeddings/data/README.md).
 
 ### Developer
 
