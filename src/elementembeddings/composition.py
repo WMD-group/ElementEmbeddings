@@ -13,7 +13,7 @@ from scipy.stats import energy_distance, wasserstein_distance
 from sklearn.metrics import DistanceMetric
 from tqdm import tqdm
 
-from .core import Embedding
+from .core import Embedding, SpeciesEmbedding
 from .utils.math import cosine_distance
 
 tqdm.pandas()
@@ -417,3 +417,117 @@ def composition_featuriser(
         raise ValueError(
             msg,
         )
+
+
+class SpeciesCompositionalEmbedding:
+    """Class to handle species compositional embeddings.
+
+    Args:
+    ----
+        formula_dict (dict): A dictionary of the form {species: amount}
+        embedding (Union[str, SpeciesEmbedding]): Either a string name of the embedding
+        or an SpeciesEmbedding instance
+        x (int, optional): The non-stoichiometric amount.
+    """
+
+    def __init__(
+        self, formula_dict: dict, embedding: Union[str, SpeciesEmbedding], x=1
+    ) -> None:
+        """Initialise a SpeciesCompositionalEmbedding instance."""
+        self.embedding = embedding
+
+        # If a string has been passed for embedding, create an Embedding instance
+        if isinstance(embedding, str):
+            self.embedding = SpeciesEmbedding.load_data(embedding)
+
+        self.embedding_name: str = self.embedding.embedding_name
+
+        # Set an attribute for the comp dict
+        self.composition = formula_dict
+
+        # Set an attribute for the number of atoms
+        self._natoms = 0
+        for v in self.composition.values():
+            if v < 0:
+                msg = "Formula cannot contain negative amounts of elements"
+                raise ValueError(msg)
+            self._natoms += abs(v)
+
+        # Set an attribute for the species list
+        self.species_list = list(self.composition.keys())
+        # Set an attribute for the species matrix
+        self.species_matrix = np.zeros(
+            shape=(len(self.composition), len(self.embedding.embeddings["Zn2+"])),
+        )
+        for i, k in enumerate(self.composition.keys()):
+            self.species_matrix[i] = self.embedding.embeddings[k]
+        self.species_matrix = np.nan_to_num(self.species_matrix)
+
+        # Set an attribute for the stoichiometric vector
+        self.stoich_vector = np.array(list(self.composition.values()))
+
+        # Set an attribute for the normalised stoichiometric vector
+        self.norm_stoich_vector = self.stoich_vector / np.sum(self.stoich_vector)
+
+    @property
+    def num_atoms(self) -> float:
+        """Total number of atoms in Composition."""
+        return self._natoms
+
+    def as_dict(self) -> dict:
+        # TO-DO: Need to create a dict representation for the embedding class
+        """Return the SpeciesCompositionalEmbedding class as a dict."""
+        return {
+            "composition": self.composition,
+        }
+
+    @property
+    def fractional_composition(self):
+        """Fractional composition of the Composition."""
+        return {k: v / self._natoms for k, v in self.composition.items()}
+
+    def _mean_feature_vector(self) -> np.ndarray:
+        """Compute a weighted mean feature vector based of the embedding.
+
+        The dimension of the feature vector is the same as the embedding.
+
+        """
+        return np.dot(self.norm_stoich_vector, self.species_matrix)
+
+    def _variance_feature_vector(self) -> np.ndarray:
+        """Compute a weighted variance feature vector."""
+        diff_matrix = self.species_matrix - self._mean_feature_vector()
+
+        diff_matrix = diff_matrix**2
+        return np.dot(self.norm_stoich_vector, diff_matrix)
+
+    def _minpool_feature_vector(self) -> np.ndarray:
+        return np.min(self.species_matrix, axis=0)
+
+    def _maxpool_feature_vector(self) -> np.ndarray:
+        return np.max(self.species_matrix, axis=0)
+
+    def _range_feature_vector(self) -> np.ndarray:
+        return np.ptp(self.species_matrix, axis=0)
+
+    def _sum_feature_vector(self) -> np.ndarray:
+        return np.dot(self.stoich_vector, self.species_matrix)
+
+    def _geometric_mean_feature_vector(self) -> np.ndarray:
+        return np.exp(np.dot(self.norm_stoich_vector, np.log(self.species_matrix)))
+
+    def _harmonic_mean_feature_vector(self) -> np.ndarray:
+        return np.reciprocal(
+            np.dot(self.norm_stoich_vector, np.reciprocal(self.species_matrix)),
+        )
+
+    _stats_functions_dict = {
+        "mean": "_mean_feature_vector",
+        "variance": "_variance_feature_vector",
+        "minpool": "_minpool_feature_vector",
+        "maxpool": "_maxpool_feature_vector",
+        "range": "_range_feature_vector",
+        "sum": "_sum_feature_vector",
+        "geometric_mean": "_geometric_mean_feature_vector",
+        "harmonic_mean": "_harmonic_mean_feature_vector",
+    }
