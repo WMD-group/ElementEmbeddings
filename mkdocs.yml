@@ -30,6 +30,10 @@ nav:
 theme:
   name: material
   custom_dir: docs/.overrides
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - content.code.copy
 
 
 # Customisation

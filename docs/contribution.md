@@ -10,6 +10,14 @@ We are always looking for ways to make `ElementEmbeddings` better and a more use
 * Please use comments liberally when adding nontrivial features, and take the chance to clean up other people's code while looking at it.
 * Add tests wherever possible, and use the test suite to check if you broke anything.
 
+## Add an embedding scheme
+
+The steps required to add a new representation scheme are:
+1. Add data file to [data/element_representations](src/elementembeddings/data/element_representations).
+2. Edit docstring table in [core.py](src/elementembeddings/core.py).
+3. Edit [utils/config.py](src/elementembeddings/utils/config.py) to include the representation in `DEFAULT_ELEMENT_EMBEDDINGS` and `CITATIONS`.
+4. Update the documentation [reference.md](docs/reference.md) and [README.md](src/elementembeddings/data/README.md).
+
 ## Workflow
 
 We follow the [GitHub flow]
