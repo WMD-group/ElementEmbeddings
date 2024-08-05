@@ -44,7 +44,7 @@ setup(
             "pre-commit==3.7.1",
             "black==24.3.0",
             "isort==5.13.2",
-            "pytest==8.2.2",
+            "pytest==8.3.2",
             "pytest-subtests==0.10.0",
             "nbqa==1.7.1",
             "flake8==7.1.0",
