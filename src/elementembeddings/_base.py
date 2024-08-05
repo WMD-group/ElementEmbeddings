@@ -16,6 +16,7 @@ from sklearn.metrics import DistanceMetric
 from sklearn.preprocessing import StandardScaler
 from umap import UMAP
 
+from .utils.config import CITATIONS
 from .utils.math import cosine_distance, cosine_similarity
 from .utils.species import parse_species
 
@@ -119,6 +120,14 @@ class EmbeddingBase(ABC):
         with open(json_path) as f:
             embeddings = json.load(f)
         return EmbeddingBase(embeddings, embedding_name)
+
+    def citation(self):
+        """Return the citation for the embedding."""
+        try:
+            citation = CITATIONS[self.embedding_name]
+            return citation
+        except KeyError:
+            return None
 
     def _is_standardised(self):
         """Check if the embedding is standardised.

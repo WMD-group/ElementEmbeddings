@@ -16,6 +16,10 @@ DEFAULT_ELEMENT_EMBEDDINGS = {
     "cgnf": "cgnf.json",
 }
 
+DEFAULT_SPECIES_EMBEDDINGS = {
+    "skipspecies": "skipspecies_2022_10_28_dim200.csv",
+    "skipspecies_induced": "skipspecies_2022_10_28_induced_dim200.csv",
+}
 CITATIONS = {
     "magpie": [
         "@article{ward2016general,"
@@ -146,7 +150,41 @@ CITATIONS = {
         "journal={arXiv preprint arXiv:2307.04340},"
         "year={2023}}",
     ],
-    "xenonpy": [],
+    "xenonpy": [
+        "@article{liu2021machine,"
+        "title={Machine learning to predict quasicrystals from chemical compositions},"
+        "author={Liu, Chang and Fujita, Erina and "
+        "Katsura, Yukari and Inada, Yuki and Ishikawa, Asuka and "
+        "Tamura, Ryuji and Kimura, Kaoru and Yoshida, Ryo},"
+        "journal={Advanced Materials},"
+        "volume={33},"
+        "number={36},"
+        "pages={2102507},"
+        "year={2021},"
+        "publisher={Wiley Online Library}"
+        "}",
+        "@article{kusaba2022crystal,"
+        "title={Crystal structure prediction with machine "
+        "learning-based element substitution},"
+        "author={Kusaba, Minoru and Liu, Chang and Yoshida, Ryo},"
+        "journal={Computational Materials Science},"
+        "volume={211},"
+        "pages={111496},"
+        "year={2022},"
+        "publisher={Elsevier}"
+        "}",
+        "@article{kusaba2023representation,"
+        "title={Representation of materials by kernel mean embedding},"
+        "author={Kusaba, Minoru and Hayashi, Yoshihiro and "
+        "Liu, Chang and Wakiuchi, Araki and Yoshida, Ryo},"
+        "journal={Physical Review B},"
+        "volume={108},"
+        "number={13},"
+        "pages={134107},"
+        "year={2023},"
+        "publisher={APS}"
+        "}",
+    ],
     "cgnf": [
         "@article{jang2024synthesizability,"
         "title={Synthesizability of materials stoichiometry "
@@ -158,6 +196,42 @@ CITATIONS = {
         "number={6},"
         "pages={2294--2312},"
         "year={2024}",
+    ],
+    "skipspecies": [
+        "@article{Onwuli_Butler_Walsh_2024, "
+        "title={Ionic species representations for materials informatics}, "
+        "DOI={10.26434/chemrxiv-2024-8621l}, "
+        "journal={ChemRxiv}, "
+        "author={Onwuli, Anthony and Butler, Keith T. and Walsh, Aron}, year={2024}} "
+        "This content is a preprint and has not been peer-reviewed.",
+        "@article{antunes2022distributed,"
+        "title={Distributed representations of atoms and materials "
+        "for machine learning},"
+        "author={Antunes, Luis M and Grau-Crespo, Ricardo and Butler, Keith T},"
+        "journal={npj Computational Materials},"
+        "volume={8},"
+        "number={1},"
+        "pages={1--9},"
+        "year={2022},"
+        "publisher={Nature Publishing Group} }",
+    ],
+    "skipspecies_induced": [
+        "@article{Onwuli_Butler_Walsh_2024, "
+        "title={Ionic species representations for materials informatics}, "
+        "DOI={10.26434/chemrxiv-2024-8621l}, "
+        "journal={ChemRxiv}, "
+        "author={Onwuli, Anthony and Butler, Keith T. and Walsh, Aron}, year={2024}} "
+        "This content is a preprint and has not been peer-reviewed.",
+        "@article{antunes2022distributed,"
+        "title={Distributed representations of atoms and materials "
+        "for machine learning},"
+        "author={Antunes, Luis M and Grau-Crespo, Ricardo and Butler, Keith T},"
+        "journal={npj Computational Materials},"
+        "volume={8},"
+        "number={1},"
+        "pages={1--9},"
+        "year={2022},"
+        "publisher={Nature Publishing Group} }",
     ],
 }
 

@@ -18,7 +18,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 from ._base import EmbeddingBase
-from .utils.config import CITATIONS, DEFAULT_ELEMENT_EMBEDDINGS
+from .utils.config import DEFAULT_ELEMENT_EMBEDDINGS, DEFAULT_SPECIES_EMBEDDINGS
 from .utils.io import NumpyEncoder
 from .utils.species import parse_species
 
@@ -268,14 +268,6 @@ class Embedding(EmbeddingBase):
             else:
                 return Embedding(embeddings_copy, self.embedding_name)
 
-    def citation(self) -> List[str]:
-        """Return a citation for the embedding."""
-        try:
-            citation = CITATIONS[self.embedding_name]
-        except KeyError:
-            citation = None
-        return citation
-
     @property
     def element_groups_dict(self) -> Dict[str, str]:
         """Return a dictionary of {element: element type} pairs.
@@ -297,18 +289,52 @@ class SpeciesEmbedding(EmbeddingBase):
     """
 
     @staticmethod
-    def load_data(embedding_name: str):
+    def load_data(embedding_name: str, include_neutral: bool = False):
         """Create a `SpeciesEmbedding` from a preset embedding file.
+
+        The default embeddings are in the table below:
+
+        | **Name**                | **str_name** |
+        |-------------------------|--------------|
+        | SkipSpecies             | skipspecies  |
+        | SkipSpecies (induced)   | skipspecies_induced |
 
         Args:
         ----
-            embedding_name (str): The name of the species representation
+            embedding_name (str): The str_name of the species representation
+            include_neutral (bool): If True, neutral species are
+                included in the embedding
 
         Returns:
         -------
             SpeciesEmbedding :class:`SpeciesEmbedding` instance.
         """
-        raise NotImplementedError
+        if DEFAULT_SPECIES_EMBEDDINGS[embedding_name].endswith(".csv"):
+            embedding = SpeciesEmbedding.from_csv(
+                path.join(
+                    data_directory,
+                    "species_representations",
+                    DEFAULT_SPECIES_EMBEDDINGS[embedding_name],
+                ),
+                embedding_name,
+            )
+            if not include_neutral:
+                embedding.remove_neutral_species(inplace=True)
+            return embedding
+        elif DEFAULT_SPECIES_EMBEDDINGS[embedding_name].endswith(".json"):
+            embedding = SpeciesEmbedding.from_json(
+                path.join(
+                    data_directory,
+                    "species_representations",
+                    DEFAULT_SPECIES_EMBEDDINGS[embedding_name],
+                ),
+                embedding_name,
+            )
+            if not include_neutral:
+                embedding.remove_neutral_species(inplace=True)
+            return embedding
+        else:
+            return None
 
     @staticmethod
     def from_csv(csv_path, embedding_name: Optional[str] = None):
@@ -363,6 +389,21 @@ class SpeciesEmbedding(EmbeddingBase):
     def element_list(self) -> list:
         """Return the elements of the embedding."""
         return list({parse_species(species)[0] for species in self.species_list})
+
+    def remove_neutral_species(self, inplace: bool = False):
+        """Remove neutral species from the SpeciesEmbedding instance.
+
+        Args:
+        ----
+            inplace (bool): If True, neutral species are removed
+                from the SpeciesEmbedding instance.
+            If false, the original SpeciesEmbedding instance is unchanged
+            and a new SpeciesEmbedding instance with the
+                neutral species removed is created.
+
+        """
+        neutral_species = [s for s in self.species_list if parse_species(s)[1] == 0]
+        return self.remove_species(neutral_species, inplace)
 
     def get_element_oxi_states(self, el: str) -> list:
         """Return the oxidation states for a given element.
