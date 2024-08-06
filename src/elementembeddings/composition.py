@@ -457,6 +457,9 @@ class SpeciesCompositionalEmbedding:
 
         # Set an attribute for the species list
         self.species_list = list(self.composition.keys())
+
+        # Set an attribute for the element list
+        self.element_list = list({parse_species(sp)[0] for sp in self.species_list})
         # Set an attribute for the species matrix
         self.species_matrix = np.zeros(
             shape=(len(self.composition), len(self.embedding.embeddings["Zn2+"])),
@@ -710,7 +713,6 @@ def _species_composition_distance(
 
 def species_composition_featuriser(
     data: Union[pd.DataFrame, pd.Series, SpeciesCompositionalEmbedding, list],
-    composition_column: str = "composition",
     embedding: Union[Embedding, str] = "skipspecies",
     stats: Union[str, list] = "mean",
     to_dataframe: bool = False,
