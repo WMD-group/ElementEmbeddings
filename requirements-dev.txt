@@ -2,7 +2,7 @@ pre-commit ==3.7.1
 black ==24.4.2
 isort ==5.13.2
 pytest ==8.3.2
-pytest-subtests ==0.10.0
+pytest-subtests ==0.13.1
 nbqa ==1.7.1
 flake8 ==7.1.0
 pyupgrade ==3.17.0
