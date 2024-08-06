@@ -4,3 +4,4 @@ A collection of jupyter notebook examples using [ElementEmbeddings](https://gith
 
 - **Usage.ipynb**: A walkthrough of the basic features of the `Embedding` class
 - **Composition.ipynb**: A walkthrough of using the `ElementEmbeddings.composition` module
+- **Species.ipynb**: A walkthrough of using the species features present in the `ElementEmbeddings` package

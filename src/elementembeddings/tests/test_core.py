@@ -497,6 +497,7 @@ class SpeciesEmbeddingTest(unittest.TestCase):
         cls.test_species_embedding = SpeciesEmbedding.from_csv(
             TEST_SPECIES_EMBEDDING_CSV
         )
+        cls.test_skipspecies = SpeciesEmbedding.load_data("skipspecies")
 
     def test_species_list(self):
         """Test the species_list attribute."""
@@ -576,3 +577,8 @@ class SpeciesEmbeddingTest(unittest.TestCase):
             "Z_2",
             "pearson",
         ]
+
+    def test_get_element_oxi_states(self):
+        """Test the get_element_oxi_states function."""
+        assert isinstance(self.test_skipspecies.get_element_oxi_states("H"), list)
+        assert self.test_skipspecies.get_element_oxi_states("H") == [-1, 1]

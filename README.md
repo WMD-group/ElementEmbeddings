@@ -180,6 +180,9 @@ The steps required to add a new representation scheme are:
 
 
 ## References
+
+[A. Onwuli et al, "Ionic species representations for materials informatics"](https://chemrxiv.org/engage/chemrxiv/article-details/66acbd865101a2ffa8eaa181)
+
 [H. Park et al, "Mapping inorganic crystal chemical space" *Faraday Discuss.* (2024)](https://pubs.rsc.org/en/content/articlelanding/2024/fd/d4fd00063c)
 
 [A. Onwuli et al, "Element similarity in high-dimensional materials representations" *Digital Discovery* **2**, 1558 (2023)](https://pubs.rsc.org/en/content/articlelanding/2023/dd/d3dd00121k)
