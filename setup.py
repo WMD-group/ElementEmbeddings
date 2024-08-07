@@ -5,7 +5,7 @@ from setuptools import find_namespace_packages, setup
 
 module_dir = os.path.dirname(os.path.abspath(__file__))
 
-VERSION = "0.5"
+VERSION = "0.6"
 DESCRIPTION = "Element Embeddings"
 with open(os.path.join(module_dir, "README.md"), encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
@@ -25,6 +25,7 @@ setup(
     package_data={
         "elementembeddings.data.element_representations": ["*.json", "*.csv"],
         "elementembeddings.data.element_data": ["*.json", "*.txt"],
+        "elementembeddings.data.species_representations": ["*.json", "*.csv"],
     },
     test_suite="elementembeddings.tests.test",
     install_requires=[
@@ -59,6 +60,7 @@ setup(
             "mkdocstrings",
             "mkdocstrings-python",
             "mike",
+            "mkdocs-jupyter",
         ],
     },
     classifiers=[
