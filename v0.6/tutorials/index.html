@@ -1,0 +1,1280 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Anthony Onwuli">
+      
+      
+        <link rel="canonical" href="https://wmd-group.github.io/ElementEmbeddings/v0.6/tutorials/">
+      
+      
+        <link rel="prev" href="../python_api/utils/species/">
+      
+      
+        <link rel="next" href="../tutorial/usage/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>Simple usage - ElementEmbeddings</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#elementembeddings" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version.
+  <a href="../..">
+    <strong>Click here to go to latest.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),outdated=__md_get("__outdated",sessionStorage);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ElementEmbeddings" class="md-header__button md-logo" aria-label="ElementEmbeddings" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ElementEmbeddings
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Simple usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/WMD-group/ElementEmbeddings" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ElementEmbeddings
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ElementEmbeddings" class="md-nav__button md-logo" aria-label="ElementEmbeddings" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    ElementEmbeddings
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/WMD-group/ElementEmbeddings" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ElementEmbeddings
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Python package
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Python package
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/composition/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Composition module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/plotter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plotter module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Utility module
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Utility module
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/utils/io/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    io
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/utils/math/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Math
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_api/utils/species/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Species
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorial
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorial
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Simple usage
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Simple usage
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#elementembeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      ElementEmbeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ElementEmbeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plotting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compositions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compositions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using the ElementEmbeddings package
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/composition/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using the composition module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/species/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Interacting with ionic species representations using ElementEmbeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Embedding Schemes
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Embedding Schemes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../embeddings/element/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Element Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../embeddings/species/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Species Embeddings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contributing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/WMD-group/ElementEmbeddings/issues" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Issue Tracker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#elementembeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      ElementEmbeddings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ElementEmbeddings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plotting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compositions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compositions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+
+
+                  
+
+
+  <h1>Simple usage</h1>
+
+<p>Here we will demonstrate how to use some of <code>ElementEmbeddings</code>'s features. For full worked examples of using the package, please refer to the Jupyter notebooks in the <a href="https://github.com/WMD-group/ElementEmbeddings/tree/main/examples">examples section of the Github repo</a>.</p>
+<h2 id="elementembeddings">ElementEmbeddings</h2>
+<p>The <code>Embedding</code> class lies at the heart of the package. It handles elemental representation data and enables analysis and visualisation.</p>
+<p>For simple usage, you can instantiate an Embedding object using one of the embeddings in the <a href="src/elementembeddings/data/element_representations/README.md">data directory</a>. For this example, let's use the magpie elemental representation.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Import the class</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">elementembeddings.core</span> <span class="kn">import</span> <span class="n">Embedding</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Load the magpie data</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">magpie</span> <span class="o">=</span> <span class="n">Embedding</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;magpie&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>We can access some of the properties of the <code>Embedding</code> class. For example, we can find the dimensions of the elemental representation and the list of elements for which an embedding exists.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Print out some of the properties of the ElementEmbeddings class</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The magpie representation has embeddings of dimension </span><span class="si">{</span><span class="n">magpie</span><span class="o">.</span><span class="n">dim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> 
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The magpie representation contains these elements: </span><span class="se">\n</span><span class="s1"> </span><span class="si">{</span><span class="n">magpie</span><span class="o">.</span><span class="n">element_list</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># prints out all the elements considered for this representation</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The magpie representation contains these features: </span><span class="se">\n</span><span class="s1"> </span><span class="si">{</span><span class="n">magpie</span><span class="o">.</span><span class="n">feature_labels</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># Prints out the feature labels of the chosen representation</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">The</span> <span class="n">magpie</span> <span class="n">representation</span> <span class="n">has</span> <span class="n">embeddings</span> <span class="n">of</span> <span class="n">dimension</span> <span class="mi">22</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">The</span> <span class="n">magpie</span> <span class="n">representation</span> <span class="n">contains</span> <span class="n">these</span> <span class="n">elements</span><span class="p">:</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;He&#39;</span><span class="p">,</span> <span class="s1">&#39;Li&#39;</span><span class="p">,</span> <span class="s1">&#39;Be&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;Ne&#39;</span><span class="p">,</span> <span class="s1">&#39;Na&#39;</span><span class="p">,</span> <span class="s1">&#39;Mg&#39;</span><span class="p">,</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Si&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl&#39;</span><span class="p">,</span> <span class="s1">&#39;Ar&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;Ca&#39;</span><span class="p">,</span> <span class="s1">&#39;Sc&#39;</span><span class="p">,</span> <span class="s1">&#39;Ti&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;Cr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mn&#39;</span><span class="p">,</span> <span class="s1">&#39;Fe&#39;</span><span class="p">,</span> <span class="s1">&#39;Co&#39;</span><span class="p">,</span> <span class="s1">&#39;Ni&#39;</span><span class="p">,</span> <span class="s1">&#39;Cu&#39;</span><span class="p">,</span> <span class="s1">&#39;Zn&#39;</span><span class="p">,</span> <span class="s1">&#39;Ga&#39;</span><span class="p">,</span> <span class="s1">&#39;Ge&#39;</span><span class="p">,</span> <span class="s1">&#39;As&#39;</span><span class="p">,</span> <span class="s1">&#39;Se&#39;</span><span class="p">,</span> <span class="s1">&#39;Br&#39;</span><span class="p">,</span> <span class="s1">&#39;Kr&#39;</span><span class="p">,</span> <span class="s1">&#39;Rb&#39;</span><span class="p">,</span> <span class="s1">&#39;Sr&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Zr&#39;</span><span class="p">,</span> <span class="s1">&#39;Nb&#39;</span><span class="p">,</span> <span class="s1">&#39;Mo&#39;</span><span class="p">,</span> <span class="s1">&#39;Tc&#39;</span><span class="p">,</span> <span class="s1">&#39;Ru&#39;</span><span class="p">,</span> <span class="s1">&#39;Rh&#39;</span><span class="p">,</span> <span class="s1">&#39;Pd&#39;</span><span class="p">,</span> <span class="s1">&#39;Ag&#39;</span><span class="p">,</span> <span class="s1">&#39;Cd&#39;</span><span class="p">,</span> <span class="s1">&#39;In&#39;</span><span class="p">,</span> <span class="s1">&#39;Sn&#39;</span><span class="p">,</span> <span class="s1">&#39;Sb&#39;</span><span class="p">,</span> <span class="s1">&#39;Te&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;Xe&#39;</span><span class="p">,</span> <span class="s1">&#39;Cs&#39;</span><span class="p">,</span> <span class="s1">&#39;Ba&#39;</span><span class="p">,</span> <span class="s1">&#39;La&#39;</span><span class="p">,</span> <span class="s1">&#39;Ce&#39;</span><span class="p">,</span> <span class="s1">&#39;Pr&#39;</span><span class="p">,</span> <span class="s1">&#39;Nd&#39;</span><span class="p">,</span> <span class="s1">&#39;Pm&#39;</span><span class="p">,</span> <span class="s1">&#39;Sm&#39;</span><span class="p">,</span> <span class="s1">&#39;Eu&#39;</span><span class="p">,</span> <span class="s1">&#39;Gd&#39;</span><span class="p">,</span> <span class="s1">&#39;Tb&#39;</span><span class="p">,</span> <span class="s1">&#39;Dy&#39;</span><span class="p">,</span> <span class="s1">&#39;Ho&#39;</span><span class="p">,</span> <span class="s1">&#39;Er&#39;</span><span class="p">,</span> <span class="s1">&#39;Tm&#39;</span><span class="p">,</span> <span class="s1">&#39;Yb&#39;</span><span class="p">,</span> <span class="s1">&#39;Lu&#39;</span><span class="p">,</span> <span class="s1">&#39;Hf&#39;</span><span class="p">,</span> <span class="s1">&#39;Ta&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="s1">&#39;Re&#39;</span><span class="p">,</span> <span class="s1">&#39;Os&#39;</span><span class="p">,</span> <span class="s1">&#39;Ir&#39;</span><span class="p">,</span> <span class="s1">&#39;Pt&#39;</span><span class="p">,</span> <span class="s1">&#39;Au&#39;</span><span class="p">,</span> <span class="s1">&#39;Hg&#39;</span><span class="p">,</span> <span class="s1">&#39;Tl&#39;</span><span class="p">,</span> <span class="s1">&#39;Pb&#39;</span><span class="p">,</span> <span class="s1">&#39;Bi&#39;</span><span class="p">,</span> <span class="s1">&#39;Po&#39;</span><span class="p">,</span> <span class="s1">&#39;At&#39;</span><span class="p">,</span> <span class="s1">&#39;Rn&#39;</span><span class="p">,</span> <span class="s1">&#39;Fr&#39;</span><span class="p">,</span> <span class="s1">&#39;Ra&#39;</span><span class="p">,</span> <span class="s1">&#39;Ac&#39;</span><span class="p">,</span> <span class="s1">&#39;Th&#39;</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">,</span> <span class="s1">&#39;U&#39;</span><span class="p">,</span> <span class="s1">&#39;Np&#39;</span><span class="p">,</span> <span class="s1">&#39;Pu&#39;</span><span class="p">,</span> <span class="s1">&#39;Am&#39;</span><span class="p">,</span> <span class="s1">&#39;Cm&#39;</span><span class="p">,</span> <span class="s1">&#39;Bk&#39;</span><span class="p">]</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">The</span> <span class="n">magpie</span> <span class="n">representation</span> <span class="n">contains</span> <span class="n">these</span> <span class="n">features</span><span class="p">:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">[</span><span class="s1">&#39;Number&#39;</span><span class="p">,</span> <span class="s1">&#39;MendeleevNumber&#39;</span><span class="p">,</span> <span class="s1">&#39;AtomicWeight&#39;</span><span class="p">,</span> <span class="s1">&#39;MeltingT&#39;</span><span class="p">,</span> <span class="s1">&#39;Column&#39;</span><span class="p">,</span> <span class="s1">&#39;Row&#39;</span><span class="p">,</span> <span class="s1">&#39;CovalentRadius&#39;</span><span class="p">,</span> <span class="s1">&#39;Electronegativity&#39;</span><span class="p">,</span> <span class="s1">&#39;NsValence&#39;</span><span class="p">,</span> <span class="s1">&#39;NpValence&#39;</span><span class="p">,</span> <span class="s1">&#39;NdValence&#39;</span><span class="p">,</span> <span class="s1">&#39;NfValence&#39;</span><span class="p">,</span> <span class="s1">&#39;NValence&#39;</span><span class="p">,</span> <span class="s1">&#39;NsUnfilled&#39;</span><span class="p">,</span> <span class="s1">&#39;NpUnfilled&#39;</span><span class="p">,</span> <span class="s1">&#39;NdUnfilled&#39;</span><span class="p">,</span> <span class="s1">&#39;NfUnfilled&#39;</span><span class="p">,</span> <span class="s1">&#39;NUnfilled&#39;</span><span class="p">,</span> <span class="s1">&#39;GSvolume_pa&#39;</span><span class="p">,</span> <span class="s1">&#39;GSbandgap&#39;</span><span class="p">,</span> <span class="s1">&#39;GSmagmom&#39;</span><span class="p">,</span> <span class="s1">&#39;SpaceGroupNumber&#39;</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="plotting">Plotting</h3>
+<p>We can quickly generate heatmaps of distance/similarity measures between the element vectors using <code>heatmap_plotter</code> and plot the representations in two dimensions using the <code>dimension_plotter</code> from the plotter module. Before we do that, we will standardise the embedding using the <code>standardise</code> method available to the Embedding class</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">elementembeddings.plotter</span> <span class="kn">import</span> <span class="n">heatmap_plotter</span><span class="p">,</span> <span class="n">dimension_plotter</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">magpie</span><span class="o">.</span><span class="n">standardise</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Standardises the representation</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">heatmap_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;vmin&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;vmax&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">heatmap_plotter</span><span class="p">(</span><span class="n">embedding</span><span class="o">=</span><span class="n">magpie</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine_similarity&quot;</span><span class="p">,</span><span class="n">show_axislabels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues_r&quot;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">heatmap_params</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Magpie cosine similarities&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="Magpie cosine similarity heatmap" src="../images/magpie_cosine_sim_heatmap.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">reducer_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;n_neighbors&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;random_state&quot;</span><span class="p">:</span><span class="mi">42</span><span class="p">}</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">scatter_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">}</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">dimension_plotter</span><span class="p">(</span><span class="n">embedding</span><span class="o">=</span><span class="n">magpie</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="s2">&quot;umap&quot;</span><span class="p">,</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">adjusttext</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">reducer_params</span><span class="o">=</span><span class="n">reducer_params</span><span class="p">,</span> <span class="n">scatter_params</span><span class="o">=</span><span class="n">scatter_params</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Magpie UMAP (n_neighbours=30)&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center right&quot;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="Magpie UMAP scatter plot" src="../images/magpie_umap.png" /></p>
+<h3 id="compositions">Compositions</h3>
+<p>The package can also be used to featurise compositions. Your data could be a list of formula strings or a pandas dataframe of the following format:</p>
+<table>
+<thead>
+<tr>
+<th>formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CsPbI3</td>
+</tr>
+<tr>
+<td>Fe2O3</td>
+</tr>
+<tr>
+<td>NaCl</td>
+</tr>
+<tr>
+<td>ZnS</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>composition_featuriser</code> function can be used to featurise the data. The compositions can be featurised using different representation schemes and different types of pooling through the <code>embedding</code> and <code>stats</code> arguments respectively.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">elementembeddings.composition</span> <span class="kn">import</span> <span class="n">composition_featuriser</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">df_featurised</span> <span class="o">=</span> <span class="n">composition_featuriser</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="s2">&quot;magpie&quot;</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span><span class="s2">&quot;sum&quot;</span><span class="p">])</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">df_featurised</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>formula</th>
+<th>mean_Number</th>
+<th>mean_MendeleevNumber</th>
+<th>mean_AtomicWeight</th>
+<th>mean_MeltingT</th>
+<th>mean_Column</th>
+<th>mean_Row</th>
+<th>mean_CovalentRadius</th>
+<th>mean_Electronegativity</th>
+<th>mean_NsValence</th>
+<th>mean_NpValence</th>
+<th>mean_NdValence</th>
+<th>mean_NfValence</th>
+<th>mean_NValence</th>
+<th>mean_NsUnfilled</th>
+<th>mean_NpUnfilled</th>
+<th>mean_NdUnfilled</th>
+<th>mean_NfUnfilled</th>
+<th>mean_NUnfilled</th>
+<th>mean_GSvolume_pa</th>
+<th>mean_GSbandgap</th>
+<th>mean_GSmagmom</th>
+<th>mean_SpaceGroupNumber</th>
+<th>sum_Number</th>
+<th>sum_MendeleevNumber</th>
+<th>sum_AtomicWeight</th>
+<th>sum_MeltingT</th>
+<th>sum_Column</th>
+<th>sum_Row</th>
+<th>sum_CovalentRadius</th>
+<th>sum_Electronegativity</th>
+<th>sum_NsValence</th>
+<th>sum_NpValence</th>
+<th>sum_NdValence</th>
+<th>sum_NfValence</th>
+<th>sum_NValence</th>
+<th>sum_NsUnfilled</th>
+<th>sum_NpUnfilled</th>
+<th>sum_NdUnfilled</th>
+<th>sum_NfUnfilled</th>
+<th>sum_NUnfilled</th>
+<th>sum_GSvolume_pa</th>
+<th>sum_GSbandgap</th>
+<th>sum_GSmagmom</th>
+<th>sum_SpaceGroupNumber</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CsPbI3</td>
+<td>59.2</td>
+<td>74.8</td>
+<td>144.16377238</td>
+<td>412.55</td>
+<td>13.2</td>
+<td>5.4</td>
+<td>161.39999999999998</td>
+<td>2.22</td>
+<td>1.8</td>
+<td>3.4</td>
+<td>8.0</td>
+<td>2.8000000000000003</td>
+<td>16.0</td>
+<td>0.2</td>
+<td>1.4</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.6</td>
+<td>54.584</td>
+<td>0.6372</td>
+<td>0.0</td>
+<td>129.20000000000002</td>
+<td>296.0</td>
+<td>374.0</td>
+<td>720.8188619</td>
+<td>2062.75</td>
+<td>66.0</td>
+<td>27.0</td>
+<td>807.0</td>
+<td>11.100000000000001</td>
+<td>9.0</td>
+<td>17.0</td>
+<td>40.0</td>
+<td>14.0</td>
+<td>80.0</td>
+<td>1.0</td>
+<td>7.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>8.0</td>
+<td>272.92</td>
+<td>3.186</td>
+<td>0.0</td>
+<td>646.0</td>
+</tr>
+<tr>
+<td>Fe2O3</td>
+<td>15.2</td>
+<td>74.19999999999999</td>
+<td>31.937640000000002</td>
+<td>757.2800000000001</td>
+<td>12.8</td>
+<td>2.8</td>
+<td>92.4</td>
+<td>2.7960000000000003</td>
+<td>2.0</td>
+<td>2.4</td>
+<td>2.4000000000000004</td>
+<td>0.0</td>
+<td>6.8</td>
+<td>0.0</td>
+<td>1.2</td>
+<td>1.6</td>
+<td>0.0</td>
+<td>2.8</td>
+<td>9.755</td>
+<td>0.0</td>
+<td>0.8442651200000001</td>
+<td>98.80000000000001</td>
+<td>76.0</td>
+<td>371.0</td>
+<td>159.6882</td>
+<td>3786.4</td>
+<td>64.0</td>
+<td>14.0</td>
+<td>462.0</td>
+<td>13.98</td>
+<td>10.0</td>
+<td>12.0</td>
+<td>12.0</td>
+<td>0.0</td>
+<td>34.0</td>
+<td>0.0</td>
+<td>6.0</td>
+<td>8.0</td>
+<td>0.0</td>
+<td>14.0</td>
+<td>48.775000000000006</td>
+<td>0.0</td>
+<td>4.2213256</td>
+<td>494.0</td>
+</tr>
+<tr>
+<td>NaCl</td>
+<td>14.0</td>
+<td>48.0</td>
+<td>29.221384640000004</td>
+<td>271.235</td>
+<td>9.0</td>
+<td>3.0</td>
+<td>134.0</td>
+<td>2.045</td>
+<td>1.5</td>
+<td>2.5</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>4.0</td>
+<td>0.5</td>
+<td>0.5</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>26.87041666665</td>
+<td>1.2465</td>
+<td>0.0</td>
+<td>146.5</td>
+<td>28.0</td>
+<td>96.0</td>
+<td>58.44276928000001</td>
+<td>542.47</td>
+<td>18.0</td>
+<td>6.0</td>
+<td>268.0</td>
+<td>4.09</td>
+<td>3.0</td>
+<td>5.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>8.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>2.0</td>
+<td>53.7408333333</td>
+<td>2.493</td>
+<td>0.0</td>
+<td>293.0</td>
+</tr>
+<tr>
+<td>ZnS</td>
+<td>23.0</td>
+<td>78.5</td>
+<td>48.7225</td>
+<td>540.52</td>
+<td>14.0</td>
+<td>3.5</td>
+<td>113.5</td>
+<td>2.115</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>5.0</td>
+<td>0.0</td>
+<td>9.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>19.8734375</td>
+<td>1.101</td>
+<td>0.0</td>
+<td>132.0</td>
+<td>46.0</td>
+<td>157.0</td>
+<td>97.445</td>
+<td>1081.04</td>
+<td>28.0</td>
+<td>7.0</td>
+<td>227.0</td>
+<td>4.23</td>
+<td>4.0</td>
+<td>4.0</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>18.0</td>
+<td>0.0</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>2.0</td>
+<td>39.746875</td>
+<td>2.202</td>
+<td>0.0</td>
+<td>264.0</td>
+</tr>
+</tbody>
+</table>
+<p>The returned dataframe contains the mean- and sum-pooled features of the magpie representation for the four formulas.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

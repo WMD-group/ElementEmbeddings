@@ -25,5 +25,12 @@
     "version": "0.3",
     "title": "0.3",
     "aliases": []
+  },
+  {
+    "version": "v0.6",
+    "title": "v0.6",
+    "aliases": [
+      "stable"
+    ]
   }
 ]
