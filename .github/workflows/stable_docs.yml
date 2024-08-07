@@ -22,6 +22,7 @@ jobs:
           python -m pip install -e ".[dev,docs]"
       - name: Setup Docs Deploy
         run: |
+          git fetch origin gh-pages --depth=1
           git config --global user.name "Docs Deploy"
           git config --global user.email "docs.deploy@example.co.uk"
       - name: Build Docs Website
