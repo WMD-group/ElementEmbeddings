@@ -21,5 +21,6 @@ jobs:
         run: |
           git config --global user.name "Docs Deploy"
           git config --global user.email "docs.deploy@example.co.uk"
+          
       - name: Build Docs Website
-        run: mike deploy --push develop
+        run: mike deploy --push main latest
