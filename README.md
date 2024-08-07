@@ -11,7 +11,7 @@
 [![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://wmd-group.github.io/ElementEmbeddings/)
 ![python version](https://img.shields.io/pypi/pyversions/elementembeddings)
 
-The **Element Embeddings** package provides high-level tools for analysing elemental
+The **Element Embeddings** package provides high-level tools for analysing elemental and ionic species
 embeddings data. This primarily involves visualising the correlation between
 embedding schemes using different statistical measures.
 
@@ -55,7 +55,7 @@ To clone the repository and make a local installation, run the following command
 ```bash
 git clone https://github.com/WMD-group/ElementEmbeddings.git
 cd ElementEmbeddings
-pip install  -e .
+pip install  -e ".[docs,dev]"
 ```
 
 With -e pip will create links to the source folder so that changes to the code will be immediately reflected on the PATH.
@@ -172,7 +172,7 @@ The steps required to add a new representation scheme are:
 1. Add data file to [data/element_representations](src/elementembeddings/data/element_representations).
 2. Edit docstring table in [core.py](src/elementembeddings/core.py).
 3. Edit [utils/config.py](src/elementembeddings/utils/config.py) to include the representation in `DEFAULT_ELEMENT_EMBEDDINGS` and `CITATIONS`.
-4. Update the documentation [reference.md](docs/reference.md) and [README.md](src/elementembeddings/data/README.md).
+4. Update the documentation [reference.md](docs/reference.md) and [README.md](src/elementembeddings/data/element_representations/README.md).
 
 ### Developer
 
