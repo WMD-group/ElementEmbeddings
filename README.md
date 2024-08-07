@@ -8,6 +8,7 @@
 [![codecov](https://codecov.io/gh/WMD-group/ElementEmbeddings/branch/main/graph/badge.svg?token=OCMIM5SHL0)](https://codecov.io/gh/WMD-group/ElementEmbeddings)
 [![DOI](https://zenodo.org/badge/493285385.svg)](https://zenodo.org/badge/latestdoi/493285385)
 [![PyPI](https://img.shields.io/pypi/v/ElementEmbeddings)](https://pypi.org/project/ElementEmbeddings/)
+[![Conda](https://anaconda.org/conda-forge/elementembeddings/badges/version.svg)](https://anaconda.org/conda-forge/elementembeddings)
 [![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://wmd-group.github.io/ElementEmbeddings/)
 ![python version](https://img.shields.io/pypi/pyversions/elementembeddings)
 
@@ -40,6 +41,12 @@ The latest stable release can be installed via pip using:
 
 ```bash
 pip install ElementEmbeddings
+```
+
+Alternatively, ElementEmbeddings is available via conda through the conda-forge channel on Anaconda Cloud:
+
+```bash
+conda install -c conda-forge elementembeddings
 ```
 
 For installing the development or documentation dependencies via pip:
