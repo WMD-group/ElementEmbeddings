@@ -296,8 +296,8 @@ class SpeciesEmbedding(EmbeddingBase):
 
         | **Name**                | **str_name** |
         |-------------------------|--------------|
-        | SkipSpecies             | skipspecies  |
-        | SkipSpecies (induced)   | skipspecies_induced |
+        | SkipSpecies (200 dim, MPv2022)             | skipspecies  |
+        | SkipSpecies (induced, 200 dim, MPv2022)   | skipspecies_induced |
 
         Args:
         ----

@@ -1,4 +1,5 @@
 """Configuration variables for ElementEmbeddings."""
+
 DEFAULT_ELEMENT_EMBEDDINGS = {
     "magpie": "magpie.csv",
     "magpie_sc": "magpie_sc.json",
