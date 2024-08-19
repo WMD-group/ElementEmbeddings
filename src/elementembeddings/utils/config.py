@@ -1,5 +1,7 @@
 """Configuration variables for ElementEmbeddings."""
 
+from __future__ import annotations
+
 DEFAULT_ELEMENT_EMBEDDINGS = {
     "magpie": "magpie.csv",
     "magpie_sc": "magpie_sc.json",

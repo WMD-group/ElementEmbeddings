@@ -1,4 +1,7 @@
 """Test the classes and functions in the composition module."""
+
+from __future__ import annotations
+
 import unittest
 
 import numpy as np
@@ -55,8 +58,7 @@ class TestCompositionalEmbedding(unittest.TestCase):
         """Set up the test formulas."""
         self.formulas = ["Sr3Sc2(GeO4)3", "Fe2O3", "Li7La3ZrO12", "CsPbI3", "CsPbI-3"]
         self.valid_magpie_compositions = [
-            composition.CompositionalEmbedding(formula=formula, embedding="magpie")
-            for formula in self.formulas[:3]
+            composition.CompositionalEmbedding(formula=formula, embedding="magpie") for formula in self.formulas[:3]
         ]
         self.stats = [
             "mean",
@@ -76,7 +78,7 @@ class TestCompositionalEmbedding(unittest.TestCase):
         assert Fe2O3_magpie.formula == "Fe2O3"
         assert Fe2O3_magpie.embedding_name == "magpie"
         assert isinstance(Fe2O3_magpie.composition, dict)
-        assert {"Fe": 2, "O": 3} == Fe2O3_magpie.composition
+        assert Fe2O3_magpie.composition == {"Fe": 2, "O": 3}
         assert Fe2O3_magpie.num_atoms == 5
         assert Fe2O3_magpie.fractional_composition == {"Fe": 0.4, "O": 0.6}
         assert Fe2O3_magpie.embedding.dim == 22
@@ -207,9 +209,7 @@ class TestSpeciesCompositionalEmbedding(unittest.TestCase):
         ]
 
         self.valid_skipspecies_compositions = [
-            composition.SpeciesCompositionalEmbedding(
-                formula_dict=comp, embedding="skipspecies"
-            )
+            composition.SpeciesCompositionalEmbedding(formula_dict=comp, embedding="skipspecies")
             for comp in self.compositions
         ]
 
@@ -252,9 +252,7 @@ class TestSpeciesCompositionalEmbedding(unittest.TestCase):
     def test_species_composition_featuriser(self):
         """Test the composition featuriser function."""
         featurised_comps = composition.species_composition_featuriser(self.compositions)
-        featurised_comps_df = composition.species_composition_featuriser(
-            self.compositions, to_dataframe=True
-        )
+        featurised_comps_df = composition.species_composition_featuriser(self.compositions, to_dataframe=True)
 
         assert isinstance(
             featurised_comps,

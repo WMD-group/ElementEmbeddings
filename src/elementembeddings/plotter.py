@@ -1,5 +1,6 @@
 """Provides the plotting functions for visualising Embeddings."""
-from typing import Optional, Union
+
+from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,11 +14,11 @@ from .utils.species import get_sign, parse_species
 
 
 def heatmap_plotter(
-    embedding: Union[Embedding, SpeciesEmbedding],
+    embedding: Embedding | SpeciesEmbedding,
     metric: str,
     cmap: str = "Blues",
     sortaxisby: str = "mendeleev",
-    ax: Optional[plt.axes] = None,
+    ax: plt.axes | None = None,
     show_axislabels: bool = True,
     **kwargs,
 ):
@@ -90,14 +91,14 @@ def heatmap_plotter(
 
 
 def dimension_plotter(
-    embedding: Union[Embedding, SpeciesEmbedding],
-    ax: Optional[plt.axes] = None,
+    embedding: Embedding | SpeciesEmbedding,
+    ax: plt.axes | None = None,
     n_components: int = 2,
     reducer: str = "umap",
     adjusttext: bool = True,
-    reducer_params: Optional[dict] = None,
-    scatter_params: Optional[dict] = None,
-    include_species: Optional[list] = None,
+    reducer_params: dict | None = None,
+    scatter_params: dict | None = None,
+    include_species: list | None = None,
 ):
     """Plot the reduced dimensions of the embeddings.
 
@@ -176,10 +177,7 @@ def dimension_plotter(
                 for (element, charge), sign in zip(parsed_species, signs)
             ]
 
-            texts = [
-                ax.text(df["x"][i], df["y"][i], species_labels[i], fontsize=12)
-                for i in range(len(df))
-            ]
+            texts = [ax.text(df["x"][i], df["y"][i], species_labels[i], fontsize=12) for i in range(len(df))]
         elif isinstance(embedding, Embedding):
             sns.scatterplot(
                 data=df,
@@ -190,10 +188,7 @@ def dimension_plotter(
                 palette=ELEMENT_GROUPS_PALETTES,
                 **scatter_params,
             )
-            texts = [
-                ax.text(df["x"][i], df["y"][i], df["element"][i], fontsize=12)
-                for i in range(len(df))
-            ]
+            texts = [ax.text(df["x"][i], df["y"][i], df["element"][i], fontsize=12) for i in range(len(df))]
         ax.set_xlabel("Dimension 1")
         ax.set_ylabel("Dimension 2")
         if adjusttext:

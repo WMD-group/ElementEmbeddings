@@ -1,10 +1,14 @@
 """Test the core module of AtomicEmbeddings."""
+
+from __future__ import annotations
+
 import copy
 import os
 import unittest
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from elementembeddings.core import Embedding, SpeciesEmbedding
 
@@ -335,9 +339,7 @@ class EmbeddingTest(unittest.TestCase):
         }
         assert magpie.element_groups_dict == group_dict
         # Check pair creation
-        assert (
-            len(list(magpie.create_pairs())) == 4753
-        ), "Incorrect number of pairs returned"
+        assert len(list(magpie.create_pairs())) == 4753, "Incorrect number of pairs returned"
         assert "H" not in magpie.remove_elements("H").element_list
         assert isinstance(magpie.citation(), list)
         assert isinstance(magpie.citation()[0], str)
@@ -354,7 +356,9 @@ class EmbeddingTest(unittest.TestCase):
         assert "H" in magpie.as_dataframe().index.tolist()
         assert isinstance(magpie.as_dataframe(columns="elements"), pd.DataFrame)
         assert "H" in magpie.as_dataframe(columns="elements").columns.tolist()
-        self.assertRaises(ValueError, magpie.as_dataframe, columns="test")
+
+        with pytest.raises(ValueError):
+            magpie.as_dataframe(columns="test")
 
     def test_to(self):
         """Test the to method."""
@@ -393,33 +397,18 @@ class EmbeddingTest(unittest.TestCase):
             self.test_magpie.compute_correlation_metric("H", "O", metric="spearman"),
             float,
         )
-
-        self.assertRaises(
-            ValueError,
-            self.test_skipatom.compute_distance_metric,
-            "He",
-            "O",
-        )
-        self.assertRaises(
-            ValueError,
-            self.test_skipatom.compute_distance_metric,
-            "O",
-            "He",
-        )
-        self.assertRaises(
-            ValueError,
-            self.test_skipatom.compute_distance_metric,
-            "Li",
-            "O",
-            "euclid",
-        )
+        with pytest.raises(ValueError):
+            self.test_magpie.compute_distance_metric("He", "O", "test")
+        with pytest.raises(ValueError):
+            self.test_magpie.compute_correlation_metric("O", "He", metric="test")
+        with pytest.raises(ValueError):
+            self.test_magpie.compute_distance_metric("Li", "O", "euclid")
 
     def test_distance_dataframe_functions(self):
         """Test the distance dataframe functions."""
         assert isinstance(self.test_magpie.distance_df(), pd.DataFrame)
         assert self.test_magpie.distance_df().shape == (
-            len(list(self.test_magpie.create_pairs())) * 2
-            - len(self.test_magpie.embeddings),
+            len(list(self.test_magpie.create_pairs())) * 2 - len(self.test_magpie.embeddings),
             7,
         )
         assert self.test_magpie.distance_df().columns.tolist() == [
@@ -443,9 +432,7 @@ class EmbeddingTest(unittest.TestCase):
         assert isinstance(self.test_skipatom.remove_elements(["H", "Li"]), Embedding)
         assert self.test_skipatom.remove_elements("H", inplace=True) is None
         assert not self.test_skipatom._is_el_sp_in_embedding("H")
-        assert (
-            self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True) is None
-        )
+        assert self.test_skipatom.remove_elements(["Li", "Ti", "Bi"], inplace=True) is None
         assert "Li" not in self.test_skipatom.element_list
         assert "Ti" not in self.test_skipatom.element_list
         assert "Bi" not in self.test_skipatom.element_list
@@ -494,9 +481,7 @@ class SpeciesEmbeddingTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up the test."""
-        cls.test_species_embedding = SpeciesEmbedding.from_csv(
-            TEST_SPECIES_EMBEDDING_CSV
-        )
+        cls.test_species_embedding = SpeciesEmbedding.from_csv(TEST_SPECIES_EMBEDDING_CSV)
         cls.test_skipspecies = SpeciesEmbedding.load_data("skipspecies")
 
     def test_species_list(self):
@@ -533,21 +518,13 @@ class SpeciesEmbeddingTest(unittest.TestCase):
         assert test_copy.remove_species(["H-", "Na+"], inplace=True) is None
         # assert len(self.test_species_embedding.species_list) == 9
         assert "H-" not in self.test_species_embedding.remove_species("H-").species_list
-        assert (
-            len(
-                self.test_species_embedding.remove_species(
-                    ["H-", "Na+", "F-"]
-                ).species_list
-            )
-            == 8
-        )
+        assert len(self.test_species_embedding.remove_species(["H-", "Na+", "F-"]).species_list) == 8
 
     def test_distance_df(self):
         """Test the distance_df function."""
         assert isinstance(self.test_species_embedding.distance_df(), pd.DataFrame)
         assert self.test_species_embedding.distance_df().shape == (
-            len(list(self.test_species_embedding.create_pairs())) * 2
-            - len(self.test_species_embedding.embeddings),
+            len(list(self.test_species_embedding.create_pairs())) * 2 - len(self.test_species_embedding.embeddings),
             7,
         )
         assert self.test_species_embedding.distance_df().columns.tolist() == [
@@ -564,8 +541,7 @@ class SpeciesEmbeddingTest(unittest.TestCase):
         """Test the correlation_df function."""
         assert isinstance(self.test_species_embedding.correlation_df(), pd.DataFrame)
         assert self.test_species_embedding.correlation_df().shape == (
-            len(list(self.test_species_embedding.create_pairs())) * 2
-            - len(self.test_species_embedding.embeddings),
+            len(list(self.test_species_embedding.create_pairs())) * 2 - len(self.test_species_embedding.embeddings),
             7,
         )
         assert self.test_species_embedding.correlation_df().columns.tolist() == [
