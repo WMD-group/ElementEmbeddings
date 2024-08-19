@@ -2,8 +2,7 @@
 
 The `ElementEmbeddings` package has been expanded to incoporate representation of ionic species. We provide the literature source for these representations as well as the data source for which the files were obtained.
 
-
-### SkipSpecies
+## SkipSpecies
 
 The following paper describes the details of how the SkipSpecies embeddings were developed.
 

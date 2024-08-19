@@ -8,17 +8,17 @@ To carry this package further, we need to be able develop methods which allow us
 ## Required features
 
 * A core module which contains the `Embedding` class
-    * [**Implemented**]Has a `load_data` method to load in default embeddings distributed with the package
-    * [**WIP**]Other file I/O methods to allow users to create `Embedding` instances from their own files
-    * [**Implemented**] A `citations` property, so that BibTex citations are provided for the distributed representations.
-    *
+  * [**Implemented**]Has a `load_data` method to load in default embeddings distributed with the package
+  * [**WIP**]Other file I/O methods to allow users to create `Embedding` instances from their own files
+  * [**Implemented**] A `citations` property, so that BibTex citations are provided for the distributed representations.
+  *
 
 * A `composition` module
-    * Required to interface with the `Embedding` class to generate composition-based feature vectors (CBFVs) based of the elemental representations
-    * Should have options to define the set of operations which are used to generate the CBFVs
-    * Should have methods to calculate the similarity between multiple CBFVs
-    * Should have functions for parsing formula [WIP]
+  * Required to interface with the `Embedding` class to generate composition-based feature vectors (CBFVs) based of the elemental representations
+  * Should have options to define the set of operations which are used to generate the CBFVs
+  * Should have methods to calculate the similarity between multiple CBFVs
+  * Should have functions for parsing formula [WIP]
 
 * Plotting utilities
-    * This can either be in the form of methods to other class instances or a separate module to handle the plotting.
-    * Could look to have a Class which can perform both UMAP, PCA, (t-SNE) dimensionality reductions (DRs) and another class for plotting the results. The class option would allow DRs to be done to both elemental `Embedding` objects and lists of `CompositionalEmbedding` objects.
+  * This can either be in the form of methods to other class instances or a separate module to handle the plotting.
+  * Could look to have a Class which can perform both UMAP, PCA, (t-SNE) dimensionality reductions (DRs) and another class for plotting the results. The class option would allow DRs to be done to both elemental `Embedding` objects and lists of `CompositionalEmbedding` objects.

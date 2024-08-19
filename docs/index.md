@@ -14,6 +14,7 @@ The documentation consists of the following six parts:
 6. [Contributing](contribution.md)
 
 ## Project Overview
+
 ::: elementembeddings
 ::: elementembeddings.utils
     :docstring:

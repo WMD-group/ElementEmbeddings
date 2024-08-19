@@ -176,6 +176,7 @@ We welcome new contributions to this project. See [the contributing guide](contr
 ### Add an embedding scheme
 
 The steps required to add a new representation scheme are:
+
 1. Add data file to [data/element_representations](src/elementembeddings/data/element_representations).
 2. Edit docstring table in [core.py](src/elementembeddings/core.py).
 3. Edit [utils/config.py](src/elementembeddings/utils/config.py) to include the representation in `DEFAULT_ELEMENT_EMBEDDINGS` and `CITATIONS`.
@@ -184,7 +185,6 @@ The steps required to add a new representation scheme are:
 ### Developer
 
 * [Anthony Onwuli](https://github.com/AntObi) (Department of Materials, Imperial College London)
-
 
 ## References
 

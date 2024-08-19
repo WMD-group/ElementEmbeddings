@@ -66,6 +66,7 @@ The 22 dimensional embedding vector includes the following elemental properties:
 * GSbandgap(DFT bandgap energy of T=0K ground state from the OQMD)
 * GSmagmom (DFT magnetic moment of T=0K ground state from the OQMD)
 * Space Group Number
+
 </details>
 
 * `magpie_sc` is a scaled version of the magpie embeddings. [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/magpie_sc.json)
@@ -146,6 +147,7 @@ The 44 features of the embedding vector are formed of the following properties:
 * Thermal_conductivity_(W/(m_K))_
 * Heat_atomization(kJ/mol)
 * Cohesive_energy
+
 </details>
 
 * `oliynyk_sc` is a scaled version of the oliynyk embeddings: [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/oliynyk_sc.json)
@@ -174,5 +176,6 @@ The following paper describes the details:
 
 The XenonPy embedding uses the 58 features which are commonly used in publications that use the [XenonPy package](https://github.com/yoshida-lab/XenonPy).
 See the following publications:
+
 * [Representation of materials by kernel mean embedding](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.108.134107)
 * [Crystal structure prediction with machine learning-based element substitution](https://www.sciencedirect.com/science/article/pii/S0927025622002555)
