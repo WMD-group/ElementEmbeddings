@@ -88,3 +88,8 @@ docstring-code-format = true
 
 [tool.ruff.lint.per-file-ignores]
 "src/elementembeddings/tests/*" = ["D"]
+
+[tool.pyright]
+typeCheckingMode = "off"
+reportPossiblyUnboundVariable = true
+reportUnboundVariable = true

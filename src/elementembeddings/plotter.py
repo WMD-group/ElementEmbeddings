@@ -54,6 +54,8 @@ def heatmap_plotter(
 
     elif metric in distance_metrics:
         p = embedding.distance_pivot_table(metric=metric, sortby=sortaxisby)
+    else:
+        raise ValueError("Unrecognised metric.")
     xlabels = [i[1] for i in p.index]
     ylabels = [i[1] for i in p.columns]
     sns.heatmap(

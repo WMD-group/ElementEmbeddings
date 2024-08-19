@@ -34,5 +34,8 @@ repos:
         args: [--write] # edit files in-place
         additional_dependencies:
           - prettier
-          - prettier-plugin-svelte
-          - svelte
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.376
+    hooks:
+      - id: pyright
+        args: [--level, error]

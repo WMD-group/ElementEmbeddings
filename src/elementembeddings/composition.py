@@ -681,7 +681,7 @@ def _species_composition_distance(
 
 
 def species_composition_featuriser(
-    data: pd.DataFrame | pd.Series | SpeciesCompositionalEmbedding | list,
+    data: SpeciesCompositionalEmbedding | list,
     embedding: Embedding | str = "skipspecies",
     stats: str | list = "mean",
     to_dataframe: bool = False,
@@ -713,6 +713,7 @@ def species_composition_featuriser(
         comps = [SpeciesCompositionalEmbedding(x, embedding) for x in data]
         comp_vectors = [x.feature_vector(stats) for x in tqdm(comps, desc="Computing feature vectors")]
     elif isinstance(data, SpeciesCompositionalEmbedding):
+        comps = [data]
         comp_vectors = data.feature_vector(stats)
     else:
         msg = "The data must be a list or SpeciesCompositionalEmbedding class."
