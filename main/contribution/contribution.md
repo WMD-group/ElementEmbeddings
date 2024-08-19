@@ -6,9 +6,9 @@ This is a quick guide on how to follow best practice and contribute smoothly to 
 
 We are always looking for ways to make `ElementEmbeddings` better and a more useful to a wider community. For making contributions, use the ["Fork and Pull"](https://docs.github.com/en/get-started/quickstart/contributing-to-projects) workflow to make contributions and stick as closely as possible to the following:
 
-* Code style should comply with [PEP8](https://peps.python.org/pep-0008/) where possible. [Google's house style](https://google.github.io/styleguide/pyguide.html) is also helpful, including a good model for docstrings.
-* Please use comments liberally when adding nontrivial features, and take the chance to clean up other people's code while looking at it.
-* Add tests wherever possible, and use the test suite to check if you broke anything.
+- Code style should comply with [PEP8](https://peps.python.org/pep-0008/) where possible. [Google's house style](https://google.github.io/styleguide/pyguide.html) is also helpful, including a good model for docstrings.
+- Please use comments liberally when adding nontrivial features, and take the chance to clean up other people's code while looking at it.
+- Add tests wherever possible, and use the test suite to check if you broke anything.
 
 ## Add an embedding scheme
 
@@ -43,8 +43,8 @@ For a general overview of using pull requests on GitHub look [in the GitHub docs
 
 When creating a pull request you should:
 
-* Ensure that the title succinctly describes the changes so it is easy to read on the overview page
-* Reference the issue which the pull request is closing
+- Ensure that the title succinctly describes the changes so it is easy to read on the overview page
+- Reference the issue which the pull request is closing
 
 Recommended reading: [How to Write the Perfect Pull Request](https://github.blog/2015-01-21-how-to-write-the-perfect-pull-request/)
 
@@ -69,4 +69,4 @@ Pre-commit hooks will check all files when you commit changes, automatically fix
 
 ## Bug reports, feature requests and questions
 
-Please use the [Issue Tracker](https://github.com/WMD-group/ElementEmbeddings/issues) to report bugs or request features in the first instance. Contributions are always welcome. 
+Please use the [Issue Tracker](https://github.com/WMD-group/ElementEmbeddings/issues) to report bugs or request features in the first instance. Contributions are always welcome.

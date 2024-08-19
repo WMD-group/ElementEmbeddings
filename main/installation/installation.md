@@ -16,6 +16,6 @@ To clone the project from Github and make a local installation:
 git clone https://github.com/WMD-group/ElementEmbeddings.git
 cd ElementEmbeddings
 pip install -e .
-``` 
+```
 
 With `-e`, pip will create links to the source folder so that the changes to the code will be reflected on the PATH.
