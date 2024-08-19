@@ -18,7 +18,7 @@ We can access some of the properties of the `Embedding` class. For example, we c
 
 ```python
 # Print out some of the properties of the ElementEmbeddings class
->>> print(f'The magpie representation has embeddings of dimension {magpie.dim}') 
+>>> print(f'The magpie representation has embeddings of dimension {magpie.dim}')
 >>> print(f'The magpie representation contains these elements: \n {magpie.element_list}') # prints out all the elements considered for this representation
 >>> print(f'The magpie representation contains these features: \n {magpie.feature_labels}') # Prints out the feature labels of the chosen representation
 

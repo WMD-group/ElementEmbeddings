@@ -174,4 +174,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - removed numba from requirements.txt ([1eb833e](https://github.com/WMD-group/ElementEmbeddings/commit/1eb833ec1769ead345de23e2c09c92cee72cc545) by Anthony).
 - removed the old AtomicEmbeddings.py file ([9b1b2e8](https://github.com/WMD-group/ElementEmbeddings/commit/9b1b2e82e0426136020f5112d12c18051d9b7c30) by Anthony).
 - removed itertools from reqssetup.py ([c9c21ca](https://github.com/WMD-group/ElementEmbeddings/commit/c9c21ca8a8e242fc99f19d1fee204da7a1bbdc62) by Anthony).
-

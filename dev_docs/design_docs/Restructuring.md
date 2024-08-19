@@ -10,8 +10,8 @@ To carry this package further, we need to be able develop methods which allow us
 * A core module which contains the `Embedding` class
     * [**Implemented**]Has a `load_data` method to load in default embeddings distributed with the package
     * [**WIP**]Other file I/O methods to allow users to create `Embedding` instances from their own files
-    * [**Implemented**] A `citations` property, so that BibTex citations are provided for the distributed representations. 
-    * 
+    * [**Implemented**] A `citations` property, so that BibTex citations are provided for the distributed representations.
+    *
 
 * A `composition` module
     * Required to interface with the `Embedding` class to generate composition-based feature vectors (CBFVs) based of the elemental representations

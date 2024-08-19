@@ -14,4 +14,3 @@ mkdocstrings >=0.25.1
 mkdocstrings-python >= 1.10.7
 mike >=2.1.2
 mkdocs-jupyter >= 0.24.8
-

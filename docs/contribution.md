@@ -69,4 +69,4 @@ Pre-commit hooks will check all files when you commit changes, automatically fix
 
 ## Bug reports, feature requests and questions
 
-Please use the [Issue Tracker](https://github.com/WMD-group/ElementEmbeddings/issues) to report bugs or request features in the first instance. Contributions are always welcome. 
+Please use the [Issue Tracker](https://github.com/WMD-group/ElementEmbeddings/issues) to report bugs or request features in the first instance. Contributions are always welcome.

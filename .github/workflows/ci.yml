@@ -20,7 +20,7 @@ jobs:
       matrix:
         python-version: ["3.9","3.10","3.11","3.12"]
         os: [ubuntu-latest,macos-latest,windows-latest]
-    
+
     runs-on: ${{matrix.os}}
     steps:
     - uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
         pip show -V elementembeddings
         pip show -V pytest
         pip show -V matplotlib
-        
+
 
     - name: Run tests
       run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings --cov-report=xml -v
@@ -47,4 +47,3 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: false
         verbose: true
-
