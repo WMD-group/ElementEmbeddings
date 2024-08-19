@@ -1,5 +1,9 @@
 """Test the modules in the utils package."""
+
+from __future__ import annotations
+
 import unittest
+from typing import ClassVar
 
 import numpy as np
 
@@ -10,9 +14,9 @@ from elementembeddings.utils import io, math, species
 class TestMath(unittest.TestCase):
     """Test the math module."""
 
-    a = [1, 2, 3, 4, 5]
-    b = [1, 2, 3, 4, 5]
-    c = [-1, 1 / 2, -1 / 3, 1 / 4, 0]
+    a: ClassVar = [1, 2, 3, 4, 5]
+    b: ClassVar = [1, 2, 3, 4, 5]
+    c: ClassVar = [-1, 1 / 2, -1 / 3, 1 / 4, 0]
 
     def test_dot(self):
         """Test the dot function."""

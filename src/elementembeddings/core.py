@@ -1,17 +1,18 @@
 """Provides the `Embedding` class.
 
-This module enables the user load in elemetal representation data
+This module enables the user load in elemental representation data
 and analyse it using statistical functions.
 
 Typical usage example:
     megnet16 = Embedding.load_data('megnet16')
 """
 
+from __future__ import annotations
+
 import fnmatch
 import json
 import warnings
 from os import path
-from typing import Dict, List, Optional, Union
 
 import numpy as np
 import pandas as pd
@@ -40,7 +41,7 @@ class Embedding(EmbeddingBase):
     """
 
     @staticmethod
-    def load_data(embedding_name: Optional[str] = None):
+    def load_data(embedding_name: str | None = None):
         """Create an instance of the `Embedding` class from a default embedding file.
 
         The default embeddings are in the table below:
@@ -102,7 +103,7 @@ class Embedding(EmbeddingBase):
             return None
 
     @staticmethod
-    def from_json(embedding_json, embedding_name: Optional[str] = None):
+    def from_json(embedding_json, embedding_name: str | None = None):
         """Create an instance of the Embedding class from a json file.
 
         Args:
@@ -116,7 +117,7 @@ class Embedding(EmbeddingBase):
         return Embedding(embedding_data, embedding_name)
 
     @staticmethod
-    def from_csv(embedding_csv, embedding_name: Optional[str] = None):
+    def from_csv(embedding_csv, embedding_name: str | None = None):
         """Create an instance of the Embedding class from a csv file.
 
         The first column of the csv file must contain the elements and be named element.
@@ -133,9 +134,7 @@ class Embedding(EmbeddingBase):
         df = df.drop(["element"], axis=1)
         feature_labels = list(df.columns)
         embeds_array = df.to_numpy()
-        embedding_data = {
-            elements[i]: embeds_array[i] for i in range(len(embeds_array))
-        }
+        embedding_data = {elements[i]: embeds_array[i] for i in range(len(embeds_array))}
         return Embedding(embedding_data, embedding_name, feature_labels)
 
     def as_dataframe(self, columns: str = "components") -> pd.DataFrame:
@@ -163,25 +162,24 @@ class Embedding(EmbeddingBase):
         elif columns == "elements":
             return df
         else:
-            msg = (
-                f"{columns} is not a valid keyword argument. "
-                f"Choose either 'components' or 'elements"
-            )
+            msg = f"{columns} is not a valid keyword argument. " f"Choose either 'components' or 'elements"
             raise (
                 ValueError(
                     msg,
                 )
             )
 
-    def to(self, fmt: str = "", filename: Optional[str] = ""):
+    def to(self, fmt: str = "", filename: str | None = ""):
         """Output the embedding to a file.
 
         Args:
         ----
             fmt (str): The file format to output the embedding to.
-            Options include "json" and "csv".
+                Options include "json" and "csv".
             filename (str): The name of the file to be outputted
+
         Returns:
+        -------
             (str) if filename not specified, otherwise None.
         """
         fmt = fmt.lower()
@@ -214,7 +212,7 @@ class Embedding(EmbeddingBase):
         """Return the elements of the embedding."""
         return self._embeddings_keys_list()
 
-    def remove_elements(self, elements: Union[str, List[str]], inplace: bool = False):
+    def remove_elements(self, elements: str | list[str], inplace: bool = False):
         # TO-DO allow removal by atomic numbers
         """Remove elements from the Embedding instance.
 
@@ -250,8 +248,7 @@ class Embedding(EmbeddingBase):
         """
         if self._is_standardised():
             warnings.warn(
-                "Embedding is already standardised. "
-                "Returning None and not changing the embedding.",
+                "Embedding is already standardised. " "Returning None and not changing the embedding.",
             )
             return None
         else:
@@ -269,7 +266,7 @@ class Embedding(EmbeddingBase):
                 return Embedding(embeddings_copy, self.embedding_name)
 
     @property
-    def element_groups_dict(self) -> Dict[str, str]:
+    def element_groups_dict(self) -> dict[str, str]:
         """Return a dictionary of {element: element type} pairs.
 
         e.g. {'He':'Noble gas'}
@@ -337,7 +334,7 @@ class SpeciesEmbedding(EmbeddingBase):
             return None
 
     @staticmethod
-    def from_csv(csv_path, embedding_name: Optional[str] = None):
+    def from_csv(csv_path, embedding_name: str | None = None):
         """Create an instance of the SpeciesEmbedding class from a csv file.
 
         The first column of the csv file must contain the species and be named species.
@@ -362,7 +359,7 @@ class SpeciesEmbedding(EmbeddingBase):
         return SpeciesEmbedding(embedding_data, embedding_name, feature_labels)
 
     @staticmethod
-    def from_json(json_path, embedding_name: Optional[str] = None):
+    def from_json(json_path, embedding_name: str | None = None):
         """Create an instance of the SpeciesEmbedding class from a json file.
 
         Args:
@@ -416,16 +413,14 @@ class SpeciesEmbedding(EmbeddingBase):
         -------
             oxidation_states (list[int]): A list of oxidation states
         """
-        assert (
-            el in self.element_list
-        ), f"There are no species of the element {el} in this SpeciesEmbedding"
+        assert el in self.element_list, f"There are no species of the element {el} in this SpeciesEmbedding"
         parsed_species = [parse_species(species) for species in self.species_list]
 
         el_species_list = [species for species in parsed_species if species[0] == el]
         oxidation_states = [species[1] for species in el_species_list]
         return sorted(oxidation_states)
 
-    def remove_species(self, species: Union[str, List[str]], inplace: bool = False):
+    def remove_species(self, species: str | list[str], inplace: bool = False):
         """Remove species from the SpeciesEmbedding instance.
 
         Args:
@@ -443,8 +438,7 @@ class SpeciesEmbedding(EmbeddingBase):
                     del self.embeddings[species]
                 except KeyError:
                     warnings.warn(
-                        f"{species} is not in the SpeciesEmbedding. "
-                        "Skipping this species.",
+                        f"{species} is not in the SpeciesEmbedding. " "Skipping this species.",
                     )
             elif isinstance(species, list):
                 for sp in species:
@@ -452,8 +446,7 @@ class SpeciesEmbedding(EmbeddingBase):
                         del self.embeddings[sp]
                     except KeyError:
                         warnings.warn(
-                            f"{sp} is not in the SpeciesEmbedding. "
-                            "Skipping this species.",
+                            f"{sp} is not in the SpeciesEmbedding. " "Skipping this species.",
                         )
             return None
         else:
@@ -463,8 +456,7 @@ class SpeciesEmbedding(EmbeddingBase):
                     del embeddings_copy[species]
                 except KeyError:
                     warnings.warn(
-                        f"{species} is not in the SpeciesEmbedding. "
-                        "Skipping this species.",
+                        f"{species} is not in the SpeciesEmbedding. " "Skipping this species.",
                     )
             elif isinstance(species, list):
                 for sp in species:
@@ -472,13 +464,12 @@ class SpeciesEmbedding(EmbeddingBase):
                         del embeddings_copy[sp]
                     except KeyError:
                         warnings.warn(
-                            f"{sp} is not in the SpeciesEmbedding. "
-                            "Skipping this species.",
+                            f"{sp} is not in the SpeciesEmbedding. " "Skipping this species.",
                         )
             return SpeciesEmbedding(embeddings_copy, self.embedding_name)
 
     @property
-    def ion_type_dict(self) -> Dict[str, str]:
+    def ion_type_dict(self) -> dict[str, str]:
         """Return a dictionary of {species: ion type} pairs.
 
         e.g. {'Fe2+':'cation'}
@@ -497,7 +488,7 @@ class SpeciesEmbedding(EmbeddingBase):
         return ion_dict
 
     @property
-    def species_groups_dict(self) -> Dict[str, str]:
+    def species_groups_dict(self) -> dict[str, str]:
         """Return a dictionary of {species: element type} pairs.
 
         e.g. {'Fe2+':'transition metal'}
@@ -519,11 +510,7 @@ class SpeciesEmbedding(EmbeddingBase):
         -------
             df (pandas.DataFrame): A pandas dataframe object
         """
-        return (
-            super()
-            .distance_df(metric)
-            .rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
-        )
+        return super().distance_df(metric).rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
 
     def correlation_df(self, metric: str = "pearson") -> pd.DataFrame:
         """Return a dataframe of the correlation between species.
@@ -538,21 +525,19 @@ class SpeciesEmbedding(EmbeddingBase):
             df (pandas.DataFrame): A pandas dataframe object
 
         """
-        return (
-            super()
-            .correlation_df(metric)
-            .rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
-        )
+        return super().correlation_df(metric).rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
 
-    def to(self, fmt: str = "", filename: Optional[str] = ""):
+    def to(self, fmt: str = "", filename: str | None = ""):
         """Output the embedding to a file.
 
         Args:
         ----
             fmt (str): The file format to output the embedding to.
-            Options include "json" and "csv".
+                Options include "json" and "csv".
             filename (str): The name of the file to be outputted
+
         Returns:
+        -------
             (str) if filename not specified, otherwise None.
         """
         fmt = fmt.lower()
@@ -567,3 +552,4 @@ class SpeciesEmbedding(EmbeddingBase):
                     return None
             else:
                 return j
+        return None

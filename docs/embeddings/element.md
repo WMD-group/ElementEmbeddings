@@ -2,8 +2,8 @@
 
 The data contained in this repository are a collection of various elemental representation/embedding schemes. We provide the literature source for these representations as well as the data source for which the files were obtained. Some representations have been obtained from the following repositories:
 
-* [lrcfmd/ElMD](https://github.com/lrcfmd/ElMD/tree/master)
-* [Kaaiian/CBFV](https://github.com/Kaaiian/CBFV/tree/master)
+- [lrcfmd/ElMD](https://github.com/lrcfmd/ElMD/tree/master)
+- [Kaaiian/CBFV](https://github.com/Kaaiian/CBFV/tree/master)
 
 ## Linear representations
 
@@ -50,25 +50,26 @@ The 22 dimensional embedding vector includes the following elemental properties:
 <details>
     <summary>Click to see the 22 properties</summary>
 
-* Number;
-* Mendeleev number;
-* Atomic weight;
-* Melting temperature;
-* Group number;
-* Period;
-* Covalent Radius; 
-* Electronegativity;
-* no. of s, p, d, f  valence electrons (4 features);
-* no. of valence electrons;
-* no. of unfilled: s, p, d, f orbitals (4 features),
-* no. of unfilled orbtials
-* GSvolume_pa (DFT volume per atom of T=0K ground state from the OQMD)
-* GSbandgap(DFT bandgap energy of T=0K ground state from the OQMD)
-* GSmagmom (DFT magnetic moment of T=0K ground state from the OQMD)
-* Space Group Number
+- Number;
+- Mendeleev number;
+- Atomic weight;
+- Melting temperature;
+- Group number;
+- Period;
+- Covalent Radius;
+- Electronegativity;
+- no. of s, p, d, f valence electrons (4 features);
+- no. of valence electrons;
+- no. of unfilled: s, p, d, f orbitals (4 features),
+- no. of unfilled orbtials
+- GSvolume_pa (DFT volume per atom of T=0K ground state from the OQMD)
+- GSbandgap(DFT bandgap energy of T=0K ground state from the OQMD)
+- GSmagmom (DFT magnetic moment of T=0K ground state from the OQMD)
+- Space Group Number
+
 </details>
 
-* `magpie_sc` is a scaled version of the magpie embeddings. [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/magpie_sc.json)
+- `magpie_sc` is a scaled version of the magpie embeddings. [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/magpie_sc.json)
 
 ### mat2vec
 
@@ -99,56 +100,58 @@ The following paper describes the details:
 [Data source](https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/oliynyk.csv)
 
 The 44 features of the embedding vector are formed of the following properties:
+
 <details>
     <summary> Click to see the 44 features!</summary>
 
-* Number
-* Atomic_Weight
-* Period
-* Group
-* Families
-* Metal
-* Nonmetal
-* Metalliod
-* Mendeleev_Number
-* l_quantum_number
-* Atomic_Radius
-* Miracle_Radius_[pm]
-* Covalent_Radius
-* Zunger_radii_sum
-* Ionic_radius
-* crystal_radius
-* Pauling_Electronegativity
-* MB_electonegativity
-* Gordy_electonegativity
-* Mulliken_EN
-* Allred-Rockow_electronegativity
-* Metallic_valence
-* Number_of_valence_electrons
-* Gilmor_number_of_valence_electron
-* valence_s
-* valence_p
-* valence_d
-* valence_f
-* Number_of_unfilled_s_valence_electrons
-* Number_of_unfilled_p_valence_electrons
-* Number_of_unfilled_d_valence_electrons
-* Number_of_unfilled_f_valence_electrons
-* Outer_shell_electrons
-* 1st_ionization_potential_(kJ/mol)
-* Polarizability(A^3)
-* Melting_point_(K)
-* Boiling_Point_(K)
-* Density_(g/mL)
-* Specific_heat_(J/g_K)_
-* Heat_of_fusion_(kJ/mol)_
-* Heat_of_vaporization_(kJ/mol)_
-* Thermal_conductivity_(W/(m_K))_
-* Heat_atomization(kJ/mol)
-* Cohesive_energy
+- Number
+- Atomic_Weight
+- Period
+- Group
+- Families
+- Metal
+- Nonmetal
+- Metalliod
+- Mendeleev_Number
+- l_quantum_number
+- Atomic_Radius
+- Miracle*Radius*[pm]
+- Covalent_Radius
+- Zunger_radii_sum
+- Ionic_radius
+- crystal_radius
+- Pauling_Electronegativity
+- MB_electonegativity
+- Gordy_electonegativity
+- Mulliken_EN
+- Allred-Rockow_electronegativity
+- Metallic_valence
+- Number_of_valence_electrons
+- Gilmor_number_of_valence_electron
+- valence_s
+- valence_p
+- valence_d
+- valence_f
+- Number_of_unfilled_s_valence_electrons
+- Number_of_unfilled_p_valence_electrons
+- Number_of_unfilled_d_valence_electrons
+- Number_of_unfilled_f_valence_electrons
+- Outer_shell_electrons
+- 1st*ionization_potential*(kJ/mol)
+- Polarizability(A^3)
+- Melting*point*(K)
+- Boiling*Point*(K)
+- Density\_(g/mL)
+- Specific*heat*(J/g*K)*
+- Heat*of_fusion*(kJ/mol)\_
+- Heat*of_vaporization*(kJ/mol)\_
+- Thermal*conductivity*(W/(m*K))*
+- Heat_atomization(kJ/mol)
+- Cohesive_energy
+
 </details>
 
-* `oliynyk_sc` is a scaled version of the oliynyk embeddings: [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/oliynyk_sc.json)
+- `oliynyk_sc` is a scaled version of the oliynyk embeddings: [Data source](https://github.com/lrcfmd/ElMD/blob/master/ElMD/el_lookup/oliynyk_sc.json)
 
 ### random
 
@@ -174,5 +177,6 @@ The following paper describes the details:
 
 The XenonPy embedding uses the 58 features which are commonly used in publications that use the [XenonPy package](https://github.com/yoshida-lab/XenonPy).
 See the following publications:
-* [Representation of materials by kernel mean embedding](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.108.134107) 
-* [Crystal structure prediction with machine learning-based element substitution](https://www.sciencedirect.com/science/article/pii/S0927025622002555)
+
+- [Representation of materials by kernel mean embedding](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.108.134107)
+- [Crystal structure prediction with machine learning-based element substitution](https://www.sciencedirect.com/science/article/pii/S0927025622002555)

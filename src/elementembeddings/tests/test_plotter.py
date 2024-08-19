@@ -1,5 +1,7 @@
 """Test the plotter module."""
 
+from __future__ import annotations
+
 import os
 import unittest
 
@@ -12,9 +14,7 @@ from elementembeddings.plotter import dimension_plotter, heatmap_plotter
 _file_path = os.path.dirname(__file__)
 test_files_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")
 
-TEST_SPECIES_EMBEDDING_JSON = os.path.join(
-    test_files_dir, "test_skipspecies_2022_10_28_dim30.json"
-)
+TEST_SPECIES_EMBEDDING_JSON = os.path.join(test_files_dir, "test_skipspecies_2022_10_28_dim30.json")
 
 
 class HeatmapTest(unittest.TestCase):
@@ -48,9 +48,7 @@ class DimensionTest(unittest.TestCase):
     def setUpClass(cls):
         """Set up the test class."""
         cls.test_skipatom = Embedding.load_data("skipatom")
-        cls.test_species = SpeciesEmbedding.from_json(
-            TEST_SPECIES_EMBEDDING_JSON, "skipspecies30"
-        )
+        cls.test_species = SpeciesEmbedding.from_json(TEST_SPECIES_EMBEDDING_JSON, "skipspecies30")
         cls.scatter_params = {"s": 50}
 
     @pytest.mark.mpl_image_compare(
@@ -134,13 +132,12 @@ class DimensionTest(unittest.TestCase):
         )
         assert isinstance(skipatom_umap_plot, plt.Axes)
 
-        self.assertRaises(
-            ValueError,
-            dimension_plotter,
-            self.test_skipatom,
-            n_components=2,
-            reducer="badreducer",
-        )
+        with pytest.raises(ValueError):
+            dimension_plotter(
+                self.test_skipatom,
+                n_components=2,
+                reducer="badreducer",
+            )
 
     def test_dimension_3d_plotter(self):
         """Test that the dimension_plotter function works in 3D."""
@@ -154,13 +151,13 @@ class DimensionTest(unittest.TestCase):
 
     def test_dimension_Nd_plotter(self):
         """Test that the dimension_plotter function will fail in d>3."""
-        self.assertRaises(
-            ValueError,
-            dimension_plotter,
-            self.test_skipatom,
-            n_components=4,
-            reducer="pca",
-        )
+        with pytest.raises(ValueError):
+            dimension_plotter(
+                self.test_skipatom,
+                n_components=4,
+                reducer="pca",
+                adjusttext=False,
+            )
 
     def test_kwargs_plotter(self):
         """Test that the dimension_plotter function works with kwargs."""

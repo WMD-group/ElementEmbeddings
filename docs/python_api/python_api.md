@@ -8,4 +8,3 @@ This part of the project documentation provides the python API for the `ElementE
 [Composition module](composition.md)
 
 [Plotter module](plotter.md)
-

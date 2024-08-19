@@ -1,9 +1,11 @@
 """Utilities for species."""
+
+from __future__ import annotations
+
 import re
-from typing import Tuple
 
 
-def parse_species(species: str) -> Tuple[str, int]:
+def parse_species(species: str) -> tuple[str, int]:
     """
     Parse a species string into its atomic symbol and oxidation state.
 
@@ -22,7 +24,7 @@ def parse_species(species: str) -> Tuple[str, int]:
         return _parse_species_old(species)
 
 
-def _parse_species_old(species: str) -> Tuple[str, int]:
+def _parse_species_old(species: str) -> tuple[str, int]:
     """
     Parse a species string into its atomic symbol and oxidation state.
 

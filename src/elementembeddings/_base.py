@@ -1,10 +1,11 @@
+from __future__ import annotations
+
 import json
 import random
 import warnings
 from abc import ABC, abstractmethod
 from itertools import combinations_with_replacement
 from os import path
-from typing import List, Optional
 
 import numpy as np
 import pandas as pd
@@ -33,8 +34,8 @@ class EmbeddingBase(ABC):
     def __init__(
         self,
         embeddings: dict,
-        embedding_name: Optional[str] = None,
-        feature_labels: Optional[List[str]] = None,
+        embedding_name: str | None = None,
+        feature_labels: list[str] | None = None,
     ) -> None:
         """Initialise the embedding base class.
 
@@ -57,9 +58,7 @@ class EmbeddingBase(ABC):
         _rand_embed = random.choice(list(self.embeddings.values()))
         # Convert embeddings to numpy array if not already a numpy array
         if not isinstance(_rand_embed, np.ndarray):
-            self.embeddings = {
-                ele: np.array(self.embeddings[ele]) for ele in self.embeddings
-            }
+            self.embeddings = {ele: np.array(self.embeddings[ele]) for ele in self.embeddings}
 
         # Determines if the embedding vector has a length attribute
         # (i.e. is not a scalar int or float)
@@ -80,13 +79,9 @@ class EmbeddingBase(ABC):
             )
             # Exceptions for mod_petti
             if self.embedding_name == "mod_petti":
-                sorted_embedding = {
-                    el: num for el, num in sorted_embedding if el in elements[:103]
-                }
+                sorted_embedding = {el: num for el, num in sorted_embedding if el in elements[:103]}
             else:
-                sorted_embedding = {
-                    el: num for el, num in sorted_embedding if el in elements[:118]
-                }
+                sorted_embedding = {el: num for el, num in sorted_embedding if el in elements[:118]}
             self.feature_labels = list(sorted_embedding.keys())
             self.embeddings = {}
             for el, num in sorted_embedding.items():
@@ -109,7 +104,7 @@ class EmbeddingBase(ABC):
         """Abstract method for loading data from a csv."""
 
     @staticmethod
-    def from_json(json_path: str, embedding_name: Optional[str] = None):
+    def from_json(json_path: str, embedding_name: str | None = None):
         """Create an embedding from a json file.
 
         Args:
@@ -124,8 +119,7 @@ class EmbeddingBase(ABC):
     def citation(self):
         """Return the citation for the embedding."""
         try:
-            citation = CITATIONS[self.embedding_name]
-            return citation
+            return CITATIONS[self.embedding_name]
         except KeyError:
             return None
 
@@ -141,7 +135,7 @@ class EmbeddingBase(ABC):
 
     def _is_el_sp_in_embedding(self, el_sp: str):
         """Check if an element/species is in the embedding."""
-        return el_sp in self.embeddings.keys()
+        return el_sp in self.embeddings
 
     def _embeddings_keys_list(self):
         """Return the keys of the embedding as a list."""
@@ -166,8 +160,7 @@ class EmbeddingBase(ABC):
         """
         if self._is_standardised():
             warnings.warn(
-                "Embedding is already standardised."
-                "Returning None and not changing the embedding",
+                "Embedding is already standardised." "Returning None and not changing the embedding",
             )
             return None
         else:
@@ -280,29 +273,23 @@ class EmbeddingBase(ABC):
 
         Args:
         ----
-            ele1 (str): element symbol
-            ele2 (str): element symbol
+            el_sp1 (str): element symbol
+            el_sp2 (str): element symbol
             metric (str): name of a correlation metric.
-            Options are "spearman", "pearson" and "cosine_similarity".
+                Options are "spearman", "pearson" and "cosine_similarity".
 
         Returns:
         -------
             float: correlation/similarity metric
         """
         # Validate if the elements are within the embedding vector
-        if not all(
-            [self._is_el_sp_in_embedding(el_sp1), self._is_el_sp_in_embedding(el_sp2)]
-        ):
+        if not all([self._is_el_sp_in_embedding(el_sp1), self._is_el_sp_in_embedding(el_sp2)]):
             if not self._is_el_sp_in_embedding(el_sp1):
-                print(
-                    f"{el_sp1} is not an element/species included within the embeddings"
-                )
+                print(f"{el_sp1} is not an element/species included within the embeddings")
                 raise ValueError
 
-            elif not self._is_el_sp_in_embedding(el_sp2):
-                print(
-                    f"{el_sp2} is not an element/species included within the embeddings"
-                )
+            if not self._is_el_sp_in_embedding(el_sp2):
+                print(f"{el_sp2} is not an element/species included within the embeddings")
                 raise ValueError
         if metric == "pearson":
             return pearsonr(self.embeddings[el_sp1], self.embeddings[el_sp2])[0]
@@ -348,19 +335,13 @@ class EmbeddingBase(ABC):
         valid_metrics = scikit_metrics + list(scipy_metrics.keys()) + ["cosine"]
 
         # Validate if the elements are within the embedding vector
-        if not all(
-            [self._is_el_sp_in_embedding(el_sp1), self._is_el_sp_in_embedding(el_sp2)]
-        ):
+        if not all([self._is_el_sp_in_embedding(el_sp1), self._is_el_sp_in_embedding(el_sp2)]):
             if not self._is_el_sp_in_embedding(el_sp1):
-                print(
-                    f"{el_sp1} is not an element/species included within the embeddings"
-                )
+                print(f"{el_sp1} is not an element/species included within the embeddings")
                 raise ValueError
 
-            elif not self._is_el_sp_in_embedding(el_sp2):
-                print(
-                    f"{el_sp2} is not an element/species included within the embeddings"
-                )
+            if not self._is_el_sp_in_embedding(el_sp2):
+                print(f"{el_sp2} is not an element/species included within the embeddings")
                 raise ValueError
 
         # Compute the distance measure
@@ -373,16 +354,13 @@ class EmbeddingBase(ABC):
             )[0][0]
 
         elif metric in scipy_metrics:
-            return scipy_metrics[metric](
-                self.embeddings[el_sp1], self.embeddings[el_sp2]
-            )
+            return scipy_metrics[metric](self.embeddings[el_sp1], self.embeddings[el_sp2])
         elif metric == "cosine_distance":
             return cosine_distance(self.embeddings[el_sp1], self.embeddings[el_sp2])
 
         else:
             print(
-                "Invalid distance metric."
-                f"Use one of the following metrics:{valid_metrics}",
+                "Invalid distance metric." f"Use one of the following metrics:{valid_metrics}",
             )
             raise ValueError
 
@@ -414,14 +392,8 @@ class EmbeddingBase(ABC):
                 table.append((ele2, ele1, dist))
         dist_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
 
-        mend_1 = [
-            (Element(parse_species(ele)[0]).mendeleev_no, ele)
-            for ele in dist_df["ele_1"]
-        ]
-        mend_2 = [
-            (Element(parse_species(ele)[0]).mendeleev_no, ele)
-            for ele in dist_df["ele_2"]
-        ]
+        mend_1 = [(Element(parse_species(ele)[0]).mendeleev_no, ele) for ele in dist_df["ele_1"]]
+        mend_2 = [(Element(parse_species(ele)[0]).mendeleev_no, ele) for ele in dist_df["ele_2"]]
 
         Z_1 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in dist_df["ele_1"]]
         Z_2 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in dist_df["ele_2"]]
@@ -461,14 +433,8 @@ class EmbeddingBase(ABC):
                 table.append((ele2, ele1, corr))
         corr_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
 
-        mend_1 = [
-            (Element(parse_species(ele)[0]).mendeleev_no, ele)
-            for ele in corr_df["ele_1"]
-        ]
-        mend_2 = [
-            (Element(parse_species(ele)[0]).mendeleev_no, ele)
-            for ele in corr_df["ele_2"]
-        ]
+        mend_1 = [(Element(parse_species(ele)[0]).mendeleev_no, ele) for ele in corr_df["ele_1"]]
+        mend_2 = [(Element(parse_species(ele)[0]).mendeleev_no, ele) for ele in corr_df["ele_2"]]
 
         Z_1 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in corr_df["ele_1"]]
         Z_2 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in corr_df["ele_2"]]

@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+
 ## Unreleased
 
 <small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.3.0...HEAD)</small>
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Removed warning ([271f61e](https://github.com/WMD-group/ElementEmbeddings/commit/271f61e8653b706a6dd716bf6c0ced9396965750) by Anthony Onwuli).
 
 <!-- insertion marker -->
+
 ## [v0.3.0](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.3.0) - 2023-08-07
 
 <small>[Compare with v0.2.0](https://github.com/WMD-group/ElementEmbeddings/compare/v0.2.0...v0.3.0)</small>
@@ -53,7 +55,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix package name in contributing.md ([075e657](https://github.com/WMD-group/ElementEmbeddings/commit/075e657d260aa72fca91c7f8cc57466235788426) by Anthony Onwuli).
 - Fixed bug with is_standarised attribute ([ebaf773](https://github.com/WMD-group/ElementEmbeddings/commit/ebaf773134c8ab4988f071da9eca2193e4340f60) by Anthony Onwuli).
-- Fixed composistion featuriser test ([3b729c9](https://github.com/WMD-group/ElementEmbeddings/commit/3b729c9584bf7cc4de2fd5c70baff41c8753800b) by Anthony Onwuli).
+- Fixed composition featuriser test ([3b729c9](https://github.com/WMD-group/ElementEmbeddings/commit/3b729c9584bf7cc4de2fd5c70baff41c8753800b) by Anthony Onwuli).
 - Fixed dim for linear/scalar representations ([f6cc681](https://github.com/WMD-group/ElementEmbeddings/commit/f6cc681ee4f343240f5bb4d49cf9dfc5fa89f455) by Anthony Onwuli).
 
 ### Changed
@@ -174,4 +176,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - removed numba from requirements.txt ([1eb833e](https://github.com/WMD-group/ElementEmbeddings/commit/1eb833ec1769ead345de23e2c09c92cee72cc545) by Anthony).
 - removed the old AtomicEmbeddings.py file ([9b1b2e8](https://github.com/WMD-group/ElementEmbeddings/commit/9b1b2e82e0426136020f5112d12c18051d9b7c30) by Anthony).
 - removed itertools from reqssetup.py ([c9c21ca](https://github.com/WMD-group/ElementEmbeddings/commit/c9c21ca8a8e242fc99f19d1fee204da7a1bbdc62) by Anthony).
-
