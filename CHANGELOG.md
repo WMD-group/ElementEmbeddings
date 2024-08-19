@@ -55,7 +55,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix package name in contributing.md ([075e657](https://github.com/WMD-group/ElementEmbeddings/commit/075e657d260aa72fca91c7f8cc57466235788426) by Anthony Onwuli).
 - Fixed bug with is_standarised attribute ([ebaf773](https://github.com/WMD-group/ElementEmbeddings/commit/ebaf773134c8ab4988f071da9eca2193e4340f60) by Anthony Onwuli).
-- Fixed composistion featuriser test ([3b729c9](https://github.com/WMD-group/ElementEmbeddings/commit/3b729c9584bf7cc4de2fd5c70baff41c8753800b) by Anthony Onwuli).
+- Fixed composition featuriser test ([3b729c9](https://github.com/WMD-group/ElementEmbeddings/commit/3b729c9584bf7cc4de2fd5c70baff41c8753800b) by Anthony Onwuli).
 - Fixed dim for linear/scalar representations ([f6cc681](https://github.com/WMD-group/ElementEmbeddings/commit/f6cc681ee4f343240f5bb4d49cf9dfc5fa89f455) by Anthony Onwuli).
 
 ### Changed

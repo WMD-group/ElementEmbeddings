@@ -88,7 +88,7 @@ class EmbeddingTest(unittest.TestCase):
         assert mod_petti.embedding_type == "one-hot"
         # Check that a list is returned
         assert isinstance(mod_petti.element_list, list)
-        # Check the the dimensons of the embedding vector
+        # Check the the dimensions of the embedding vector
         assert mod_petti.embeddings["H"].shape == (103,)
         # Check that the embedding vector is not all zeros
         assert not np.all(mod_petti.embeddings["H"] == 0)
@@ -112,7 +112,7 @@ class EmbeddingTest(unittest.TestCase):
         assert atomic.embedding_type == "one-hot"
         # Check that a list is returned
         assert isinstance(atomic.element_list, list)
-        # Check the the dimensons of the embedding vector
+        # Check the the dimensions of the embedding vector
         assert atomic.embeddings["H"].shape == (118,)
         # Check that the embedding vector is not all zeros
         assert not np.all(atomic.embeddings["H"] == 0)

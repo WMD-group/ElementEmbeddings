@@ -1,3 +1,9 @@
+ci:
+  autoupdate_schedule: quarterly
+  autofix_commit_msg: pre-commit auto-fixes
+  autoupdate_commit_msg: pre-commit autoupdate
+  skip: [eslint, pyright]
+
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.5.5
@@ -39,3 +45,11 @@ repos:
     hooks:
       - id: pyright
         args: [--level, error]
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        stages: [commit, commit-msg]
+        args: [--toml, pyproject.toml]
+        additional_dependencies:
+          - tomli

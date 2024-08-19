@@ -24,7 +24,7 @@ nav:
       - "Simple usage": tutorials.md
       - "Core usage (notebook)": tutorial/usage.ipynb
       - "Composition usage (notebook)": tutorial/composition.ipynb
-      - "Ionic Speices (notebook)": tutorial/species.ipynb
+      - "Ionic Species (notebook)": tutorial/species.ipynb
   - Embedding Schemes:
       - "Element Embeddings": "embeddings/element.md"
       - Species Embeddings: "embeddings/species.md"
