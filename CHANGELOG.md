@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+
 ## Unreleased
 
 <small>[Compare with latest](https://github.com/WMD-group/ElementEmbeddings/compare/v0.3.0...HEAD)</small>
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Removed warning ([271f61e](https://github.com/WMD-group/ElementEmbeddings/commit/271f61e8653b706a6dd716bf6c0ced9396965750) by Anthony Onwuli).
 
 <!-- insertion marker -->
+
 ## [v0.3.0](https://github.com/WMD-group/ElementEmbeddings/releases/tag/v0.3.0) - 2023-08-07
 
 <small>[Compare with v0.2.0](https://github.com/WMD-group/ElementEmbeddings/compare/v0.2.0...v0.3.0)</small>

@@ -17,5 +17,5 @@ The documentation consists of the following six parts:
 
 ::: elementembeddings
 ::: elementembeddings.utils
-    :docstring:
-    :members:
+:docstring:
+:members:
