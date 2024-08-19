@@ -91,6 +91,15 @@ class TestCompositionalEmbedding(unittest.TestCase):
                 embedding="magpie",
             )
 
+    def test_CompositionalEmbedding_as_dict(self):
+        """Test the Composition class as a dictionary."""
+        assert isinstance(self.valid_magpie_compositions[0].as_dict(), dict)
+        assert self.valid_magpie_compositions[0].as_dict() == {
+            "formula": "Sr3Sc2(GeO4)3",
+            "composition": {"Sr": 3, "Sc": 2, "Ge": 3, "O": 12},
+            "fractional_composition": {"Sr": 0.15, "Sc": 0.1, "Ge": 0.15, "O": 0.6},
+        }
+
     def test__mean_feature_vector(self):
         """Test the _mean_feature_vector function."""
         assert isinstance(
@@ -113,6 +122,8 @@ class TestCompositionalEmbedding(unittest.TestCase):
             self.valid_magpie_compositions[0].feature_vector(stats="mean"),
             np.ndarray,
         )
+        with pytest.raises(ValueError):
+            self.valid_magpie_compositions[0].feature_vector(stats="invalid_stat")
 
     def test_composition_featuriser(self):
         """Test the composition featuriser function."""
@@ -194,6 +205,17 @@ class TestCompositionalEmbedding(unittest.TestCase):
             stats=["mean", "variance"],
             distance_metric="cosine_distance",
         )
+
+        with pytest.raises(TypeError):
+            self.valid_magpie_compositions[0].distance(
+                5,
+                stats=["mean", "variance"],
+            )
+        with pytest.raises(TypeError):
+            self.valid_magpie_compositions[0].distance(
+                composition.CompositionalEmbedding(formula="Fe2O3", embedding="skipatom"),
+                stats="mean",
+            )
 
 
 class TestSpeciesCompositionalEmbedding(unittest.TestCase):
