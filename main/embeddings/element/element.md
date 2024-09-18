@@ -162,8 +162,8 @@ The 118 200-dimensional vectors in `random_200_new` were generated using the fol
 ```python
 import numpy as np
 
-mu , sigma = 0 , 1 # mean and standard deviation s = np.random.normal(mu, sigma, 1000)
-s = np.random.default_rng(seed=42).normal(mu, sigma, (118,200))
+mu, sigma = 0, 1  # mean and standard deviation s = np.random.normal(mu, sigma, 1000)
+s = np.random.default_rng(seed=42).normal(mu, sigma, (118, 200))
 ```
 
 ### skipatom
