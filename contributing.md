@@ -1,4 +1,4 @@
-# Contributing
+`# Contributing
 
 This is a quick guide on how to follow best practice and contribute smoothly to `ElementEmbeddings`.
 
@@ -49,3 +49,4 @@ pre-commit run --all-files # optionally run hooks on all files
 ```
 
 Pre-commit hooks will check all files when you commit changes, automatically fixing any files which are not formatted correctly. Those files will need to be staged again before re-attempting the commit.
+`
