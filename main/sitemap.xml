@@ -2,92 +2,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/about/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/contribution/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/installation/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/tutorials/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/embeddings/element/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/embeddings/embeddings/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/embeddings/species/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/python_api/composition/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/python_api/core/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/python_api/plotter/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/python_api/python_api/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/python_api/utils/io/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/python_api/utils/math/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/python_api/utils/species/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/tutorial/composition/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/tutorial/species/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
     <url>
          <loc>https://wmd-group.github.io/ElementEmbeddings/main/tutorial/usage/</loc>
-         <lastmod>2024-08-19</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-18</lastmod>
     </url>
 </urlset>
