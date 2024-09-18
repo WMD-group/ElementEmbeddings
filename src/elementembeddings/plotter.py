@@ -175,7 +175,7 @@ def dimension_plotter(
             signs = [get_sign(charge) for _, charge in parsed_species]
 
             species_labels = [
-                rf"$\mathregular{{{element}^{{{abs(charge)}{sign}}}}}}}$"
+                rf"$\mathregular{{{element}^{{{abs(charge)}{sign}}}}}$"
                 for (element, charge), sign in zip(parsed_species, signs)
             ]
 

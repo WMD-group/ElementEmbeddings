@@ -8,25 +8,150 @@ For simple usage, you can instantiate an Embedding object using one of the embed
 
 ```python
 # Import the class
->>> from elementembeddings.core import Embedding
+from elementembeddings.core import Embedding
 
 # Load the magpie data
->>> magpie = Embedding.load_data('magpie')
+magpie = Embedding.load_data("magpie")
 ```
 
 We can access some of the properties of the `Embedding` class. For example, we can find the dimensions of the elemental representation and the list of elements for which an embedding exists.
 
 ```python
 # Print out some of the properties of the ElementEmbeddings class
->>> print(f'The magpie representation has embeddings of dimension {magpie.dim}')
->>> print(f'The magpie representation contains these elements: \n {magpie.element_list}') # prints out all the elements considered for this representation
->>> print(f'The magpie representation contains these features: \n {magpie.feature_labels}') # Prints out the feature labels of the chosen representation
+print(f"The magpie representation has embeddings of dimension {magpie.dim}")
+print(
+    f"The magpie representation contains these elements: \n {magpie.element_list}"
+)  # prints out all the elements considered for this representation
+print(
+    f"The magpie representation contains these features: \n {magpie.feature_labels}"
+)  # Prints out the feature labels of the chosen representation
 
-The magpie representation has embeddings of dimension 22
-The magpie representation contains these elements:
-['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk']
-The magpie representation contains these features:
-['Number', 'MendeleevNumber', 'AtomicWeight', 'MeltingT', 'Column', 'Row', 'CovalentRadius', 'Electronegativity', 'NsValence', 'NpValence', 'NdValence', 'NfValence', 'NValence', 'NsUnfilled', 'NpUnfilled', 'NdUnfilled', 'NfUnfilled', 'NUnfilled', 'GSvolume_pa', 'GSbandgap', 'GSmagmom', 'SpaceGroupNumber']
+# The magpie representation has embeddings of dimension 22
+# The magpie representation contains these elements:
+[
+    "H",
+    "He",
+    "Li",
+    "Be",
+    "B",
+    "C",
+    "N",
+    "O",
+    "F",
+    "Ne",
+    "Na",
+    "Mg",
+    "Al",
+    "Si",
+    "P",
+    "S",
+    "Cl",
+    "Ar",
+    "K",
+    "Ca",
+    "Sc",
+    "Ti",
+    "V",
+    "Cr",
+    "Mn",
+    "Fe",
+    "Co",
+    "Ni",
+    "Cu",
+    "Zn",
+    "Ga",
+    "Ge",
+    "As",
+    "Se",
+    "Br",
+    "Kr",
+    "Rb",
+    "Sr",
+    "Y",
+    "Zr",
+    "Nb",
+    "Mo",
+    "Tc",
+    "Ru",
+    "Rh",
+    "Pd",
+    "Ag",
+    "Cd",
+    "In",
+    "Sn",
+    "Sb",
+    "Te",
+    "I",
+    "Xe",
+    "Cs",
+    "Ba",
+    "La",
+    "Ce",
+    "Pr",
+    "Nd",
+    "Pm",
+    "Sm",
+    "Eu",
+    "Gd",
+    "Tb",
+    "Dy",
+    "Ho",
+    "Er",
+    "Tm",
+    "Yb",
+    "Lu",
+    "Hf",
+    "Ta",
+    "W",
+    "Re",
+    "Os",
+    "Ir",
+    "Pt",
+    "Au",
+    "Hg",
+    "Tl",
+    "Pb",
+    "Bi",
+    "Po",
+    "At",
+    "Rn",
+    "Fr",
+    "Ra",
+    "Ac",
+    "Th",
+    "Pa",
+    "U",
+    "Np",
+    "Pu",
+    "Am",
+    "Cm",
+    "Bk",
+]
+# The magpie representation contains these features:
+[
+    "Number",
+    "MendeleevNumber",
+    "AtomicWeight",
+    "MeltingT",
+    "Column",
+    "Row",
+    "CovalentRadius",
+    "Electronegativity",
+    "NsValence",
+    "NpValence",
+    "NdValence",
+    "NfValence",
+    "NValence",
+    "NsUnfilled",
+    "NpUnfilled",
+    "NdUnfilled",
+    "NfUnfilled",
+    "NUnfilled",
+    "GSvolume_pa",
+    "GSbandgap",
+    "GSmagmom",
+    "SpaceGroupNumber",
+]
 ```
 
 ### Plotting
@@ -37,26 +162,40 @@ We can quickly generate heatmaps of distance/similarity measures between the ele
 from elementembeddings.plotter import heatmap_plotter, dimension_plotter
 import matplotlib.pyplot as plt
 
-magpie.standardise(inplace=True) # Standardises the representation
+magpie.standardise(inplace=True)  # Standardises the representation
 
-fig, ax = plt.subplots(1, 1, figsize=(6,6))
+fig, ax = plt.subplots(1, 1, figsize=(6, 6))
 heatmap_params = {"vmin": -1, "vmax": 1}
-heatmap_plotter(embedding=magpie, metric="cosine_similarity",show_axislabels=False,cmap="Blues_r",ax=ax, **heatmap_params)
+heatmap_plotter(
+    embedding=magpie,
+    metric="cosine_similarity",
+    show_axislabels=False,
+    cmap="Blues_r",
+    ax=ax,
+    **heatmap_params
+)
 ax.set_title("Magpie cosine similarities")
 fig.tight_layout()
 fig.show()
-
 ```
 
 ![Magpie cosine similarity heatmap](images/magpie_cosine_sim_heatmap.png)
 
 ```python
-fig, ax = plt.subplots(1, 1, figsize=(6,6))
+fig, ax = plt.subplots(1, 1, figsize=(6, 6))
 
-reducer_params={"n_neighbors": 30, "random_state":42}
-scatter_params = {"s":100}
+reducer_params = {"n_neighbors": 30, "random_state": 42}
+scatter_params = {"s": 100}
 
-dimension_plotter(embedding=magpie, reducer="umap",n_components=2,ax=ax,adjusttext=True,reducer_params=reducer_params, scatter_params=scatter_params)
+dimension_plotter(
+    embedding=magpie,
+    reducer="umap",
+    n_components=2,
+    ax=ax,
+    adjusttext=True,
+    reducer_params=reducer_params,
+    scatter_params=scatter_params,
+)
 ax.set_title("Magpie UMAP (n_neighbours=30)")
 ax.legend().remove()
 handles, labels = ax1.get_legend_handles_labels()
@@ -84,7 +223,7 @@ The `composition_featuriser` function can be used to featurise the data. The com
 ```python
 from elementembeddings.composition import composition_featuriser
 
-df_featurised = composition_featuriser(df, embedding="magpie", stats=["mean","sum"])
+df_featurised = composition_featuriser(df, embedding="magpie", stats=["mean", "sum"])
 
 df_featurised
 ```

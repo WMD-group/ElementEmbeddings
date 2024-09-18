@@ -57,3 +57,6 @@ class TestSpecies(unittest.TestCase):
         assert species.parse_species("Fe1-") == ("Fe", -1)
         assert species.parse_species("Fe+") == ("Fe", 1)
         assert species.parse_species("Fe-") == ("Fe", -1)
+        assert species.parse_species("Fe2.5+") == ("Fe", 2.5)
+        assert species.parse_species("Fe2.5-") == ("Fe", -2.5)
+        assert species.parse_species("Fe2.555+") == ("Fe", 2.555)

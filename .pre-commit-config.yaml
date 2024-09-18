@@ -53,3 +53,7 @@ repos:
         args: [--toml, pyproject.toml]
         additional_dependencies:
           - tomli
+  - repo: https://github.com/adamchainz/blacken-docs
+    rev: 1.18.0
+    hooks:
+      - id: blacken-docs

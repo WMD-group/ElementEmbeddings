@@ -34,8 +34,8 @@ def _parse_species_old(species: str) -> tuple[str, int]:
     """
     ele = re.match(r"[A-Za-z]+", species).group(0)
 
-    charge_match = re.search(r"\d+", species)
-    ox_state = int(charge_match.group(0)) if charge_match else 0
+    charge_match = re.search(r"(\d+\.\d+|\d+)", species)
+    ox_state = float(charge_match.group(1)) if charge_match else 0
 
     if "-" in species:
         ox_state *= -1
