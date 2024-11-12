@@ -11,6 +11,7 @@
 [![Conda](https://anaconda.org/conda-forge/elementembeddings/badges/version.svg)](https://anaconda.org/conda-forge/elementembeddings)
 [![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://wmd-group.github.io/ElementEmbeddings/)
 ![python version](https://img.shields.io/pypi/pyversions/elementembeddings)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/elementembeddings)
 
 The **Element Embeddings** package provides high-level tools for analysing elemental and ionic species
 embeddings data. This primarily involves visualising the correlation between
