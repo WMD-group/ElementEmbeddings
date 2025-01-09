@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
@@ -1074,7 +1074,7 @@ include_species (list, optional): The elements/species to include in the plot,
 <span class="normal"><a href="#__codelineno-0-229">229</a></span>
 <span class="normal"><a href="#__codelineno-0-230">230</a></span>
 <span class="normal"><a href="#__codelineno-0-231">231</a></span>
-<span class="normal"><a href="#__codelineno-0-232">232</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="k">def</span> <span class="nf">dimension_plotter</span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-232">232</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-95" name="__codelineno-0-95"></a><span class="k">def</span><span class="w"> </span><span class="nf">dimension_plotter</span><span class="p">(</span>
 <a id="__codelineno-0-96" name="__codelineno-0-96"></a>    <span class="n">embedding</span><span class="p">:</span> <span class="n">Embedding</span> <span class="o">|</span> <span class="n">SpeciesEmbedding</span><span class="p">,</span>
 <a id="__codelineno-0-97" name="__codelineno-0-97"></a>    <span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <a id="__codelineno-0-98" name="__codelineno-0-98"></a>    <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
@@ -1158,7 +1158,7 @@ include_species (list, optional): The elements/species to include in the plot,
 <a id="__codelineno-0-176" name="__codelineno-0-176"></a>
 <a id="__codelineno-0-177" name="__codelineno-0-177"></a>            <span class="n">species_labels</span> <span class="o">=</span> <span class="p">[</span>
 <a id="__codelineno-0-178" name="__codelineno-0-178"></a>                <span class="sa">rf</span><span class="s2">&quot;$\mathregular</span><span class="se">{{</span><span class="si">{</span><span class="n">element</span><span class="si">}</span><span class="s2">^</span><span class="se">{{</span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">charge</span><span class="p">)</span><span class="si">}{</span><span class="n">sign</span><span class="si">}</span><span class="se">}}}}</span><span class="s2">$&quot;</span>
-<a id="__codelineno-0-179" name="__codelineno-0-179"></a>                <span class="k">for</span> <span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">charge</span><span class="p">),</span> <span class="n">sign</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parsed_species</span><span class="p">,</span> <span class="n">signs</span><span class="p">)</span>
+<a id="__codelineno-0-179" name="__codelineno-0-179"></a>                <span class="k">for</span> <span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">charge</span><span class="p">),</span> <span class="n">sign</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">parsed_species</span><span class="p">,</span> <span class="n">signs</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <a id="__codelineno-0-180" name="__codelineno-0-180"></a>            <span class="p">]</span>
 <a id="__codelineno-0-181" name="__codelineno-0-181"></a>
 <a id="__codelineno-0-182" name="__codelineno-0-182"></a>            <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">species_labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))]</span>
@@ -1320,7 +1320,7 @@ show_axislabels (bool, optional): Whether to show the axis, by default True
 <span class="normal"><a href="#__codelineno-0-89">89</a></span>
 <span class="normal"><a href="#__codelineno-0-90">90</a></span>
 <span class="normal"><a href="#__codelineno-0-91">91</a></span>
-<span class="normal"><a href="#__codelineno-0-92">92</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="k">def</span> <span class="nf">heatmap_plotter</span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-92">92</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">heatmap_plotter</span><span class="p">(</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="n">embedding</span><span class="p">:</span> <span class="n">Embedding</span> <span class="o">|</span> <span class="n">SpeciesEmbedding</span><span class="p">,</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a>    <span class="n">cmap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Blues&quot;</span><span class="p">,</span>
@@ -1459,7 +1459,7 @@ show_axislabels (bool, optional): Whether to show the axis, by default True
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "content.code.copy"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>

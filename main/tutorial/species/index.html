@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
@@ -1146,6 +1146,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                     processEnvironments: true
                 },
                 displayAlign: 'center',
+                messageStyle: 'none',
                 CommonHTML: {
                     linebreaks: {
                     automatic: true
@@ -1372,8 +1373,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">elementembeddings.core</span> <span class="kn">import</span> <span class="n">SpeciesEmbedding</span>
-<span class="kn">from</span> <span class="nn">elementembeddings.composition</span> <span class="kn">import</span> <span class="p">(</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpeciesEmbedding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.composition</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">SpeciesCompositionalEmbedding</span><span class="p">,</span>
     <span class="n">species_composition_featuriser</span><span class="p">,</span>
 <span class="p">)</span>
@@ -1394,7 +1395,7 @@ from elementembeddings.composition import (
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+<pre>/opt/hostedtoolcache/Python/3.10.16/x64/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
   from .autonotebook import tqdm as notebook_tqdm
 </pre>
 </div>
@@ -1624,7 +1625,7 @@ print(skipspecies.element_list)</div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>The folliowing elements have SkipSpecies ionic species representations:
 
-['Sn', 'P', 'Ge', 'N', 'Sb', 'I', 'Na', 'Ti', 'Dy', 'Th', 'C', 'Si', 'W', 'Zn', 'Ir', 'Ba', 'Ta', 'O', 'Li', 'Pm', 'Ce', 'Bi', 'Er', 'F', 'Ru', 'Tb', 'In', 'Hg', 'Al', 'Rh', 'Fe', 'As', 'Np', 'B', 'K', 'Cs', 'Ca', 'Te', 'Pd', 'Pb', 'Be', 'Sc', 'Mg', 'Hf', 'Pa', 'Pu', 'Tc', 'Rb', 'Se', 'Mn', 'Cr', 'Y', 'Re', 'Os', 'Pt', 'Tm', 'Sm', 'Cd', 'Mo', 'Gd', 'Br', 'Zr', 'Au', 'Lu', 'V', 'Tl', 'Ga', 'H', 'Co', 'Cu', 'Ac', 'Cl', 'Ni', 'Sr', 'Nd', 'La', 'Ag', 'Eu', 'U', 'Pr', 'S', 'Yb', 'Nb', 'Ho']
+['C', 'Ni', 'Au', 'Mg', 'Ge', 'Th', 'Bi', 'Br', 'In', 'Li', 'Ag', 'F', 'La', 'Te', 'Tb', 'Ac', 'Zn', 'W', 'Pt', 'Rh', 'Sc', 'V', 'Sm', 'Rb', 'Mn', 'Pu', 'Np', 'Ca', 'Os', 'Ba', 'Ir', 'Nb', 'Cs', 'Zr', 'I', 'Pb', 'Si', 'Al', 'Re', 'Y', 'Pa', 'Sn', 'Lu', 'K', 'O', 'Ti', 'Ce', 'B', 'Pm', 'U', 'Cl', 'Fe', 'P', 'Na', 'Se', 'Be', 'Ta', 'Ho', 'Tc', 'N', 'As', 'Cd', 'Eu', 'Tm', 'Yb', 'Cr', 'Er', 'Sb', 'Ru', 'Tl', 'Sr', 'Gd', 'Mo', 'Cu', 'Pr', 'S', 'Dy', 'Pd', 'Hg', 'Hf', 'Nd', 'Ga', 'Co', 'H']
 </pre>
 </div>
 </div>
@@ -1900,7 +1901,7 @@ featurised_comps_df</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>Computing feature vectors: 100%|██████████| 5/5 [00:00&lt;00:00, 38199.49it/s]</pre>
+<pre>Computing feature vectors: 100%|██████████| 5/5 [00:00&lt;00:00, 25145.71it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2221,7 +2222,7 @@ The euclidean distance between Fe3O4 and CsPbI3 is 2.11
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "content.code.copy"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>

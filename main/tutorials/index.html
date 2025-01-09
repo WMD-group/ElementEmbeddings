@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
@@ -901,7 +901,7 @@ version.
 <p>The <code>Embedding</code> class lies at the heart of the package. It handles elemental representation data and enables analysis and visualisation.</p>
 <p>For simple usage, you can instantiate an Embedding object using one of the embeddings in the <a href="src/elementembeddings/data/element_representations/README.md">data directory</a>. For this example, let's use the magpie elemental representation.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Import the class</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">elementembeddings.core</span> <span class="kn">import</span> <span class="n">Embedding</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Embedding</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Load the magpie data</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">magpie</span> <span class="o">=</span> <span class="n">Embedding</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s2">&quot;magpie&quot;</span><span class="p">)</span>
@@ -1045,8 +1045,8 @@ version.
 </code></pre></div>
 <h3 id="plotting">Plotting</h3>
 <p>We can quickly generate heatmaps of distance/similarity measures between the element vectors using <code>heatmap_plotter</code> and plot the representations in two dimensions using the <code>dimension_plotter</code> from the plotter module. Before we do that, we will standardise the embedding using the <code>standardise</code> method available to the Embedding class</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">elementembeddings.plotter</span> <span class="kn">import</span> <span class="n">heatmap_plotter</span><span class="p">,</span> <span class="n">dimension_plotter</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.plotter</span><span class="w"> </span><span class="kn">import</span> <span class="n">heatmap_plotter</span><span class="p">,</span> <span class="n">dimension_plotter</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">magpie</span><span class="o">.</span><span class="n">standardise</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Standardises the representation</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
@@ -1112,7 +1112,7 @@ version.
 </tbody>
 </table>
 <p>The <code>composition_featuriser</code> function can be used to featurise the data. The compositions can be featurised using different representation schemes and different types of pooling through the <code>embedding</code> and <code>stats</code> arguments respectively.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">elementembeddings.composition</span> <span class="kn">import</span> <span class="n">composition_featuriser</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.composition</span><span class="w"> </span><span class="kn">import</span> <span class="n">composition_featuriser</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">df_featurised</span> <span class="o">=</span> <span class="n">composition_featuriser</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="s2">&quot;magpie&quot;</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">])</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
@@ -1409,7 +1409,7 @@ version.
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
       
     
   </body>
