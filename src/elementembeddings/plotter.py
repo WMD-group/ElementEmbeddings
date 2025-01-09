@@ -176,7 +176,7 @@ def dimension_plotter(
 
             species_labels = [
                 rf"$\mathregular{{{element}^{{{abs(charge)}{sign}}}}}$"
-                for (element, charge), sign in zip(parsed_species, signs)
+                for (element, charge), sign in zip(parsed_species, signs, strict=False)
             ]
 
             texts = [ax.text(df["x"][i], df["y"][i], species_labels[i], fontsize=12) for i in range(len(df))]

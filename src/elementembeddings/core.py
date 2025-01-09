@@ -255,7 +255,7 @@ class Embedding(EmbeddingBase):
             embeddings_copy = self.embeddings.copy()
             embeddings_array = np.array(list(embeddings_copy.values()))
             embeddings_array = StandardScaler().fit_transform(embeddings_array)
-            for el, emb in zip(embeddings_copy.keys(), embeddings_array):
+            for el, emb in zip(embeddings_copy.keys(), embeddings_array, strict=False):
                 embeddings_copy[el] = emb
 
             if inplace:
