@@ -6,20 +6,20 @@ ci:
 
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.5
+    rev: v0.9.6
     hooks:
       - id: ruff
         args: [--fix]
       - id: ruff-format
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.41.0
+    rev: v0.44.0
     hooks:
       - id: markdownlint
         # MD013: line too long
@@ -29,7 +29,7 @@ repos:
         # MD025: single title
         args: [--disable, MD013, MD024, MD025, MD033, MD041, "--"]
   - repo: https://github.com/kynan/nbstripout
-    rev: 0.7.1
+    rev: 0.8.1
     hooks:
       - id: nbstripout
         args: [--drop-empty-cells, --keep-output]
@@ -41,19 +41,19 @@ repos:
         additional_dependencies:
           - prettier
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.376
+    rev: v1.1.393
     hooks:
       - id: pyright
         args: [--level, error]
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
+    rev: v2.4.1
     hooks:
       - id: codespell
-        stages: [commit, commit-msg]
+        stages: [pre-commit, commit-msg]
         args: [--toml, pyproject.toml]
         additional_dependencies:
           - tomli
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: 1.18.0
+    rev: 1.19.1
     hooks:
       - id: blacken-docs
