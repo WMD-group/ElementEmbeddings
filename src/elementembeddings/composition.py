@@ -239,7 +239,7 @@ class CompositionalEmbedding:
         if isinstance(stats, str):
             stats = [stats]
         if not all(s in implemented_stats for s in stats):
-            msg = f" {[stat for stat in stats if stat not in implemented_stats]} " f"are not valid statistics."
+            msg = f" {[stat for stat in stats if stat not in implemented_stats]} are not valid statistics."
             raise ValueError(
                 msg,
             )
@@ -287,10 +287,10 @@ class CompositionalEmbedding:
         )
 
     def __repr__(self) -> str:
-        return f"CompositionalEmbedding(formula={self.formula}, " f"embedding={self.embedding_name})"
+        return f"CompositionalEmbedding(formula={self.formula}, embedding={self.embedding_name})"
 
     def __str__(self) -> str:
-        return f"CompositionalEmbedding(formula={self.formula}, " f"embedding={self.embedding_name})"
+        return f"CompositionalEmbedding(formula={self.formula}, embedding={self.embedding_name})"
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -396,7 +396,7 @@ def composition_featuriser(
     elif isinstance(data, CompositionalEmbedding):
         return data.feature_vector(stats)
     else:
-        msg = "The data must be a pandas DataFrame, Series," " list or CompositionalEmbedding class."
+        msg = "The data must be a pandas DataFrame, Series, list or CompositionalEmbedding class."
         raise TypeError(
             msg,
         )
@@ -572,7 +572,7 @@ class SpeciesCompositionalEmbedding:
         if isinstance(stats, str):
             stats = [stats]
         if not all(s in implemented_stats for s in stats):
-            msg = f" {[stat for stat in stats if stat not in implemented_stats]} " f"are not valid statistics."
+            msg = f" {[stat for stat in stats if stat not in implemented_stats]} are not valid statistics."
             raise ValueError(
                 msg,
             )
@@ -622,10 +622,10 @@ class SpeciesCompositionalEmbedding:
         )
 
     def __repr__(self) -> str:
-        return f"SpeciesCompositionalEmbedding(formula={self.formula_pretty}, " f"embedding={self.embedding_name})"
+        return f"SpeciesCompositionalEmbedding(formula={self.formula_pretty}, embedding={self.embedding_name})"
 
     def __str__(self) -> str:
-        return f"SpeciesCompositionalEmbedding(formula={self.formula_pretty}, " f"embedding={self.embedding_name})"
+        return f"SpeciesCompositionalEmbedding(formula={self.formula_pretty}, embedding={self.embedding_name})"
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):

@@ -41,7 +41,7 @@ The following paper describes the details of the Materials Agnostic Platform for
 [A general-purpose machine learning framework for predicting properties of inorganic materials](https://www.nature.com/articles/npjcompumats201628)
 
 The source code for Magpie can be found
-[here](https://bitbucket.org/wolverton/magpie/src/master/)
+[on Bitbucket](https://bitbucket.org/wolverton/magpie/src/master/)
 
 [Data source](https://github.com/Kaaiian/CBFV/blob/master/cbfv/element_properties/magpie.csv)
 

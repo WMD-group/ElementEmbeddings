@@ -162,7 +162,7 @@ class Embedding(EmbeddingBase):
         elif columns == "elements":
             return df
         else:
-            msg = f"{columns} is not a valid keyword argument. " f"Choose either 'components' or 'elements"
+            msg = f"{columns} is not a valid keyword argument. Choose either 'components' or 'elements"
             raise (
                 ValueError(
                     msg,
@@ -248,7 +248,7 @@ class Embedding(EmbeddingBase):
         """
         if self._is_standardised():
             warnings.warn(
-                "Embedding is already standardised. " "Returning None and not changing the embedding.",
+                "Embedding is already standardised. Returning None and not changing the embedding.",
             )
             return None
         else:
@@ -438,7 +438,7 @@ class SpeciesEmbedding(EmbeddingBase):
                     del self.embeddings[species]
                 except KeyError:
                     warnings.warn(
-                        f"{species} is not in the SpeciesEmbedding. " "Skipping this species.",
+                        f"{species} is not in the SpeciesEmbedding. Skipping this species.",
                     )
             elif isinstance(species, list):
                 for sp in species:
@@ -446,7 +446,7 @@ class SpeciesEmbedding(EmbeddingBase):
                         del self.embeddings[sp]
                     except KeyError:
                         warnings.warn(
-                            f"{sp} is not in the SpeciesEmbedding. " "Skipping this species.",
+                            f"{sp} is not in the SpeciesEmbedding. Skipping this species.",
                         )
             return None
         else:
@@ -456,7 +456,7 @@ class SpeciesEmbedding(EmbeddingBase):
                     del embeddings_copy[species]
                 except KeyError:
                     warnings.warn(
-                        f"{species} is not in the SpeciesEmbedding. " "Skipping this species.",
+                        f"{species} is not in the SpeciesEmbedding. Skipping this species.",
                     )
             elif isinstance(species, list):
                 for sp in species:
@@ -464,7 +464,7 @@ class SpeciesEmbedding(EmbeddingBase):
                         del embeddings_copy[sp]
                     except KeyError:
                         warnings.warn(
-                            f"{sp} is not in the SpeciesEmbedding. " "Skipping this species.",
+                            f"{sp} is not in the SpeciesEmbedding. Skipping this species.",
                         )
             return SpeciesEmbedding(embeddings_copy, self.embedding_name)
 
@@ -477,7 +477,7 @@ class SpeciesEmbedding(EmbeddingBase):
         """
         ion_dict = {}
         for species in self.species_list:
-            el, charge = parse_species(species)
+            _el, charge = parse_species(species)
             if charge > 0:
                 ion_dict[species] = "Cation"
             elif charge < 0:

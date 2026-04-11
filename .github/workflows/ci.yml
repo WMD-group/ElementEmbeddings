@@ -39,10 +39,4 @@ jobs:
           uv pip show -V matplotlib
 
       - name: Run tests
-        run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings --cov-report=xml -v
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
-          verbose: true
+        run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings -v

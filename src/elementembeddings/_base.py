@@ -160,7 +160,7 @@ class EmbeddingBase(ABC):
         """
         if self._is_standardised():
             warnings.warn(
-                "Embedding is already standardised." "Returning None and not changing the embedding",
+                "Embedding is already standardised. Returning None and not changing the embedding",
             )
             return None
         else:
@@ -360,7 +360,7 @@ class EmbeddingBase(ABC):
 
         else:
             print(
-                "Invalid distance metric." f"Use one of the following metrics:{valid_metrics}",
+                f"Invalid distance metric. Use one of the following metrics:{valid_metrics}",
             )
             raise ValueError
 

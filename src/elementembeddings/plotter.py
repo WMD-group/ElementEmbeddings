@@ -38,7 +38,7 @@ def heatmap_plotter(
 
     """
     if not ax:
-        fig, ax = plt.subplots()
+        _, ax = plt.subplots()
 
     correlation_metrics = ["spearman", "pearson", "cosine_similarity"]
     distance_metrics = [
@@ -156,7 +156,7 @@ def dimension_plotter(
         if include_species:
             df = df[df["element"].isin(include_species)].reset_index(drop=True)
         if not ax:
-            fig, ax = plt.subplots()
+            _, ax = plt.subplots()
         if scatter_params is None:
             scatter_params = {}
         if isinstance(embedding, SpeciesEmbedding):
