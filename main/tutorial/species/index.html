@@ -1851,17 +1851,21 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpeciesEmbedding</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.composition</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">SpeciesCompositionalEmbedding</span><span class="p">,</span>
     <span class="n">species_composition_featuriser</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpeciesEmbedding</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1">from elementembeddings.core import SpeciesEmbedding
+<div class="clipboard-copy-txt" id="cell-1">from __future__ import annotations
+
 from elementembeddings.composition import (
     SpeciesCompositionalEmbedding,
     species_composition_featuriser,
-)</div>
+)
+from elementembeddings.core import SpeciesEmbedding</div>
 </div>
 </div>
 </div>
@@ -2103,7 +2107,7 @@ print(skipspecies.element_list)</div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>The folliowing elements have SkipSpecies ionic species representations:
 
-['Mn', 'K', 'Cu', 'N', 'W', 'Cs', 'Fe', 'Pm', 'Ti', 'Ho', 'Ni', 'Ge', 'Ir', 'Th', 'Np', 'Br', 'Na', 'Mg', 'Pr', 'Er', 'O', 'Re', 'Zn', 'Ac', 'Co', 'Nd', 'Hf', 'Cl', 'Pd', 'Tm', 'Cr', 'Dy', 'C', 'La', 'Sr', 'F', 'P', 'As', 'Yb', 'Ru', 'Pb', 'S', 'Si', 'Pu', 'I', 'Al', 'Li', 'Bi', 'V', 'In', 'Ag', 'Tc', 'Se', 'H', 'Nb', 'Tl', 'Rb', 'Zr', 'Te', 'Ba', 'Ta', 'Ga', 'Gd', 'Eu', 'Ce', 'Mo', 'Rh', 'Tb', 'Be', 'Sm', 'Au', 'Hg', 'Pa', 'Ca', 'Sn', 'Cd', 'Sc', 'U', 'Y', 'Sb', 'Pt', 'Os', 'B', 'Lu']
+['Be', 'N', 'As', 'Al', 'Tl', 'Zn', 'Pr', 'Gd', 'Y', 'V', 'Li', 'Nd', 'U', 'Pb', 'Ag', 'Sn', 'La', 'Eu', 'Mn', 'O', 'Ca', 'Sr', 'F', 'Mo', 'Co', 'H', 'K', 'Se', 'Np', 'In', 'Ge', 'Pt', 'Ho', 'Ni', 'Yb', 'Br', 'Tb', 'Th', 'Cu', 'Cs', 'Cr', 'Hf', 'Er', 'Sb', 'Fe', 'Cl', 'Pa', 'Bi', 'Pm', 'Cd', 'Ir', 'Hg', 'Au', 'Mg', 'Ce', 'Tm', 'Zr', 'B', 'Ta', 'Ba', 'Lu', 'C', 'Ga', 'Rh', 'Si', 'Ru', 'Pd', 'Nb', 'Te', 'Dy', 'Sm', 'I', 'Sc', 'Ac', 'Pu', 'Rb', 'P', 'W', 'Na', 'Os', 'S', 'Tc', 'Re', 'Ti']
 </pre>
 </div>
 </div>
@@ -2200,15 +2204,11 @@ print(skipspecies.element_list)</div>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">composition</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Fe2+"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"Fe3+"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"O2-"</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
 
-<span class="n">Fe3O4_skipspecies</span> <span class="o">=</span> <span class="n">SpeciesCompositionalEmbedding</span><span class="p">(</span>
-    <span class="n">formula_dict</span><span class="o">=</span><span class="n">composition</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">skipspecies</span>
-<span class="p">)</span>
+<span class="n">Fe3O4_skipspecies</span> <span class="o">=</span> <span class="n">SpeciesCompositionalEmbedding</span><span class="p">(</span><span class="n">formula_dict</span><span class="o">=</span><span class="n">composition</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">skipspecies</span><span class="p">)</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-6">composition = {"Fe2+": 1, "Fe3+": 2, "O2-": 4}
 
-Fe3O4_skipspecies = SpeciesCompositionalEmbedding(
-    formula_dict=composition, embedding=skipspecies
-)</div>
+Fe3O4_skipspecies = SpeciesCompositionalEmbedding(formula_dict=composition, embedding=skipspecies)</div>
 </div>
 </div>
 </div>
@@ -2293,7 +2293,7 @@ print(Fe3O4_skipspecies.num_atoms)</div>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Fe3O4
-['Fe', 'O']
+['O', 'Fe']
 ['Fe2+', 'Fe3+', 'O2-']
 [1 2 4]
 [0.14285714 0.28571429 0.57142857]
@@ -2379,7 +2379,7 @@ featurised_comps_df</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>Computing feature vectors: 100%|██████████| 5/5 [00:00&lt;00:00, 47127.01it/s]</pre>
+<pre>Computing feature vectors: 100%|██████████| 5/5 [00:00&lt;00:00, 47233.15it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2600,7 +2600,7 @@ featurised_comps_df</div>
     <span class="sa">f</span><span class="s2">"The euclidean distance between Fe3O4 and Pb2O3 is </span><span class="si">{</span><span class="n">Fe3O4_skipspecies</span><span class="o">.</span><span class="n">distance</span><span class="p">({</span><span class="s1">'Pb2+'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'Pb4+'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'O2-'</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span><span class="w"> </span><span class="n">distance_metric</span><span class="o">=</span><span class="s1">'euclidean'</span><span class="p">,</span><span class="w"> </span><span class="n">stats</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">"The euclidean distance between Fe3O4 and CsPbI3 is </span><span class="si">{</span><span class="n">Fe3O4_skipspecies</span><span class="o">.</span><span class="n">distance</span><span class="p">({</span><span class="s1">'Cs+'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'Pb2+'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'I-'</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span><span class="n">distance_metric</span><span class="o">=</span><span class="s1">'euclidean'</span><span class="p">,</span><span class="w"> </span><span class="n">stats</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"The euclidean distance between Fe3O4 and CsPbI3 is </span><span class="si">{</span><span class="n">Fe3O4_skipspecies</span><span class="o">.</span><span class="n">distance</span><span class="p">({</span><span class="s1">'Cs+'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'Pb2+'</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">'I-'</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span><span class="w"> </span><span class="n">distance_metric</span><span class="o">=</span><span class="s1">'euclidean'</span><span class="p">,</span><span class="w"> </span><span class="n">stats</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-9">print(
@@ -2610,7 +2610,7 @@ print(
     f"The euclidean distance between Fe3O4 and Pb2O3 is {Fe3O4_skipspecies.distance({'Pb2+': 1, 'Pb4+': 1, 'O2-': 3}, distance_metric='euclidean', stats='mean'):.2f}"
 )
 print(
-    f"The euclidean distance between Fe3O4 and CsPbI3 is {Fe3O4_skipspecies.distance({'Cs+': 1, 'Pb2+': 1, 'I-': 3},distance_metric='euclidean', stats='mean'):.2f}"
+    f"The euclidean distance between Fe3O4 and CsPbI3 is {Fe3O4_skipspecies.distance({'Cs+': 1, 'Pb2+': 1, 'I-': 3}, distance_metric='euclidean', stats='mean'):.2f}"
 )</div>
 </div>
 </div>

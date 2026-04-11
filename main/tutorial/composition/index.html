@@ -1861,17 +1861,21 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.composition</span><span class="w"> </span><span class="kn">import</span> <span class="n">composition_featuriser</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.composition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompositionalEmbedding</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">elementembeddings.composition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompositionalEmbedding</span><span class="p">,</span> <span class="n">composition_featuriser</span>
 
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1">import pandas as pd
-from elementembeddings.composition import composition_featuriser
-from elementembeddings.composition import CompositionalEmbedding
+<div class="clipboard-copy-txt" id="cell-1">from __future__ import annotations
+
 import numpy as np
+import pandas as pd
+
+from elementembeddings.composition import CompositionalEmbedding, composition_featuriser
 
 np.set_printoptions(suppress=True)</div>
 </div>
@@ -2268,17 +2272,13 @@ print(CsPbI3_magpie.feature_vector(stats="mean"))</div>
 </clipboard-copy>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Print the feature vector for the mean, variance, minpool, maxpool, and sum</span>
-<span class="n">CsPbI3_magpie_cbfv</span> <span class="o">=</span> <span class="n">CsPbI3_magpie</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span>
-    <span class="n">stats</span><span class="o">=</span><span class="p">[</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"variance"</span><span class="p">,</span> <span class="s2">"minpool"</span><span class="p">,</span> <span class="s2">"maxpool"</span><span class="p">,</span> <span class="s2">"sum"</span><span class="p">]</span>
-<span class="p">)</span>
+<span class="n">CsPbI3_magpie_cbfv</span> <span class="o">=</span> <span class="n">CsPbI3_magpie</span><span class="o">.</span><span class="n">feature_vector</span><span class="p">(</span><span class="n">stats</span><span class="o">=</span><span class="p">[</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"variance"</span><span class="p">,</span> <span class="s2">"minpool"</span><span class="p">,</span> <span class="s2">"maxpool"</span><span class="p">,</span> <span class="s2">"sum"</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The dimension of the feature vector is </span><span class="si">{</span><span class="n">CsPbI3_magpie_cbfv</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">CsPbI3_magpie_cbfv</span><span class="p">)</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-8"># Print the feature vector for the mean, variance, minpool, maxpool, and sum
-CsPbI3_magpie_cbfv = CsPbI3_magpie.feature_vector(
-    stats=["mean", "variance", "minpool", "maxpool", "sum"]
-)
+CsPbI3_magpie_cbfv = CsPbI3_magpie.feature_vector(stats=["mean", "variance", "minpool", "maxpool", "sum"])
 print(f"The dimension of the feature vector is {CsPbI3_magpie_cbfv.shape[0]}")
 
 print(CsPbI3_magpie_cbfv)</div>
@@ -2379,7 +2379,7 @@ composition_featuriser(formulas, embedding="magpie", stats="mean")</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|██████████| 3/3 [00:00&lt;00:00, 10263.39it/s]</pre>
+<pre>100%|██████████| 3/3 [00:00&lt;00:00, 23344.92it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2463,7 +2463,7 @@ composition_featuriser(df, embedding="magpie", stats=["mean", "sum"])</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|██████████| 3/3 [00:00&lt;00:00, 462.81it/s]</pre>
+<pre>100%|██████████| 3/3 [00:00&lt;00:00, 423.92it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2489,7 +2489,7 @@ composition_featuriser(df, embedding="magpie", stats=["mean", "sum"])</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>100%|██████████| 3/3 [00:00&lt;00:00, 38245.93it/s]</pre>
+<pre>100%|██████████| 3/3 [00:00&lt;00:00, 22712.84it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2659,20 +2659,20 @@ composition_featuriser(df, embedding="magpie", stats=["mean", "sum"])</div>
     <span class="sa">f</span><span class="s2">"The euclidean distance between CsPbI3 and Fe2O3 is </span><span class="si">{</span><span class="n">CsPbI3_magpie</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="s1">'Fe2O3'</span><span class="p">,</span><span class="w"> </span><span class="n">distance_metric</span><span class="o">=</span><span class="s1">'euclidean'</span><span class="p">,</span><span class="w"> </span><span class="n">stats</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">"The euclidean distance between CsPbI3 and NaCl is </span><span class="si">{</span><span class="n">CsPbI3_magpie</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="s1">'NaCl'</span><span class="p">,</span><span class="n">distance_metric</span><span class="o">=</span><span class="s1">'euclidean'</span><span class="p">,</span><span class="w"> </span><span class="n">stats</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"The euclidean distance between CsPbI3 and NaCl is </span><span class="si">{</span><span class="n">CsPbI3_magpie</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="s1">'NaCl'</span><span class="p">,</span><span class="w"> </span><span class="n">distance_metric</span><span class="o">=</span><span class="s1">'euclidean'</span><span class="p">,</span><span class="w"> </span><span class="n">stats</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">"The euclidean distance between CsPbI3 and CsPbCl3 is </span><span class="si">{</span><span class="n">CsPbI3_magpie</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="s1">'CsPbCl3'</span><span class="p">,</span><span class="n">distance_metric</span><span class="o">=</span><span class="s1">'euclidean'</span><span class="p">,</span><span class="w"> </span><span class="n">stats</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"The euclidean distance between CsPbI3 and CsPbCl3 is </span><span class="si">{</span><span class="n">CsPbI3_magpie</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="s1">'CsPbCl3'</span><span class="p">,</span><span class="w"> </span><span class="n">distance_metric</span><span class="o">=</span><span class="s1">'euclidean'</span><span class="p">,</span><span class="w"> </span><span class="n">stats</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-11">print(
     f"The euclidean distance between CsPbI3 and Fe2O3 is {CsPbI3_magpie.distance('Fe2O3', distance_metric='euclidean', stats='mean'):.2f}"
 )
 print(
-    f"The euclidean distance between CsPbI3 and NaCl is {CsPbI3_magpie.distance('NaCl',distance_metric='euclidean', stats='mean'):.2f}"
+    f"The euclidean distance between CsPbI3 and NaCl is {CsPbI3_magpie.distance('NaCl', distance_metric='euclidean', stats='mean'):.2f}"
 )
 print(
-    f"The euclidean distance between CsPbI3 and CsPbCl3 is {CsPbI3_magpie.distance('CsPbCl3',distance_metric='euclidean', stats='mean'):.2f}"
+    f"The euclidean distance between CsPbI3 and CsPbCl3 is {CsPbI3_magpie.distance('CsPbCl3', distance_metric='euclidean', stats='mean'):.2f}"
 )</div>
 </div>
 </div>
