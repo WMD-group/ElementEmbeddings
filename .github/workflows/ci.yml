@@ -42,4 +42,6 @@ jobs:
           uv pip show matplotlib
 
       - name: Run tests
+        env:
+          MPLBACKEND: Agg
         run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings -v
