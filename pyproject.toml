@@ -35,21 +35,14 @@ dependencies = [
     "umap-learn>=0.5.3",
     "adjustText>=0.8",
     "openTSNE>=1.0.0",
-    "typing-extensions",
     "llvmlite>=0.40",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pre-commit",
-    "black",
-    "isort",
     "pytest",
     "pytest-subtests",
-    "nbqa",
-    "flake8",
-    "pyupgrade",
-    "autopep8",
     "pytest-cov",
     "pytest-mpl",
 ]
@@ -63,7 +56,7 @@ docs = [
 ]
 
 [tool.semantic_release]
-version_variable = "setup.py:__version__"
+version_toml = ["pyproject.toml:project.version"]
 version_source = "tag"
 
 [tool.ruff]
@@ -136,7 +129,7 @@ ignore = [
     "TRY301",  # Check for raise statements within try blocks
     "E741",    # Ambiguous variable
 ]
-exclude = ["Publications/*"]
+exclude = ["Publication/*"]
 pydocstyle.convention = "google"
 isort.required-imports = ["from __future__ import annotations"]
 
