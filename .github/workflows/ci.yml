@@ -37,9 +37,9 @@ jobs:
           uv pip install -e ".[dev]" --system
       - name: Check package versions
         run: |
-          uv pip show -V elementembeddings
-          uv pip show -V pytest
-          uv pip show -V matplotlib
+          uv pip show elementembeddings
+          uv pip show pytest
+          uv pip show matplotlib
 
       - name: Run tests
         run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings -v
