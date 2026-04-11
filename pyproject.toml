@@ -63,6 +63,7 @@ version_source = "tag"
 target-version = "py310"
 line-length = 120
 force-exclude = true
+exclude = ["Publication/*", "dev_docs/*"]
 
 [tool.ruff.lint]
 select = ["ALL"]
@@ -129,7 +130,6 @@ ignore = [
     "TRY301",  # Check for raise statements within try blocks
     "E741",    # Ambiguous variable
 ]
-exclude = ["Publication/*"]
 pydocstyle.convention = "google"
 isort.required-imports = ["from __future__ import annotations"]
 
