@@ -180,3 +180,22 @@ See the following publications:
 
 - [Representation of materials by kernel mean embedding](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.108.134107)
 - [Crystal structure prediction with machine learning-based element substitution](https://www.sciencedirect.com/science/article/pii/S0927025622002555)
+
+## MLIP representations
+
+The following embeddings are derived from Machine Learning Interatomic Potentials (MLIPs). Element-level vectors are obtained by averaging atom-level embeddings over structures from the MP-20 dataset.
+
+### mace_mp0
+
+256-dimensional descriptors from the MACE-MP-0 foundation model, extracted using the descriptors from the final equivariant message-passing layer via `MACECalculator.get_descriptors()`:
+[A foundation model for atomistic simulations](https://arxiv.org/abs/2401.00096)
+
+### sevennet
+
+64-dimensional node features from the SevenNet (7net-0) model, captured from the atomic feature vectors at the input to the energy readout layer after five interaction blocks:
+[Scalable parallel algorithm for graph neural network interatomic potentials in molecular dynamics simulations](https://pubs.acs.org/doi/10.1021/acs.jctc.4c00190)
+
+### orb_v2
+
+256-dimensional node features from the ORB-v2 model, captured at the input to the energy prediction head after the decoder transforms the graph neural network output:
+[ORB: A fast, scalable neural network potential](https://arxiv.org/abs/2501.12231)
