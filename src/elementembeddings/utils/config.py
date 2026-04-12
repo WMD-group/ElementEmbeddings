@@ -218,12 +218,8 @@ CITATIONS = {
         "interatomic potentials in molecular dynamics simulations},"
         "author={Park, Yutack and Kim, Jaesun and Hwang, Seungwoo "
         "and Han, Seungwu},"
-        "journal={Journal of Chemical Theory and Computation},"
-        "volume={20},"
-        "number={11},"
-        "pages={4857--4868},"
-        "year={2024},"
-        "publisher={ACS Publications}}",
+        "journal={arXiv preprint arXiv:2402.03789},"
+        "year={2024}}",
     ],
     "orb_v2": [
         "@article{neumann2024orb,"

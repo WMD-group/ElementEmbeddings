@@ -193,7 +193,7 @@ The following embeddings are derived from Machine Learning Interatomic Potential
 ### sevennet
 
 64-dimensional node features from the SevenNet (7net-0) model, captured from the atomic feature vectors at the input to the energy readout layer after five interaction blocks:
-[Scalable parallel algorithm for graph neural network interatomic potentials in molecular dynamics simulations](https://pubs.acs.org/doi/10.1021/acs.jctc.4c00190)
+[Scalable parallel algorithm for graph neural network interatomic potentials in molecular dynamics simulations](https://arxiv.org/abs/2402.03789)
 
 ### orb_v2
 
