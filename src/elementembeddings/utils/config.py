@@ -228,8 +228,9 @@ CITATIONS = {
     "orb_v2": [
         "@article{neumann2024orb,"
         "title={ORB: A Fast, Scalable Neural Network Potential},"
-        "author={Neumann, Mark and Rhodes, Benjamin and Rhodes, James "
-        "and Sargent, Luke and Willatt, Michael},"
+        "author={Neumann, Mark and Gin, James and Rhodes, Benjamin "
+        "and Bennett, Steven and Li, Zhiyi and Choubisa, Hitarth "
+        "and Hussey, Arthur and Godwin, Jonathan},"
         "journal={arXiv preprint arXiv:2410.22570},"
         "year={2024}}",
     ],
