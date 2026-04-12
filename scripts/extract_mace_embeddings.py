@@ -63,7 +63,7 @@ def extract_mace(structures: list) -> dict[int, list[np.ndarray]]:
             print(f"  Processing {i}/{len(structures)}...")
         try:
             atoms.calc = calc
-            descriptors = calc.get_descriptors(atoms, invariants_only=True)
+            descriptors = calc.get_descriptors(atoms, invariants_only=True, num_layers=1)
             for j, z in enumerate(atoms.get_atomic_numbers()):
                 element_embeddings[z].append(descriptors[j])
         except Exception as e:

@@ -66,14 +66,19 @@ def extract_sevennet(structures: list) -> dict[int, list[np.ndarray]]:
     calc = SevenNetCalculator("7net-0", device="cpu")
 
     captured = {}
-    for name, mod in calc.model.named_modules():
-        if name == "reduce_input_to_hidden":
-            def hook_fn(module, input, output):
-                graph = input[0]
-                captured["x"] = graph.x.detach().cpu().numpy()
-                captured["z"] = graph.atomic_numbers.detach().cpu().numpy()
-            mod.register_forward_hook(hook_fn)
-            break
+
+    # Hook the last equivariant gate (layer before reduce_input_to_hidden)
+    # to capture 128D scalar (l=0) node features
+    layer_names = list(calc.model._modules.keys())
+    idx = layer_names.index("reduce_input_to_hidden")
+    target = layer_names[idx - 1]
+    print(f"  Hooking: {target}")
+
+    def hook_fn(module, input, output):
+        captured["x"] = output.x.detach().cpu().numpy()
+        captured["z"] = output.atomic_numbers.detach().cpu().numpy()
+
+    calc.model._modules[target].register_forward_hook(hook_fn)
 
     element_embeddings = defaultdict(list)
     n_failed = 0

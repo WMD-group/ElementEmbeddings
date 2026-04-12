@@ -187,12 +187,12 @@ The following embeddings are derived from Machine Learning Interatomic Potential
 
 ### mace_mp0
 
-256-dimensional descriptors from the MACE-MP-0 foundation model, extracted using the invariant descriptors from the final equivariant message-passing layer via `MACECalculator.get_descriptors()`:
+128-dimensional scalar invariant descriptors from the MACE-MP-0 medium foundation model, extracted from the last interaction layer via `MACECalculator.get_descriptors(invariants_only=True, num_layers=1)`:
 [A foundation model for atomistic simulations](https://arxiv.org/abs/2401.00096)
 
 ### sevennet
 
-64-dimensional node features from the SevenNet (7net-0) model, captured from the atomic feature vectors at the input to the energy readout layer after five interaction blocks:
+128-dimensional scalar (l=0) node features from the SevenNet (7net-0) model, captured from the output of the last equivariant gate after five interaction blocks:
 [Scalable parallel algorithm for graph neural network interatomic potentials in molecular dynamics simulations](https://arxiv.org/abs/2402.03789)
 
 ### orb_v2
