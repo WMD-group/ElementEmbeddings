@@ -204,13 +204,13 @@ CITATIONS = {
         "year={2024}",
     ],
     "mace_mp0": [
-        "@article{batatia2023foundation,"
-        "title={A foundation model for atomistic simulations},"
-        "author={Batatia, Ilyes and Benber, Philipp and Chmiela, Stefan "
-        "and Kovacs, David Peter and Busk, Jonas and Klug, Felix and "
-        "Ortner, Christoph and Csanyi, Gabor},"
+        "@article{batatia2024foundation,"
+        "title={A foundation model for atomistic materials chemistry},"
+        "author={Batatia, Ilyes and Benner, Philipp and Chiang, Yuan "
+        "and Elena, Alin M. and Kov{\\'a}cs, D{\\'a}vid P. "
+        "and Riebesell, Janosh and others},"
         "journal={arXiv preprint arXiv:2401.00096},"
-        "year={2023}}",
+        "year={2024}}",
     ],
     "sevennet": [
         "@article{park2024scalable,"
