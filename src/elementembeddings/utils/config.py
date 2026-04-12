@@ -230,7 +230,7 @@ CITATIONS = {
         "title={ORB: A Fast, Scalable Neural Network Potential},"
         "author={Neumann, Mark and Rhodes, Benjamin and Rhodes, James "
         "and Sargent, Luke and Willatt, Michael},"
-        "journal={arXiv preprint arXiv:2501.12231},"
+        "journal={arXiv preprint arXiv:2410.22570},"
         "year={2024}}",
     ],
     "skipspecies": [

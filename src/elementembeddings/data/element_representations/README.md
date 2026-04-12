@@ -198,4 +198,4 @@ The following embeddings are derived from Machine Learning Interatomic Potential
 ### orb_v2
 
 256-dimensional node features from the ORB-v2 model, captured at the input to the energy prediction head after the decoder transforms the graph neural network output:
-[ORB: A Fast, Scalable Neural Network Potential](https://arxiv.org/abs/2501.12231)
+[ORB: A Fast, Scalable Neural Network Potential](https://arxiv.org/abs/2410.22570)
