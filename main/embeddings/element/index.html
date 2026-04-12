@@ -1593,10 +1593,10 @@ See the following publications:</p>
 <h2 id="mlip-representations">MLIP representations</h2>
 <p>The following embeddings are derived from Machine Learning Interatomic Potentials (MLIPs). Element-level vectors are obtained by averaging atom-level embeddings over structures from the MP-20 dataset.</p>
 <h3 id="mace_mp0">mace_mp0</h3>
-<p>256-dimensional descriptors from the MACE-MP-0 foundation model, extracted using the descriptors from the final equivariant message-passing layer via <code>MACECalculator.get_descriptors()</code>:
+<p>128-dimensional scalar invariant descriptors from the MACE-MP-0 medium foundation model, extracted from the last interaction layer via <code>MACECalculator.get_descriptors(invariants_only=True, num_layers=1)</code>:
 <a href="https://arxiv.org/abs/2401.00096">A foundation model for atomistic simulations</a></p>
 <h3 id="sevennet">sevennet</h3>
-<p>64-dimensional node features from the SevenNet (7net-0) model, captured from the atomic feature vectors at the input to the energy readout layer after five interaction blocks:
+<p>128-dimensional scalar (l=0) node features from the SevenNet (7net-0) model, captured from the output of the last equivariant gate after five interaction blocks:
 <a href="https://arxiv.org/abs/2402.03789">Scalable parallel algorithm for graph neural network interatomic potentials in molecular dynamics simulations</a></p>
 <h3 id="orb_v2">orb_v2</h3>
 <p>256-dimensional node features from the ORB-v2 model, captured at the input to the energy prediction head after the decoder transforms the graph neural network output:
