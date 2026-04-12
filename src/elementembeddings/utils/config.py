@@ -17,6 +17,9 @@ DEFAULT_ELEMENT_EMBEDDINGS = {
     "crystallm": "crystallm_v24c.dim512_atom_vectors.csv",
     "xenonpy": "xenonpy_element_features.csv",
     "cgnf": "cgnf.json",
+    "mace_mp0": "mace_mp0.csv",
+    "sevennet": "sevennet.csv",
+    "orb_v2": "orb_v2.csv",
 }
 
 DEFAULT_SPECIES_EMBEDDINGS = {
@@ -199,6 +202,36 @@ CITATIONS = {
         "number={6},"
         "pages={2294--2312},"
         "year={2024}",
+    ],
+    "mace_mp0": [
+        "@article{batatia2023foundation,"
+        "title={A foundation model for atomistic simulations},"
+        "author={Batatia, Ilyes and Benber, Philipp and Chmiela, Stefan "
+        "and Kovacs, David Peter and Busk, Jonas and Klug, Felix and "
+        "Ortner, Christoph and Csanyi, Gabor},"
+        "journal={arXiv preprint arXiv:2401.00096},"
+        "year={2023}}",
+    ],
+    "sevennet": [
+        "@article{park2024scalable,"
+        "title={Scalable parallel algorithm for graph neural network "
+        "interatomic potentials in molecular dynamics simulations},"
+        "author={Park, Yutack and Kim, Jaesun and Hwang, Seungwoo "
+        "and Han, Seungwu},"
+        "journal={Journal of Chemical Theory and Computation},"
+        "volume={20},"
+        "number={11},"
+        "pages={4857--4868},"
+        "year={2024},"
+        "publisher={ACS Publications}}",
+    ],
+    "orb_v2": [
+        "@article{neumann2024orb,"
+        "title={ORB: A Fast, Scalable Neural Network Potential},"
+        "author={Neumann, Mark and Rhodes, Benjamin and Rhodes, James "
+        "and Sargent, Luke and Willatt, Michael},"
+        "journal={arXiv preprint arXiv:2501.12231},"
+        "year={2024}}",
     ],
     "skipspecies": [
         "@article{Onwuli_Butler_Walsh_2024, "

@@ -26,21 +26,22 @@ widespread. Some of these involve the use of deep learning
 techniques where the representation of the elements is learned
 rather than specified by the user of the model. While an important goal of
 machine learning training is to minimise the chosen error function to make more
-accurate predictions, it is also important for us material scientists to be able
+accurate predictions, it is also important for material scientists to be able
 to interpret these models. As such, we aim to evaluate and compare different atomic embedding
 schemes in a consistent framework.
 
 ## Getting started
 
-ElementEmbeddings's main feature, the Embedding class is accessible by
+ElementEmbeddings's main feature, the Embedding class, is accessible by
 importing the class.
 
 ## Installation
 
-The latest stable release can be installed via pip using:
+The latest stable release can be installed via pip or uv:
 
 ```bash
 pip install ElementEmbeddings
+uv pip install ElementEmbeddings
 ```
 
 Alternatively, ElementEmbeddings is available via conda through the conda-forge channel on Anaconda Cloud:
@@ -49,7 +50,7 @@ Alternatively, ElementEmbeddings is available via conda through the conda-forge 
 conda install -c conda-forge elementembeddings
 ```
 
-For installing the development or documentation dependencies via pip:
+For installing the development or documentation dependencies:
 
 ```bash
 pip install "ElementEmbeddings[dev]"
@@ -62,7 +63,7 @@ To clone the repository and make a local installation, run the following command
 ```bash
 git clone https://github.com/WMD-group/ElementEmbeddings.git
 cd ElementEmbeddings
-pip install  -e ".[docs,dev]"
+pip install -e ".[docs,dev]"
 ```
 
 With -e pip will create links to the source folder so that changes to the code will be immediately reflected on the PATH.
@@ -198,7 +199,7 @@ The steps required to add a new representation scheme are:
 1. Add data file to [data/element_representations](src/elementembeddings/data/element_representations).
 2. Edit docstring table in [core.py](src/elementembeddings/core.py).
 3. Edit [utils/config.py](src/elementembeddings/utils/config.py) to include the representation in `DEFAULT_ELEMENT_EMBEDDINGS` and `CITATIONS`.
-4. Update the documentation [reference.md](docs/reference.md) and [README.md](src/elementembeddings/data/element_representations/README.md).
+4. Update the documentation [element.md](docs/embeddings/element.md) and [README.md](src/elementembeddings/data/element_representations/README.md).
 
 ### Developer
 

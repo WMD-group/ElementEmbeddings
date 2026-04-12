@@ -62,6 +62,9 @@ class Embedding(EmbeddingBase):
         | CrystaLLM               | crystallm    |
         | XenonPy                 | xenonpy      |
         | Cgnf                    | cgnf         |
+        | MACE-MP-0               | mace_mp0     |
+        | SevenNet                | sevennet     |
+        | ORB-v2                  | orb_v2       |
 
 
         Args:
