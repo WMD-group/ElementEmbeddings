@@ -1040,6 +1040,56 @@ version.
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#mlip-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLIP representations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLIP representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mace_mp0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mace_mp0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sevennet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sevennet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orb_v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        orb_v2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1330,6 +1380,56 @@ version.
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#mlip-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLIP representations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MLIP representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mace_mp0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mace_mp0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sevennet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sevennet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orb_v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        orb_v2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1490,6 +1590,17 @@ See the following publications:</p>
 <li><a href="https://journals.aps.org/prb/abstract/10.1103/PhysRevB.108.134107">Representation of materials by kernel mean embedding</a></li>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S0927025622002555">Crystal structure prediction with machine learning-based element substitution</a></li>
 </ul>
+<h2 id="mlip-representations">MLIP representations</h2>
+<p>The following embeddings are derived from Machine Learning Interatomic Potentials (MLIPs). Element-level vectors are obtained by averaging atom-level embeddings over structures from the MP-20 dataset.</p>
+<h3 id="mace_mp0">mace_mp0</h3>
+<p>256-dimensional descriptors from the MACE-MP-0 foundation model, extracted using the descriptors from the final equivariant message-passing layer via <code>MACECalculator.get_descriptors()</code>:
+<a href="https://arxiv.org/abs/2401.00096">A foundation model for atomistic simulations</a></p>
+<h3 id="sevennet">sevennet</h3>
+<p>64-dimensional node features from the SevenNet (7net-0) model, captured from the atomic feature vectors at the input to the energy readout layer after five interaction blocks:
+<a href="https://pubs.acs.org/doi/10.1021/acs.jctc.4c00190">Scalable parallel algorithm for graph neural network interatomic potentials in molecular dynamics simulations</a></p>
+<h3 id="orb_v2">orb_v2</h3>
+<p>256-dimensional node features from the ORB-v2 model, captured at the input to the energy prediction head after the decoder transforms the graph neural network output:
+<a href="https://arxiv.org/abs/2501.12231">ORB: A fast, scalable neural network potential</a></p>
 
 
 
