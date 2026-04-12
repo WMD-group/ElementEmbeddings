@@ -1,0 +1,8 @@
+Embedding 1,Embedding 2,r,p-value
+Magpie,Oliynyk,0.8601,0.001
+Mat2Vec,SkipAtom,0.5012,0.001
+MACE-MP-0,SevenNet,0.7378,0.001
+MACE-MP-0,ORB-v2,0.2994,0.001
+SevenNet,ORB-v2,0.2312,0.001
+Mat2Vec,MACE-MP-0,0.4326,0.001
+Magpie,MACE-MP-0,0.4664,0.001
