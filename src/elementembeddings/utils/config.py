@@ -20,6 +20,9 @@ DEFAULT_ELEMENT_EMBEDDINGS = {
     "mace_mp0": "mace_mp0.csv",
     "sevennet": "sevennet.csv",
     "orb_v2": "orb_v2.csv",
+    "chgnet": "chgnet.csv",
+    "matscibert": "matscibert.csv",
+    "chemeleon": "chemeleon.csv",
 }
 
 DEFAULT_SPECIES_EMBEDDINGS = {
@@ -229,6 +232,45 @@ CITATIONS = {
         "and Hussey, Arthur and Godwin, Jonathan},"
         "journal={arXiv preprint arXiv:2410.22570},"
         "year={2024}}",
+    ],
+    "chgnet": [
+        "@article{deng2023chgnet,"
+        "title={{CHGNet} as a pretrained universal neural network potential "
+        "for charge-informed atomistic modelling},"
+        "author={Deng, Bowen and Zhong, Peichen and Jun, KyuJung and "
+        "Riebesell, Janosh and Han, Kevin and Bartel, Christopher J "
+        "and Ceder, Gerbrand},"
+        "journal={Nature Machine Intelligence},"
+        "volume={5},"
+        "number={9},"
+        "pages={1031--1041},"
+        "year={2023},"
+        "publisher={Nature Publishing Group}}",
+    ],
+    "matscibert": [
+        "@article{gupta2022matscibert,"
+        "title={{MatSciBERT}: A materials domain language model for text "
+        "mining and information extraction},"
+        "author={Gupta, Tanishq and Zaki, Mohd and Krishnan, NM Anoop "
+        "and Mausam},"
+        "journal={npj Computational Materials},"
+        "volume={8},"
+        "number={1},"
+        "pages={102},"
+        "year={2022},"
+        "publisher={Nature Publishing Group}}",
+    ],
+    "chemeleon": [
+        "@article{park2025chemeleon,"
+        "title={Crystal structure generation and property optimization "
+        "using a generative graph neural network},"
+        "author={Park, Hyunsoo and Onwuli, Anthony O. and Walsh, Aron},"
+        "journal={Nature Communications},"
+        "volume={16},"
+        "pages={4869},"
+        "year={2025},"
+        "doi={10.1038/s41467-025-59636-y},"
+        "publisher={Nature Publishing Group}}",
     ],
     "skipspecies": [
         "@article{Onwuli_Butler_Walsh_2024, "

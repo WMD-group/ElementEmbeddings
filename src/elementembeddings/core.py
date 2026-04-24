@@ -65,6 +65,9 @@ class Embedding(EmbeddingBase):
         | MACE-MP-0               | mace_mp0     |
         | SevenNet                | sevennet     |
         | ORB-v2                  | orb_v2       |
+        | CHGNet                  | chgnet       |
+        | MatSciBERT              | matscibert   |
+        | Chemeleon               | chemeleon    |
 
 
         Args:

@@ -199,3 +199,22 @@ The following embeddings are derived from Machine Learning Interatomic Potential
 
 256-dimensional node features from the ORB-v2 model, captured at the input to the energy prediction head after the decoder transforms the graph neural network output:
 [ORB: A fast, scalable neural network potential](https://arxiv.org/abs/2410.22570)
+
+### chgnet
+
+64-dimensional node features from the CHGNet model, captured from the output of the last atom convolution layer. CHGNet is a pretrained universal neural network potential that incorporates charge information:
+[CHGNet as a pretrained universal neural network potential for charge-informed atomistic modelling](https://www.nature.com/articles/s42256-023-00716-3)
+
+### chemeleon
+
+512-dimensional node features from the Chemeleon-DNG generative crystal structure model, captured after the GNN message-passing layers at t=0 (fully denoised state) and averaged over MP-20 structures:
+[Crystal structure generation and property optimization using a generative graph neural network](https://doi.org/10.1038/s41467-025-59636-y)
+
+## LLM representations
+
+The following embeddings are derived from Large Language Models trained on materials science text.
+
+### matscibert
+
+768-dimensional token embeddings from MatSciBERT, a BERT model pre-trained on materials science literature. Element vectors are extracted from the token embedding layer for each element symbol:
+[MatSciBERT: A materials domain language model for text mining and information extraction](https://www.nature.com/articles/s41524-022-00784-w)

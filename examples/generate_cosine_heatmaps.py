@@ -49,6 +49,9 @@ ALL_EMBEDDINGS = [
     ("mace_mp0", "MACE-MP-0"),
     ("sevennet", "SevenNet"),
     ("orb_v2", "ORB-v2"),
+    ("chgnet", "CHGNet"),
+    ("matscibert", "MatSciBERT"),
+    ("chemeleon", "Chemeleon"),
 ]
 
 GIF_EMBEDDINGS = [
@@ -63,6 +66,9 @@ GIF_EMBEDDINGS = [
     ("mace_mp0", "MACE-MP-0"),
     ("sevennet", "SevenNet"),
     ("orb_v2", "ORB-v2"),
+    ("chgnet", "CHGNet"),
+    ("matscibert", "MatSciBERT"),
+    ("chemeleon", "Chemeleon"),
 ]
 
 gif_set = {name for name, _ in GIF_EMBEDDINGS}
