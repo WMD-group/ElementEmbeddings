@@ -1085,6 +1085,56 @@ version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#chgnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chgnet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chemeleon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chemeleon
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#llm-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LLM representations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LLM representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matscibert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        matscibert
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1425,6 +1475,56 @@ version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#chgnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chgnet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chemeleon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chemeleon
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#llm-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LLM representations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LLM representations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matscibert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        matscibert
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1601,6 +1701,17 @@ See the following publications:</p>
 <h3 id="orb_v2">orb_v2</h3>
 <p>256-dimensional node features from the ORB-v2 model, captured at the input to the energy prediction head after the decoder transforms the graph neural network output:
 <a href="https://arxiv.org/abs/2410.22570">ORB: A fast, scalable neural network potential</a></p>
+<h3 id="chgnet">chgnet</h3>
+<p>64-dimensional node features from the CHGNet model, captured from the output of the last atom convolution layer. CHGNet is a pretrained universal neural network potential that incorporates charge information:
+<a href="https://www.nature.com/articles/s42256-023-00716-3">CHGNet as a pretrained universal neural network potential for charge-informed atomistic modelling</a></p>
+<h3 id="chemeleon">chemeleon</h3>
+<p>512-dimensional node features from the Chemeleon-DNG generative crystal structure model, captured after the GNN message-passing layers at t=0 (fully denoised state) and averaged over MP-20 structures:
+<a href="https://doi.org/10.1038/s41467-025-59636-y">Crystal structure generation and property optimization using a generative graph neural network</a></p>
+<h2 id="llm-representations">LLM representations</h2>
+<p>The following embeddings are derived from Large Language Models trained on materials science text.</p>
+<h3 id="matscibert">matscibert</h3>
+<p>768-dimensional token embeddings from MatSciBERT, a BERT model pre-trained on materials science literature. Element vectors are extracted from the token embedding layer for each element symbol:
+<a href="https://www.nature.com/articles/s41524-022-00784-w">MatSciBERT: A materials domain language model for text mining and information extraction</a></p>
 
 
 
