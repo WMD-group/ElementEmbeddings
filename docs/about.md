@@ -28,12 +28,13 @@ accurate predictions, it is also important for us material scientists to be able
 to interpret these models. As such, we aim to evaluate and compare different atomic embedding
 schemes in a consistent framework.
 
-### Developer
+### Developers
 
 - [Anthony Onwuli](https://github.com/AntObi) (Department of Materials, Imperial College London)
+- [Aron Walsh](https://github.com/aronwalsh) (Department of Materials, Imperial College London)
 
 ## References
 
-[H. Park et al, "Mapping inorganic crystal chemical space" _Faraday Discuss._ (2024)](https://pubs.rsc.org/en/content/articlelanding/2024/fd/d4fd00063c)
+[H. Park et al, "Mapping inorganic crystal chemical space" _Faraday Discuss._ **256**, 601 (2025)](https://pubs.rsc.org/en/content/articlelanding/2024/fd/d4fd00063c)
 
 [A. Onwuli et al, "Element similarity in high-dimensional materials representations" _Digital Discovery_ **2**, 1558 (2023)](https://pubs.rsc.org/en/content/articlelanding/2023/dd/d3dd00121k)

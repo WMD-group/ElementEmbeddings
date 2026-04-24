@@ -16,6 +16,3 @@ The documentation consists of the following six parts:
 ## Project Overview
 
 ::: elementembeddings
-::: elementembeddings.utils
-:docstring:
-:members:
