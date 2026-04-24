@@ -10,14 +10,13 @@ from os import path
 import numpy as np
 import pandas as pd
 from openTSNE import TSNE
-from pymatgen.core import Element
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
 from sklearn import decomposition
 from sklearn.metrics import DistanceMetric
 from sklearn.preprocessing import StandardScaler
 from umap import UMAP
 
-from .utils.config import CITATIONS
+from .utils.config import CITATIONS, MENDELEEV_NUMBERS
 from .utils.math import cosine_distance, cosine_similarity
 from .utils.species import parse_species
 
@@ -392,8 +391,8 @@ class EmbeddingBase(ABC):
                 table.append((ele2, ele1, dist))
         dist_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
 
-        mend_1 = [(Element(parse_species(ele)[0]).mendeleev_no, ele) for ele in dist_df["ele_1"]]
-        mend_2 = [(Element(parse_species(ele)[0]).mendeleev_no, ele) for ele in dist_df["ele_2"]]
+        mend_1 = [(MENDELEEV_NUMBERS.get(parse_species(ele)[0], 0), ele) for ele in dist_df["ele_1"]]
+        mend_2 = [(MENDELEEV_NUMBERS.get(parse_species(ele)[0], 0), ele) for ele in dist_df["ele_2"]]
 
         Z_1 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in dist_df["ele_1"]]
         Z_2 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in dist_df["ele_2"]]
@@ -433,8 +432,8 @@ class EmbeddingBase(ABC):
                 table.append((ele2, ele1, corr))
         corr_df = pd.DataFrame(table, columns=["ele_1", "ele_2", metric])
 
-        mend_1 = [(Element(parse_species(ele)[0]).mendeleev_no, ele) for ele in corr_df["ele_1"]]
-        mend_2 = [(Element(parse_species(ele)[0]).mendeleev_no, ele) for ele in corr_df["ele_2"]]
+        mend_1 = [(MENDELEEV_NUMBERS.get(parse_species(ele)[0], 0), ele) for ele in corr_df["ele_1"]]
+        mend_2 = [(MENDELEEV_NUMBERS.get(parse_species(ele)[0], 0), ele) for ele in corr_df["ele_2"]]
 
         Z_1 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in corr_df["ele_1"]]
         Z_2 = [(pt[parse_species(ele)[0]]["number"], ele) for ele in corr_df["ele_2"]]
