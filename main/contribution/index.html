@@ -1185,11 +1185,11 @@ branches for new work and pull requests for verifying the work.</p>
 </ul>
 <p>Recommended reading: <a href="https://github.blog/2015-01-21-how-to-write-the-perfect-pull-request/">How to Write the Perfect Pull Request</a></p>
 <h2 id="dev-requirements">Dev requirements</h2>
-<p>When developing locally, it is recommended to install the python packages in <code>requirements-dev.txt</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-dev.txt
+<p>When developing locally, install the package together with its <code>dev</code> and <code>docs</code> extras:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev,docs]&quot;</span>
 </code></pre></div>
 <p>This will allow you to run the tests locally with pytest as described in the main README,
-as well as run pre-commit hooks to automatically format python files with isort and black.
+as well as run pre-commit hooks to lint and format python files with <code>ruff</code>.
 To install the pre-commit hooks (only needs to be done once):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pre-commit<span class="w"> </span>install
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files<span class="w"> </span><span class="c1"># optionally run hooks on all files</span>
