@@ -138,8 +138,18 @@ def mantel_test(
         n_permutations: Number of permutations for p-value estimation.
 
     Returns:
-        Tuple of (correlation_coefficient, p_value).
+        Tuple of (correlation_coefficient, two_sided_p_value).
+        The p-value is two-sided: the fraction of permutations whose
+        absolute correlation is at least as large as |observed|.
     """
+    if method == "pearson":
+        corr_fn = stats.pearsonr
+    elif method == "spearman":
+        corr_fn = stats.spearmanr
+    else:
+        msg = f"Unknown Mantel method: {method}. Use 'pearson' or 'spearman'."
+        raise ValueError(msg)
+
     elements = _get_common_elements(emb1, emb2)
     mat1 = _get_similarity_matrix(emb1, elements, metric)
     mat2 = _get_similarity_matrix(emb2, elements, metric)
@@ -147,10 +157,9 @@ def mantel_test(
     v1 = _upper_triangle(mat1)
     v2 = _upper_triangle(mat2)
 
-    corr_fn = stats.pearsonr if method == "pearson" else stats.spearmanr
     observed = float(corr_fn(v1, v2).statistic)
+    threshold = abs(observed)
 
-    # Permutation test: shuffle rows/columns of one matrix
     n = len(elements)
     rng = np.random.default_rng(42)
     count = 0
@@ -159,7 +168,7 @@ def mantel_test(
         mat2_perm = mat2[np.ix_(perm, perm)]
         v2_perm = _upper_triangle(mat2_perm)
         perm_corr = float(corr_fn(v1, v2_perm).statistic)
-        if perm_corr >= observed:
+        if abs(perm_corr) >= threshold:
             count += 1
 
     p_value = (count + 1) / (n_permutations + 1)

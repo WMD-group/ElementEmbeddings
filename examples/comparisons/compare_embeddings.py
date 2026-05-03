@@ -17,7 +17,6 @@ import seaborn as sns
 from umap import UMAP
 
 from elementembeddings.compare import (
-    _get_common_elements,
     _get_similarity_matrix,
     _upper_triangle,
     mantel_test,
