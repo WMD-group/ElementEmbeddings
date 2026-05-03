@@ -1,7 +1,8 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+# Dependabot configuration.
+# See: https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+#
+# Dev/docs deps are declared in pyproject.toml (no requirements*.txt files).
+# Updates are grouped to keep PR noise low — one PR per ecosystem per cycle.
 
 version: 2
 updates:
@@ -9,8 +10,31 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
-  - package-ecosystem: "pip" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: pip
+    directory: /
     schedule:
-      interval: "monthly"
+      interval: monthly
+    open-pull-requests-limit: 5
+    groups:
+      python-deps:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # Major bumps for core scientific deps tend to need manual review.
+      - dependency-name: "numpy"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "scipy"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "matplotlib"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "scikit-learn"
+        update-types: ["version-update:semver-major"]

@@ -33,14 +33,14 @@ Recommended reading: [How to Write the Perfect Pull Request](https://github.blog
 
 ## Dev requirements
 
-When developing locally, it is recommended to install the python packages in `requirements-dev.txt`.
+When developing locally, install the package together with its `dev` and `docs` extras:
 
 ```bash
-pip install -r requirements-dev.txt
+pip install -e ".[dev,docs]"
 ```
 
 This will allow you to run the tests locally with pytest as described in the main README,
-as well as run pre-commit hooks to automatically format python files with isort and black.
+as well as run pre-commit hooks to lint and format python files with `ruff`.
 To install the pre-commit hooks (only needs to be done once):
 
 ```bash
