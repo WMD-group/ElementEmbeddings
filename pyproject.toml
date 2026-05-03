@@ -148,6 +148,7 @@ reportUnboundVariable = true
 skip = "*.csv,*/site/*,publications/element_similarity/**,*periodic-table*.json"
 check-filenames = true
 ignore-words-list = [
+            "fro",
             "H",
             "He",
             "Li",
