@@ -10,6 +10,7 @@ from os import path
 import numpy as np
 import pandas as pd
 from openTSNE import TSNE
+from pacmap import PaCMAP
 from scipy.stats import energy_distance, pearsonr, spearmanr, wasserstein_distance
 from sklearn import decomposition
 from sklearn.metrics import DistanceMetric
@@ -256,6 +257,40 @@ class EmbeddingBase(ABC):
 
         umap = UMAP(n_components=n_components, **kwargs)
         return umap.fit_transform(embeddings_array)
+
+    def calculate_pacmap(
+        self,
+        n_components: int = 2,
+        standardise: bool = True,
+        init: str = "pca",
+        **kwargs,
+    ):
+        """Calculate PaCMAP (Pairwise Controlled Manifold Approximation) embeddings.
+
+        Args:
+        ----
+            n_components (int): The number of components to project the embeddings to.
+            standardise (bool): Whether to scale the embeddings before projecting.
+            init (str): Initialisation of the low-dimensional embedding, passed to
+                ``PaCMAP.fit_transform`` (e.g. ``"pca"`` or ``"random"``).
+            **kwargs: Other keyword arguments to be passed to PaCMAP.
+        """
+        if standardise:
+            if self.is_standardised:
+                embeddings_array = np.array(list(self.embeddings.values()))
+            else:
+                self.standardise(inplace=True)
+                embeddings_array = np.array(list(self.embeddings.values()))
+        else:
+            warnings.warn(
+                """It is recommended to scale the embeddings
+                before projecting with PaCMAP.
+                To do so, set `standardise=True`.""",
+            )
+            embeddings_array = np.array(list(self.embeddings.values()))
+
+        pacmap = PaCMAP(n_components=n_components, **kwargs)
+        return pacmap.fit_transform(embeddings_array, init=init)
 
     def compute_correlation_metric(
         self,

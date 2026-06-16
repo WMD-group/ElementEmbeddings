@@ -35,6 +35,7 @@ dependencies = [
     "adjustText>=0.8",
     "openTSNE>=1.0.0",
     "llvmlite>=0.40",
+    "pacmap>=0.7.0",
 ]
 
 [project.optional-dependencies]
