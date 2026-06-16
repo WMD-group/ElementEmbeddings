@@ -130,7 +130,7 @@ def dimension_plotter(
     elif reducer == "pacmap":
         reduced = embedding.calculate_pacmap(n_components=n_components, **reducer_params)
     else:
-        msg = "Unrecognised reducer."
+        msg = f"Unrecognised reducer: {reducer!r}. Expected one of 'umap', 'tsne', 'pca' or 'pacmap'."
         raise ValueError(msg)
 
     if isinstance(embedding, Embedding):
