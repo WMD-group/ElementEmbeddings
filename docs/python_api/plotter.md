@@ -1,1 +1,3 @@
+# `plotter`
+
 ::: elementembeddings.plotter

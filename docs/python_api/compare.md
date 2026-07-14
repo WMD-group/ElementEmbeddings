@@ -1,0 +1,3 @@
+# `compare`
+
+::: elementembeddings.compare

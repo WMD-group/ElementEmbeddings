@@ -4,7 +4,7 @@ Here we will demonstrate how to use some of `ElementEmbeddings`'s features. For 
 
 The `Embedding` class lies at the heart of the package. It handles elemental representation data and enables analysis and visualisation.
 
-For simple usage, you can instantiate an Embedding object using one of the embeddings in the [data directory](src/elementembeddings/data/element_representations/README.md). For this example, let's use the magpie elemental representation.
+For simple usage, you can instantiate an Embedding object using one of the embeddings in the [data directory](https://github.com/WMD-group/ElementEmbeddings/tree/main/src/elementembeddings/data/element_representations). For this example, let's use the magpie elemental representation.
 
 ```python
 # Import the class
