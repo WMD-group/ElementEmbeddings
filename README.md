@@ -186,7 +186,7 @@ The returned dataframe contains the mean-pooled and sum-pooled features of the m
 
 ### Bugs, features and questions
 
-Please use the [issue tracker](https://github.com/WMD-group/ElementEmbeddings/issues) to report bugs and any feature requests. Hopefully, most questions should be solvable through [the docs](https://wmd-group.github.io/ElementEmbeddings/). For any other queries related to the project, please contact Anthony Onwuli by [e-mail: anthony.onwuli16@imperial.ac.uk](anthony.onwuli16@imperial.ac.uk).
+Please use the [issue tracker](https://github.com/WMD-group/ElementEmbeddings/issues) to report bugs and any feature requests. Hopefully, most questions should be solvable through [the docs](https://wmd-group.github.io/ElementEmbeddings/). For any other queries related to the project, please contact Anthony Onwuli by [e-mail: aonwuli@proton.me](aonwuli@proton.me) or Aron Walsh by [e-mail: a.walsh@imperial.ac.uk](a.walsh@imperial.ac.uk).
 
 ### Code contributions
 

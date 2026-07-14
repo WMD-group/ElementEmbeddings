@@ -11,7 +11,9 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [
-    { name = "Anthony O. Onwuli", email = "anthony.onwuli16@imperial.ac.uk" }
+    { name = "Anthony O. Onwuli", email = "aonwuli@proton.me" },
+    {name = "Aron Walsh", email = "a.walsh@imperial.ac.uk"}
+
 ]
 classifiers = [
     "Programming Language :: Python",
