@@ -65,4 +65,4 @@ jobs:
       - name: Run tests
         env:
           MPLBACKEND: Agg
-        run: uv run python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings -v
+        run: uv run python -m pytest --mpl --mpl-baseline-path=tests/baseline --cov=src/elementembeddings -v

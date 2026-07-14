@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import operator
-from collections.abc import Iterable
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def dot(a: Iterable[int | float], b: Iterable[int | float]) -> float:

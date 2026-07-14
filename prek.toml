@@ -21,14 +21,14 @@ hooks = [
   {
     id = "ruff-check",
     name = "ruff check",
-    entry = "uv run ruff check --fix src scripts examples",
+    entry = "uv run ruff check --fix src tests scripts examples",
     language = "system",
     pass_filenames = false
   },
   {
     id = "ruff-format",
     name = "ruff format",
-    entry = "uv run ruff format src scripts examples",
+    entry = "uv run ruff format src tests scripts examples",
     language = "system",
     pass_filenames = false
   },

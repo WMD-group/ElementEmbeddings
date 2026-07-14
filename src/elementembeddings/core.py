@@ -114,8 +114,8 @@ class Embedding(EmbeddingBase):
 
         Args:
         ----
-            embedding_json (str): Filepath of the json file
-            embedding_name (str): The name of the elemental representation
+            json_path (str): Filepath of the json file.
+            embedding_name (str): The name of the elemental representation.
         """
         # Need to add validation handling for JSONs in different formats
         with open(json_path) as f:
@@ -130,8 +130,8 @@ class Embedding(EmbeddingBase):
 
         Args:
         ----
-            embedding_csv (str): Filepath of the csv file
-            embedding_name (str): The name of the elemental representation
+            csv_path (str): Filepath of the csv file.
+            embedding_name (str): The name of the elemental representation.
 
         """
         # Need to add validation handling for csv files

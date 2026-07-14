@@ -2,19 +2,21 @@
 
 from __future__ import annotations
 
-from typing import cast
+from typing import TYPE_CHECKING, cast
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 from adjustText import adjust_text
-from matplotlib.axes import Axes
-from mpl_toolkits.mplot3d.axes3d import Axes3D
 
 from .core import Embedding, SpeciesEmbedding
 from .utils.config import ELEMENT_GROUPS_PALETTES
 from .utils.species import get_sign, parse_species
+
+if TYPE_CHECKING:
+    from matplotlib.axes import Axes
+    from mpl_toolkits.mplot3d.axes3d import Axes3D
 
 
 def heatmap_plotter(
@@ -219,11 +221,7 @@ def dimension_plotter(
         if not ax:
             plt.figure()
             ax = plt.axes(projection="3d")
-        ax_3d: Axes3D
-        if isinstance(ax, Axes3D):
-            ax_3d = ax
-        else:
-            ax_3d = cast("Axes3D", plt.axes(projection="3d"))
+        ax_3d = ax if hasattr(ax, "scatter3D") else cast("Axes3D", plt.axes(projection="3d"))
         ax_3d.scatter3D(
             df["x"],
             df["y"],
