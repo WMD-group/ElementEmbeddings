@@ -8,16 +8,17 @@ name = "ElementEmbeddings"
 version = "0.7.2"
 description = "Element Embeddings"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [
     { name = "Anthony O. Onwuli", email = "anthony.onwuli16@imperial.ac.uk" }
 ]
 classifiers = [
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
@@ -52,6 +53,23 @@ docs = [
     "mkdocstrings-python",
     "mike",
     "mkdocs-jupyter",
+]
+
+[tool.setuptools]
+include-package-data = true
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["elementembeddings*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+elementembeddings = [
+    "data/**/*.csv",
+    "data/**/*.json",
+    "data/**/*.md",
+    "data/**/*.txt",
 ]
 
 [tool.semantic_release]
