@@ -394,7 +394,7 @@ def composition_featuriser(
         fvs = [x.feature_vector(stats) for x in tqdm(comps)]
         feature_names = [str(feature) for feature in (comps[0].embedding.feature_labels or [])]
         feature_names = [f"{stat}_{feature}" for stat in stats for feature in feature_names]
-        return pd.concat([data, pd.DataFrame(fvs, columns=feature_names)], axis=1)
+        return pd.concat([data, pd.DataFrame(fvs, columns=feature_names, index=data.index)], axis=1)
     elif isinstance(data, list):
         if not all(isinstance(x, str) for x in data):
             msg = "Formula lists must contain only strings."
@@ -746,10 +746,12 @@ def species_composition_featuriser(
         feature_names = [str(feature) for feature in (comps[0].embedding.feature_labels or [])]
         feature_names = [f"{stat}_{feature}" for stat in stats for feature in feature_names]
         formulae = [x.formula_pretty for x in comps]
+        row_vectors = [comp_vectors] if isinstance(data, SpeciesCompositionalEmbedding) else comp_vectors
+        compositions_out = [data] if isinstance(data, SpeciesCompositionalEmbedding) else data
         # Create a DataFrame with formula, composition and feature vectors
-        df = pd.DataFrame(comp_vectors, columns=feature_names)
+        df = pd.DataFrame(row_vectors, columns=feature_names)
         df["formula"] = formulae
-        df["composition"] = data
+        df["composition"] = compositions_out
         # Reorder the columns
         return df[["formula", "composition", *feature_names]]
 

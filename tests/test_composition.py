@@ -136,6 +136,10 @@ class TestCompositionalEmbedding(unittest.TestCase):
         assert isinstance(featurised_list, list)
         assert len(featurised_list) == 3
 
+        indexed_df = pd.DataFrame({"formula": formulas}, index=[10, 20, 30])
+        indexed_features = composition.composition_featuriser(indexed_df)
+        assert indexed_features.index.tolist() == [10, 20, 30]
+
     def test_composition_distance(self):
         """Test the distance method of the CompositionalEmbedding class."""
         assert isinstance(
@@ -277,6 +281,10 @@ class TestSpeciesCompositionalEmbedding(unittest.TestCase):
         """Test the composition featuriser function."""
         featurised_comps = composition.species_composition_featuriser(self.compositions)
         featurised_comps_df = composition.species_composition_featuriser(self.compositions, to_dataframe=True)
+        single_comp_df = composition.species_composition_featuriser(
+            self.valid_skipspecies_compositions[0],
+            to_dataframe=True,
+        )
 
         assert isinstance(
             featurised_comps,
@@ -288,6 +296,9 @@ class TestSpeciesCompositionalEmbedding(unittest.TestCase):
             pd.DataFrame,
         )
         assert featurised_comps_df.shape == (4, 202)
+        assert isinstance(single_comp_df, pd.DataFrame)
+        assert single_comp_df.shape == (1, 202)
+        assert single_comp_df["formula"].iloc[0] == "Fe3O4"
 
     def test_composition_distance(self):
         """Test the distance method of the SpeciesCompositionalEmbedding class."""

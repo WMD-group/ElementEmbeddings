@@ -220,8 +220,12 @@ def dimension_plotter(
             df = df[df["element"].isin(include_species)].reset_index(drop=True)
         if not ax:
             plt.figure()
-            ax = plt.axes(projection="3d")
-        ax_3d = ax if hasattr(ax, "scatter3D") else cast("Axes3D", plt.axes(projection="3d"))
+            ax_3d = cast("Axes3D", plt.axes(projection="3d"))
+        elif not hasattr(ax, "scatter3D"):
+            msg = "A 3D plot requires an Axes3D-compatible axes instance."
+            raise TypeError(msg)
+        else:
+            ax_3d = cast("Axes3D", ax)
         ax_3d.scatter3D(
             df["x"],
             df["y"],

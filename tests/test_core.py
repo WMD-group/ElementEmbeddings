@@ -521,6 +521,11 @@ class SpeciesEmbeddingTest(unittest.TestCase):
         assert "H-" not in self.test_species_embedding.remove_species("H-").species_list
         assert len(self.test_species_embedding.remove_species(["H-", "Na+", "F-"]).species_list) == 8
 
+    def test_to_invalid_format(self):
+        """Test that unsupported output formats raise an error."""
+        with pytest.raises(ValueError):
+            self.test_species_embedding.to(fmt="csv")
+
     def test_distance_df(self):
         """Test the distance_df function."""
         assert isinstance(self.test_species_embedding.distance_df(), pd.DataFrame)

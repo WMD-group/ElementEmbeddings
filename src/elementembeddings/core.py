@@ -558,4 +558,5 @@ class SpeciesEmbedding(EmbeddingBase):
                     return None
             else:
                 return j
-        return None
+        msg = f"{fmt!s} is an invalid or unsupported file format"
+        raise ValueError(msg)

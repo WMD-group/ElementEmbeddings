@@ -18,10 +18,8 @@ def parse_species(species: str) -> tuple[str, float]:
     if match is None:
         return _parse_species_old(species)
     ele, oxi_state = match.groups()
-    if oxi_state[-1] in ["+", "-"]:
-        charge = (int(oxi_state[:-1] or 1)) * (-1 if "-" in oxi_state else 1)
-        return ele, float(charge)
-    return ele, 0.0
+    charge = (int(oxi_state[:-1] or 1)) * (-1 if "-" in oxi_state else 1)
+    return ele, float(charge)
 
 
 def _parse_species_old(species: str) -> tuple[str, float]:
