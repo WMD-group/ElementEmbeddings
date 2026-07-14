@@ -21,21 +21,21 @@ hooks = [
   {
     id = "ruff-check",
     name = "ruff check",
-    entry = "uv --cache-dir /tmp/uv-cache run ruff check --fix src scripts examples",
+    entry = "uv run ruff check --fix src scripts examples",
     language = "system",
     pass_filenames = false
   },
   {
     id = "ruff-format",
     name = "ruff format",
-    entry = "uv --cache-dir /tmp/uv-cache run ruff format src scripts examples",
+    entry = "uv run ruff format src scripts examples",
     language = "system",
     pass_filenames = false
   },
   {
     id = "ty",
     name = "ty",
-    entry = "uv --cache-dir /tmp/uv-cache run ty check src/elementembeddings",
+    entry = "uv run ty check src/elementembeddings",
     language = "system",
     pass_filenames = false,
     stages = ["manual"]
