@@ -10,7 +10,7 @@
         <meta name="author" content="Anthony Onwuli">
       
       
-        <link rel="canonical" href="https://wmd-group.github.io/ElementEmbeddings/main/python_api/utils/math/">
+        <link rel="canonical" href="https://wmd-group.github.io/ElementEmbeddings/main/python_api/utils/config/">
       
       
       
@@ -23,7 +23,7 @@
     
     
       
-        <title>utils.math - ElementEmbeddings</title>
+        <title>utils.config - ElementEmbeddings</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#utilsmath" class="md-skip">
+        <a href="#utilsconfig" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@ version.
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              utils.math
+              utils.config
             
           </span>
         </div>
@@ -613,43 +613,10 @@ version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#elementembeddings.utils.math" class="md-nav__link">
+  <a href="#elementembeddings.utils.config" class="md-nav__link">
     <span class="md-ellipsis">
       
-        math
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#elementembeddings.utils.math.cosine_distance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        cosine_distance
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#elementembeddings.utils.math.cosine_similarity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        cosine_similarity
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#elementembeddings.utils.math.dot" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        dot
+        config
       
     </span>
   </a>
@@ -673,17 +640,17 @@ version.
 
 
 
-<h1 id="utilsmath"><code>utils.math</code></h1>
+<h1 id="utilsconfig"><code>utils.config</code></h1>
 
 
 <div class="doc doc-object doc-module">
 
 
 
-<a id="elementembeddings.utils.math"></a>
+<a id="elementembeddings.utils.config"></a>
     <div class="doc doc-contents first">
 
-        <p>Math functions for the AtomicEmbeddings package.</p>
+        <p>Configuration variables for ElementEmbeddings.</p>
 
 
 
@@ -704,99 +671,6 @@ version.
 
 
 
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="elementembeddings.utils.math.cosine_distance" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">cosine_distance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Cosine distance of two vectors.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code>src/elementembeddings/utils/math.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">cosine_distance</span><span class="p">(</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    <span class="n">a</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">],</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="n">b</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">],</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Cosine distance of two vectors.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="elementembeddings.utils.math.cosine_similarity" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Cosine similarity of two vectors.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code>src/elementembeddings/utils/math.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-17">17</a></span>
-<span class="normal"><a href="#__codelineno-0-18">18</a></span>
-<span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span>
-<span class="normal"><a href="#__codelineno-0-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">cosine_similarity</span><span class="p">(</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="n">a</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">],</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a>    <span class="n">b</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">],</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Cosine similarity of two vectors.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="k">return</span> <span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">))</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="elementembeddings.utils.math.dot" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Dot product of two vectors.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code>src/elementembeddings/utils/math.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-12">12</a></span>
-<span class="normal"><a href="#__codelineno-0-13">13</a></span>
-<span class="normal"><a href="#__codelineno-0-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">dot</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Dot product of two vectors.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)))</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
 
 
 
