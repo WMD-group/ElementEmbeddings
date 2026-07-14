@@ -1,0 +1,45 @@
+name: Publish Docs
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-${{ github.event_name }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+          python -m pip install -e ".[dev,docs]"
+      - name: Generate API docs
+        run: python scripts/generate_api_docs.py
+      - name: Configure docs deployment
+        run: |
+          git fetch origin gh-pages:gh-pages --depth=1
+          git config --global user.name "Docs Deploy"
+          git config --global user.email "docs.deploy@example.co.uk"
+      - name: Publish docs
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            mike deploy --push --update-aliases "${{ github.event.release.tag_name }}" stable
+          else
+            mike deploy --push main latest
+          fi
