@@ -50,23 +50,24 @@ Alternatively, ElementEmbeddings is available via conda through the conda-forge 
 conda install -c conda-forge elementembeddings
 ```
 
-For installing the development or documentation dependencies:
+For installing the development or documentation dependencies from a release:
 
 ```bash
 pip install "ElementEmbeddings[dev]"
 pip install "ElementEmbeddings[docs]"
+uv pip install "ElementEmbeddings[dev]"
+uv pip install "ElementEmbeddings[docs]"
 ```
 
-For development, you can clone the repository and install the package in editable mode.
-To clone the repository and make a local installation, run the following commands:
+For development, clone the repository and sync the project environment with `uv`:
 
 ```bash
 git clone https://github.com/WMD-group/ElementEmbeddings.git
 cd ElementEmbeddings
-pip install -e ".[docs,dev]"
+uv sync --extra dev --extra docs
 ```
 
-With -e pip will create links to the source folder so that changes to the code will be immediately reflected on the PATH.
+This creates a project virtual environment in `.venv` and installs the package in editable mode, so local code changes are reflected immediately.
 
 ## Usage
 
@@ -186,7 +187,7 @@ The returned dataframe contains the mean-pooled and sum-pooled features of the m
 
 ### Bugs, features and questions
 
-Please use the [issue tracker](https://github.com/WMD-group/ElementEmbeddings/issues) to report bugs and any feature requests. Hopefully, most questions should be solvable through [the docs](https://wmd-group.github.io/ElementEmbeddings/). For any other queries related to the project, please contact Anthony Onwuli by [e-mail: anthony.onwuli16@imperial.ac.uk](anthony.onwuli16@imperial.ac.uk).
+Please use the [issue tracker](https://github.com/WMD-group/ElementEmbeddings/issues) to report bugs and any feature requests. Hopefully, most questions should be solvable through [the docs](https://wmd-group.github.io/ElementEmbeddings/). For any other queries related to the project, please contact Anthony Onwuli by [e-mail: aonwuli@proton.me](aonwuli@proton.me) or Aron Walsh by [e-mail: a.walsh@imperial.ac.uk](a.walsh@imperial.ac.uk).
 
 ### Code contributions
 

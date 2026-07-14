@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from typing import Any
 
 import numpy as np
 
@@ -10,8 +11,8 @@ import numpy as np
 class NumpyEncoder(json.JSONEncoder):
     """Special json encoder for numpy types."""
 
-    def default(self, obj):
+    def default(self, o: Any) -> Any:
         """Encode numpy types."""
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        return json.JSONEncoder.default(self, obj)
+        if isinstance(o, np.ndarray):
+            return o.tolist()
+        return super().default(o)

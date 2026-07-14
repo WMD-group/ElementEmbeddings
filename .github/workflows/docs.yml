@@ -1,0 +1,46 @@
+name: Publish Docs
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-${{ github.event_name }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.0
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v8.3.2
+        with:
+          python-version: "3.14"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --extra dev --extra docs
+      - name: Generate API docs
+        run: uv run python scripts/generate_api_docs.py
+      - name: Configure docs deployment
+        run: |
+          git fetch origin gh-pages:gh-pages --depth=1
+          git config --global user.name "Docs Deploy"
+          git config --global user.email "docs.deploy@example.co.uk"
+      - name: Publish docs
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            uv run mike deploy --push --update-aliases "${RELEASE_TAG}" stable
+          else
+            uv run mike deploy --push main latest
+          fi

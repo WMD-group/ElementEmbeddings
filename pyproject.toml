@@ -11,7 +11,9 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [
-    { name = "Anthony O. Onwuli", email = "anthony.onwuli16@imperial.ac.uk" }
+    { name = "Anthony O. Onwuli", email = "aonwuli@proton.me" },
+    {name = "Aron Walsh", email = "a.walsh@imperial.ac.uk"}
+
 ]
 classifiers = [
     "Programming Language :: Python",
@@ -40,11 +42,13 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pre-commit",
+    "prek>=0.4.9",
     "pytest",
     "pytest-subtests",
     "pytest-cov",
     "pytest-mpl",
+    "ruff>=0.15.21",
+    "ty>=0.0.59",
 ]
 docs = [
     "mkdocs",
@@ -155,12 +159,7 @@ docstring-code-format = true
 
 
 [tool.ruff.lint.per-file-ignores]
-"src/elementembeddings/tests/*" = ["D"]
-
-[tool.pyright]
-typeCheckingMode = "off"
-reportPossiblyUnboundVariable = true
-reportUnboundVariable = true
+"tests/*" = ["D"]
 
 [tool.codespell]
 skip = "*.csv,*/site/*,publications/element_similarity/**,*periodic-table*.json"
@@ -265,3 +264,10 @@ ignore-words-list = [
             "Cm",
             "Bk",
         ]
+
+[dependency-groups]
+lint = [
+    "prek>=0.4.9",
+    "ruff>=0.15.21",
+    "ty>=0.0.59",
+]

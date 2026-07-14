@@ -341,8 +341,9 @@ class EmbeddingTest(unittest.TestCase):
         # Check pair creation
         assert len(list(magpie.create_pairs())) == 4753, "Incorrect number of pairs returned"
         assert "H" not in magpie.remove_elements("H").element_list
-        assert isinstance(magpie.citation(), list)
-        assert isinstance(magpie.citation()[0], str)
+        citation = magpie.citation()
+        assert isinstance(citation, list)
+        assert isinstance(citation[0], str)
         assert magpie._is_el_sp_in_embedding("H")
         assert isinstance(magpie.correlation_df(), pd.DataFrame)
 
@@ -439,38 +440,38 @@ class EmbeddingTest(unittest.TestCase):
 
     def test_PCA(self):
         """Test the PCA function."""
-        pca_params = {"svd_solver": "full", "random_state": 42}
-        assert isinstance(self.test_matscholar.calculate_pca(**pca_params), np.ndarray)
+        assert isinstance(
+            self.test_matscholar.calculate_pca(svd_solver="full", random_state=42),
+            np.ndarray,
+        )
         assert self.test_matscholar.calculate_pca().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
-        pca1 = self.test_matscholar.calculate_pca(**pca_params)
-        pca2 = self.test_matscholar.calculate_pca(**pca_params)
+        pca1 = self.test_matscholar.calculate_pca(svd_solver="full", random_state=42)
+        pca2 = self.test_matscholar.calculate_pca(svd_solver="full", random_state=42)
         assert (pca1 == pca2).all()
 
     def test_tSNE(self):
         """Test the tSNE function."""
-        tsne_params = {"n_iter": 1000, "random_state": 42, "perplexity": 50}
         assert isinstance(self.test_matscholar.calculate_tsne(), np.ndarray)
         assert self.test_matscholar.calculate_tsne().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
-        tsne1 = self.test_matscholar.calculate_tsne(**tsne_params)
-        tsne2 = self.test_matscholar.calculate_tsne(**tsne_params)
+        tsne1 = self.test_matscholar.calculate_tsne(n_iter=1000, random_state=42, perplexity=50)
+        tsne2 = self.test_matscholar.calculate_tsne(n_iter=1000, random_state=42, perplexity=50)
         assert (tsne1 == tsne2).all()
 
     def test_UMAP(self):
         """Test the UMAP function."""
-        umap_params = {"n_neighbors": 15, "random_state": 42}
         assert isinstance(self.test_matscholar.calculate_umap(), np.ndarray)
         assert self.test_matscholar.calculate_umap().shape == (
             len(self.test_matscholar.element_list),
             2,
         )
-        umap1 = self.test_matscholar.calculate_umap(**umap_params)
-        umap2 = self.test_matscholar.calculate_umap(**umap_params)
+        umap1 = self.test_matscholar.calculate_umap(n_neighbors=15, random_state=42)
+        umap2 = self.test_matscholar.calculate_umap(n_neighbors=15, random_state=42)
         assert (umap1 == umap2).all()
 
 
@@ -519,6 +520,11 @@ class SpeciesEmbeddingTest(unittest.TestCase):
         # assert len(self.test_species_embedding.species_list) == 9
         assert "H-" not in self.test_species_embedding.remove_species("H-").species_list
         assert len(self.test_species_embedding.remove_species(["H-", "Na+", "F-"]).species_list) == 8
+
+    def test_to_invalid_format(self):
+        """Test that unsupported output formats raise an error."""
+        with pytest.raises(ValueError):
+            self.test_species_embedding.to(fmt="csv")
 
     def test_distance_df(self):
         """Test the distance_df function."""

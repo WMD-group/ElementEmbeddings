@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import collections
 import re
-from typing import ClassVar
+from typing import ClassVar, cast
 
 import numpy as np
 import pandas as pd
@@ -103,13 +103,12 @@ class CompositionalEmbedding:
 
     def __init__(self, formula: str, embedding: str | Embedding, x=1) -> None:
         """Initialise a CompositionalEmbedding instance."""
-        self.embedding = embedding
+        self.embedding: Embedding = Embedding.load_data(embedding) if isinstance(embedding, str) else embedding
 
-        # If a string has been passed for embedding, create an Embedding instance
-        if isinstance(embedding, str):
-            self.embedding = Embedding.load_data(embedding)
-
-        self.embedding_name: str = self.embedding.embedding_name
+        if self.embedding.embedding_name is None:
+            msg = "Embedding instances used in compositions must define an embedding_name."
+            raise ValueError(msg)
+        self.embedding_name = self.embedding.embedding_name
         # Set an attribute for the formula
         self.formula = formula
 
@@ -127,9 +126,8 @@ class CompositionalEmbedding:
         # Set an attribute for the element list
         self.element_list = list(self.composition.keys())
         # Set an attribute for the element matrix
-        self.el_matrix = np.zeros(
-            shape=(len(self.composition), len(self.embedding.embeddings["H"])),
-        )
+        first_vector = next(iter(self.embedding.embeddings.values()))
+        self.el_matrix = np.zeros(shape=(len(self.composition), len(first_vector)))
         for i, k in enumerate(self.composition.keys()):
             self.el_matrix[i] = self.embedding.embeddings[k]
         self.el_matrix = np.nan_to_num(self.el_matrix)
@@ -313,9 +311,16 @@ def _composition_distance(
     stats: str | list[str] = "mean",
 ) -> float:
     """Compute the distance between two compositions."""
+    if embedding is None and (
+        not isinstance(comp1, CompositionalEmbedding) or not isinstance(comp2, CompositionalEmbedding)
+    ):
+        msg = "An embedding must be provided when passing raw composition strings."
+        raise ValueError(msg)
     if not isinstance(comp1, CompositionalEmbedding):
+        assert embedding is not None
         comp1 = CompositionalEmbedding(comp1, embedding=embedding)
     if not isinstance(comp2, CompositionalEmbedding):
+        assert embedding is not None
         comp2 = CompositionalEmbedding(comp2, embedding=embedding)
     assert comp1.embedding_name == comp2.embedding_name
 
@@ -336,18 +341,19 @@ def _composition_distance(
 
     elif distance_metric in scipy_metrics:
         return scipy_metrics[distance_metric](comp1_vec, comp2_vec)
-    elif distance_metric == "cosine_distance":
+    if distance_metric == "cosine_distance":
         return cosine_distance(comp1_vec, comp2_vec)
-    return None
+    msg = f"Invalid distance metric: {distance_metric}"
+    raise ValueError(msg)
 
 
 def composition_featuriser(
-    data: pd.DataFrame | pd.Series | CompositionalEmbedding | list,
+    data: pd.DataFrame | pd.Series | CompositionalEmbedding | list[str],
     formula_column: str = "formula",
     embedding: Embedding | str = "magpie",
-    stats: str | list = "mean",
+    stats: str | list[str] = "mean",
     inplace: bool = False,
-) -> pd.DataFrame:
+) -> pd.DataFrame | list[np.ndarray] | np.ndarray:
     """Compute a feature vector for a composition.
 
     The feature vector is based on the statistics specified
@@ -386,11 +392,15 @@ def composition_featuriser(
         comps = [CompositionalEmbedding(x, embedding) for x in tqdm(data[formula_column].tolist())]
         print("Computing feature vectors...")
         fvs = [x.feature_vector(stats) for x in tqdm(comps)]
-        feature_names = comps[0].embedding.feature_labels
+        feature_names = [str(feature) for feature in (comps[0].embedding.feature_labels or [])]
         feature_names = [f"{stat}_{feature}" for stat in stats for feature in feature_names]
-        return pd.concat([data, pd.DataFrame(fvs, columns=feature_names)], axis=1)
+        return pd.concat([data, pd.DataFrame(fvs, columns=feature_names, index=data.index)], axis=1)
     elif isinstance(data, list):
-        comps = [CompositionalEmbedding(x, embedding) for x in data]
+        if not all(isinstance(x, str) for x in data):
+            msg = "Formula lists must contain only strings."
+            raise TypeError(msg)
+        formulae = cast("list[str]", data)
+        comps = [CompositionalEmbedding(x, embedding) for x in formulae]
         return [x.feature_vector(stats) for x in tqdm(comps)]
 
     elif isinstance(data, CompositionalEmbedding):
@@ -415,13 +425,14 @@ class SpeciesCompositionalEmbedding:
 
     def __init__(self, formula_dict: dict, embedding: str | SpeciesEmbedding, x=1) -> None:
         """Initialise a SpeciesCompositionalEmbedding instance."""
-        self.embedding = embedding
+        self.embedding: SpeciesEmbedding = (
+            SpeciesEmbedding.load_data(embedding) if isinstance(embedding, str) else embedding
+        )
 
-        # If a string has been passed for embedding, create an Embedding instance
-        if isinstance(embedding, str):
-            self.embedding = SpeciesEmbedding.load_data(embedding)
-
-        self.embedding_name: str = self.embedding.embedding_name
+        if self.embedding.embedding_name is None:
+            msg = "Species embedding instances used in compositions must define an embedding_name."
+            raise ValueError(msg)
+        self.embedding_name = self.embedding.embedding_name
 
         # Set an attribute for the comp dict
         self.composition = formula_dict
@@ -440,9 +451,8 @@ class SpeciesCompositionalEmbedding:
         # Set an attribute for the element list
         self.element_list = list({parse_species(sp)[0] for sp in self.species_list})
         # Set an attribute for the species matrix
-        self.species_matrix = np.zeros(
-            shape=(len(self.composition), len(self.embedding.embeddings["Zn2+"])),
-        )
+        first_vector = next(iter(self.embedding.embeddings.values()))
+        self.species_matrix = np.zeros(shape=(len(self.composition), len(first_vector)))
         for i, k in enumerate(self.composition.keys()):
             self.species_matrix[i] = self.embedding.embeddings[k]
         self.species_matrix = np.nan_to_num(self.species_matrix)
@@ -652,9 +662,16 @@ def _species_composition_distance(
     stats: str | list[str] = "mean",
 ) -> float:
     """Compute the distance between two compositions."""
+    if embedding is None and (
+        not isinstance(comp1, SpeciesCompositionalEmbedding) or not isinstance(comp2, SpeciesCompositionalEmbedding)
+    ):
+        msg = "An embedding must be provided when passing raw species compositions."
+        raise ValueError(msg)
     if not isinstance(comp1, SpeciesCompositionalEmbedding):
+        assert embedding is not None
         comp1 = SpeciesCompositionalEmbedding(comp1, embedding=embedding)
     if not isinstance(comp2, SpeciesCompositionalEmbedding):
+        assert embedding is not None
         comp2 = SpeciesCompositionalEmbedding(comp2, embedding=embedding)
     assert comp1.embedding_name == comp2.embedding_name
 
@@ -675,17 +692,18 @@ def _species_composition_distance(
 
     elif distance_metric in scipy_metrics:
         return scipy_metrics[distance_metric](comp1_vec, comp2_vec)
-    elif distance_metric == "cosine_distance":
+    if distance_metric == "cosine_distance":
         return cosine_distance(comp1_vec, comp2_vec)
-    return None
+    msg = f"Invalid distance metric: {distance_metric}"
+    raise ValueError(msg)
 
 
 def species_composition_featuriser(
-    data: SpeciesCompositionalEmbedding | list,
-    embedding: Embedding | str = "skipspecies",
-    stats: str | list = "mean",
+    data: SpeciesCompositionalEmbedding | list[dict[str, int | float]],
+    embedding: SpeciesEmbedding | str = "skipspecies",
+    stats: str | list[str] = "mean",
     to_dataframe: bool = False,
-) -> list | pd.DataFrame:
+) -> list[np.ndarray] | np.ndarray | pd.DataFrame:
     """Compute a feature vector for a composition.
 
     The feature vector is based on the statistics specified
@@ -710,7 +728,11 @@ def species_composition_featuriser(
     if isinstance(stats, str):
         stats = [stats]
     if isinstance(data, list):
-        comps = [SpeciesCompositionalEmbedding(x, embedding) for x in data]
+        if not all(isinstance(x, dict) for x in data):
+            msg = "Species composition lists must contain only dictionaries."
+            raise TypeError(msg)
+        compositions = cast("list[dict[str, int | float]]", data)
+        comps = [SpeciesCompositionalEmbedding(x, embedding) for x in compositions]
         comp_vectors = [x.feature_vector(stats) for x in tqdm(comps, desc="Computing feature vectors")]
     elif isinstance(data, SpeciesCompositionalEmbedding):
         comps = [data]
@@ -721,13 +743,15 @@ def species_composition_featuriser(
             msg,
         )
     if to_dataframe:
-        feature_names = comps[0].embedding.feature_labels
+        feature_names = [str(feature) for feature in (comps[0].embedding.feature_labels or [])]
         feature_names = [f"{stat}_{feature}" for stat in stats for feature in feature_names]
         formulae = [x.formula_pretty for x in comps]
+        row_vectors = [comp_vectors] if isinstance(data, SpeciesCompositionalEmbedding) else comp_vectors
+        compositions_out = [data] if isinstance(data, SpeciesCompositionalEmbedding) else data
         # Create a DataFrame with formula, composition and feature vectors
-        df = pd.DataFrame(comp_vectors, columns=feature_names)
+        df = pd.DataFrame(row_vectors, columns=feature_names)
         df["formula"] = formulae
-        df["composition"] = data
+        df["composition"] = compositions_out
         # Reorder the columns
         return df[["formula", "composition", *feature_names]]
 

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, cast
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -12,13 +14,17 @@ from .core import Embedding, SpeciesEmbedding
 from .utils.config import ELEMENT_GROUPS_PALETTES
 from .utils.species import get_sign, parse_species
 
+if TYPE_CHECKING:
+    from matplotlib.axes import Axes
+    from mpl_toolkits.mplot3d.axes3d import Axes3D
+
 
 def heatmap_plotter(
     embedding: Embedding | SpeciesEmbedding,
     metric: str,
     cmap: str = "Blues",
     sortaxisby: str = "mendeleev",
-    ax: plt.axes | None = None,
+    ax: Axes | None = None,
     show_axislabels: bool = True,
     **kwargs,
 ):
@@ -72,7 +78,7 @@ def heatmap_plotter(
         **kwargs,
     )
     ax.set_title(
-        embedding.embedding_name,
+        embedding.embedding_name or "",
         fontdict={
             "fontweight": "bold",
         },
@@ -94,7 +100,7 @@ def heatmap_plotter(
 
 def dimension_plotter(
     embedding: Embedding | SpeciesEmbedding,
-    ax: plt.axes | None = None,
+    ax: Axes | None = None,
     n_components: int = 2,
     reducer: str = "umap",
     adjusttext: bool = True,
@@ -213,20 +219,26 @@ def dimension_plotter(
         if include_species:
             df = df[df["element"].isin(include_species)].reset_index(drop=True)
         if not ax:
-            fig = plt.figure()  # noqa: F841
-            ax = plt.axes(projection="3d")
-        ax.scatter3D(
+            plt.figure()
+            ax_3d = cast("Axes3D", plt.axes(projection="3d"))
+        elif not hasattr(ax, "scatter3D"):
+            msg = "A 3D plot requires an Axes3D-compatible axes instance."
+            raise TypeError(msg)
+        else:
+            ax_3d = cast("Axes3D", ax)
+        ax_3d.scatter3D(
             df["x"],
             df["y"],
             df["z"],
         )
-        ax.set_xlabel("Dimension 1")
-        ax.set_ylabel("Dimension 2")
-        ax.set_zlabel("Dimension 3")
+        ax_3d.set_xlabel("Dimension 1")
+        ax_3d.set_ylabel("Dimension 2")
+        ax_3d.set_zlabel("Dimension 3")
         for i in range(len(df)):
-            ax.text(df["x"][i], df["y"][i], df["z"][i], df["element"][i], fontsize=12)
+            ax_3d.text(df["x"][i], df["y"][i], df["z"][i], df["element"][i], fontsize=12)
+        ax = ax_3d
     else:
         msg = "Unrecognised number of dimensions."
         raise ValueError(msg)
-    ax.set_title(embedding.embedding_name, fontdict={"fontweight": "bold"})
+    ax.set_title(embedding.embedding_name or "", fontdict={"fontweight": "bold"})
     return ax

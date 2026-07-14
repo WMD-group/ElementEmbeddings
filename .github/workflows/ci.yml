@@ -12,8 +12,31 @@ jobs:
   qa:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: pre-commit/action@v3.0.1
+      - uses: actions/checkout@v7.0.0
+      - uses: astral-sh/setup-uv@v8.3.2
+        with:
+          python-version: "3.14"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --extra dev
+      - name: Run prek hooks
+        env:
+          PREK_HOME: /tmp/prek-home
+        run: uv run prek run --all-files --show-diff-on-failure
+
+  typecheck:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7.0.0
+      - uses: astral-sh/setup-uv@v8.3.2
+        with:
+          python-version: "3.14"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --extra dev
+      - name: Run ty
+        run: uv run ty check src/elementembeddings --output-format github
 
   test:
     needs: qa
@@ -25,16 +48,14 @@ jobs:
 
     runs-on: ${{matrix.os}}
     steps:
-      - uses: actions/checkout@v6
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+      - uses: actions/checkout@v7.0.0
+      - name: Set up uv and Python ${{ matrix.python-version }}
+        uses: astral-sh/setup-uv@v8.3.2
         with:
           python-version: ${{ matrix.python-version }}
+          enable-cache: true
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip wheel
-          python -m pip install --upgrade uv
-          uv pip install -e ".[dev]" --system
+        run: uv sync --extra dev
       - name: Check package versions
         run: |
           uv pip show elementembeddings
@@ -44,4 +65,4 @@ jobs:
       - name: Run tests
         env:
           MPLBACKEND: Agg
-        run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings -v
+        run: uv run python -m pytest --mpl --mpl-baseline-path=tests/baseline --cov=src/elementembeddings -v

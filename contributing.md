@@ -33,20 +33,22 @@ Recommended reading: [How to Write the Perfect Pull Request](https://github.blog
 
 ## Dev requirements
 
-When developing locally, install the package together with its `dev` and `docs` extras:
+When developing locally with `uv`, sync the project together with its development,
+documentation, and lint tooling:
 
 ```bash
-pip install -e ".[dev,docs]"
+uv sync --extra dev --extra docs
 ```
 
 This will allow you to run the tests locally with pytest as described in the main README,
-as well as run pre-commit hooks to lint and format python files with `ruff`.
-To install the pre-commit hooks (only needs to be done once):
+as well as run `prek` hooks for linting and formatting with `ruff`.
+To install the git hooks (only needs to be done once):
 
 ```bash
-pre-commit install
-pre-commit run --all-files # optionally run hooks on all files
+uv run prek install
+uv run prek run --all-files
+uv run ty check src/elementembeddings
 ```
 
-Pre-commit hooks will check all files when you commit changes, automatically fixing any files which are not formatted correctly. Those files will need to be staged again before re-attempting the commit.
+`prek` will check files when you commit changes and automatically apply fixes where supported. If a hook rewrites files, stage those changes again before retrying the commit.
 `

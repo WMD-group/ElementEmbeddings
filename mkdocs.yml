@@ -12,22 +12,13 @@ nav:
   - Home: index.md
   - About: about.md
   - Getting Started: installation.md
-  - "Python package":
-      - "Core module": "python_api/core.md"
-      - "Composition module": "python_api/composition.md"
-      - "Plotter module": "python_api/plotter.md"
-      - "Utility module":
-          - "io": python_api/utils/io.md
-          - "Math": python_api/utils/math.md
-          - "Species": python_api/utils/species.md
+  - "Python package": "python_api/index.md"
   - Tutorial:
       - "Simple usage": tutorials.md
       - "Core usage (notebook)": tutorial/usage.ipynb
       - "Composition usage (notebook)": tutorial/composition.ipynb
       - "Ionic Species (notebook)": tutorial/species.ipynb
-  - Embedding Schemes:
-      - "Element Embeddings": "embeddings/element.md"
-      - Species Embeddings: "embeddings/species.md"
+  - Embedding Schemes: "embeddings/embeddings.md"
   - Contributing: contribution.md
   - Issue Tracker: https://github.com/WMD-group/ElementEmbeddings/issues
 
@@ -45,6 +36,12 @@ extra:
   version:
     provider: mike
     default: stable
+
+not_in_nav: |
+  embeddings/element.md
+  embeddings/species.md
+  python_api/*.md
+  python_api/**/*.md
 
 plugins:
   - mkdocstrings
