@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from typing import Match
+from re import Match
 
 
 def parse_species(species: str) -> tuple[str, float]:

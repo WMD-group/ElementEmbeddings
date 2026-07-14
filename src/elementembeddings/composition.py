@@ -399,7 +399,7 @@ def composition_featuriser(
         if not all(isinstance(x, str) for x in data):
             msg = "Formula lists must contain only strings."
             raise TypeError(msg)
-        formulae = cast(list[str], data)
+        formulae = cast("list[str]", data)
         comps = [CompositionalEmbedding(x, embedding) for x in formulae]
         return [x.feature_vector(stats) for x in tqdm(comps)]
 
@@ -731,7 +731,7 @@ def species_composition_featuriser(
         if not all(isinstance(x, dict) for x in data):
             msg = "Species composition lists must contain only dictionaries."
             raise TypeError(msg)
-        compositions = cast(list[dict[str, int | float]], data)
+        compositions = cast("list[dict[str, int | float]]", data)
         comps = [SpeciesCompositionalEmbedding(x, embedding) for x in compositions]
         comp_vectors = [x.feature_vector(stats) for x in tqdm(comps, desc="Computing feature vectors")]
     elif isinstance(data, SpeciesCompositionalEmbedding):

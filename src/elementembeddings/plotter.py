@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -9,7 +11,6 @@ import seaborn as sns
 from adjustText import adjust_text
 from matplotlib.axes import Axes
 from mpl_toolkits.mplot3d.axes3d import Axes3D
-from typing import cast
 
 from .core import Embedding, SpeciesEmbedding
 from .utils.config import ELEMENT_GROUPS_PALETTES
@@ -222,7 +223,7 @@ def dimension_plotter(
         if isinstance(ax, Axes3D):
             ax_3d = ax
         else:
-            ax_3d = cast(Axes3D, plt.axes(projection="3d"))
+            ax_3d = cast("Axes3D", plt.axes(projection="3d"))
         ax_3d.scatter3D(
             df["x"],
             df["y"],
