@@ -2,7 +2,7 @@
 
 This API reference is generated from the public modules in `src/elementembeddings`.
 The pages below stay aligned with the source tree automatically during docs builds
-and pre-commit runs.
+and prek runs.
 
 ## `compare`
 
