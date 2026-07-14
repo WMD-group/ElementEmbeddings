@@ -42,11 +42,13 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pre-commit",
+    "prek>=0.4.9",
     "pytest",
     "pytest-subtests",
     "pytest-cov",
     "pytest-mpl",
+    "ruff>=0.15.21",
+    "ty>=0.0.59",
 ]
 docs = [
     "mkdocs",
@@ -159,11 +161,6 @@ docstring-code-format = true
 [tool.ruff.lint.per-file-ignores]
 "src/elementembeddings/tests/*" = ["D"]
 
-[tool.pyright]
-typeCheckingMode = "off"
-reportPossiblyUnboundVariable = true
-reportUnboundVariable = true
-
 [tool.codespell]
 skip = "*.csv,*/site/*,publications/element_similarity/**,*periodic-table*.json"
 check-filenames = true
@@ -267,3 +264,10 @@ ignore-words-list = [
             "Cm",
             "Bk",
         ]
+
+[dependency-groups]
+lint = [
+    "prek>=0.4.9",
+    "ruff>=0.15.21",
+    "ty>=0.0.59",
+]

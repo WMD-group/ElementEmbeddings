@@ -13,7 +13,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pre-commit/action@v3.0.1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+          python -m pip install --upgrade uv
+          uv sync --extra dev
+      - name: Run prek hooks
+        env:
+          PREK_HOME: /tmp/prek-home
+        run: uv run prek run --all-files --show-diff-on-failure
+
+  typecheck:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+          python -m pip install --upgrade uv
+          uv sync --extra dev
+      - name: Run ty
+        run: uv run ty check src/elementembeddings --output-format github
 
   test:
     needs: qa
@@ -34,14 +61,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip wheel
           python -m pip install --upgrade uv
-          uv pip install -e ".[dev]" --system
+          uv sync --extra dev
       - name: Check package versions
         run: |
-          uv pip show elementembeddings
-          uv pip show pytest
-          uv pip show matplotlib
+          uv run python -m pip show elementembeddings
+          uv run python -m pip show pytest
+          uv run python -m pip show matplotlib
 
       - name: Run tests
         env:
           MPLBACKEND: Agg
-        run: python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings -v
+        run: uv run python -m pytest --mpl --mpl-baseline-path=src/elementembeddings/tests/baseline --cov=src/elementembeddings -v
