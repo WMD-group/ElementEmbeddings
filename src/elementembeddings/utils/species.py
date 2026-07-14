@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import re
+from typing import Match
 
 
-def parse_species(species: str) -> tuple[str, int]:
+def parse_species(species: str) -> tuple[str, float]:
     """
     Parse a species string into its atomic symbol and oxidation state.
 
@@ -13,18 +14,17 @@ def parse_species(species: str) -> tuple[str, int]:
     :return: a tuple of the atomic symbol and oxidation state
 
     """
-    try:
-        ele, oxi_state = re.match(r"([A-Za-z]+)([0-9]*[\+\-])", species).groups()
-        if oxi_state[-1] in ["+", "-"]:
-            charge = (int(oxi_state[:-1] or 1)) * (-1 if "-" in oxi_state else 1)
-            return ele, charge
-        else:
-            return ele, 0
-    except AttributeError:
+    match = re.match(r"([A-Za-z]+)([0-9]*[\+\-])", species)
+    if match is None:
         return _parse_species_old(species)
+    ele, oxi_state = match.groups()
+    if oxi_state[-1] in ["+", "-"]:
+        charge = (int(oxi_state[:-1] or 1)) * (-1 if "-" in oxi_state else 1)
+        return ele, float(charge)
+    return ele, 0.0
 
 
-def _parse_species_old(species: str) -> tuple[str, int]:
+def _parse_species_old(species: str) -> tuple[str, float]:
     """
     Parse a species string into its atomic symbol and oxidation state.
 
@@ -32,7 +32,11 @@ def _parse_species_old(species: str) -> tuple[str, int]:
     :return: a tuple of the atomic symbol and oxidation state
 
     """
-    ele = re.match(r"[A-Za-z]+", species).group(0)
+    element_match: Match[str] | None = re.match(r"[A-Za-z]+", species)
+    if element_match is None:
+        msg = f"{species} is not a valid species string"
+        raise ValueError(msg)
+    ele = element_match.group(0)
 
     charge_match = re.search(r"(\d+\.\d+|\d+)", species)
     ox_state = float(charge_match.group(1)) if charge_match else 0
@@ -52,10 +56,10 @@ def _parse_species_old(species: str) -> tuple[str, int]:
     elif ox_state == 0 and "-" in species:
         ox_state = -1
 
-    return ele, ox_state
+    return ele, float(ox_state)
 
 
-def get_sign(charge: int) -> str:
+def get_sign(charge: float) -> str:
     """Get string representation of a number's sign.
 
     Args:

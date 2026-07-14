@@ -129,10 +129,12 @@ class TestCompositionalEmbedding(unittest.TestCase):
         """Test the composition featuriser function."""
         formulas = self.formulas[:3]
         formula_df = pd.DataFrame(formulas, columns=["formula"])
-        assert isinstance(composition.composition_featuriser(formula_df), pd.DataFrame)
-        assert composition.composition_featuriser(formula_df).shape == (3, 23)
-        assert isinstance(composition.composition_featuriser(formulas), list)
-        assert len(composition.composition_featuriser(formulas)) == 3
+        featurised_df = composition.composition_featuriser(formula_df)
+        assert isinstance(featurised_df, pd.DataFrame)
+        assert featurised_df.shape == (3, 23)
+        featurised_list = composition.composition_featuriser(formulas)
+        assert isinstance(featurised_list, list)
+        assert len(featurised_list) == 3
 
     def test_composition_distance(self):
         """Test the distance method of the CompositionalEmbedding class."""
@@ -223,7 +225,7 @@ class TestSpeciesCompositionalEmbedding(unittest.TestCase):
 
     def setUp(self):
         """Set up the test compositions."""
-        self.compositions = [
+        self.compositions: list[dict[str, int | float]] = [
             {"Fe2+": 1, "Fe3+": 2, "O2-": 4},
             {"Li+": 7, "La3+": 3, "Zr4+": 1, "O2-": 12},
             {"Cs+": 1, "Pb2+": 1, "I-": 3},

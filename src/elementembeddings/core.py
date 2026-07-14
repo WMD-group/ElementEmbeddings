@@ -41,7 +41,7 @@ class Embedding(EmbeddingBase):
     """
 
     @staticmethod
-    def load_data(embedding_name: str | None = None):
+    def load_data(embedding_name: str) -> Embedding:
         """Create an instance of the `Embedding` class from a default embedding file.
 
         The default embeddings are in the table below:
@@ -105,11 +105,11 @@ class Embedding(EmbeddingBase):
                 ),
                 embedding_name,
             )
-        else:
-            return None
+        msg = f"Unsupported embedding format for {embedding_name}"
+        raise ValueError(msg)
 
     @staticmethod
-    def from_json(embedding_json, embedding_name: str | None = None):
+    def from_json(json_path: str, embedding_name: str | None = None) -> Embedding:
         """Create an instance of the Embedding class from a json file.
 
         Args:
@@ -118,12 +118,12 @@ class Embedding(EmbeddingBase):
             embedding_name (str): The name of the elemental representation
         """
         # Need to add validation handling for JSONs in different formats
-        with open(embedding_json) as f:
+        with open(json_path) as f:
             embedding_data = json.load(f)
         return Embedding(embedding_data, embedding_name)
 
     @staticmethod
-    def from_csv(embedding_csv, embedding_name: str | None = None):
+    def from_csv(csv_path: str, embedding_name: str | None = None) -> Embedding:
         """Create an instance of the Embedding class from a csv file.
 
         The first column of the csv file must contain the elements and be named element.
@@ -135,7 +135,7 @@ class Embedding(EmbeddingBase):
 
         """
         # Need to add validation handling for csv files
-        df = pd.read_csv(embedding_csv)
+        df = pd.read_csv(csv_path)
         elements = list(df["element"])
         df = df.drop(["element"], axis=1)
         feature_labels = list(df.columns)
@@ -175,7 +175,7 @@ class Embedding(EmbeddingBase):
                 )
             )
 
-    def to(self, fmt: str = "", filename: str | None = ""):
+    def to(self, fmt: str = "", filename: str | None = None):
         """Output the embedding to a file.
 
         Args:
@@ -190,7 +190,7 @@ class Embedding(EmbeddingBase):
         """
         fmt = fmt.lower()
 
-        if fmt == "json" or fnmatch.fnmatch(filename, "*.json"):
+        if fmt == "json" or (filename is not None and fnmatch.fnmatch(filename, "*.json")):
             j = json.dumps(self.embeddings, cls=NumpyEncoder)
             if filename:
                 if not filename.endswith(".json"):
@@ -200,7 +200,7 @@ class Embedding(EmbeddingBase):
                     return None
             else:
                 return j
-        elif fmt == "csv" or fnmatch.fnmatch(filename, "*.csv"):
+        elif fmt == "csv" or (filename is not None and fnmatch.fnmatch(filename, "*.csv")):
             if filename:
                 if not filename.endswith(".csv"):
                     filename = filename + ".csv"
@@ -292,7 +292,7 @@ class SpeciesEmbedding(EmbeddingBase):
     """
 
     @staticmethod
-    def load_data(embedding_name: str, include_neutral: bool = False):
+    def load_data(embedding_name: str, include_neutral: bool = False) -> SpeciesEmbedding:
         """Create a `SpeciesEmbedding` from a preset embedding file.
 
         The default embeddings are in the table below:
@@ -336,11 +336,11 @@ class SpeciesEmbedding(EmbeddingBase):
             if not include_neutral:
                 embedding.remove_neutral_species(inplace=True)
             return embedding
-        else:
-            return None
+        msg = f"Unsupported species embedding format for {embedding_name}"
+        raise ValueError(msg)
 
     @staticmethod
-    def from_csv(csv_path, embedding_name: str | None = None):
+    def from_csv(csv_path: str, embedding_name: str | None = None) -> SpeciesEmbedding:
         """Create an instance of the SpeciesEmbedding class from a csv file.
 
         The first column of the csv file must contain the species and be named species.
@@ -365,7 +365,7 @@ class SpeciesEmbedding(EmbeddingBase):
         return SpeciesEmbedding(embedding_data, embedding_name, feature_labels)
 
     @staticmethod
-    def from_json(json_path, embedding_name: str | None = None):
+    def from_json(json_path: str, embedding_name: str | None = None) -> SpeciesEmbedding:
         """Create an instance of the SpeciesEmbedding class from a json file.
 
         Args:
@@ -533,7 +533,7 @@ class SpeciesEmbedding(EmbeddingBase):
         """
         return super().correlation_df(metric).rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
 
-    def to(self, fmt: str = "", filename: str | None = ""):
+    def to(self, fmt: str = "", filename: str | None = None):
         """Output the embedding to a file.
 
         Args:
@@ -548,7 +548,7 @@ class SpeciesEmbedding(EmbeddingBase):
         """
         fmt = fmt.lower()
 
-        if fmt == "json" or fnmatch.fnmatch(filename, "*.json"):
+        if fmt == "json" or (filename is not None and fnmatch.fnmatch(filename, "*.json")):
             j = json.dumps(self.embeddings, cls=NumpyEncoder)
             if filename:
                 if not filename.endswith(".json"):

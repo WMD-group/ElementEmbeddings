@@ -6,6 +6,7 @@ import warnings
 from abc import ABC, abstractmethod
 from itertools import combinations_with_replacement
 from os import path
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -32,9 +33,9 @@ class EmbeddingBase(ABC):
 
     def __init__(
         self,
-        embeddings: dict,
+        embeddings: dict[str, Any],
         embedding_name: str | None = None,
-        feature_labels: list[str] | None = None,
+        feature_labels: list[str | int] | None = None,
     ) -> None:
         """Initialise the embedding base class.
 
@@ -99,7 +100,7 @@ class EmbeddingBase(ABC):
 
     @staticmethod
     @abstractmethod
-    def from_csv(csv_path: str):
+    def from_csv(csv_path: str, embedding_name: str | None = None):
         """Abstract method for loading data from a csv."""
 
     @staticmethod
@@ -115,8 +116,10 @@ class EmbeddingBase(ABC):
             embeddings = json.load(f)
         return EmbeddingBase(embeddings, embedding_name)
 
-    def citation(self):
+    def citation(self) -> list[str] | None:
         """Return the citation for the embedding."""
+        if self.embedding_name is None:
+            return None
         try:
             return CITATIONS[self.embedding_name]
         except KeyError:
@@ -478,7 +481,8 @@ class EmbeddingBase(ABC):
                 index="Z_1",
                 columns="Z_2",
             )
-        return None
+        msg = f"Unknown sort order: {sortby}"
+        raise ValueError(msg)
 
     def correlation_pivot_table(
         self,
@@ -512,4 +516,5 @@ class EmbeddingBase(ABC):
                 index="Z_1",
                 columns="Z_2",
             )
-        return None
+        msg = f"Unknown sort order: {sortby}"
+        raise ValueError(msg)
