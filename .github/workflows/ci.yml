@@ -58,9 +58,9 @@ jobs:
         run: uv sync --extra dev
       - name: Check package versions
         run: |
-          uv run python -m pip show elementembeddings
-          uv run python -m pip show pytest
-          uv run python -m pip show matplotlib
+          uv pip show elementembeddings
+          uv pip show pytest
+          uv pip show matplotlib
 
       - name: Run tests
         env:
