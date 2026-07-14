@@ -21,15 +21,14 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v6
+      - uses: astral-sh/setup-uv@v8
         with:
           python-version: "3.14"
+          enable-cache: true
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip wheel
-          python -m pip install -e ".[dev,docs]"
+        run: uv sync --extra dev --extra docs
       - name: Generate API docs
-        run: python scripts/generate_api_docs.py
+        run: uv run python scripts/generate_api_docs.py
       - name: Configure docs deployment
         run: |
           git fetch origin gh-pages:gh-pages --depth=1
@@ -39,7 +38,7 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ github.event_name }}" == "release" ]]; then
-            mike deploy --push --update-aliases "${{ github.event.release.tag_name }}" stable
+            uv run mike deploy --push --update-aliases "${{ github.event.release.tag_name }}" stable
           else
-            mike deploy --push main latest
+            uv run mike deploy --push main latest
           fi

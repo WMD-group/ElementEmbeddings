@@ -21,16 +21,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v8
         with:
-          python-version: "3.x"
+          python-version: "3.14"
+          enable-cache: true
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
+        run: uv sync
       - name: Build package
-        run: python -m build
+        run: uv build
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b
         with:
