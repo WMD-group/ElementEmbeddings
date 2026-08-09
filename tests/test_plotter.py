@@ -156,6 +156,16 @@ class DimensionTest(unittest.TestCase):
         )
         assert isinstance(skipatom_3d_pca_plot, plt.Axes)
 
+        _, ax = plt.subplots()
+        with pytest.raises(TypeError):
+            dimension_plotter(
+                self.test_skipatom,
+                ax=ax,
+                n_components=3,
+                reducer="pca",
+                adjusttext=False,
+            )
+
     def test_dimension_Nd_plotter(self):
         """Test that the dimension_plotter function will fail in d>3."""
         with pytest.raises(ValueError):

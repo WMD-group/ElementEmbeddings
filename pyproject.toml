@@ -5,19 +5,22 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ElementEmbeddings"
-version = "0.7.2"
+version = "0.8.0"
 description = "Element Embeddings"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [
-    { name = "Anthony O. Onwuli", email = "anthony.onwuli16@imperial.ac.uk" }
+    { name = "Anthony O. Onwuli", email = "aonwuli@proton.me" },
+    {name = "Aron Walsh", email = "a.walsh@imperial.ac.uk"}
+
 ]
 classifiers = [
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
@@ -40,11 +43,13 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pre-commit",
+    "prek>=0.4.9",
     "pytest",
     "pytest-subtests",
     "pytest-cov",
     "pytest-mpl",
+    "ruff>=0.15.21",
+    "ty>=0.0.59",
 ]
 docs = [
     "mkdocs",
@@ -53,6 +58,23 @@ docs = [
     "mkdocstrings-python",
     "mike",
     "mkdocs-jupyter",
+]
+
+[tool.setuptools]
+include-package-data = true
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["elementembeddings*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+elementembeddings = [
+    "data/**/*.csv",
+    "data/**/*.json",
+    "data/**/*.md",
+    "data/**/*.txt",
 ]
 
 [tool.semantic_release]
@@ -107,6 +129,7 @@ ignore = [
     "PLR0912", # Too many branches
     "PLR0913", # Too many arguments
     "PLR0915", # Too many statements
+    "PLR0917", # Too many positional arguments
     "PLR2004", # Magic-value-comparison TODO fix these
     "PLW2901", # Outer for loop variable overwritten by inner assignment target
     "PLW0603", # Using the global statement to update `_el_ox_states_wiki` is discouraged TODO fix these
@@ -138,12 +161,7 @@ docstring-code-format = true
 
 
 [tool.ruff.lint.per-file-ignores]
-"src/elementembeddings/tests/*" = ["D"]
-
-[tool.pyright]
-typeCheckingMode = "off"
-reportPossiblyUnboundVariable = true
-reportUnboundVariable = true
+"tests/*" = ["D"]
 
 [tool.codespell]
 skip = "*.csv,*/site/*,publications/element_similarity/**,*periodic-table*.json"
@@ -248,3 +266,10 @@ ignore-words-list = [
             "Cm",
             "Bk",
         ]
+
+[dependency-groups]
+lint = [
+    "prek>=0.4.9",
+    "ruff>=0.15.21",
+    "ty>=0.0.59",
+]
