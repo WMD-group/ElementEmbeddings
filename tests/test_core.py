@@ -474,6 +474,18 @@ class EmbeddingTest(unittest.TestCase):
         umap2 = self.test_matscholar.calculate_umap(n_neighbors=15, random_state=42)
         assert (umap1 == umap2).all()
 
+    def test_PaCMAP(self):
+        """Test the PaCMAP function."""
+        pacmap_params = {"random_state": 42}
+        assert isinstance(self.test_matscholar.calculate_pacmap(), np.ndarray)
+        assert self.test_matscholar.calculate_pacmap().shape == (
+            len(self.test_matscholar.element_list),
+            2,
+        )
+        pacmap1 = self.test_matscholar.calculate_pacmap(**pacmap_params)
+        pacmap2 = self.test_matscholar.calculate_pacmap(**pacmap_params)
+        assert (pacmap1 == pacmap2).all()
+
 
 class SpeciesEmbeddingTest(unittest.TestCase):
     """Test the SpeciesEmbedding class."""

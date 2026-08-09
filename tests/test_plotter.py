@@ -131,6 +131,13 @@ class DimensionTest(unittest.TestCase):
             adjusttext=True,
         )
         assert isinstance(skipatom_umap_plot, plt.Axes)
+        skipatom_pacmap_plot = dimension_plotter(
+            self.test_skipatom,
+            n_components=2,
+            reducer="pacmap",
+            adjusttext=False,
+        )
+        assert isinstance(skipatom_pacmap_plot, plt.Axes)
 
         with pytest.raises(ValueError):
             dimension_plotter(

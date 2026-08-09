@@ -115,7 +115,8 @@ def dimension_plotter(
         embedding (Embedding): The embedding to be plotted.
         ax (plt.axes, optional): The axes to plot on, by default None
         n_components (int): The number of components to reduce to, by default 2
-        reducer (str): The dimensionality reduction algorithm to use, by default "umap"
+        reducer (str): The dimensionality reduction algorithm to use. One of
+        "umap", "tsne", "pca" or "pacmap", by default "umap"
         adjusttext (bool): Whether to avoid overlap of the text labels, by default True
         reducer_params (dict, optional): Additional keyword arguments to pass to
         the reducer, by default None
@@ -132,8 +133,10 @@ def dimension_plotter(
         reduced = embedding.calculate_tsne(n_components=n_components, **reducer_params)
     elif reducer == "pca":
         reduced = embedding.calculate_pca(n_components=n_components, **reducer_params)
+    elif reducer == "pacmap":
+        reduced = embedding.calculate_pacmap(n_components=n_components, **reducer_params)
     else:
-        msg = "Unrecognised reducer."
+        msg = f"Unrecognised reducer: {reducer!r}. Expected one of 'umap', 'tsne', 'pca' or 'pacmap'."
         raise ValueError(msg)
 
     if isinstance(embedding, Embedding):
