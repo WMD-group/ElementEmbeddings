@@ -160,11 +160,10 @@ class EmbeddingBase(ABC):
         Returns:
         -------
             None if inplace is True, otherwise returns the standardised embedding.
+            Calling this method on an already-standardised embedding is a no-op and
+            returns ``None``.
         """
         if self._is_standardised():
-            warnings.warn(
-                "Embedding is already standardised. Returning None and not changing the embedding",
-            )
             return None
         else:
             embeddings_copy = self.embeddings.copy()
@@ -258,7 +257,11 @@ class EmbeddingBase(ABC):
             )
             embeddings_array = np.array(list(self.embeddings.values()))
 
-        umap = UMAP(n_components=n_components, **kwargs)
+        umap_kwargs = dict(kwargs)
+        if umap_kwargs.get("random_state") is not None:
+            umap_kwargs.setdefault("n_jobs", 1)
+
+        umap = UMAP(n_components=n_components, **umap_kwargs)
         return umap.fit_transform(embeddings_array)
 
     def calculate_pacmap(

@@ -190,13 +190,15 @@ class CompositionalEmbedding:
 
     def _geometric_mean_feature_vector(self) -> np.ndarray:
         """Compute the geometric mean feature vector."""
-        return np.exp(np.dot(self.norm_stoich_vector, np.log(self.el_matrix)))
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return np.exp(np.dot(self.norm_stoich_vector, np.log(self.el_matrix)))
 
     def _harmonic_mean_feature_vector(self) -> np.ndarray:
         """Compute the harmonic mean feature vector."""
-        return np.reciprocal(
-            np.dot(self.norm_stoich_vector, np.reciprocal(self.el_matrix)),
-        )
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return np.reciprocal(
+                np.dot(self.norm_stoich_vector, np.reciprocal(self.el_matrix)),
+            )
 
     _stats_functions_dict: ClassVar = {
         "mean": "_mean_feature_vector",
@@ -536,12 +538,14 @@ class SpeciesCompositionalEmbedding:
         return np.dot(self.stoich_vector, self.species_matrix)
 
     def _geometric_mean_feature_vector(self) -> np.ndarray:
-        return np.exp(np.dot(self.norm_stoich_vector, np.log(self.species_matrix)))
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return np.exp(np.dot(self.norm_stoich_vector, np.log(self.species_matrix)))
 
     def _harmonic_mean_feature_vector(self) -> np.ndarray:
-        return np.reciprocal(
-            np.dot(self.norm_stoich_vector, np.reciprocal(self.species_matrix)),
-        )
+        with np.errstate(divide="ignore", invalid="ignore"):
+            return np.reciprocal(
+                np.dot(self.norm_stoich_vector, np.reciprocal(self.species_matrix)),
+            )
 
     _stats_functions_dict: ClassVar = {
         "mean": "_mean_feature_vector",

@@ -54,7 +54,7 @@ When developing locally with `uv`, sync the project together with its developmen
 documentation, and lint tooling:
 
 ```bash
-uv sync --extra dev --extra docs
+uv sync --group dev --group docs
 ```
 
 This will allow you to run the tests locally with pytest as described in the main README,

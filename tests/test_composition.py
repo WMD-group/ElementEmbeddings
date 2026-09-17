@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+import warnings
 
 import numpy as np
 import pandas as pd
@@ -110,13 +111,12 @@ class TestCompositionalEmbedding(unittest.TestCase):
 
     def test_feature_vector(self):
         """Test the feature_vector function."""
-        assert isinstance(
-            self.valid_magpie_compositions[0].feature_vector(stats=self.stats),
-            np.ndarray,
-        )
-        assert len(
-            self.valid_magpie_compositions[0].feature_vector(stats=self.stats),
-        ) == self.valid_magpie_compositions[0].embedding.dim * len(self.stats)
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            feature_vector = self.valid_magpie_compositions[0].feature_vector(stats=self.stats)
+
+        assert isinstance(feature_vector, np.ndarray)
+        assert len(feature_vector) == self.valid_magpie_compositions[0].embedding.dim * len(self.stats)
         # Test that the feature vector function works with a single stat
         assert isinstance(
             self.valid_magpie_compositions[0].feature_vector(stats="mean"),
@@ -264,13 +264,12 @@ class TestSpeciesCompositionalEmbedding(unittest.TestCase):
 
     def test_feature_vector(self):
         """Test the feature_vector function."""
-        assert isinstance(
-            self.valid_skipspecies_compositions[0].feature_vector(stats=self.stats),
-            np.ndarray,
-        )
-        assert len(
-            self.valid_skipspecies_compositions[0].feature_vector(stats=self.stats),
-        ) == self.valid_skipspecies_compositions[0].embedding.dim * len(self.stats)
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            feature_vector = self.valid_skipspecies_compositions[0].feature_vector(stats=self.stats)
+
+        assert isinstance(feature_vector, np.ndarray)
+        assert len(feature_vector) == self.valid_skipspecies_compositions[0].embedding.dim * len(self.stats)
         # Test that the feature vector function works with a single stat
         assert isinstance(
             self.valid_skipspecies_compositions[0].feature_vector(stats="mean"),

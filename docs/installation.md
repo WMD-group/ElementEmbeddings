@@ -16,7 +16,7 @@ To clone the project from GitHub and create the local development environment wi
 ```bash
 git clone https://github.com/WMD-group/ElementEmbeddings.git
 cd ElementEmbeddings
-uv sync --extra dev --extra docs
+uv sync --group dev --group docs
 ```
 
 This creates `.venv` and installs the project in editable mode, so local source changes are reflected immediately.

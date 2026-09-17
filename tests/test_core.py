@@ -5,6 +5,7 @@ from __future__ import annotations
 import copy
 import os
 import unittest
+import warnings
 
 import numpy as np
 import pandas as pd
@@ -63,7 +64,9 @@ class EmbeddingTest(unittest.TestCase):
         assert self.test_magpie.standardise().is_standardised is True
         assert self.test_skipatom.is_standardised is False
         assert self.test_skipatom.standardise().is_standardised is True
-        assert self.test_skipatom.standardise().standardise() is None
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            assert self.test_skipatom.standardise().standardise() is None
         assert copy.deepcopy(self.test_magpie).standardise(inplace=True) is None
 
     def test_Embedding_file_input(self):
@@ -470,8 +473,10 @@ class EmbeddingTest(unittest.TestCase):
             len(self.test_matscholar.element_list),
             2,
         )
-        umap1 = self.test_matscholar.calculate_umap(n_neighbors=15, random_state=42)
-        umap2 = self.test_matscholar.calculate_umap(n_neighbors=15, random_state=42)
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            umap1 = self.test_matscholar.calculate_umap(n_neighbors=15, random_state=42)
+            umap2 = self.test_matscholar.calculate_umap(n_neighbors=15, random_state=42)
         assert (umap1 == umap2).all()
 
     def test_PaCMAP(self):

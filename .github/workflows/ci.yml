@@ -18,7 +18,7 @@ jobs:
           python-version: "3.14"
           enable-cache: true
       - name: Install dependencies
-        run: uv sync --extra dev
+        run: uv sync --group dev
       - name: Run prek hooks
         env:
           PREK_HOME: /tmp/prek-home
@@ -34,7 +34,7 @@ jobs:
           python-version: "3.14"
           enable-cache: true
       - name: Install dependencies
-        run: uv sync --extra dev
+        run: uv sync --group dev
       - name: Run ty
         run: uv run ty check src/elementembeddings --output-format github
 
@@ -55,7 +55,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           enable-cache: true
       - name: Install dependencies
-        run: uv sync --extra dev
+        run: uv sync --group dev
       - name: Check package versions
         run: |
           uv pip show elementembeddings

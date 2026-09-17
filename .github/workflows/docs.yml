@@ -26,7 +26,7 @@ jobs:
           python-version: "3.14"
           enable-cache: true
       - name: Install dependencies
-        run: uv sync --extra dev --extra docs
+        run: uv sync --group dev --group docs
       - name: Generate API docs
         run: uv run python scripts/generate_api_docs.py
       - name: Configure docs deployment

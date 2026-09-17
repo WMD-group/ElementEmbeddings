@@ -241,7 +241,8 @@ class DimensionTest(unittest.TestCase):
                 "Mn2+",
             ],
         )
-        return fig
+        assert isinstance(ax, plt.Axes)
+        plt.close(fig)
 
     #   @pytest.mark.mpl_image_compare(
     #       baseline_dir=f"{_file_path}/baseline",
@@ -275,4 +276,5 @@ class DimensionTest(unittest.TestCase):
                 "Mn2+",
             ],
         )
-        return fig
+        assert isinstance(ax, plt.Axes)
+        plt.close(fig)

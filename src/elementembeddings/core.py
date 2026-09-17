@@ -251,11 +251,11 @@ class Embedding(EmbeddingBase):
 
         Mean is 0 and standard deviation is 1.
 
+        Calling this method on an already-standardised embedding is a no-op and
+        returns ``None``.
+
         """
         if self._is_standardised():
-            warnings.warn(
-                "Embedding is already standardised. Returning None and not changing the embedding.",
-            )
             return None
         else:
             embeddings_copy = self.embeddings.copy()
