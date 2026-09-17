@@ -8,7 +8,8 @@ from __future__ import annotations
 
 import collections
 import re
-from typing import ClassVar, cast
+from dataclasses import asdict, dataclass
+from typing import TYPE_CHECKING, ClassVar, cast
 
 import numpy as np
 import pandas as pd
@@ -21,8 +22,27 @@ from .utils.config import X
 from .utils.math import cosine_distance
 from .utils.species import parse_species
 
+if TYPE_CHECKING:
+    from numpy.typing import NDArray
+
 tqdm.pandas()
 # Modified from pymatgen.core.Compositions
+
+
+@dataclass(frozen=True)
+class CompositionalEmbeddingData:
+    """Structured representation of an elemental composition embedding."""
+
+    formula: str
+    composition: dict[str, float]
+    fractional_composition: dict[str, float]
+
+
+@dataclass(frozen=True)
+class SpeciesCompositionalEmbeddingData:
+    """Structured representation of a species composition embedding."""
+
+    composition: dict[str, int | float]
 
 
 def formula_parser(formula: str) -> dict[str, float]:
@@ -139,7 +159,7 @@ class CompositionalEmbedding:
         self.norm_stoich_vector = self.stoich_vector / self._natoms
 
     @property
-    def fractional_composition(self):
+    def fractional_composition(self) -> dict[str, float]:
         """Fractional composition of the Composition."""
         return _get_fractional_composition(self.formula)
 
@@ -148,16 +168,19 @@ class CompositionalEmbedding:
         """Total number of atoms in Composition."""
         return self._natoms
 
-    def as_dict(self) -> dict:
-        # TO-DO: Need to create a dict representation for the embedding class
-        """Return the CompositionalEmbedding class as a dict."""
-        return {
-            "formula": self.formula,
-            "composition": self.composition,
-            "fractional_composition": self.fractional_composition,
-        }
+    def as_data(self) -> CompositionalEmbeddingData:
+        """Return a structured representation of the composition."""
+        return CompositionalEmbeddingData(
+            formula=self.formula,
+            composition=self.composition,
+            fractional_composition=self.fractional_composition,
+        )
 
-    def _mean_feature_vector(self) -> np.ndarray:
+    def as_dict(self) -> dict[str, object]:
+        """Return the composition as a dictionary for serialization."""
+        return asdict(self.as_data())
+
+    def _mean_feature_vector(self) -> NDArray[np.float64]:
         """Compute a weighted mean feature vector based of the embedding.
 
         The dimension of the feature vector is the same as the embedding.
@@ -165,35 +188,35 @@ class CompositionalEmbedding:
         """
         return np.dot(self.norm_stoich_vector, self.el_matrix)
 
-    def _variance_feature_vector(self) -> np.ndarray:
+    def _variance_feature_vector(self) -> NDArray[np.float64]:
         """Compute a weighted variance feature vector."""
         diff_matrix = self.el_matrix - self._mean_feature_vector()
 
         diff_matrix = diff_matrix**2
         return np.dot(self.norm_stoich_vector, diff_matrix)
 
-    def _minpool_feature_vector(self) -> np.ndarray:
+    def _minpool_feature_vector(self) -> NDArray[np.float64]:
         """Compute a min pooled feature vector."""
         return np.min(self.el_matrix, axis=0)
 
-    def _maxpool_feature_vector(self) -> np.ndarray:
+    def _maxpool_feature_vector(self) -> NDArray[np.float64]:
         """Compute a max pooled feature vector."""
         return np.max(self.el_matrix, axis=0)
 
-    def _range_feature_vector(self) -> np.ndarray:
+    def _range_feature_vector(self) -> NDArray[np.float64]:
         """Compute a range feature vector."""
         return np.ptp(self.el_matrix, axis=0)
 
-    def _sum_feature_vector(self) -> np.ndarray:
+    def _sum_feature_vector(self) -> NDArray[np.float64]:
         """Compute the weighted sum feature vector."""
         return np.dot(self.stoich_vector, self.el_matrix)
 
-    def _geometric_mean_feature_vector(self) -> np.ndarray:
+    def _geometric_mean_feature_vector(self) -> NDArray[np.float64]:
         """Compute the geometric mean feature vector."""
         with np.errstate(divide="ignore", invalid="ignore"):
             return np.exp(np.dot(self.norm_stoich_vector, np.log(self.el_matrix)))
 
-    def _harmonic_mean_feature_vector(self) -> np.ndarray:
+    def _harmonic_mean_feature_vector(self) -> NDArray[np.float64]:
         """Compute the harmonic mean feature vector."""
         with np.errstate(divide="ignore", invalid="ignore"):
             return np.reciprocal(
@@ -211,7 +234,7 @@ class CompositionalEmbedding:
         "harmonic_mean": "_harmonic_mean_feature_vector",
     }
 
-    def feature_vector(self, stats: str | list = "mean"):
+    def feature_vector(self, stats: str | list = "mean") -> NDArray[np.float64]:
         """Compute a feature vector.
 
         The feature vector is a concatenation of
@@ -253,7 +276,7 @@ class CompositionalEmbedding:
         comp_other,
         distance_metric: str = "euclidean",
         stats: str | list[str] = "mean",
-    ):
+    ) -> float:
         """Compute the distance between two compositions.
 
         Args:
@@ -292,16 +315,16 @@ class CompositionalEmbedding:
     def __str__(self) -> str:
         return f"CompositionalEmbedding(formula={self.formula}, embedding={self.embedding_name})"
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, self.__class__):
             return self.formula == other.formula and self.embedding_name == other.embedding_name
         else:
             return False
 
-    def __ne__(self, other):
+    def __ne__(self, other: object) -> bool:
         return not self.__eq__(other)
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.formula, self.embedding))
 
 
@@ -355,7 +378,7 @@ def composition_featuriser(
     embedding: Embedding | str = "magpie",
     stats: str | list[str] = "mean",
     inplace: bool = False,
-) -> pd.DataFrame | list[np.ndarray] | np.ndarray:
+) -> pd.DataFrame | list[NDArray[np.float64]] | NDArray[np.float64]:
     """Compute a feature vector for a composition.
 
     The feature vector is based on the statistics specified
@@ -498,19 +521,20 @@ class SpeciesCompositionalEmbedding:
             return str(int(stoich))
         return str(round(stoich, 8))
 
-    def as_dict(self) -> dict:
-        # TO-DO: Need to create a dict representation for the embedding class
-        """Return the SpeciesCompositionalEmbedding class as a dict."""
-        return {
-            "composition": self.composition,
-        }
+    def as_data(self) -> SpeciesCompositionalEmbeddingData:
+        """Return a structured representation of the species composition."""
+        return SpeciesCompositionalEmbeddingData(composition=self.composition)
+
+    def as_dict(self) -> dict[str, object]:
+        """Return the species composition as a dictionary for serialization."""
+        return asdict(self.as_data())
 
     @property
-    def fractional_composition(self):
+    def fractional_composition(self) -> dict[str, float]:
         """Fractional composition of the Composition."""
         return {k: v / self._natoms for k, v in self.composition.items()}
 
-    def _mean_feature_vector(self) -> np.ndarray:
+    def _mean_feature_vector(self) -> NDArray[np.float64]:
         """Compute a weighted mean feature vector based of the embedding.
 
         The dimension of the feature vector is the same as the embedding.
@@ -518,30 +542,30 @@ class SpeciesCompositionalEmbedding:
         """
         return np.dot(self.norm_stoich_vector, self.species_matrix)
 
-    def _variance_feature_vector(self) -> np.ndarray:
+    def _variance_feature_vector(self) -> NDArray[np.float64]:
         """Compute a weighted variance feature vector."""
         diff_matrix = self.species_matrix - self._mean_feature_vector()
 
         diff_matrix = diff_matrix**2
         return np.dot(self.norm_stoich_vector, diff_matrix)
 
-    def _minpool_feature_vector(self) -> np.ndarray:
+    def _minpool_feature_vector(self) -> NDArray[np.float64]:
         return np.min(self.species_matrix, axis=0)
 
-    def _maxpool_feature_vector(self) -> np.ndarray:
+    def _maxpool_feature_vector(self) -> NDArray[np.float64]:
         return np.max(self.species_matrix, axis=0)
 
-    def _range_feature_vector(self) -> np.ndarray:
+    def _range_feature_vector(self) -> NDArray[np.float64]:
         return np.ptp(self.species_matrix, axis=0)
 
-    def _sum_feature_vector(self) -> np.ndarray:
+    def _sum_feature_vector(self) -> NDArray[np.float64]:
         return np.dot(self.stoich_vector, self.species_matrix)
 
-    def _geometric_mean_feature_vector(self) -> np.ndarray:
+    def _geometric_mean_feature_vector(self) -> NDArray[np.float64]:
         with np.errstate(divide="ignore", invalid="ignore"):
             return np.exp(np.dot(self.norm_stoich_vector, np.log(self.species_matrix)))
 
-    def _harmonic_mean_feature_vector(self) -> np.ndarray:
+    def _harmonic_mean_feature_vector(self) -> NDArray[np.float64]:
         with np.errstate(divide="ignore", invalid="ignore"):
             return np.reciprocal(
                 np.dot(self.norm_stoich_vector, np.reciprocal(self.species_matrix)),
@@ -558,7 +582,7 @@ class SpeciesCompositionalEmbedding:
         "harmonic_mean": "_harmonic_mean_feature_vector",
     }
 
-    def feature_vector(self, stats: str | list = "mean"):
+    def feature_vector(self, stats: str | list = "mean") -> NDArray[np.float64]:
         """Compute a feature vector.
 
         The feature vector is a concatenation of
@@ -600,7 +624,7 @@ class SpeciesCompositionalEmbedding:
         comp_other,
         distance_metric: str = "euclidean",
         stats: str | list[str] = "mean",
-    ):
+    ) -> float:
         """Compute the distance between two compositions.
 
         Args:
@@ -641,7 +665,7 @@ class SpeciesCompositionalEmbedding:
     def __str__(self) -> str:
         return f"SpeciesCompositionalEmbedding(formula={self.formula_pretty}, embedding={self.embedding_name})"
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, self.__class__):
             return (
                 self.formula_pretty == other.formula_pretty
@@ -651,10 +675,10 @@ class SpeciesCompositionalEmbedding:
         else:
             return False
 
-    def __ne__(self, other):
+    def __ne__(self, other: object) -> bool:
         return not self.__eq__(other)
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.formula_pretty, self.embedding))
 
 
@@ -707,7 +731,7 @@ def species_composition_featuriser(
     embedding: SpeciesEmbedding | str = "skipspecies",
     stats: str | list[str] = "mean",
     to_dataframe: bool = False,
-) -> list[np.ndarray] | np.ndarray | pd.DataFrame:
+) -> list[NDArray[np.float64]] | NDArray[np.float64] | pd.DataFrame:
     """Compute a feature vector for a composition.
 
     The feature vector is based on the statistics specified

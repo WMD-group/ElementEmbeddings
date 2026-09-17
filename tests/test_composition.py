@@ -94,6 +94,9 @@ class TestCompositionalEmbedding(unittest.TestCase):
 
     def test_CompositionalEmbedding_as_dict(self):
         """Test the Composition class as a dictionary."""
+        composition_data = self.valid_magpie_compositions[0].as_data()
+        assert isinstance(composition_data, composition.CompositionalEmbeddingData)
+        assert composition_data.formula == "Sr3Sc2(GeO4)3"
         assert isinstance(self.valid_magpie_compositions[0].as_dict(), dict)
         assert self.valid_magpie_compositions[0].as_dict() == {
             "formula": "Sr3Sc2(GeO4)3",
@@ -255,6 +258,9 @@ class TestSpeciesCompositionalEmbedding(unittest.TestCase):
     def test_SpeciesCompositionalEmbedding_attributes(self):
         """Test the SpeciesCompositionalEmbedding class."""
         Fe3O4_skipspecies = self.valid_skipspecies_compositions[0]
+        composition_data = Fe3O4_skipspecies.as_data()
+        assert isinstance(composition_data, composition.SpeciesCompositionalEmbeddingData)
+        assert composition_data.composition == self.compositions[0]
         assert isinstance(Fe3O4_skipspecies.embedding, core.SpeciesEmbedding)
         assert Fe3O4_skipspecies.composition == self.compositions[0]
         assert Fe3O4_skipspecies.num_atoms == 7

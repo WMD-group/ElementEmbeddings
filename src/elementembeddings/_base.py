@@ -6,7 +6,7 @@ import warnings
 from abc import ABC, abstractmethod
 from itertools import combinations_with_replacement
 from os import path
-from typing import Any
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 import numpy as np
 import pandas as pd
@@ -21,6 +21,19 @@ from umap import UMAP
 from .utils.config import CITATIONS, MENDELEEV_NUMBERS
 from .utils.math import cosine_distance, cosine_similarity
 from .utils.species import parse_species
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from numpy.typing import NDArray
+
+
+class EmbeddingPair(NamedTuple):
+    """Pair of embedding keys returned by :meth:`EmbeddingBase.create_pairs`."""
+
+    first: str
+    second: str
+
 
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, "data")
@@ -96,16 +109,16 @@ class EmbeddingBase(ABC):
 
     @staticmethod
     @abstractmethod
-    def load_data(embedding_name: str):
+    def load_data(embedding_name: str) -> EmbeddingBase:
         """Abstract method for loading data."""
 
     @staticmethod
     @abstractmethod
-    def from_csv(csv_path: str, embedding_name: str | None = None):
+    def from_csv(csv_path: str, embedding_name: str | None = None) -> EmbeddingBase:
         """Abstract method for loading data from a csv."""
 
     @staticmethod
-    def from_json(json_path: str, embedding_name: str | None = None):
+    def from_json(json_path: str, embedding_name: str | None = None) -> EmbeddingBase:
         """Create an embedding from a json file.
 
         Args:
@@ -126,7 +139,7 @@ class EmbeddingBase(ABC):
         except KeyError:
             return None
 
-    def _is_standardised(self):
+    def _is_standardised(self) -> bool:
         """Check if the embedding is standardised.
 
         Mean must be 0 and standard deviation must be 1.
@@ -136,19 +149,22 @@ class EmbeddingBase(ABC):
             0,
         ) and np.isclose(np.std(np.array(list(self.embeddings.values()))), 1)
 
-    def _is_el_sp_in_embedding(self, el_sp: str):
+    def _is_el_sp_in_embedding(self, el_sp: str) -> bool:
         """Check if an element/species is in the embedding."""
         return el_sp in self.embeddings
 
-    def _embeddings_keys_list(self):
+    def _embeddings_keys_list(self) -> list[str]:
         """Return the keys of the embedding as a list."""
         return list(self.embeddings.keys())
 
-    def create_pairs(self):
+    def create_pairs(self) -> Iterator[EmbeddingPair]:
         """Create all possible pairs of elements/species."""
-        return combinations_with_replacement(self._embeddings_keys_list(), 2)
+        return (
+            EmbeddingPair(first, second)
+            for first, second in combinations_with_replacement(self._embeddings_keys_list(), 2)
+        )
 
-    def standardise(self, inplace: bool = False):
+    def standardise(self, inplace: bool = False) -> EmbeddingBase | None:
         """Standardise the embedding.
 
         Mean is 0 and standard deviation is 1.
@@ -178,7 +194,12 @@ class EmbeddingBase(ABC):
             else:
                 return EmbeddingBase(embeddings_copy, self.embedding_name)
 
-    def calculate_pca(self, n_components: int = 2, standardise: bool = True, **kwargs):
+    def calculate_pca(
+        self,
+        n_components: int = 2,
+        standardise: bool = True,
+        **kwargs,
+    ) -> NDArray[np.float64]:
         """Calculate the principal components (PC) of the embeddings.
 
         Args:
@@ -208,7 +229,12 @@ class EmbeddingBase(ABC):
         pca.fit(embeddings_array)
         return pca.transform(embeddings_array)
 
-    def calculate_tsne(self, n_components: int = 2, standardise: bool = True, **kwargs):
+    def calculate_tsne(
+        self,
+        n_components: int = 2,
+        standardise: bool = True,
+        **kwargs,
+    ) -> NDArray[np.float64]:
         """Calculate t-SNE components.
 
         Args:
@@ -234,7 +260,12 @@ class EmbeddingBase(ABC):
         tsne = TSNE(n_components=n_components, **kwargs)
         return tsne.fit(embeddings_array)
 
-    def calculate_umap(self, n_components: int = 2, standardise: bool = True, **kwargs):
+    def calculate_umap(
+        self,
+        n_components: int = 2,
+        standardise: bool = True,
+        **kwargs,
+    ) -> NDArray[np.float64]:
         """Calculate UMAP embeddings.
 
         Args:
@@ -270,7 +301,7 @@ class EmbeddingBase(ABC):
         standardise: bool = True,
         init: str = "pca",
         **kwargs,
-    ):
+    ) -> NDArray[np.float64]:
         """Calculate PaCMAP (Pairwise Controlled Manifold Approximation) embeddings.
 
         Args:

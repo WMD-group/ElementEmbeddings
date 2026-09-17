@@ -28,14 +28,23 @@ Example usage::
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, NamedTuple
 
 import numpy as np
 import pandas as pd
 from scipy import stats
 
 if TYPE_CHECKING:
+    from numpy.typing import NDArray
+
     from .core import Embedding
+
+
+class MantelTestResult(NamedTuple):
+    """Correlation and p-value returned by :func:`mantel_test`."""
+
+    correlation: float
+    p_value: float
 
 
 def _get_common_elements(emb1: Embedding, emb2: Embedding) -> list[str]:
@@ -51,7 +60,7 @@ def _get_similarity_matrix(
     emb: Embedding,
     elements: list[str],
     metric: str = "cosine_similarity",
-) -> np.ndarray:
+) -> NDArray[np.float64]:
     """Compute pairwise similarity matrix for given elements.
 
     Args:
@@ -73,7 +82,7 @@ def _get_similarity_matrix(
     return mat
 
 
-def _upper_triangle(mat: np.ndarray) -> np.ndarray:
+def _upper_triangle(mat: NDArray[np.float64]) -> NDArray[np.float64]:
     """Extract upper triangle values (excluding diagonal) as flat array."""
     return mat[np.triu_indices_from(mat, k=1)]
 
@@ -123,7 +132,7 @@ def mantel_test(
     metric: str = "cosine_similarity",
     method: str = "pearson",
     n_permutations: int = 999,
-) -> tuple[float, float]:
+) -> MantelTestResult:
     """Mantel test for correlation between two embedding similarity matrices.
 
     Permutation-based significance test for the correlation between two
@@ -138,7 +147,7 @@ def mantel_test(
         n_permutations: Number of permutations for p-value estimation.
 
     Returns:
-        Tuple of (correlation_coefficient, two_sided_p_value).
+        Named tuple containing the correlation coefficient and two-sided p-value.
         The p-value is two-sided: the fraction of permutations whose
         absolute correlation is at least as large as |observed|.
     """
@@ -172,7 +181,7 @@ def mantel_test(
             count += 1
 
     p_value = (count + 1) / (n_permutations + 1)
-    return observed, p_value
+    return MantelTestResult(observed, p_value)
 
 
 def kl_divergence(
@@ -203,7 +212,7 @@ def kl_divergence(
     v2 = _upper_triangle(mat2)
 
     # Softmax normalisation to probability distributions
-    def _softmax(x: np.ndarray) -> np.ndarray:
+    def _softmax(x: NDArray[np.float64]) -> NDArray[np.float64]:
         e = np.exp(x - np.max(x))
         return e / e.sum()
 

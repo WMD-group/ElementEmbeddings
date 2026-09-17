@@ -27,7 +27,7 @@ def heatmap_plotter(
     ax: Axes | None = None,
     show_axislabels: bool = True,
     **kwargs,
-):
+) -> Axes:
     """Plot multiple heatmaps of the embeddings.
 
     Args:
@@ -107,7 +107,7 @@ def dimension_plotter(
     reducer_params: dict | None = None,
     scatter_params: dict | None = None,
     include_species: list | None = None,
-):
+) -> Axes | Axes3D:
     """Plot the reduced dimensions of the embeddings.
 
     Args:

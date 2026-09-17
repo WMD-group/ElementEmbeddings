@@ -88,7 +88,7 @@ class Embedding(EmbeddingBase):
                 embedding_name,
             )
         elif "megnet" in DEFAULT_ELEMENT_EMBEDDINGS[embedding_name]:
-            return Embedding.from_json(
+            embedding = Embedding.from_json(
                 path.join(
                     data_directory,
                     "element_representations",
@@ -96,6 +96,8 @@ class Embedding(EmbeddingBase):
                 ),
                 embedding_name,
             ).remove_elements(["Null"])
+            assert isinstance(embedding, Embedding)
+            return embedding
         elif DEFAULT_ELEMENT_EMBEDDINGS[embedding_name].endswith(".json"):
             return Embedding.from_json(
                 path.join(
@@ -175,7 +177,7 @@ class Embedding(EmbeddingBase):
                 )
             )
 
-    def to(self, fmt: str = "", filename: str | None = None):
+    def to(self, fmt: str = "", filename: str | None = None) -> str | None:
         """Output the embedding to a file.
 
         Args:
@@ -214,11 +216,11 @@ class Embedding(EmbeddingBase):
             raise ValueError(msg)
 
     @property
-    def element_list(self) -> list:
+    def element_list(self) -> list[str]:
         """Return the elements of the embedding."""
         return self._embeddings_keys_list()
 
-    def remove_elements(self, elements: str | list[str], inplace: bool = False):
+    def remove_elements(self, elements: str | list[str], inplace: bool = False) -> Embedding | None:
         # TO-DO allow removal by atomic numbers
         """Remove elements from the Embedding instance.
 
@@ -246,7 +248,7 @@ class Embedding(EmbeddingBase):
                     del embeddings_copy[el]
             return Embedding(embeddings_copy, self.embedding_name)
 
-    def standardise(self, inplace: bool = False):
+    def standardise(self, inplace: bool = False) -> Embedding | None:
         """Standardise the embeddings.
 
         Mean is 0 and standard deviation is 1.
@@ -384,16 +386,16 @@ class SpeciesEmbedding(EmbeddingBase):
         return SpeciesEmbedding(embedding_data, embedding_name)
 
     @property
-    def species_list(self) -> list:
+    def species_list(self) -> list[str]:
         """Return the species of the embedding."""
         return list(self.embeddings.keys())
 
     @property
-    def element_list(self) -> list:
+    def element_list(self) -> list[str]:
         """Return the elements of the embedding."""
         return list({parse_species(species)[0] for species in self.species_list})
 
-    def remove_neutral_species(self, inplace: bool = False):
+    def remove_neutral_species(self, inplace: bool = False) -> SpeciesEmbedding | None:
         """Remove neutral species from the SpeciesEmbedding instance.
 
         Args:
@@ -408,7 +410,7 @@ class SpeciesEmbedding(EmbeddingBase):
         neutral_species = [s for s in self.species_list if parse_species(s)[1] == 0]
         return self.remove_species(neutral_species, inplace)
 
-    def get_element_oxi_states(self, el: str) -> list:
+    def get_element_oxi_states(self, el: str) -> list[float]:
         """Return the oxidation states for a given element.
 
         Args:
@@ -426,7 +428,7 @@ class SpeciesEmbedding(EmbeddingBase):
         oxidation_states = [species[1] for species in el_species_list]
         return sorted(oxidation_states)
 
-    def remove_species(self, species: str | list[str], inplace: bool = False):
+    def remove_species(self, species: str | list[str], inplace: bool = False) -> SpeciesEmbedding | None:
         """Remove species from the SpeciesEmbedding instance.
 
         Args:
@@ -533,7 +535,7 @@ class SpeciesEmbedding(EmbeddingBase):
         """
         return super().correlation_df(metric).rename(mapper={"ele_1": "species_1", "ele_2": "species_2"}, axis=1)
 
-    def to(self, fmt: str = "", filename: str | None = None):
+    def to(self, fmt: str = "", filename: str | None = None) -> str | None:
         """Output the embedding to a file.
 
         Args:

@@ -4,14 +4,22 @@ from __future__ import annotations
 
 import re
 from re import Match
+from typing import NamedTuple
 
 
-def parse_species(species: str) -> tuple[str, float]:
+class ParsedSpecies(NamedTuple):
+    """Parsed element symbol and oxidation state."""
+
+    element: str
+    charge: float
+
+
+def parse_species(species: str) -> ParsedSpecies:
     """
     Parse a species string into its atomic symbol and oxidation state.
 
     :param species: the species string
-    :return: a tuple of the atomic symbol and oxidation state
+    :return: parsed atomic symbol and oxidation state
 
     """
     match = re.match(r"([A-Za-z]+)([0-9]*[\+\-])", species)
@@ -19,15 +27,15 @@ def parse_species(species: str) -> tuple[str, float]:
         return _parse_species_old(species)
     ele, oxi_state = match.groups()
     charge = (int(oxi_state[:-1] or 1)) * (-1 if "-" in oxi_state else 1)
-    return ele, float(charge)
+    return ParsedSpecies(ele, float(charge))
 
 
-def _parse_species_old(species: str) -> tuple[str, float]:
+def _parse_species_old(species: str) -> ParsedSpecies:
     """
     Parse a species string into its atomic symbol and oxidation state.
 
     :param species: the species string
-    :return: a tuple of the atomic symbol and oxidation state
+    :return: parsed atomic symbol and oxidation state
 
     """
     element_match: Match[str] | None = re.match(r"[A-Za-z]+", species)
@@ -54,7 +62,7 @@ def _parse_species_old(species: str) -> tuple[str, float]:
     elif ox_state == 0 and "-" in species:
         ox_state = -1
 
-    return ele, float(ox_state)
+    return ParsedSpecies(ele, float(ox_state))
 
 
 def get_sign(charge: float) -> str:
