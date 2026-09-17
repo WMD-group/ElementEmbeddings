@@ -50,21 +50,12 @@ Alternatively, ElementEmbeddings is available via conda through the conda-forge 
 conda install -c conda-forge elementembeddings
 ```
 
-For installing the development or documentation dependencies from a release:
-
-```bash
-pip install "ElementEmbeddings[dev]"
-pip install "ElementEmbeddings[docs]"
-uv pip install "ElementEmbeddings[dev]"
-uv pip install "ElementEmbeddings[docs]"
-```
-
 For development, clone the repository and sync the project environment with `uv`:
 
 ```bash
 git clone https://github.com/WMD-group/ElementEmbeddings.git
 cd ElementEmbeddings
-uv sync --extra dev --extra docs
+uv sync --group dev --group docs
 ```
 
 This creates a project virtual environment in `.venv` and installs the package in editable mode, so local code changes are reflected immediately.
