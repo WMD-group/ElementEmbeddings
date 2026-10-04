@@ -780,21 +780,21 @@ version.
 <span class="normal"><a href="#__codelineno-0-73">73</a></span>
 <span class="normal"><a href="#__codelineno-0-74">74</a></span>
 <span class="normal"><a href="#__codelineno-0-75">75</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-60" name="__codelineno-0-60"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_sign</span><span class="p">(</span><span class="n">charge</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get string representation of a number&#39;s sign.</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="w">    </span><span class="sd">"""Get string representation of a number's sign.</span>
 <a id="__codelineno-0-62" name="__codelineno-0-62"></a>
 <a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="sd">    Args:</span>
 <a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="sd">        charge (int): The number whose sign to derive.</span>
 <a id="__codelineno-0-65" name="__codelineno-0-65"></a>
 <a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="sd">        sign (str): either &#39;+&#39;, &#39;-&#39;, or &#39;&#39; for neutral.</span>
+<a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="sd">        sign (str): either '+', '-', or '' for neutral.</span>
 <a id="__codelineno-0-68" name="__codelineno-0-68"></a>
-<a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="sd">    """</span>
 <a id="__codelineno-0-70" name="__codelineno-0-70"></a>    <span class="k">if</span> <span class="n">charge</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-<a id="__codelineno-0-71" name="__codelineno-0-71"></a>        <span class="k">return</span> <span class="s2">&quot;+&quot;</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71"></a>        <span class="k">return</span> <span class="s2">"+"</span>
 <a id="__codelineno-0-72" name="__codelineno-0-72"></a>    <span class="k">elif</span> <span class="n">charge</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-<a id="__codelineno-0-73" name="__codelineno-0-73"></a>        <span class="k">return</span> <span class="s2">&quot;-&quot;</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73"></a>        <span class="k">return</span> <span class="s2">"-"</span>
 <a id="__codelineno-0-74" name="__codelineno-0-74"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-75" name="__codelineno-0-75"></a>        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75"></a>        <span class="k">return</span> <span class="s2">""</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -833,18 +833,18 @@ version.
 <span class="normal"><a href="#__codelineno-0-20">20</a></span>
 <span class="normal"><a href="#__codelineno-0-21">21</a></span>
 <span class="normal"><a href="#__codelineno-0-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">parse_species</span><span class="p">(</span><span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="sd">"""</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="sd">    Parse a species string into its atomic symbol and oxidation state.</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12"></a>
 <a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="sd">    :param species: the species string</span>
 <a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="sd">    :return: a tuple of the atomic symbol and oxidation state</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([A-Za-z]+)([0-9]*[\+\-])&quot;</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="sd">    """</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">"([A-Za-z]+)([0-9]*[\+\-])"</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
 <a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a>        <span class="k">return</span> <span class="n">_parse_species_old</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
 <a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="n">ele</span><span class="p">,</span> <span class="n">oxi_state</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="n">charge</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">oxi_state</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">oxi_state</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="n">charge</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">oxi_state</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="s2">"-"</span> <span class="ow">in</span> <span class="n">oxi_state</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="k">return</span> <span class="n">ele</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">charge</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
