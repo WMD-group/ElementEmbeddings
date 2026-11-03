@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
       
       
 
@@ -764,37 +764,37 @@ version.
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/elementembeddings/utils/species.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-60">60</a></span>
-<span class="normal"><a href="#__codelineno-0-61">61</a></span>
-<span class="normal"><a href="#__codelineno-0-62">62</a></span>
-<span class="normal"><a href="#__codelineno-0-63">63</a></span>
-<span class="normal"><a href="#__codelineno-0-64">64</a></span>
-<span class="normal"><a href="#__codelineno-0-65">65</a></span>
-<span class="normal"><a href="#__codelineno-0-66">66</a></span>
-<span class="normal"><a href="#__codelineno-0-67">67</a></span>
-<span class="normal"><a href="#__codelineno-0-68">68</a></span>
-<span class="normal"><a href="#__codelineno-0-69">69</a></span>
-<span class="normal"><a href="#__codelineno-0-70">70</a></span>
-<span class="normal"><a href="#__codelineno-0-71">71</a></span>
-<span class="normal"><a href="#__codelineno-0-72">72</a></span>
-<span class="normal"><a href="#__codelineno-0-73">73</a></span>
-<span class="normal"><a href="#__codelineno-0-74">74</a></span>
-<span class="normal"><a href="#__codelineno-0-75">75</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-60" name="__codelineno-0-60"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_sign</span><span class="p">(</span><span class="n">charge</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="w">    </span><span class="sd">"""Get string representation of a number's sign.</span>
-<a id="__codelineno-0-62" name="__codelineno-0-62"></a>
-<a id="__codelineno-0-63" name="__codelineno-0-63"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="sd">        charge (int): The number whose sign to derive.</span>
-<a id="__codelineno-0-65" name="__codelineno-0-65"></a>
-<a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="sd">        sign (str): either '+', '-', or '' for neutral.</span>
-<a id="__codelineno-0-68" name="__codelineno-0-68"></a>
-<a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="sd">    """</span>
-<a id="__codelineno-0-70" name="__codelineno-0-70"></a>    <span class="k">if</span> <span class="n">charge</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-<a id="__codelineno-0-71" name="__codelineno-0-71"></a>        <span class="k">return</span> <span class="s2">"+"</span>
-<a id="__codelineno-0-72" name="__codelineno-0-72"></a>    <span class="k">elif</span> <span class="n">charge</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-<a id="__codelineno-0-73" name="__codelineno-0-73"></a>        <span class="k">return</span> <span class="s2">"-"</span>
-<a id="__codelineno-0-74" name="__codelineno-0-74"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-75" name="__codelineno-0-75"></a>        <span class="k">return</span> <span class="s2">""</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-62">62</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-63">63</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-64">64</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-66">66</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-67">67</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-68">68</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-69">69</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-70">70</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-71">71</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-72">72</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-73">73</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-74">74</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.get_sign--source--__codelineno-0-75">75</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-60" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-60"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_sign</span><span class="p">(</span><span class="n">charge</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-61" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-61"></a><span class="w">    </span><span class="sd">"""Get string representation of a number's sign.</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-62" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-62"></a>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-63" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-63"></a><span class="sd">    Args:</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-64" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-64"></a><span class="sd">        charge (int): The number whose sign to derive.</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-65" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-65"></a>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-66" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-66"></a><span class="sd">    Returns:</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-67" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-67"></a><span class="sd">        sign (str): either '+', '-', or '' for neutral.</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-68" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-68"></a>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-69" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-69"></a><span class="sd">    """</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-70" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-70"></a>    <span class="k">if</span> <span class="n">charge</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-71" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-71"></a>        <span class="k">return</span> <span class="s2">"+"</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-72" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-72"></a>    <span class="k">elif</span> <span class="n">charge</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-73" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-73"></a>        <span class="k">return</span> <span class="s2">"-"</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-74" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-74"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="elementembeddings.utils.species.get_sign--source--__codelineno-0-75" name="elementembeddings.utils.species.get_sign--source--__codelineno-0-75"></a>        <span class="k">return</span> <span class="s2">""</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -819,33 +819,33 @@ version.
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/elementembeddings/utils/species.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-0-10">10</a></span>
-<span class="normal"><a href="#__codelineno-0-11">11</a></span>
-<span class="normal"><a href="#__codelineno-0-12">12</a></span>
-<span class="normal"><a href="#__codelineno-0-13">13</a></span>
-<span class="normal"><a href="#__codelineno-0-14">14</a></span>
-<span class="normal"><a href="#__codelineno-0-15">15</a></span>
-<span class="normal"><a href="#__codelineno-0-16">16</a></span>
-<span class="normal"><a href="#__codelineno-0-17">17</a></span>
-<span class="normal"><a href="#__codelineno-0-18">18</a></span>
-<span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span>
-<span class="normal"><a href="#__codelineno-0-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">parse_species</span><span class="p">(</span><span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="sd">"""</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="sd">    Parse a species string into its atomic symbol and oxidation state.</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="sd">    :param species: the species string</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="sd">    :return: a tuple of the atomic symbol and oxidation state</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="sd">    """</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">"([A-Za-z]+)([0-9]*[\+\-])"</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a>        <span class="k">return</span> <span class="n">_parse_species_old</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="n">ele</span><span class="p">,</span> <span class="n">oxi_state</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="n">charge</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">oxi_state</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="s2">"-"</span> <span class="ow">in</span> <span class="n">oxi_state</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="k">return</span> <span class="n">ele</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">charge</span><span class="p">)</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#elementembeddings.utils.species.parse_species--source--__codelineno-0-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-9" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">parse_species</span><span class="p">(</span><span class="n">species</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-10" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-10"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-11" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-11"></a><span class="sd">    Parse a species string into its atomic symbol and oxidation state.</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-12" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-12"></a>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-13" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-13"></a><span class="sd">    :param species: the species string</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-14" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-14"></a><span class="sd">    :return: a tuple of the atomic symbol and oxidation state</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-15" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-15"></a>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-16" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-16"></a><span class="sd">    """</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-17" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-17"></a>    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">"([A-Za-z]+)([0-9]*[\+\-])"</span><span class="p">,</span> <span class="n">species</span><span class="p">)</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-18" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-18"></a>    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-19" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-19"></a>        <span class="k">return</span> <span class="n">_parse_species_old</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-20" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-20"></a>    <span class="n">ele</span><span class="p">,</span> <span class="n">oxi_state</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-21" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-21"></a>    <span class="n">charge</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">oxi_state</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="s2">"-"</span> <span class="ow">in</span> <span class="n">oxi_state</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+<a id="elementembeddings.utils.species.parse_species--source--__codelineno-0-22" name="elementembeddings.utils.species.parse_species--source--__codelineno-0-22"></a>    <span class="k">return</span> <span class="n">ele</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">charge</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -908,11 +908,118 @@ version.
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
       
     
-  </body>
+  <script data-mkdocs-jupyter-mathjax="{&quot;url&quot;: &quot;https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-mml-chtml.js&quot;, &quot;version&quot;: 4}">
+/* Shared by full pages and Material's instant navigation. */
+(() => {
+  const config = JSON.parse(document.currentScript.dataset.mkdocsJupyterMathjax);
+  if (window.mkdocsJupyterMathJax) return;
+
+  let loading;
+  let queue = Promise.resolve();
+  let previous = [];
+
+  const ready = async () => {
+    if (!loading) {
+      loading = (async () => {
+        let math = window.MathJax;
+        if (!math?.typesetPromise) {
+          const url = new URL(config.url, document.baseURI).href;
+          const existing = Array.from(document.scripts).find(script =>
+            script.src && (script.src === url || script.id === 'MathJax-script' ||
+              (/mathjax/i.test(script.src) &&
+               /\/(?:MathJax|latest|(?:tex|mml)(?:-mml)?-(?:chtml|svg))\.js(?:[?#]|$)/i.test(script.src))));
+          if (existing) {
+            if (!math?.startup?.promise) {
+              await new Promise((resolve, reject) => {
+                existing.addEventListener('load', resolve, { once: true });
+                existing.addEventListener('error', reject, { once: true });
+              });
+            }
+          } else {
+            // Keep site macros, delimiters and startup hooks when supplied.
+            const options = math || {};
+            window.MathJax = {
+              ...options,
+              loader: {
+                ...options.loader,
+                load: Array.from(new Set(['ui/safe', ...(options.loader?.load || [])]))
+              },
+              startup: { typeset: false, ...options.startup },
+              tex: {
+                tags: 'ams',
+                useLabelIds: true,
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                ...options.tex
+              }
+            };
+            await new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = config.url;
+              script.id = 'MathJax-script';
+              script.async = true;
+              script.onload = resolve;
+              script.onerror = reject;
+              document.head.appendChild(script);
+            });
+          }
+        }
+        math = window.MathJax;
+        await math.startup.promise;
+        return math;
+      })();
+    }
+    const math = await loading;
+    // A site owner can extend the v3 queue again on each navigation.
+    await math.startup.promise;
+    return math;
+  };
+
+  const unrendered = node => {
+    if (node.matches('mjx-container')) return [];
+    if (!node.querySelector('mjx-container')) return [node];
+    // In v3, scanning generated assistive MathML again produces nested output.
+    return Array.from(node.children).flatMap(unrendered);
+  };
+
+  const refresh = () => {
+    // A separate chain also serializes v3, without changing v4's startup promise.
+    queue = queue.then(async () => {
+      const notebooks = Array.from(document.querySelectorAll('.jupyter-wrapper'));
+      if (!notebooks.length && !previous.length) return;
+      if (notebooks.length === previous.length &&
+          notebooks.every((node, index) => node === previous[index])) return;
+      const math = await ready();
+      if (previous.length) {
+        math.typesetClear(previous);
+        math.texReset();
+      }
+      previous = notebooks.filter(node => node.isConnected);
+      const pending = previous.flatMap(unrendered);
+      if (pending.length) await math.typesetPromise(pending);
+    }).catch(error => console.error('mkdocs-jupyter: MathJax rendering failed', error));
+    return queue;
+  };
+
+  window.mkdocsJupyterMathJax = { refresh };
+  const start = () => {
+    if (typeof document$ !== 'undefined') document$.subscribe(refresh);
+    else refresh();
+  };
+  // Theme bundles and user-provided MathJax scripts can follow notebook content.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start, { once: true });
+  } else start();
+})();
+
+</script>
+</body>
 </html>
